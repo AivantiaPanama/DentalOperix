@@ -106,3 +106,23 @@ Before any runtime activation:
 Continue with 57.4 documentation and executive governance package.
 
 Do not activate relational persistence.
+
+## 57.6 Authorization Hold Handoff
+
+```text
+STATUS: COMPLETED
+RESULT: HOLD ENFORCED
+```
+
+The relational database roadmap remains prepared but inactive.
+
+Roadmap boundary:
+
+```text
+Relational Database = Future Physical Persistence
+Activation = Not Approved
+Cutover = Not Approved
+```
+
+No roadmap item may be interpreted as runtime authorization.
+
