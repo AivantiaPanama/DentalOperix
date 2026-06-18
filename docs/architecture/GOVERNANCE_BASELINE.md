@@ -38,6 +38,30 @@ Forbidden Patterns:
 - Projection Engine Adoption
 - PRD to Leads Synchronization
 
+
+## Source of Truth Persistence Clarification
+
+Logical Source of Truth:
+
+- Leads
+
+Current physical persistence:
+
+- Google Sheet / Google Sheets CRM worksheet
+
+Verified implementation evidence:
+
+- `src/server/google/crm.ts` appends, reads and updates Leads through Google Sheets.
+- `src/server/google/sheets.ts` exposes the legacy Leads sheet adapter.
+- `src/lib/api/dental.server.ts` writes new dental leads through `appendLeadToSheet` and updates status, Calendar event id and email-sent flags through `updateLeadInSheet`.
+- `GOOGLE_SHEET_ID` and `GOOGLE_SHEET_NAME` are required server configuration values for the current working implementation.
+
+Governance interpretation:
+
+`Leads = Source of Truth` is a logical domain rule. Google Sheet is the current physical persistence mechanism for Leads.
+
+A future relational database may replace Google Sheet as the physical persistence mechanism only through a governed persistence transition. That transition must preserve the Leads domain as the Source of Truth and must not create a second concurrent Source of Truth.
+
 ## Evidence-Based Documentation Rule
 
 Implementation assessments may inspect, inventory, audit and classify.

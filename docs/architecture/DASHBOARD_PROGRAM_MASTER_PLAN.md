@@ -59,3 +59,29 @@ CONDITIONAL
 - Certified KPI lineage is mapped to implementation evidence.
 - Certified dashboard consumption path is verified from route to contract to read model.
 - Executive readiness assessment is completed.
+
+
+## Planned Future Program
+
+### 57.x Leads Persistence Transition Strategy
+
+Status:
+PLANNED / NOT STARTED
+
+Purpose:
+Define the governed transition from Google Sheet-backed Leads persistence to relational database-backed Leads persistence.
+
+Non-goals:
+
+- No new Source of Truth
+- No permanent dual write
+- No product migration
+- No lead replacement
+- No PRD write-back
+
+Entry criteria:
+
+- 55.x implementation assessment completed or sufficiently scoped
+- Relational database target selected
+- Operational Leads schema proposed
+- Cutover and rollback strategy approved

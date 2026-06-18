@@ -32,6 +32,21 @@ Projection Engine:
 - Not Recommended
 - Closed
 
+
+## Source of Truth Persistence Boundary
+
+`Leads` remains the logical Source of Truth.
+
+The current tested implementation persists Leads in Google Sheets. Repository evidence includes:
+
+- `src/server/google/crm.ts` as the CRM Leads persistence adapter.
+- `src/server/google/sheets.ts` as the legacy sheet-facing Leads adapter.
+- `src/lib/api/dental.server.ts` as the current lead creation orchestration path that writes to the Google Sheet-backed CRM.
+
+The future relational database is not a new source of truth. It is the intended future physical persistence mechanism for the same Leads domain, subject to a separate governed transition plan.
+
+The Persistent Read Database remains downstream, read-only and analytical. It must not become the operational Leads database and must not write back to Leads.
+
 ## Implementation Evidence Update
 
 Repository inspection shows a concrete read-model implementation under:

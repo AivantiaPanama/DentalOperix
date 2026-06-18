@@ -34,6 +34,7 @@ Documentation is treated as potentially stale unless supported by repository evi
 
 Verified repository evidence:
 
+- Google Sheet is verified as the current physical persistence mechanism for the Leads Source of Truth.
 - TanStack Start / React / TypeScript application.
 - Role-aware route structure for admin, assistant, doctor, patient and public pages.
 - Operational APIs for leads, patients, CRM metrics, goals, audit, data quality, notifications, follow-ups, Calendar and Gmail.
@@ -52,3 +53,26 @@ The implementation contains strong governance and executive-dashboard foundation
 ## Next Phase
 
 55.2 Dashboard Capability Assessment
+
+
+## Source of Truth Persistence Status
+
+Logical Source of Truth:
+
+- Leads
+
+Current physical persistence:
+
+- Google Sheet / Google Sheets CRM worksheet
+
+Future direction:
+
+- Governed relational database persistence for Leads when the database exists and is certified.
+
+Important distinction:
+
+The future database is not a new Source of Truth. It is the future persistence mechanism for the existing Leads Source of Truth.
+
+Current decision:
+
+55.x remains focused on implementation assessment. 57.x Leads Persistence Transition Strategy is planned but not started.

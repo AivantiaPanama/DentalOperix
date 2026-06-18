@@ -168,19 +168,30 @@ Current governing rule:
 
 Leads = Source of Truth
 
+Persistence clarification:
+
+- Logical Source of Truth: Leads
+- Current physical persistence: Google Sheet / Google Sheets CRM worksheet
+- Future target persistence: governed relational Leads database, not yet implemented
+
 Repository evidence:
 
 - `/api/leads/create` delegates lead creation to `processDentalLead`.
-- `src/server/google/sheets.ts` remains the live CRM/Leads integration point for several operational paths.
+- `src/lib/api/dental.server.ts` writes new lead records through `appendLeadToSheet` and then updates status, Calendar event id and email-sent flags through `updateLeadInSheet`.
+- `src/server/google/crm.ts` implements the current Google Sheets CRM persistence adapter for append, read and update operations.
+- `src/server/google/sheets.ts` remains the live sheet-facing Leads adapter for legacy and operational read paths.
+- `GOOGLE_SHEET_ID` and `GOOGLE_SHEET_NAME` are required server configuration values for the current implementation.
 - `read-model-source-provider.ts` supports read-model consumption with controlled fallback to legacy Leads when read models are unavailable or fail.
 
 Assessment:
 
-COMPLIANT WITH TRANSITIONAL READ-MODEL FALLBACK
+COMPLIANT WITH GOOGLE SHEET-BACKED LEADS SOURCE OF TRUTH
 
 Important note:
 
 The fallback mode is not a dual write pattern. It is a read fallback for consumption resilience. This must remain governed under ADR-017 Fallback Policy and must not become an alternative source of truth.
+
+The future relational database must be treated as a persistence transition for Leads, not as a new Source of Truth.
 
 ### 5.2 Restricted Components
 
@@ -477,3 +488,55 @@ Required evidence collection:
 - Inventory dashboard components under `src/components/admin` and `src/components/admin/executive-dashboard`.
 - Map each dashboard surface to API/data contract.
 - Identify which KPIs are rendered from live data vs readiness/contract packs.
+
+
+---
+
+## 13. Leads Persistence Transition Readiness
+
+### 13.1 Current State
+
+The current tested implementation uses Google Sheets as the physical persistence mechanism for the Leads Source of Truth.
+
+Verified implementation files:
+
+- `src/server/google/crm.ts`
+- `src/server/google/sheets.ts`
+- `src/lib/api/dental.server.ts`
+- `src/lib/config.server.ts`
+
+### 13.2 Target Direction
+
+A future relational database may replace Google Sheets as the physical persistence mechanism for Leads.
+
+This must be classified as:
+
+- Persistence transition
+- Operational storage modernization
+- Source of Truth preservation
+
+It must not be classified as:
+
+- New Source of Truth
+- Product migration
+- Lead replacement
+- PRD write-back
+- Permanent dual write
+
+### 13.3 Required Future Architecture Gates
+
+Before any implementation work, the following gates must be approved:
+
+1. Leads relational schema proposal
+2. Persistence adapter boundary design
+3. Google Sheet to database backfill and reconciliation plan
+4. Cutover strategy
+5. Rollback strategy
+6. Google Sheet archival or decommissioning decision
+7. Governance validation that Leads remains the logical Source of Truth
+
+### 13.4 Current Decision
+
+Status: PLANNED / NOT STARTED
+
+The current code continues to work against Google Sheets. No database migration implementation is proposed or approved in 55.x.

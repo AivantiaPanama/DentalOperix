@@ -32,6 +32,37 @@ Repository inspection confirms:
 - Executive dashboard contract and observability packages exist.
 - Internal executive observability APIs exist.
 
+
+## Planned Future Initiative
+
+57.x Leads Persistence Transition Strategy
+
+Status:
+PLANNED / NOT STARTED
+
+Objective:
+Move the physical persistence of the Leads Source of Truth from Google Sheets to a governed relational database when the database exists and is certified for operational persistence.
+
+Current state:
+
+- Leads logical Source of Truth: active
+- Current physical persistence: Google Sheet / Google Sheets CRM worksheet
+- Future target physical persistence: relational operational Leads database
+
+Governance constraint:
+
+This is a persistence transition, not a product migration, not a domain replacement and not a new Source of Truth.
+
+Required future gates:
+
+- Database schema approval
+- Leads persistence adapter design
+- Backfill/reconciliation plan
+- Cutover plan
+- Rollback plan
+- Post-cutover Google Sheet retirement or read-only archival decision
+- Explicit no-dual-write validation
+
 ## Current Roadmap Decision
 
 The roadmap should not introduce new data architecture before completing 55.x.
