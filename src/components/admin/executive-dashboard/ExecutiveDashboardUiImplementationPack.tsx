@@ -220,7 +220,7 @@ export function ExecutiveDashboardRenderStateView({ state }: { state: ExecutiveD
     forbidden: "Acceso restringido a observabilidad ejecutiva",
   };
 
-  return <p data-state={state}>{labels[state]}</p>;
+  return <p data-render-state={state}>{labels[state]}</p>;
 }
 
 export function ExecutiveDashboardMetricCard({ metric }: { metric: ExecutiveDashboardMetricCardViewModel }) {
