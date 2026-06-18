@@ -12,7 +12,8 @@
     "postinstall": "npm run build",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest --hookTimeout=30000 --testTimeout=30000"
+    "test": "vitest --hookTimeout=30000 --testTimeout=30000",
+    "validate:relational-env": "node scripts/validate-relational-env.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
