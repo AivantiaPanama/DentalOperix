@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Atención dental infantil acompañada">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f5fbff"/><stop offset="1" stop-color="#eef7e8"/></linearGradient></defs>
+  <rect width="640" height="420" rx="36" fill="url(#g)"/>
+  <rect x="74" y="76" width="492" height="268" rx="30" fill="#fff" opacity=".88"/>
+  <circle cx="230" cy="156" r="44" fill="#bddfed"/>
+  <circle cx="402" cy="176" r="34" fill="#cde8df"/>
+  <path d="M160 306c20-74 118-74 138 0" fill="#4f91a8" opacity=".84"/>
+  <path d="M354 306c14-58 82-58 96 0" fill="#5ea68c" opacity=".84"/>
+  <path d="M200 154c17 14 39 14 56 0M386 176c12 10 28 10 40 0" stroke="#fff" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <circle cx="496" cy="112" r="16" fill="#7cc5d8" opacity=".5"/><circle cx="520" cy="150" r="10" fill="#8acfac" opacity=".55"/>
+</svg>

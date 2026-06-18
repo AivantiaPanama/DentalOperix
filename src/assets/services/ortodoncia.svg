@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Orientación sobre ortodoncia">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#eef8fb"/><stop offset="1" stop-color="#e4f1ff"/></linearGradient></defs>
+  <rect width="640" height="420" rx="36" fill="url(#g)"/>
+  <rect x="76" y="80" width="488" height="260" rx="30" fill="#fff" opacity=".88"/>
+  <rect x="122" y="118" width="182" height="148" rx="22" fill="#d8eef5"/>
+  <path d="M164 180h98M164 208h98M184 152h58" stroke="#3c7f95" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="392" cy="156" r="44" fill="#b8dce8"/>
+  <path d="M320 306c24-76 120-76 144 0" fill="#357d91" opacity=".85"/>
+  <path d="M366 150c18 16 37 16 55 0" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+  <path d="M468 128l44-26M486 174l48 10" stroke="#7cc5d8" stroke-width="10" stroke-linecap="round" opacity=".55"/>
+</svg>

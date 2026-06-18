@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Consulta clínica para implantes dentales">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#eef9f6"/><stop offset="1" stop-color="#e7f2fb"/></linearGradient></defs>
+  <rect width="640" height="420" rx="36" fill="url(#g)"/>
+  <rect x="72" y="78" width="496" height="266" rx="30" fill="#fff" opacity=".88"/>
+  <circle cx="230" cy="158" r="44" fill="#badfed"/>
+  <path d="M160 304c20-74 118-74 138 0" fill="#357d91" opacity=".84"/>
+  <rect x="350" y="112" width="132" height="150" rx="20" fill="#d9eef6"/>
+  <path d="M386 152c30-18 60 0 60 35 0 26-18 54-30 66-12-12-30-40-30-66 0-35 30-53 60-35" fill="#fff"/>
+  <path d="M416 246v42" stroke="#5ea68c" stroke-width="12" stroke-linecap="round"/>
+  <path d="M334 306h164" stroke="#254b5a" stroke-width="14" stroke-linecap="round" opacity=".13"/>
+</svg>

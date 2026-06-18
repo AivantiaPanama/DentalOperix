@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Consulta de diseño de sonrisa">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset="1" stop-color="#e6f5ef"/></linearGradient></defs>
+  <rect width="640" height="420" rx="36" fill="url(#g)"/>
+  <rect x="88" y="74" width="464" height="272" rx="30" fill="#fff" opacity=".88"/>
+  <circle cx="230" cy="164" r="48" fill="#c9e6f0"/>
+  <path d="M155 310c20-82 130-82 150 0" fill="#4f91a8" opacity=".84"/>
+  <rect x="345" y="126" width="130" height="86" rx="22" fill="#dff2f7"/>
+  <path d="M374 164c20 24 52 24 72 0" fill="none" stroke="#357d91" stroke-width="10" stroke-linecap="round"/>
+  <path d="M395 252h78M360 282h132" stroke="#254b5a" stroke-width="14" stroke-linecap="round" opacity=".16"/>
+  <path d="M502 92l8 18 18 8-18 8-8 18-8-18-18-8 18-8z" fill="#7cc5d8" opacity=".55"/>
+</svg>
