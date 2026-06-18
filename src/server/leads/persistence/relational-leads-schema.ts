@@ -133,7 +133,7 @@ export const RELATIONAL_LEAD_STATUS_VALUES = CRM_STATUS_VALUES;
 
 export const RELATIONAL_LEADS_SCHEMA_GOVERNANCE = {
   program: "57.1-B Relational Leads Schema Design",
-  status: "designed-not-active",
+  status: "completed-accepted-not-active",
   sourceOfTruth: "Leads",
   currentPhysicalPersistence: "Google Sheet",
   futurePhysicalPersistence: "Relational Database",
@@ -141,7 +141,7 @@ export const RELATIONAL_LEADS_SCHEMA_GOVERNANCE = {
   dualWriteAllowed: false,
   operationalFlowChanged: false,
   notes: [
-    "This schema metadata is a design artifact only.",
+    "This schema metadata is a completed and accepted non-active design artifact.",
     "Google Sheet remains the active physical persistence until explicit cutover approval.",
     "The relational database must replace the physical persistence layer without creating a new Source of Truth.",
   ],

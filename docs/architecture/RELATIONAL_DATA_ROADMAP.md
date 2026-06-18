@@ -2,94 +2,107 @@
 
 ## Completed Initiative
 
-Persistent Read Database Architecture
-STATUS: CLOSED / APPROVED / GOVERNANCE BASELINED
+### 53.x Persistent Read Database Architecture
+STATUS: CLOSED / CERTIFIED / GOVERNANCE BASELINED
 
 ## Completed Direction
 
-Executive Dashboard Consumption Layer
-STATUS: CLOSED / APPROVED / READY FOR IMPLEMENTATION ASSESSMENT
+### 54.x Executive Dashboard Consumption Layer
+STATUS: CLOSED / CERTIFIED
+
+## Completed Initiative
+
+### 55.x Enterprise Implementation Assessment
+STATUS: CLOSED / SUCCESSFUL
+
+Primary finding:
+
+Implementation maturity exceeds historical documentation maturity.
 
 ## Active Initiative
 
-55.x Enterprise Implementation Assessment
-
-Status:
-IN PROGRESS
-
-Current Phase:
-55.1 Repository Architecture Assessment
-
-Primary Deliverable:
-EXECUTIVE_IMPLEMENTATION_ASSESSMENT.md
-
-## Evidence-Based Findings
-
-Repository inspection confirms:
-
-- A dedicated read-model layer exists under `src/server/read-models`.
-- Multi-domain aggregate read services exist for Patient, CRM, Billing, Clinical, Operations, Finance, Inventory and Support.
-- Executive dashboard contract and observability packages exist.
-- Internal executive observability APIs exist.
-
-
-## Planned Future Initiative
-
-57.x Leads Persistence Transition Strategy
-
-Status:
-PLANNED / NOT STARTED
+### 57.x Leads Persistence Transition Strategy
+STATUS: ACTIVE
+TYPE: Persistence transition, not re-architecture.
 
 Objective:
-Move the physical persistence of the Leads Source of Truth from Google Sheets to a governed relational database when the database exists and is certified for operational persistence.
+
+Prepare the physical persistence transition of the Leads Source of Truth from Google Sheet to a governed relational database when all governance, operational and executive approval gates are satisfied.
 
 Current state:
 
 - Leads logical Source of Truth: active
 - Current physical persistence: Google Sheet / Google Sheets CRM worksheet
 - Future target physical persistence: relational operational Leads database
+- Cutover: not approved
 
 Governance constraint:
 
 This is a persistence transition, not a product migration, not a domain replacement and not a new Source of Truth.
 
-Required future gates:
+## 57.x Completed Work
 
-- Database schema approval
-- Leads persistence adapter design
-- Backfill/reconciliation plan
-- Cutover plan
-- Rollback plan
-- Post-cutover Google Sheet retirement or read-only archival decision
-- Explicit no-dual-write validation
+### 57.1-A Persistence Adapter Infrastructure
+STATUS: COMPLETED / COMPILED / TESTED / ACCEPTED
 
-## Current Roadmap Decision
+Implemented:
 
-The roadmap should not introduce new data architecture before completing 55.x.
+- LeadPersistencePort
+- GoogleSheetLeadPersistenceAdapter
+- RelationalLeadPersistenceAdapter (inactive)
+- LeadPersistenceProvider
 
-Next work must focus on:
-
-- Dashboard capability assessment
-- PRD consumption readiness
-- Conceptual-to-implementation mapping
-- Executive gap analysis
-- Executive implementation decision
-
----
-
-## 57.1-B Relational Leads Schema Design
-
-Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
-
-The relational target for operational Leads persistence has been defined as a future physical persistence replacement for Google Sheet.
+### 57.1-B Relational Leads Schema Design
+STATUS: COMPLETED / COMPILED / TESTED / ACCEPTED
+RUNTIME STATUS: NOT ACTIVE
+CUTOVER STATUS: NOT APPROVED
 
 Designed tables:
 
 - `leads`
 - `lead_persistence_migration_audit`
 
-This roadmap entry does not authorize runtime activation, dual write or cutover.
+### 57.1-C Documentation State Reconciliation
+STATUS: COMPLETED
 
-Next roadmap dependency:
+### 57.1-C.1 Baseline ADR Restoration
+STATUS: COMPLETED
 
-- Backfill and reconciliation planning
+### 57.2 Persistence Readiness Validation
+STATUS: COMPLETED
+RESULT: PARTIALLY READY
+
+### 57.3 Migration Readiness Assessment
+STATUS: COMPLETED
+RESULT: READY FOR EXECUTIVE REVIEW
+CUTOVER RESULT: NO GO
+
+## Current Roadmap Step
+
+### 57.4 Cutover Governance Package
+STATUS: APPROVED TO START
+
+Purpose:
+
+Prepare executive evidence and decision materials for a future Go / No-Go review.
+
+57.4 does not authorize cutover.
+
+## Required Future Gates
+
+Before any runtime activation:
+
+- Executive approval record
+- Cutover plan
+- Rollback plan
+- Runtime adapter activation plan
+- Data quality exception acceptance or remediation
+- Post-cutover certification plan
+- Google Sheet archival or read-only policy
+- Explicit no-dual-write validation
+
+## Current Roadmap Decision
+
+Continue with 57.4 documentation and executive governance package.
+
+Do not activate relational persistence.

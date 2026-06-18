@@ -161,3 +161,102 @@ Governance rules:
 - Dual write is not approved.
 - Operational flows are not changed by the schema design.
 - Cutover requires separate approval.
+
+---
+
+## 57.1-C Documentation State Reconciliation
+
+Status: COMPLETED
+
+Purpose:
+
+Restore alignment between implementation evidence, certified architectural baseline and program documentation.
+
+Outcome:
+
+- 55.x is closed as SUCCESSFUL.
+- 57.x is active as a persistence transition.
+- 57.1-A is completed, compiled, tested and accepted.
+- 57.1-B is completed, compiled, tested and accepted.
+- Relational persistence remains inactive.
+- Cutover remains not approved.
+
+---
+
+## 57.1-C.1 Baseline ADR Restoration
+
+Status: COMPLETED
+
+Restored baseline ADRs:
+
+- ADR-015 Read Model Governance
+- ADR-016 Domain Boundaries
+- ADR-017 Fallback Policy
+- ADR-025 Projection Engine Deferral
+- ADR-026 Persistent Read Database Strategy
+- ADR-027 Enterprise Analytics Architecture
+- ADR-028 KPI Governance Architecture
+- ADR-029 Analytics Consumption Contracts
+
+Restoration rule:
+
+The restored ADRs document the already-certified architecture baseline. They do not introduce new architecture decisions.
+
+---
+
+## 57.2 Persistence Readiness Validation
+
+Status: COMPLETED
+Result: PARTIALLY READY
+
+Validated:
+
+- Persistence inventory
+- Schema compatibility
+- Adapter readiness
+- Governance compliance
+- Migration readiness score
+
+Outcome:
+
+Architecture and governance readiness are verified. Full migration readiness requires operational package and executive review.
+
+---
+
+## 57.3 Migration Readiness Assessment
+
+Status: COMPLETED
+Result: READY FOR EXECUTIVE REVIEW
+Cutover Result: NO GO
+
+Validated:
+
+- Production data quality from the provided Google Sheet snapshot
+- Data mapping from Google Sheet to relational schema
+- Rollback readiness
+- Go / No-Go criteria
+
+Open observations:
+
+- Status values should be normalized before or during future migration certification (`new` / `nuevo`).
+- Mixed ID prefixes are accepted as historical values (`lead_` / `dental_`).
+- `LEADS_PERSISTENCE_MODE=relational-db` remains a low configuration exposure risk because the relational adapter fails closed.
+
+Cutover remains NO GO until explicit executive approval exists.
+
+---
+
+## 57.4 Cutover Governance Package
+
+Status: APPROVED TO START
+
+57.4 may prepare evidence and decision materials only.
+
+57.4 must not:
+
+- activate relational persistence,
+- run a production migration,
+- enable dual write,
+- change the Source of Truth,
+- retire Google Sheet,
+- alter restricted components.

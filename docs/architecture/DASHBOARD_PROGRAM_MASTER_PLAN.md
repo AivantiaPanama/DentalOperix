@@ -1,115 +1,176 @@
 # DentalOperix Dashboard Program Master Plan
 
+## Governance Baseline
+
+The program is governed by the following permanent rules:
+
+- Leads = Source of Truth.
+- Google Sheet = Current Physical Persistence.
+- Relational Database = Future Physical Persistence.
+- READ MODEL PLATFORM v2 = CLOSED / FROZEN / GOVERNANCE BASELINED.
+- No Dual Write.
+- No Multiple Sources of Truth.
+- No Projection Engine.
+- No Product Migration.
+- No Lead Replacement.
+- No operational cutover without explicit approval.
+
 ## Certified Programs
 
 ### 52.x Enterprise Analytics & KPI Architecture
-CLOSED / APPROVED / CERTIFIED
+CLOSED / CERTIFIED
 
 ### 53.x Persistent Read Database Architecture
-CLOSED / APPROVED / CERTIFIED / GOVERNANCE BASELINED
+CLOSED / CERTIFIED / GOVERNANCE BASELINED
 
 ### 54.x Executive Dashboard Consumption Layer
-CLOSED / APPROVED / READY FOR IMPLEMENTATION ASSESSMENT
+CLOSED / CERTIFIED
+
+### 55.x Enterprise Implementation Assessment
+CLOSED / SUCCESSFUL
+
+Primary finding:
+
+Implementation maturity exceeds historical documentation maturity.
+
+Verified conclusions:
+
+- Read Model Infrastructure = Implemented.
+- Executive Dashboard Infrastructure = Implemented.
+- Provider Layer = Implemented.
+- Fallback Layer = Implemented.
+- Multi-Domain Read Architecture = Implemented.
+- Governance Alignment = Verified.
 
 ## Active Program
 
-### 55.x Enterprise Implementation Assessment
+### 57.x Leads Persistence Transition Strategy
+STATUS: ACTIVE
+TYPE: Persistence transition, not re-architecture.
 
-Primary Deliverable:
-EXECUTIVE_IMPLEMENTATION_ASSESSMENT.md
+Purpose:
 
-Current Phase:
-55.1 Repository Architecture Assessment
+Prepare the governed transition from Google Sheet-backed Leads persistence to relational database-backed Leads persistence while preserving Leads as the Source of Truth.
 
-Current Decision:
-CONDITIONAL
+Non-goals:
+
+- No new Source of Truth.
+- No permanent dual write.
+- No product migration.
+- No lead replacement.
+- No PRD write-back.
+- No Projection Engine.
+- No cutover without explicit approval.
+
+## 57.x Phase Plan
+
+### 57.1-A Persistence Adapter Infrastructure
+STATUS: COMPLETED / COMPILED / TESTED / ACCEPTED
+
+Deliverables:
+
+- LeadPersistencePort
+- GoogleSheetLeadPersistenceAdapter
+- RelationalLeadPersistenceAdapter (inactive)
+- LeadPersistenceProvider
+
+### 57.1-B Relational Leads Schema Design
+STATUS: COMPLETED / COMPILED / TESTED / ACCEPTED
+RUNTIME STATUS: NOT ACTIVE
+CUTOVER STATUS: NOT APPROVED
+
+Deliverables:
+
+- Relational Leads Schema Design
+- Offline SQL Reference
+- TypeScript Schema Metadata
+- Governance Validation
+
+### 57.1-C Documentation State Reconciliation
+STATUS: COMPLETED
+
+Deliverables:
+
+- Program status reconciliation
+- Master plan reconciliation
+- Transition strategy reconciliation
+- Relational schema design status reconciliation
+
+### 57.1-C.1 Baseline ADR Restoration
+STATUS: COMPLETED
+
+Deliverables:
+
+- ADR-015 Read Model Governance
+- ADR-016 Domain Boundaries
+- ADR-017 Fallback Policy
+- ADR-025 Projection Engine Deferral
+- ADR-026 Persistent Read Database Strategy
+- ADR-027 Enterprise Analytics Architecture
+- ADR-028 KPI Governance Architecture
+- ADR-029 Analytics Consumption Contracts
+
+### 57.2 Persistence Readiness Validation
+STATUS: COMPLETED
+RESULT: PARTIALLY READY
+
+Deliverables:
+
+- Persistence Inventory Report
+- Schema Compatibility Matrix
+- Adapter Readiness Report
+- Governance Compliance Report
+- Migration Readiness Score
+
+Decision:
+
+Architecture and governance are ready. Operational and production-data validation were required before executive review.
+
+### 57.3 Migration Readiness Assessment
+STATUS: COMPLETED
+RESULT: READY FOR EXECUTIVE REVIEW
+CUTOVER RESULT: NO GO
+
+Deliverables:
+
+- Production Data Quality Assessment
+- Migration Mapping Matrix
+- Rollback Readiness Assessment
+- Go / No-Go Criteria Definition
+
+Decision:
+
+Migration readiness is sufficient for executive review, but cutover remains NO GO until explicit executive approval exists.
+
+### 57.4 Cutover Governance Package
+STATUS: APPROVED TO START
+TYPE: Executive governance package.
+
+Deliverables:
+
+- Cutover Governance Package
+- Executive Approval Checklist
+- Rollback Validation Checklist
+- Go / No-Go Decision Record
+
+Boundary:
+
+57.4 prepares decision evidence only. It does not activate relational persistence.
 
 ## Evidence Policy
 
 The codebase is the latest tested implementation reference.
 
-Architecture documentation must be updated from repository evidence and may not infer current-state implementation without code validation.
+Architecture documentation must be updated from repository evidence and may not infer implementation state without code or data validation.
 
-## Phases
+## Success Criteria for 57.x
 
-- 55.1 Repository Architecture Assessment
-- 55.2 Dashboard Capability Assessment
-- 55.3 PRD Consumption Readiness
-- 55.4 Executive Gap Analysis
-- 55.5 Executive Implementation Decision
+57.x may only complete when all of the following are true:
 
-## 55.1 Repository Architecture Assessment - Current Findings
-
-Verified:
-
-- Application structure is layered across `components`, `routes`, `lib`, `server`, `data`, `hooks` and tests.
-- Read-model services exist under `src/server/read-models`.
-- Executive dashboard readiness and release-candidate packs exist.
-- Internal executive observability APIs exist.
-- Architecture guard tests exist.
-
-Preliminary classification:
-
-CONDITIONAL
-
-## Success Criteria
-
-- No governance violations.
 - Leads remains Source of Truth.
-- Certified KPI lineage is mapped to implementation evidence.
-- Certified dashboard consumption path is verified from route to contract to read model.
-- Executive readiness assessment is completed.
-
-
-## Planned Future Program
-
-### 57.x Leads Persistence Transition Strategy
-
-Status:
-PLANNED / NOT STARTED
-
-Purpose:
-Define the governed transition from Google Sheet-backed Leads persistence to relational database-backed Leads persistence.
-
-Non-goals:
-
-- No new Source of Truth
-- No permanent dual write
-- No product migration
-- No lead replacement
-- No PRD write-back
-
-Entry criteria:
-
-- 55.x implementation assessment completed or sufficiently scoped
-- Relational database target selected
-- Operational Leads schema proposed
-- Cutover and rollback strategy approved
-
----
-
-## 57.1-B Relational Leads Schema Design
-
-Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
-
-Objective:
-
-Define the target relational schema for Leads persistence without activating database runtime behavior.
-
-Deliverables:
-
-- Relational Leads schema design document
-- Offline SQL reference
-- TypeScript schema metadata
-- Governance test
-
-Non-Goals:
-
-- no database activation
-- no dual write
-- no cutover
-- no operational flow change
-
-Next Recommended Phase:
-
-57.1-C Backfill and Reconciliation Plan
+- Google Sheet remains active until separately approved cutover.
+- Relational persistence activation is explicitly approved.
+- Data quality and mapping evidence are accepted.
+- Rollback procedure is documented and validated.
+- Go / No-Go criteria are met.
+- Executive approval exists.
