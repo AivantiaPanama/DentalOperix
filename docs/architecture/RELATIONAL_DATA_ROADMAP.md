@@ -74,3 +74,22 @@ Next work must focus on:
 - Conceptual-to-implementation mapping
 - Executive gap analysis
 - Executive implementation decision
+
+---
+
+## 57.1-B Relational Leads Schema Design
+
+Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
+
+The relational target for operational Leads persistence has been defined as a future physical persistence replacement for Google Sheet.
+
+Designed tables:
+
+- `leads`
+- `lead_persistence_migration_audit`
+
+This roadmap entry does not authorize runtime activation, dual write or cutover.
+
+Next roadmap dependency:
+
+- Backfill and reconciliation planning

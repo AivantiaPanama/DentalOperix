@@ -85,3 +85,31 @@ Entry criteria:
 - Relational database target selected
 - Operational Leads schema proposed
 - Cutover and rollback strategy approved
+
+---
+
+## 57.1-B Relational Leads Schema Design
+
+Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
+
+Objective:
+
+Define the target relational schema for Leads persistence without activating database runtime behavior.
+
+Deliverables:
+
+- Relational Leads schema design document
+- Offline SQL reference
+- TypeScript schema metadata
+- Governance test
+
+Non-Goals:
+
+- no database activation
+- no dual write
+- no cutover
+- no operational flow change
+
+Next Recommended Phase:
+
+57.1-C Backfill and Reconciliation Plan

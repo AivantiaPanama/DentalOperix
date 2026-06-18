@@ -102,3 +102,25 @@ Governance outcome:
 Current decision:
 
 57.x may continue with schema and cutover planning, but relational persistence remains inactive until explicitly approved.
+
+---
+
+## 57.1-B Relational Leads Schema Design
+
+Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
+
+Result:
+
+- Target relational Leads schema documented.
+- Offline SQL reference added.
+- TypeScript schema metadata added.
+- Governance test added.
+- No runtime persistence activation performed.
+- Google Sheet remains the active physical persistence mechanism.
+
+Governance:
+
+- Leads remains the Source of Truth.
+- Relational Database is future physical persistence only.
+- Dual write remains prohibited.
+- Cutover is not approved by 57.1-B.

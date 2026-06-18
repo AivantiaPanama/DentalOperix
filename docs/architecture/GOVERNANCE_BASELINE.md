@@ -144,3 +144,20 @@ Relational Database
 ```
 
 The future database is a persistence mechanism for Leads, not a new Source of Truth.
+
+---
+
+## 57.1-B Relational Leads Schema Governance
+
+Status: DESIGNED / NOT ACTIVE
+
+57.1-B defines a relational Leads schema as a future physical persistence target.
+
+Governance rules:
+
+- Leads remains the Source of Truth.
+- Google Sheet remains the active physical persistence until explicit cutover approval.
+- Relational Database is not a new Source of Truth.
+- Dual write is not approved.
+- Operational flows are not changed by the schema design.
+- Cutover requires separate approval.

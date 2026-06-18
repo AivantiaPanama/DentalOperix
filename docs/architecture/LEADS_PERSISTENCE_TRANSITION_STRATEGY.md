@@ -149,3 +149,61 @@ The following remain prohibited:
 - lead replacement
 - product migration
 - Projection Engine adoption
+
+---
+
+## 57.1-B Relational Leads Schema Design
+
+Status: DESIGNED / NOT ACTIVE / NOT EXECUTED
+
+Repository evidence added during 57.1-B:
+
+- `docs/architecture/57.1-B_RELATIONAL_LEADS_SCHEMA_DESIGN.md`
+- `docs/architecture/sql/57_1_B_relational_leads_schema.sql`
+- `src/server/leads/persistence/relational-leads-schema.ts`
+- `src/server/leads/persistence/relational-leads-schema.test.ts`
+
+### Governance Decision
+
+57.1-B defines the target relational schema for the existing Leads domain only.
+
+It does not activate relational persistence.
+It does not approve dual write.
+It does not change the Leads Source of Truth.
+It does not modify operational flows.
+
+### Target Persistence Boundary
+
+Current:
+
+```text
+Leads
+  ↓
+Google Sheet
+```
+
+Future, after separately approved cutover:
+
+```text
+Leads
+  ↓
+Relational Database
+```
+
+### Designed Tables
+
+Primary table:
+
+- `leads`
+
+Migration support table:
+
+- `lead_persistence_migration_audit`
+
+The migration audit table supports future backfill and reconciliation certification. It is not an operational Source of Truth.
+
+### Cutover Status
+
+Cutover remains blocked.
+
+Google Sheet remains the active physical persistence mechanism until a future explicit cutover approval.
