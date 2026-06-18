@@ -302,15 +302,15 @@ Completed:
 53.1 Logical Architecture
 
 53.2 Domain Storage Model
+
+53.3 Historical Persistence Model
+
+53.4 Certification & Freshness Architecture
 ```
 
 Next:
 
 ```txt id="h6c17p"
-53.3 Historical Persistence Model
-
-53.4 Certification & Freshness Architecture
-
 53.5 Security & Access Architecture
 
 53.6 Executive Architecture Decision
@@ -454,7 +454,7 @@ IN PROGRESS
 # Current Phase
 
 ```txt id="3a1c3j"
-53.3 Historical Persistence Model
+53.5 Security & Access Architecture
 ```
 
 ---

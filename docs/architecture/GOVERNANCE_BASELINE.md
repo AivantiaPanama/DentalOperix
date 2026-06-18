@@ -435,3 +435,47 @@ APPROVED
 Persistent Read Database Architecture:
 IN PROGRESS
 ```
+
+---
+
+## 53.3 / 53.4 PRD Governance Addendum
+
+### Historical Persistence Governance
+
+```txt
+PATIENT_MASTER_SNAPSHOT = Certified Historical Read Model
+```
+
+Rules:
+
+* Historical snapshots are immutable.
+* Historical snapshots are append-only.
+* Historical snapshots are read-only analytical artifacts.
+* Historical snapshots cannot modify Leads.
+* Historical snapshots cannot become a Source of Truth.
+
+### Certification & Freshness Governance
+
+Certified PRD consumers may rely only on datasets with explicit certification and freshness metadata.
+
+Required metadata:
+
+```txt
+model_name
+certification_status
+certification_version
+generated_at
+certified_at
+freshness_status
+source_timestamp
+```
+
+Executive KPI consumption is prohibited for:
+
+```txt
+UNKNOWN
+STALE
+EXPIRED
+```
+
+unless an approved consumption contract explicitly permits degraded display with visible warnings.

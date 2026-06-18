@@ -203,19 +203,21 @@ Completed:
 53.1 Logical Architecture
 
 53.2 Domain Storage Model
+
+53.3 Historical Persistence Model
+
+53.4 Certification & Freshness Architecture
 ```
 
 Current Phase:
 
 ```txt id="q7v4tx"
-53.3 Historical Persistence Model
+53.5 Security & Access Architecture
 ```
 
 Pending:
 
 ```txt id="m9r1zc"
-53.4 Certification & Freshness Architecture
-
 53.5 Security & Access Architecture
 
 53.6 Executive Architecture Decision
@@ -350,7 +352,17 @@ IN PROGRESS
 # Active Workstream
 
 ```txt id="x2m8pr"
+53.5 Security & Access Architecture
+```
+
+---
+
+# Completed Milestones
+
+```txt
 53.3 Historical Persistence Model
+
+53.4 Certification & Freshness Architecture
 ```
 
 ---
@@ -358,8 +370,6 @@ IN PROGRESS
 # Next Planned Milestones
 
 ```txt id="r6v1qw"
-53.4 Certification & Freshness Architecture
-
 53.5 Security & Access Architecture
 
 53.6 Executive Architecture Decision

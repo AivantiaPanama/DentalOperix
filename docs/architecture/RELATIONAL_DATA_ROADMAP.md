@@ -400,14 +400,46 @@ COMPLETED
 
 ---
 
-## Current Phase
+## Completed Architecture Milestones
 
 ### 53.3 Historical Persistence Model
 
 Status:
 
 ```txt id="v1m8qy"
-ACTIVE
+COMPLETED
+```
+
+Outcome:
+
+```txt
+PATIENT_MASTER_SNAPSHOT certified as immutable historical analytical storage.
+Historical persistence remains read-only and does not alter Leads as Source of Truth.
+```
+
+---
+
+### 53.4 Certification & Freshness Architecture
+
+Status:
+
+```txt
+COMPLETED
+```
+
+Outcome:
+
+```txt
+Certification and freshness states defined for PRD certified read models.
+Executive KPI consumption requires governed certification and freshness metadata.
+```
+
+---
+
+## Current Phase
+
+```txt
+53.5 Security & Access Architecture
 ```
 
 ---
@@ -415,8 +447,6 @@ ACTIVE
 ## Pending
 
 ```txt id="n6v4tr"
-53.4 Certification & Freshness Architecture
-
 53.5 Security & Access Architecture
 
 53.6 Executive Architecture Decision
