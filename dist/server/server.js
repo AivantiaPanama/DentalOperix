@@ -434,7 +434,7 @@ function parseCookies(cookieHeader) {
 function getOAuthStateFromCookies(request) {
 	return parseCookies(request.headers.get("cookie"))[STATE_COOKIE_NAME];
 }
-function createOAuthStateCookie(state, secure = true) {
+function createOAuthStateCookie(state, secure = false) {
 	const parts = [
 		`${STATE_COOKIE_NAME}=${encodeURIComponent(state)}`,
 		`Path=/`,
@@ -445,7 +445,7 @@ function createOAuthStateCookie(state, secure = true) {
 	if (secure) parts.push("Secure");
 	return parts.join("; ");
 }
-function clearOAuthStateCookie(secure = true) {
+function clearOAuthStateCookie(secure = false) {
 	const parts = [
 		`${STATE_COOKIE_NAME}=; Path=/`,
 		`Max-Age=0`,
@@ -471,7 +471,7 @@ async function GET$15() {
 			scope: config.googleScopes,
 			state
 		}).toString()}`;
-		const cookie = createOAuthStateCookie(state, true);
+		const cookie = createOAuthStateCookie(state, false);
 		return new Response(null, {
 			status: 302,
 			headers: {
@@ -550,7 +550,7 @@ async function GET$14(request) {
 			status: 200,
 			headers: {
 				"Content-Type": "text/html; charset=utf-8",
-				"Set-Cookie": clearOAuthStateCookie(true)
+				"Set-Cookie": clearOAuthStateCookie(false)
 			}
 		});
 	} catch (error) {
@@ -1028,6 +1028,8 @@ async function appendLeadToSheet(input) {
 		calendarEventId: payload.calendarEventId ?? "",
 		emailSent: payload.emailSent ?? false
 	};
+	console.log("LEAD PAYLOAD:", payload);
+	console.log("LEAD RECORD:", row);
 	const range = `${config.googleSheetName}!A:N`;
 	const values = [leadToCRMRow(row)];
 	await sheets.spreadsheets.values.append({
@@ -1226,6 +1228,13 @@ async function createGoogleCalendarEvent(payload) {
 		}
 	});
 	if (!event.data || !event.data.id || !event.data.htmlLink) throw new Error("No se pudo crear el evento de Google Calendar.");
+	console.log("CALENDAR EVENT:", {
+		id: event.data.id,
+		htmlLink: event.data.htmlLink,
+		calendarId,
+		start: event.data.start,
+		end: event.data.end
+	});
 	return event.data;
 }
 async function sendConfirmationEmail$1(payload, eventLink) {
@@ -1295,11 +1304,27 @@ async function processDentalLead(payload) {
 		calendarEventId: "",
 		emailSent: false
 	};
+	console.log("LEAD PAYLOAD:", {
+		appointmentId: completePayload.appointmentId,
+		name: completePayload.name,
+		email: completePayload.email,
+		phone: completePayload.phone,
+		service: completePayload.service,
+		treatment: completePayload.treatment,
+		date: completePayload.date,
+		time: completePayload.time,
+		preferredDate: completePayload.preferredDate,
+		notes: completePayload.notes,
+		source: completePayload.source
+	});
+	console.log("LEAD RECORD:", leadRecord);
 	await appendLeadToSheet(leadRecord);
 	let event;
 	let calendarEventId = "";
 	let updatedStatus = CRM_STATUS.NUEVO;
 	let emailSent = false;
+	let calendarError;
+	let emailError;
 	try {
 		event = await createGoogleCalendarEvent(completePayload);
 		calendarEventId = event.id ?? "";
@@ -1310,7 +1335,7 @@ async function processDentalLead(payload) {
 		});
 	} catch (error) {
 		console.error("Error creando evento de Google Calendar:", error);
-		error instanceof Error && error.message;
+		calendarError = error instanceof Error ? error.message : "Error desconocido al crear el evento de Google Calendar.";
 	}
 	try {
 		await sendConfirmationEmail$1(completePayload, event?.htmlLink ?? "");
@@ -1318,10 +1343,10 @@ async function processDentalLead(payload) {
 		await updateLeadInSheet(leadRecord.id, { emailSent: true });
 	} catch (error) {
 		console.error("Error enviando correo Gmail:", error);
-		error instanceof Error && error.message;
+		emailError = error instanceof Error ? error.message : "Error desconocido al enviar el correo de confirmación.";
 	}
 	const message = calendarEventId ? emailSent ? "Tu cita fue registrada y enviamos la confirmación a tu correo." : "Tu cita fue registrada. No pudimos enviar el correo de confirmación, pero nos pondremos en contacto contigo." : "Recibimos tu solicitud. Nuestro equipo confirmará la disponibilidad contigo.";
-	return {
+	const responseBody = {
 		appointmentId: leadRecord.id,
 		status: updatedStatus === CRM_STATUS.AGENDADA ? "confirmed" : "pending",
 		eventLink: event?.htmlLink ?? null,
@@ -1330,6 +1355,9 @@ async function processDentalLead(payload) {
 		crmSaved: true,
 		message
 	};
+	responseBody.calendarError = calendarError;
+	responseBody.emailError = emailError;
+	return responseBody;
 }
 //#endregion
 //#region src/routes/api/leads/create.ts
@@ -1369,9 +1397,10 @@ async function POST$7(request) {
 			status: 400,
 			headers: { "Content-Type": "application/json" }
 		});
+		const errorMessage = error instanceof Error ? error.message : "Error desconocido al procesar la solicitud.";
 		return new Response(JSON.stringify({
 			success: false,
-			error: "No se pudo procesar la solicitud."
+			error: errorMessage
 		}), {
 			status: 500,
 			headers: { "Content-Type": "application/json" }
@@ -2159,6 +2188,13 @@ async function createDentalAppointment(input) {
 		}
 	});
 	if (!event.data || !event.data.id) throw new Error("No se pudo crear el evento en Google Calendar.");
+	console.log("CALENDAR EVENT:", {
+		id: event.data.id,
+		htmlLink: event.data.htmlLink,
+		calendarId,
+		start: event.data.start,
+		end: event.data.end
+	});
 	return event.data;
 }
 var createGoogleEvent = createDentalAppointment;
@@ -7059,7 +7095,7 @@ function enforceProtectedDashboardAccess(request) {
 }
 var serverEntryPromise;
 async function getServerEntry() {
-	if (!serverEntryPromise) serverEntryPromise = import("./assets/server-D4rdaeZQ.js").then((m) => m.default ?? m);
+	if (!serverEntryPromise) serverEntryPromise = import("./assets/server-BhEQDYdT.js").then((m) => m.default ?? m);
 	return serverEntryPromise;
 }
 async function normalizeCatastrophicSsrResponse(response) {

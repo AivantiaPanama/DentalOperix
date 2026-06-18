@@ -1,0 +1,24 @@
+[
+  {
+    "id": "audit_mqjif1de_mkfubed2",
+    "timestamp": "2026-06-18T13:02:22.898Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mqjievr2_si0ivoio",
+    "timestamp": "2026-06-18T13:02:15.614Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  }
+]
