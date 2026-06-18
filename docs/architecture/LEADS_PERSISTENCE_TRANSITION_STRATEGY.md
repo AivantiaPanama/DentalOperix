@@ -81,3 +81,71 @@ The PRD must not become the operational Leads database.
 Recommended future program:
 
 57.x Leads Persistence Transition Strategy
+
+---
+
+## 57.1-A Persistence Adapter Infrastructure
+
+Status: IMPLEMENTED / NOT ACTIVE
+
+Repository evidence added during 57.1-A:
+
+- `src/server/leads/persistence/lead-persistence-port.ts`
+- `src/server/leads/persistence/google-sheet-lead-persistence-adapter.ts`
+- `src/server/leads/persistence/relational-lead-persistence-adapter.ts`
+- `src/server/leads/persistence/lead-persistence-provider.ts`
+- `src/server/leads/persistence/lead-persistence-provider.test.ts`
+
+### Governance Decision
+
+The initial 57.x code introduces a persistence boundary only.
+
+It does not activate relational persistence.
+
+It does not introduce dual write.
+
+It does not change the Leads Source of Truth.
+
+### Active Persistence
+
+Current active persistence remains:
+
+```text
+Leads
+  ↓
+Google Sheet
+```
+
+### Future Persistence Placeholder
+
+The relational adapter exists as an inactive placeholder for future cutover planning:
+
+```text
+Leads
+  ↓
+Relational Database
+```
+
+The relational adapter intentionally throws `LeadPersistenceNotConfiguredError` for reads, writes and updates until a future cutover decision explicitly activates it.
+
+### Cutover Rule
+
+No runtime flow may switch to relational persistence until the following are approved:
+
+1. Relational Leads schema
+2. Backfill and reconciliation plan
+3. Cutover plan
+4. Rollback plan
+5. Google Sheet archival/read-only policy
+6. Post-cutover certification
+
+### Non-Regression Rule
+
+The following remain prohibited:
+
+- dual write
+- multiple active Sources of Truth
+- PRD write-back
+- lead replacement
+- product migration
+- Projection Engine adoption

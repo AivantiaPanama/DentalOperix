@@ -77,16 +77,28 @@ Current decision:
 
 55.x remains focused on implementation assessment. 57.x Leads Persistence Transition Strategy is planned but not started.
 
+---
 
-## 55.x Closure Recommendation
+## 57.x Leads Persistence Transition Strategy
 
-Status Recommendation: CLOSED (pending documentation synchronization)
+STATUS: INITIATED
+CURRENT PHASE: 57.1-A Persistence Adapter Infrastructure
+IMPLEMENTATION STATUS: IMPLEMENTED / NOT ACTIVE
 
-Primary Finding:
-Implementation maturity exceeds historical documentation maturity.
+Repository evidence:
 
-Verified:
-- Executive Dashboard Infrastructure
-- Executive Dashboard APIs
-- Read Model Infrastructure
-- Provider Abstraction Layer
+- Lead persistence port introduced.
+- Google Sheet adapter introduced as the active persistence adapter.
+- Relational adapter introduced as an inactive placeholder.
+- Provider introduced to select persistence mode without changing operational flows.
+
+Governance outcome:
+
+- No dual write introduced.
+- No Source of Truth change introduced.
+- No operational cutover performed.
+- Google Sheet remains current physical persistence.
+
+Current decision:
+
+57.x may continue with schema and cutover planning, but relational persistence remains inactive until explicitly approved.

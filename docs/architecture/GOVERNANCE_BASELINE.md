@@ -101,7 +101,46 @@ Fallback may not become:
 
 Fallback usage must remain observable and governed under the fallback policy.
 
+---
 
-## Repository Assessment Finding
+## 57.x Persistence Adapter Governance
 
-Repository assessment indicates implementation is materially aligned with the governance baseline. Verified evidence exists for read-model infrastructure, executive dashboard infrastructure, provider abstraction and fallback policy implementation.
+Initial 57.x implementation introduced a Leads persistence adapter boundary.
+
+Governance classification:
+
+- Approved as infrastructure-only.
+- Not approved as runtime cutover.
+- Not approved as dual write.
+- Not approved as Source of Truth replacement.
+
+The active physical persistence remains Google Sheet until a future cutover decision certifies relational persistence.
+
+The relational persistence adapter must remain inactive and non-writable until explicit approval of:
+
+1. relational schema,
+2. migration/backfill plan,
+3. reconciliation plan,
+4. cutover plan,
+5. rollback plan,
+6. post-cutover certification.
+
+Permanent rule:
+
+```text
+Leads = Source of Truth
+```
+
+Current physical persistence:
+
+```text
+Google Sheet
+```
+
+Future physical persistence:
+
+```text
+Relational Database
+```
+
+The future database is a persistence mechanism for Leads, not a new Source of Truth.
