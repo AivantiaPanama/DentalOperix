@@ -305,3 +305,18 @@ Manual testing confirmed that `/api/analytics/revenue?period=all` could return r
 Resolution: 60.3-HF2 introduced a guarded empty-state condition based on both `emptyCRM` and `totals.leads === 0`, preventing stale or transitional empty-state display when real leads are present.
 
 Governance note: no persistence, source-of-truth, Google Sheets write path, lead creation path, or protected component was modified.
+
+## FI-009 Dashboard First Load Monitoring
+
+Status: OPEN  
+Priority: LOW  
+Category: Observability
+
+After 60.3-HF3, the dashboard reconciles transient first-load empty snapshots. A future improvement may add lightweight telemetry to count reconciliation events and identify if external data sources are intermittently slow.
+
+Governance:
+
+```text
+Persistence Change Required: NO
+Source of Truth Change Required: NO
+```

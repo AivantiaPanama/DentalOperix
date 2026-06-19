@@ -1,5 +1,49 @@
 [
   {
+    "id": "audit_mqlbxqis_zk5a6r1a",
+    "timestamp": "2026-06-19T19:36:30.340Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mqlbsolj_rs09wrq3",
+    "timestamp": "2026-06-19T19:32:34.567Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mqlbm4sn_8uk89gjo",
+    "timestamp": "2026-06-19T19:27:28.967Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mqlblzmr_21zzqc2h",
+    "timestamp": "2026-06-19T19:27:22.275Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
     "id": "audit_mqlayo74_z3ifazp9",
     "timestamp": "2026-06-19T19:09:14.368Z",
     "action": "report.operational.viewed",

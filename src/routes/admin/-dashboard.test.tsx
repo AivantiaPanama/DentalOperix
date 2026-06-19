@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
-import { DashboardPage, shouldShowDashboardEmptyCRM } from "./dashboard";
+import { DashboardPage, shouldReconcileDashboardMetrics, shouldShowDashboardEmptyCRM } from "./dashboard";
 
 vi.mock("@/components/site/SiteLayout", () => ({
   SiteLayout: ({ children }: { children: React.ReactNode }) => <>{children}</>,
@@ -27,7 +27,7 @@ describe("Admin dashboard", () => {
       totals: { leads: 18, agendadas: 14, completadas: 0, canceladas: 0, noAsistio: 0 },
     } as any;
 
-    expect(shouldShowDashboardEmptyCRM(metrics, false)).toBe(false);
+    expect(shouldShowDashboardEmptyCRM(metrics, false, false)).toBe(false);
   });
 
   it("shows the empty CRM state only after loading and with no leads", () => {
@@ -36,8 +36,23 @@ describe("Admin dashboard", () => {
       totals: { leads: 0, agendadas: 0, completadas: 0, canceladas: 0, noAsistio: 0 },
     } as any;
 
-    expect(shouldShowDashboardEmptyCRM(metrics, true)).toBe(false);
-    expect(shouldShowDashboardEmptyCRM(metrics, false)).toBe(true);
+    expect(shouldShowDashboardEmptyCRM(metrics, true, false)).toBe(false);
+    expect(shouldShowDashboardEmptyCRM(metrics, false, true)).toBe(false);
+    expect(shouldShowDashboardEmptyCRM(metrics, false, false)).toBe(true);
+  });
+
+  it("reconciles only empty snapshots without leads", () => {
+    const emptyMetrics = {
+      emptyCRM: true,
+      totals: { leads: 0, agendadas: 0, completadas: 0, canceladas: 0, noAsistio: 0 },
+    } as any;
+    const realMetrics = {
+      emptyCRM: false,
+      totals: { leads: 18, agendadas: 14, completadas: 0, canceladas: 0, noAsistio: 0 },
+    } as any;
+
+    expect(shouldReconcileDashboardMetrics(emptyMetrics)).toBe(true);
+    expect(shouldReconcileDashboardMetrics(realMetrics)).toBe(false);
   });
 
 });

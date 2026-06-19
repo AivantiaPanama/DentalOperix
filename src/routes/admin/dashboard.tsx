@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { AdminRouteGuard } from "@/components/admin/AdminRouteGuard";
@@ -68,9 +68,20 @@ const PERIODS: Array<{ value: DashboardPeriod; label: string }> = [
   { value: "all", label: "Todo" },
 ] as const;
 
-export function shouldShowDashboardEmptyCRM(metrics: CrmDashboardMetrics | null, loading: boolean) {
-  const hasLoadedLeads = (metrics?.totals?.leads ?? 0) > 0;
-  return !loading && metrics?.emptyCRM === true && !hasLoadedLeads;
+export function hasDashboardLeads(metrics: CrmDashboardMetrics | null) {
+  return (metrics?.totals?.leads ?? 0) > 0;
+}
+
+export function shouldReconcileDashboardMetrics(metrics: CrmDashboardMetrics | null) {
+  return metrics?.emptyCRM === true && !hasDashboardLeads(metrics);
+}
+
+export function shouldShowDashboardEmptyCRM(
+  metrics: CrmDashboardMetrics | null,
+  loading: boolean,
+  reconciling: boolean,
+) {
+  return !loading && !reconciling && shouldReconcileDashboardMetrics(metrics);
 }
 
 export const Route = createFileRoute("/admin/dashboard")({
@@ -91,26 +102,49 @@ export function DashboardPage() {
   const [executiveAnalytics, setExecutiveAnalytics] = useState<ExecutiveAnalyticsSnapshot | null>(null);
   const [period, setPeriod] = useState<DashboardPeriod>("all");
   const [loading, setLoading] = useState(true);
+  const [reconcilingMetrics, setReconcilingMetrics] = useState(false);
   const [executiveLoading, setExecutiveLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [executiveError, setExecutiveError] = useState<string | null>(null);
   const [goalSettings, setGoalSettings] = useState<GoalSettings>(getDefaultGoals());
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const metricsRequestId = useRef(0);
 
-  const loadMetrics = (selectedPeriod: string) => {
+  const loadMetrics = async (selectedPeriod: string) => {
+    const requestId = metricsRequestId.current + 1;
+    metricsRequestId.current = requestId;
     setLoading(true);
-    fetchRevenueDashboardMetrics(selectedPeriod)
-      .then((data) => {
-        setMetrics(data);
-        setError(null);
-      })
-      .catch((fetchError) => {
-        console.error(fetchError);
-        setError(
-          fetchError instanceof Error ? fetchError.message : "Error al cargar métricas CRM.",
-        );
-      })
-      .finally(() => setLoading(false));
+    setReconcilingMetrics(false);
+
+    try {
+      const initialMetrics = await fetchRevenueDashboardMetrics(selectedPeriod);
+      let nextMetrics = initialMetrics;
+
+      if (shouldReconcileDashboardMetrics(initialMetrics)) {
+        setReconcilingMetrics(true);
+        try {
+          const reconciledMetrics = await fetchRevenueDashboardMetrics(selectedPeriod);
+          if (hasDashboardLeads(reconciledMetrics) || !shouldReconcileDashboardMetrics(reconciledMetrics)) {
+            nextMetrics = reconciledMetrics;
+          }
+        } catch (reconciliationError) {
+          console.warn("Dashboard metrics reconciliation failed; keeping initial snapshot.", reconciliationError);
+        }
+      }
+
+      if (metricsRequestId.current !== requestId) return;
+      setMetrics(nextMetrics);
+      setError(null);
+    } catch (fetchError) {
+      if (metricsRequestId.current !== requestId) return;
+      console.error(fetchError);
+      setError(fetchError instanceof Error ? fetchError.message : "Error al cargar métricas CRM.");
+    } finally {
+      if (metricsRequestId.current === requestId) {
+        setReconcilingMetrics(false);
+        setLoading(false);
+      }
+    }
   };
 
 
@@ -140,7 +174,7 @@ export function DashboardPage() {
     : [];
 
   useEffect(() => {
-    loadMetrics(period);
+    void loadMetrics(period);
     loadExecutiveAnalytics(period);
   }, [period]);
 
@@ -217,7 +251,7 @@ export function DashboardPage() {
       ? generateGoalInsights(goalProgress, goalProjection, goals)
       : [];
 
-  const shouldShowEmptyCRM = shouldShowDashboardEmptyCRM(metrics, loading);
+  const shouldShowEmptyCRM = shouldShowDashboardEmptyCRM(metrics, loading, reconcilingMetrics);
 
   return (
     <AdminRouteGuard>
@@ -277,7 +311,7 @@ export function DashboardPage() {
 
           {loading ? (
             <div className="rounded-3xl border border-border bg-white p-10 text-center text-lg font-medium text-muted-foreground shadow-soft">
-              Cargando métricas de Revenue Intelligence...
+              {reconcilingMetrics ? "Validando métricas reales del CRM..." : "Cargando métricas de Revenue Intelligence..."}
             </div>
           ) : error ? (
             <div className="rounded-3xl border border-destructive bg-destructive/10 p-10 text-center text-lg font-medium text-destructive shadow-soft">
