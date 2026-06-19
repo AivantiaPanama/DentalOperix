@@ -68,6 +68,11 @@ const PERIODS: Array<{ value: DashboardPeriod; label: string }> = [
   { value: "all", label: "Todo" },
 ] as const;
 
+export function shouldShowDashboardEmptyCRM(metrics: CrmDashboardMetrics | null, loading: boolean) {
+  const hasLoadedLeads = (metrics?.totals?.leads ?? 0) > 0;
+  return !loading && metrics?.emptyCRM === true && !hasLoadedLeads;
+}
+
 export const Route = createFileRoute("/admin/dashboard")({
   head: () => ({
     meta: [
@@ -212,6 +217,8 @@ export function DashboardPage() {
       ? generateGoalInsights(goalProgress, goalProjection, goals)
       : [];
 
+  const shouldShowEmptyCRM = shouldShowDashboardEmptyCRM(metrics, loading);
+
   return (
     <AdminRouteGuard>
       <AdminLayout>
@@ -278,7 +285,7 @@ export function DashboardPage() {
             </div>
           ) : metrics ? (
             <>
-              {metrics.emptyCRM ? (
+              {shouldShowEmptyCRM ? (
                 <div className="rounded-3xl border border-border bg-slate-50 p-6 text-center text-sm font-medium text-muted-foreground shadow-soft">
                   <p>Aún no existen registros en el CRM.</p>
                   <p className="mt-2 text-base text-deep">

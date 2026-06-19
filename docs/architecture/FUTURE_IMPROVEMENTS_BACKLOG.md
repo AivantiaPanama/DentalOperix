@@ -292,3 +292,16 @@ No persistence, source-of-truth, Google Sheets write path, lead creation path, o
 Status: RESOLVED
 
 Expanded conservative read-side normalization for observed incomplete mojibake values such as `OdontologÃa` and `MartÃnes`. No persistence writes were introduced.
+
+
+## Resolved During 60.3-HF2
+
+### FI-DASH-001 Dashboard Empty State Guard
+
+Status: RESOLVED
+
+Manual testing confirmed that `/api/analytics/revenue?period=all` could return real Google Sheets data with `snapshot.totals.leads > 0` while the Admin Dashboard still showed the empty CRM message on first navigation.
+
+Resolution: 60.3-HF2 introduced a guarded empty-state condition based on both `emptyCRM` and `totals.leads === 0`, preventing stale or transitional empty-state display when real leads are present.
+
+Governance note: no persistence, source-of-truth, Google Sheets write path, lead creation path, or protected component was modified.
