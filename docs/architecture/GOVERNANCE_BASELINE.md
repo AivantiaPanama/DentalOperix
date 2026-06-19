@@ -291,3 +291,44 @@ Governance baseline after 57.6:
 
 Any future cutover requires a separate explicit executive authorization record.
 
+
+---
+
+## 57.8-C Production Cutover Governance Baseline
+
+Status: READY FOR CONTROLLED PRODUCTION WINDOW
+
+57.8-C permits controlled runtime activation only when all required runtime flags are explicitly present:
+
+```env
+LEADS_PERSISTENCE_MODE=relational-db
+RELATIONAL_CUTOVER_APPROVED=true
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
+RELATIONAL_PRODUCTION_CUTOVER_READINESS_APPROVED=true
+```
+
+Post-cutover synthetic validation requires a separate explicit flag:
+
+```env
+RELATIONAL_POST_CUTOVER_VALIDATION_APPROVED=true
+```
+
+Governance controls:
+
+- Relational runtime activation is fail-closed by default.
+- Google Sheet rollback reference must remain configured before activation.
+- Production cutover readiness validation performs no writes.
+- Post-cutover validation uses a synthetic transaction and rolls back cleanup.
+- Dual write remains prohibited.
+- Multiple Sources of Truth remain prohibited.
+- Leads remains the Source of Truth.
+
+Rollback command state:
+
+```env
+LEADS_PERSISTENCE_MODE=google-sheet
+RELATIONAL_CUTOVER_APPROVED=false
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=false
+RELATIONAL_PRODUCTION_CUTOVER_READINESS_APPROVED=false
+RELATIONAL_POST_CUTOVER_VALIDATION_APPROVED=false
+```

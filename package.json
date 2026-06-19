@@ -18,7 +18,9 @@
     "deploy:relational-schema": "node scripts/deploy-relational-schema.mjs",
     "validate:relational-schema": "node scripts/validate-relational-schema.mjs",
     "validate:relational-dry-run": "node scripts/validate-relational-dry-run.mjs",
-    "validate:relational-runtime-flags": "node scripts/validate-relational-runtime-flags.mjs"
+    "validate:relational-runtime-flags": "node scripts/validate-relational-runtime-flags.mjs",
+    "validate:production-cutover-readiness": "node scripts/validate-production-cutover-readiness.mjs",
+    "validate:production-post-cutover": "node scripts/validate-production-post-cutover.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

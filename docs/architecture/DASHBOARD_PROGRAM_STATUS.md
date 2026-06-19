@@ -273,3 +273,67 @@ No Projection Engine
 No Product Migration
 Rollback documented
 ```
+
+---
+
+## 57.8-B Production Relational Environment Preparation
+
+```text
+STATUS: COMPLETED
+RESULT: PASS
+```
+
+Validated environments:
+
+```text
+DEV Supabase PostgreSQL: PASS
+PROD Supabase PostgreSQL: PASS
+```
+
+Validated gates:
+
+- Connectivity Validation: PASS
+- Schema Deployment: PASS
+- Schema Validation: PASS
+- Dry Run Validation: PASS
+
+Governance result:
+
+```text
+Google Sheet = Active until controlled runtime activation
+Supabase PostgreSQL PROD = Prepared and validated
+Leads = Source of Truth
+No Dual Write
+```
+
+---
+
+## 57.8-C Production Cutover Execution
+
+```text
+STATUS: READY FOR CONTROLLED PRODUCTION WINDOW
+RESULT: CODE GENERATED / DOCUMENTATION UPDATED
+LIVE CUTOVER: NOT EXECUTED BY THIS ARTIFACT
+```
+
+Runtime activation requires:
+
+```env
+LEADS_PERSISTENCE_MODE=relational-db
+RELATIONAL_CUTOVER_APPROVED=true
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
+RELATIONAL_PRODUCTION_CUTOVER_READINESS_APPROVED=true
+```
+
+Post-cutover validation additionally requires:
+
+```env
+RELATIONAL_POST_CUTOVER_VALIDATION_APPROVED=true
+```
+
+Current program decision:
+
+```text
+57.x Leads Persistence Transition Strategy
+STATUS: READY FOR CONTROLLED PRODUCTION CUTOVER WINDOW
+```

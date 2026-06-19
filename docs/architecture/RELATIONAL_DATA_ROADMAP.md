@@ -126,3 +126,39 @@ Cutover = Not Approved
 
 No roadmap item may be interpreted as runtime authorization.
 
+
+---
+
+## 57.8-B Production Relational Environment Preparation
+
+STATUS: COMPLETED
+RESULT: PASS
+
+Roadmap update:
+
+- Supabase DEV environment prepared and validated.
+- Supabase PROD environment prepared and validated.
+- Connectivity validation passed in both environments.
+- Schema deployment and validation passed in both environments.
+- Dry-run validation passed in both environments.
+
+## 57.8-C Production Cutover Execution
+
+STATUS: READY FOR CONTROLLED PRODUCTION WINDOW
+LIVE CUTOVER: NOT EXECUTED BY THIS ARTIFACT
+
+The roadmap now permits a controlled production cutover window, subject to:
+
+- Google Sheet backup/export confirmation.
+- Production readiness validation PASS.
+- Runtime activation flags explicitly enabled.
+- Post-cutover validation PASS.
+- Rollback watch window active.
+
+Current roadmap state:
+
+```text
+Google Sheet = Current Physical Persistence until runtime activation
+Supabase PostgreSQL PROD = Prepared Physical Persistence
+Leads = Source of Truth
+```

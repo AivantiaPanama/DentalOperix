@@ -310,3 +310,47 @@ RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
 This remains a physical persistence transition only. Leads remains the Source of Truth.
 
 Rollback is documented in `57.8_ROLLBACK_RUNBOOK.md`.
+
+---
+
+## 57.8-B Production Relational Environment Preparation
+
+STATUS: COMPLETED
+RESULT: PASS
+
+Outcome:
+
+- Supabase DEV validated.
+- Supabase PROD validated.
+- Production schema deployed and validated.
+- Production dry-run validation completed.
+- Google Sheet remains active persistence until controlled runtime activation.
+
+## 57.8-C Production Cutover Execution
+
+STATUS: READY FOR CONTROLLED PRODUCTION WINDOW
+RESULT: CODE GENERATED / DOCUMENTATION UPDATED
+LIVE CUTOVER: NOT EXECUTED BY THIS ARTIFACT
+
+Controlled runtime activation requires all runtime flags:
+
+```env
+LEADS_PERSISTENCE_MODE=relational-db
+RELATIONAL_CUTOVER_APPROVED=true
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
+RELATIONAL_PRODUCTION_CUTOVER_READINESS_APPROVED=true
+```
+
+Post-cutover validation requires:
+
+```env
+RELATIONAL_POST_CUTOVER_VALIDATION_APPROVED=true
+```
+
+Governance invariant:
+
+```text
+Leads = Source of Truth
+```
+
+The production cutover is a physical persistence change only. It is not a domain replacement, product migration, Projection Engine adoption or dual-write implementation.
