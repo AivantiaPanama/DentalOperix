@@ -76,13 +76,16 @@ async function handleRequest(req, res) {
     }
   }
 
+  const hasBody = req.method !== "GET" && req.method !== "HEAD";
+
   const request = new Request(url.toString(), {
     method: req.method,
     headers: req.headers,
-    body: req.method === "GET" || req.method === "HEAD" ? undefined : req,
+    body: hasBody ? req : undefined,
+    ...(hasBody ? { duplex: "half" } : {}),
   });
 
-  const response = await serverModule.default.fetch(request, {}, {});
+  const response = await serverModule.fetch(request, {}, {});
   const headers = {};
   for (const [key, value] of response.headers) {
     if (value != null) {

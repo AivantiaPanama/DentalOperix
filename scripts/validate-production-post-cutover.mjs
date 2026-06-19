@@ -113,15 +113,31 @@ try {
 
   await client.query(
     `INSERT INTO lead_persistence_migration_audit (
-       operation, source_system, target_system, lead_id, result, details
-     ) VALUES ($1, $2, $3, $4, $5, $6)`,
+      id,
+      migration_batch_id,
+      source_system,
+      target_system,
+      source_record_id,
+      target_record_id,
+      source_record_hash,
+      migration_status,
+      failure_reason
+      )
+      VALUES (
+        $1,
+        $2,
+        'runtime',
+        'supabase',
+        $3,
+        $3,
+        NULL,
+        'reconciled',
+        NULL
+      )`,
     [
-      'post_cutover_validation',
-      'controlled-cutover-runbook',
-      'supabase-postgresql',
+      `audit_${syntheticLeadId}`,
+      `post_cutover_validation_${Date.now()}`,
       syntheticLeadId,
-      'success',
-      JSON.stringify({ synthetic: true, rolledBack: true, phase: '57.8-C' }),
     ],
   );
 
