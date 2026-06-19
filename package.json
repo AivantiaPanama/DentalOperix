@@ -14,7 +14,9 @@
     "format": "prettier --write .",
     "test": "vitest --hookTimeout=30000 --testTimeout=30000",
     "validate:relational-env": "node scripts/validate-relational-env.mjs",
-    "validate:relational-connectivity": "node scripts/validate-relational-connectivity.mjs"
+    "validate:relational-connectivity": "node scripts/validate-relational-connectivity.mjs",
+    "deploy:relational-schema": "node scripts/deploy-relational-schema.mjs",
+    "validate:relational-schema": "node scripts/validate-relational-schema.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
