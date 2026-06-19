@@ -13,6 +13,7 @@ import * as crmMetricsHandler from "./routes/api/crm/metrics";
 import * as revenueAnalyticsHandler from "./routes/api/analytics/revenue";
 import * as revenueForecastHandler from "./routes/api/analytics/revenue-forecast";
 import * as executiveAnalyticsHandler from "./routes/api/analytics/executive";
+import * as clinicalAnalyticsHandler from "./routes/api/analytics/clinical";
 import * as calendarCreateEventHandler from "./routes/api/calendar/create-event";
 import * as gmailSendConfirmationHandler from "./routes/api/gmail/send-confirmation";
 import * as followupRunHandler from "./routes/api/followups/run";
@@ -191,6 +192,10 @@ export default {
 
       if (url.pathname === "/api/analytics/executive" && request.method === "GET") {
         return await executiveAnalyticsHandler.GET(request);
+      }
+
+      if (url.pathname === "/api/analytics/clinical" && request.method === "GET") {
+        return await clinicalAnalyticsHandler.GET(request);
       }
 
       if (url.pathname === "/api/goals/get" && request.method === "GET") {
