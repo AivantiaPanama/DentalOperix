@@ -13,6 +13,14 @@ import { createRevenueForecastSnapshot } from "@/lib/revenue-forecast";
 import { createRevenueSnapshotV1 } from "@/lib/revenue-intelligence";
 import { readLeadsFromSheet } from "@/server/google/sheets";
 
+const jsonHeaders = { "Content-Type": "application/json" };
+
+function createExecutiveSnapshotFromLeads(leads: CrmLeadRow[]) {
+  const revenue = createRevenueSnapshotV1(leads);
+  const forecast = createRevenueForecastSnapshot(revenue);
+  return createExecutiveAnalyticsSnapshot(revenue, forecast);
+}
+
 export async function GET(request: Request) {
   try {
     requirePermission(request, "reports:read");
@@ -28,33 +36,38 @@ export async function GET(request: Request) {
       JSON.stringify({ success: false, error: "Executive Analytics access is restricted in production." }),
       {
         status: 403,
-        headers: { "Content-Type": "application/json" },
+        headers: jsonHeaders,
       },
     );
   }
 
+  const period = normalizeDashboardPeriod(new URL(request.url).searchParams.get("period"));
+
   try {
-    const period = normalizeDashboardPeriod(new URL(request.url).searchParams.get("period"));
     const leads = (await readLeadsFromSheet()) as CrmLeadRow[];
     const filteredLeads = filterLeadsByPeriod(leads, period);
-    const revenue = createRevenueSnapshotV1(filteredLeads);
-    const forecast = createRevenueForecastSnapshot(revenue);
-    const executive = createExecutiveAnalyticsSnapshot(revenue, forecast);
+    const executive = createExecutiveSnapshotFromLeads(filteredLeads);
 
-    return new Response(JSON.stringify({ success: true, period, executive }), {
+    return new Response(JSON.stringify({ success: true, degraded: false, source: "google-sheets", period, executive }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
     });
   } catch (error) {
-    console.error("Failed to load Executive Analytics snapshot:", error);
+    console.warn("Executive Analytics source unavailable; returning degraded empty snapshot:", error);
+    const executive = createExecutiveSnapshotFromLeads([]);
+
     return new Response(
       JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        success: true,
+        degraded: true,
+        source: "empty-fallback",
+        period,
+        warning: "Executive Analytics source unavailable; returned an empty read-only snapshot.",
+        executive,
       }),
       {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
+        status: 200,
+        headers: jsonHeaders,
       },
     );
   }

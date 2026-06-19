@@ -11,6 +11,8 @@ import { filterLeadsByPeriod, normalizeDashboardPeriod } from "@/lib/date-filter
 import { createRevenueSnapshotV1 } from "@/lib/revenue-intelligence";
 import { readLeadsFromSheet } from "@/server/google/sheets";
 
+const jsonHeaders = { "Content-Type": "application/json" };
+
 export async function GET(request: Request) {
   try {
     requirePermission(request, "reports:read");
@@ -26,31 +28,38 @@ export async function GET(request: Request) {
       JSON.stringify({ success: false, error: "Revenue Intelligence access is restricted in production." }),
       {
         status: 403,
-        headers: { "Content-Type": "application/json" },
+        headers: jsonHeaders,
       },
     );
   }
 
+  const period = normalizeDashboardPeriod(new URL(request.url).searchParams.get("period"));
+
   try {
-    const period = normalizeDashboardPeriod(new URL(request.url).searchParams.get("period"));
     const leads = (await readLeadsFromSheet()) as CrmLeadRow[];
     const filteredLeads = filterLeadsByPeriod(leads, period);
     const snapshot = createRevenueSnapshotV1(filteredLeads);
 
-    return new Response(JSON.stringify({ success: true, period, snapshot }), {
+    return new Response(JSON.stringify({ success: true, degraded: false, source: "google-sheets", period, snapshot }), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
     });
   } catch (error) {
-    console.error("Failed to load Revenue Intelligence snapshot:", error);
+    console.warn("Revenue Intelligence source unavailable; returning degraded empty snapshot:", error);
+    const snapshot = createRevenueSnapshotV1([]);
+
     return new Response(
       JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        success: true,
+        degraded: true,
+        source: "empty-fallback",
+        period,
+        warning: "Revenue Intelligence source unavailable; returned an empty read-only snapshot.",
+        snapshot,
       }),
       {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
+        status: 200,
+        headers: jsonHeaders,
       },
     );
   }

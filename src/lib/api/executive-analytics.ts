@@ -2,6 +2,9 @@ import type { ExecutiveAnalyticsSnapshot } from "@/lib/executive-analytics";
 
 export type ExecutiveAnalyticsApiResponse = {
   success: true;
+  degraded?: boolean;
+  source?: "google-sheets" | "empty-fallback";
+  warning?: string;
   period: string;
   executive: ExecutiveAnalyticsSnapshot;
 };

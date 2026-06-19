@@ -191,3 +191,26 @@ FI-003  Executive Alert Prioritization                  OPEN      LOW
 FI-004  Clinical Data Completeness Dashboard            PLANNED   MEDIUM
 FI-005  Favicon Development Asset                       OPEN      LOW
 ```
+
+
+## FI-007 Dashboard Period State Alignment
+
+Priority: MEDIUM
+
+Status: OPEN
+
+Category: Admin Dashboard UX
+
+Description:
+
+Investigate and normalize the admin dashboard period-selection state so that the highlighted button, displayed period label, URL hash, Revenue Intelligence request period, and Executive Analytics request period always represent the same value.
+
+Rationale:
+
+Manual testing showed confusing behavior where selecting a control appeared to produce unexpected UI state. This is separate from the analytics endpoint resilience hotfix and should be addressed as a focused UI-state alignment task.
+
+Restrictions:
+
+- Do not modify protected components.
+- Do not change persistence.
+- Do not change Leads source-of-truth governance.

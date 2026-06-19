@@ -53,6 +53,8 @@ describe("/api/analytics/executive endpoint", () => {
 
     expect(response.status).toBe(200);
     expect(payload.success).toBe(true);
+    expect(payload.degraded).toBe(false);
+    expect(payload.source).toBe("google-sheets");
     expect(payload.period).toBe("all");
     expect(payload.executive.version).toBe("59.3-v1");
     expect(payload.executive.sourceSnapshotVersion).toBe("58.2-v1");
@@ -97,5 +99,22 @@ describe("/api/analytics/executive endpoint", () => {
     expect(response.status).toBe(200);
     expect(payload.period).toBe("last7days");
     expect(payload.executive.version).toBe("59.3-v1");
+  });
+
+  it("returns a degraded empty executive snapshot instead of 500 when the analytics source fails", async () => {
+    readLeadsFromSheet.mockRejectedValue(new Error("Google Sheets unavailable"));
+
+    const response = await GET(new Request("http://localhost/api/analytics/executive?period=all"));
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload.success).toBe(true);
+    expect(payload.degraded).toBe(true);
+    expect(payload.source).toBe("empty-fallback");
+    expect(payload.period).toBe("all");
+    expect(payload.executive.version).toBe("59.3-v1");
+    expect(payload.executive.governance.readOnly).toBe(true);
+    expect(payload.executive.priorityActions.length).toBeGreaterThanOrEqual(1);
+    expect(payload.warning).toContain("source unavailable");
   });
 });

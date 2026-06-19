@@ -2,6 +2,9 @@ import type { RevenueSnapshotV1 } from "@/lib/revenue-intelligence";
 
 export type RevenueIntelligenceApiResponse = {
   success: true;
+  degraded?: boolean;
+  source?: "google-sheets" | "empty-fallback";
+  warning?: string;
   period: string | null;
   snapshot: RevenueSnapshotV1;
 };
