@@ -125,6 +125,11 @@ export function AssistantDashboard() {
   const loadAssistantData = async () => {
     setLoading(true);
     setError(null);
+    setState((current) => ({
+      ...current,
+      fallback: false,
+      message: null,
+    }));
 
     try {
       const response = await fetch("/api/leads/list", { credentials: "same-origin" });
@@ -138,11 +143,13 @@ export function AssistantDashboard() {
       const appointments = leads.map(mapLeadToAppointment).sort(compareAppointments);
       const patientProfiles = derivePatientAdministrativeProfiles(leads);
 
+      const isFallbackResponse = payload.fallback === true;
+
       setState({
         appointments,
         patientProfiles,
-        fallback: Boolean(payload.fallback),
-        message: payload.message ?? null,
+        fallback: isFallbackResponse,
+        message: isFallbackResponse ? payload.message ?? null : null,
       });
     } catch (loadError) {
       setState(emptyState);

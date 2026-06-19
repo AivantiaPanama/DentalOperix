@@ -239,9 +239,30 @@ Effective period label: Todo
 Recommended future action:
 
 ```text
-Open 60.2-HF6 Dashboard Filter State Synchronization after 60.2-HF5 validation.
+Open a separate dashboard filter synchronization hotfix after Assistant fallback cleanup validation.
 ```
 
 Governance note:
 
 This item is not part of 60.2-HF5. It must be handled as a separate approved change because it affects UI state behavior, not endpoint resilience.
+
+
+## FI-008 Assistant Fallback State Cleanup
+
+Priority: MEDIUM
+
+Status: RESOLVED IN 60.2-HF6
+
+Category: Assistant UI State
+
+Description:
+
+Manual testing confirmed that `/api/leads/list` returned real Google Sheets data without `fallback: true`, while the Assistant UI could still display the demo-data banner.
+
+Resolution:
+
+Implemented `60.2-HF6 Assistant Fallback State Cleanup` to clear stale fallback state during refresh and only show the demo banner when the API explicitly returns `fallback: true`.
+
+Governance note:
+
+No persistence, Google Sheets write path, lead ingestion, or protected components were modified.
