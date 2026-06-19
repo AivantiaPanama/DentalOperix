@@ -301,3 +301,28 @@ Required controls:
 - no dual write or parallel source of truth is allowed
 - derived analytics remain read-only
 
+
+## Booking Confirmation Action Guard Pattern
+
+Use this pattern for public conversion actions that create or confirm operational records.
+
+Required controls:
+
+```text
+explicit button type="button"
+visible loading/submitting state immediately after click
+duplicate submit guard while saving
+visible validation error for blocked client-side submits
+visible server error for failed backend submits
+no silent no-op after user action
+focused UI test covering click -> server function call -> success/error state
+```
+
+Governance constraints:
+
+```text
+Do not change Source of Truth
+Do not introduce Dual Write
+Do not log patient-sensitive payloads in analytics
+Do not modify protected components without explicit approval
+```

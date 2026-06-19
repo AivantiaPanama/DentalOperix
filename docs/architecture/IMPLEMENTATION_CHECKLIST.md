@@ -145,3 +145,16 @@ Manual validation:
 Documentation updated:
 ZIP generated:
 ```
+
+## Booking Confirmation Action Guard Checklist
+
+Before completing any booking or public conversion action change, verify:
+
+- [ ] The action button has `type="button"` unless it is intentionally inside a form submit flow.
+- [ ] The user sees immediate loading/submitting feedback after click.
+- [ ] Duplicate submit is blocked while the request is in flight.
+- [ ] Client validation failures show a visible error and do not call the server.
+- [ ] Server failures show a visible error and do not fail silently.
+- [ ] Success path shows a visible confirmation.
+- [ ] Focused tests cover click-to-submit and validation blocked states.
+- [ ] No Source of Truth, persistence adapter, Calendar, or Gmail behavior changed unless explicitly approved.

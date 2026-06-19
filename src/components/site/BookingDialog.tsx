@@ -154,9 +154,34 @@ export function BookingDialog({ open, onOpenChange, initialData }: Props) {
   const back = () => setStep((s) => Math.max(1, s - 1));
 
   const submit = async () => {
-    if (!validateStep3()) return;
+    track("booking_submit_clicked", {
+      source: data.source,
+      serviceId: data.serviceId,
+      urgency: data.urgency,
+      hasDate: Boolean(data.date),
+      hasTime: Boolean(data.time),
+    });
+
+    if (submitting) return;
+
+    if (!validateStep3()) {
+      track("booking_submit_failed", {
+        source: data.source,
+        serviceId: data.serviceId,
+        urgency: data.urgency,
+        reason: "client_validation",
+      });
+      setServerError("Selecciona una fecha y un horario disponible para confirmar tu reserva.");
+      return;
+    }
+
     setServerError(null);
     setSubmitting("saving");
+    track("booking_submit_started", {
+      source: data.source,
+      serviceId: data.serviceId,
+      urgency: data.urgency,
+    });
 
     const selectedServiceLabel = data.serviceId
       ? (getDentalServiceById(data.serviceId)?.label ?? data.service)
@@ -272,24 +297,37 @@ export function BookingDialog({ open, onOpenChange, initialData }: Props) {
           )}
         </div>
 
-        {!done && !submitting && (
+        {!done && (
           <div className="flex items-center justify-between border-t border-border px-6 py-4">
-            <Button variant="ghost" onClick={back} disabled={step === 1} className="rounded-full">
+            <Button type="button" variant="ghost" onClick={back} disabled={step === 1 || Boolean(submitting)} className="rounded-full">
               <ChevronLeft className="mr-1 h-4 w-4" /> Atrás
             </Button>
             {step < 3 ? (
               <Button
+                type="button"
                 onClick={next}
+                disabled={Boolean(submitting)}
                 className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 Continuar <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
             ) : (
               <Button
+                type="button"
                 onClick={submit}
+                disabled={Boolean(submitting)}
+                aria-busy={Boolean(submitting)}
                 className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                Confirmar reserva <Sparkles className="ml-1 h-4 w-4" />
+                {submitting ? (
+                  <>
+                    Confirmando <Loader2 className="ml-1 h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Confirmar reserva <Sparkles className="ml-1 h-4 w-4" />
+                  </>
+                )}
               </Button>
             )}
           </div>

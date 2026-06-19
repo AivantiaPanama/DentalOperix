@@ -389,3 +389,47 @@ Constraints:
 - no new source of truth
 - no logging of secrets or patient-sensitive payloads
 
+
+## Resolved During 60.4-HF1
+
+### FI-BOOKING-001 Booking Confirmation Silent Submit
+
+Status: RESOLVED  
+Priority: HIGH  
+Category: Conversion / UX Reliability
+
+A user reported that the public booking dialog did not visibly react after clicking **Confirmar reserva** with date and time selected.
+
+Resolution:
+
+```text
+src/components/site/BookingDialog.tsx
+src/components/site/BookingDialog.test.tsx
+docs/architecture/60.4-HF1_BOOKING_CONFIRMATION_ACTION_GUARD.md
+```
+
+Implemented visible submitting feedback, duplicate submit guard, validation error visibility, and focused UI tests.
+
+Governance note:
+
+```text
+Persistence Change: NO
+Source of Truth Change: NO
+Protected Component Modified: YES - BookingDialog, explicitly approved
+```
+
+### FI-BOOKING-002 Booking Submission Observability
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: Observability / Conversion
+
+Future improvement: route `booking_submit_clicked`, `booking_submit_started`, and `booking_submit_failed` into approved observability without writing analytics data into the Leads source of truth and without logging patient-sensitive payloads.
+
+Constraints:
+
+```text
+No analytics writes to source-of-truth tables
+No patient-sensitive payload logging
+No bypass of RBAC
+```

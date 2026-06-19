@@ -3,7 +3,8 @@ export type LeadSource =
   | "hero-button"
   | "navbar-button"
   | "services-page"
-  | "whatsapp";
+  | "whatsapp"
+  | "web-form";
 
 export type AnalyticsEvent =
   | "chat_started"
@@ -11,7 +12,10 @@ export type AnalyticsEvent =
   | "urgency_detected"
   | "booking_intent"
   | "booking_dialog_opened"
+  | "booking_submit_clicked"
+  | "booking_submit_started"
   | "booking_completed"
+  | "booking_submit_failed"
   | "booking_failed"
   | "whatsapp_clicked";
 
