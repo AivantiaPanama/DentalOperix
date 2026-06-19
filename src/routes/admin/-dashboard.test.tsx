@@ -12,7 +12,7 @@ describe("Admin dashboard", () => {
 
     expect(html).toContain("Admin CRM");
     expect(html).toContain("Dashboard de métricas");
-    expect(html).toContain("Cargando métricas del CRM...");
+    expect(html).toContain("Cargando métricas de Revenue Intelligence...");
   });
 
   it("renders the goal settings action button", () => {
