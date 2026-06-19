@@ -378,6 +378,16 @@ function buildPriorityActions(
     });
   });
 
+  if (snapshot.totals.leads === 0 && actions.length === 0) {
+    actions.push({
+      title: "Validar disponibilidad de datos operativos",
+      category: "data-quality",
+      priority: "low",
+      rationale: "El snapshot no contiene leads; Executive Analytics conserva modo read-only y no asume persistencia adicional.",
+      expectedOutcome: "Confirmar que la captura operativa esté disponible antes de tomar decisiones ejecutivas.",
+    });
+  }
+
   if (alerts.length === 0 && actions.length === 0) {
     actions.push({
       title: "Mantener cadencia ejecutiva semanal",
