@@ -18,8 +18,11 @@ import { GoalInsights } from "@/components/admin/GoalInsights";
 import { GoalRiskPanel } from "@/components/admin/GoalRiskPanel";
 import { GoalSettingsPanel } from "@/components/admin/GoalSettingsPanel";
 import { GoalsOverview } from "@/components/admin/GoalsOverview";
+import { ExecutiveAnalyticsPanel } from "@/components/admin/ExecutiveAnalyticsPanel";
 import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
 import { fetchRevenueDashboardMetrics } from "@/lib/api/revenue-dashboard-metrics";
+import { fetchExecutiveAnalytics } from "@/lib/api/executive-analytics";
+import type { ExecutiveAnalyticsSnapshot } from "@/lib/executive-analytics";
 import { getPeriodLabel, type DashboardPeriod } from "@/lib/date-filters";
 import {
   currencyFormatter,
@@ -80,9 +83,12 @@ export const Route = createFileRoute("/admin/dashboard")({
 
 export function DashboardPage() {
   const [metrics, setMetrics] = useState<CrmDashboardMetrics | null>(null);
+  const [executiveAnalytics, setExecutiveAnalytics] = useState<ExecutiveAnalyticsSnapshot | null>(null);
   const [period, setPeriod] = useState<DashboardPeriod>("all");
   const [loading, setLoading] = useState(true);
+  const [executiveLoading, setExecutiveLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [executiveError, setExecutiveError] = useState<string | null>(null);
   const [goalSettings, setGoalSettings] = useState<GoalSettings>(getDefaultGoals());
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -102,6 +108,24 @@ export function DashboardPage() {
       .finally(() => setLoading(false));
   };
 
+
+  const loadExecutiveAnalytics = (selectedPeriod: string) => {
+    setExecutiveLoading(true);
+    fetchExecutiveAnalytics(selectedPeriod)
+      .then((data) => {
+        setExecutiveAnalytics(data.executive);
+        setExecutiveError(null);
+      })
+      .catch((fetchError) => {
+        console.error(fetchError);
+        setExecutiveAnalytics(null);
+        setExecutiveError(
+          fetchError instanceof Error ? fetchError.message : "Error al cargar Executive Analytics.",
+        );
+      })
+      .finally(() => setExecutiveLoading(false));
+  };
+
   const selectedTrend = metrics
     ? period === "all"
       ? metrics.trend.monthly
@@ -112,6 +136,7 @@ export function DashboardPage() {
 
   useEffect(() => {
     loadMetrics(period);
+    loadExecutiveAnalytics(period);
   }, [period]);
 
   useEffect(() => {
@@ -261,6 +286,12 @@ export function DashboardPage() {
                   </p>
                 </div>
               ) : null}
+
+              <ExecutiveAnalyticsPanel
+                executive={executiveAnalytics}
+                loading={executiveLoading}
+                error={executiveError}
+              />
 
               {businessInsights.length > 0 ? (
                 <div className="mb-6">

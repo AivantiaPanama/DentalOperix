@@ -5,6 +5,8 @@ import { render, screen } from "@testing-library/react";
 import { DashboardPage } from "@/routes/admin/dashboard";
 import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
 import { fetchRevenueDashboardMetrics } from "@/lib/api/revenue-dashboard-metrics";
+import { fetchExecutiveAnalytics } from "@/lib/api/executive-analytics";
+import type { ExecutiveAnalyticsSnapshot } from "@/lib/executive-analytics";
 
 vi.mock("@/lib/api/revenue-dashboard-metrics", async () => {
   const actual = await vi.importActual<typeof import("@/lib/api/revenue-dashboard-metrics")>(
@@ -13,6 +15,17 @@ vi.mock("@/lib/api/revenue-dashboard-metrics", async () => {
   return {
     ...actual,
     fetchRevenueDashboardMetrics: vi.fn(),
+  };
+});
+
+
+vi.mock("@/lib/api/executive-analytics", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/api/executive-analytics")>(
+    "@/lib/api/executive-analytics",
+  );
+  return {
+    ...actual,
+    fetchExecutiveAnalytics: vi.fn(),
   };
 });
 
@@ -42,6 +55,10 @@ globalThis.ResizeObserver = ResizeObserverMock as any;
 
 const mockedFetchRevenueDashboardMetrics = fetchRevenueDashboardMetrics as unknown as vi.MockedFunction<
   typeof fetchRevenueDashboardMetrics
+>;
+
+const mockedFetchExecutiveAnalytics = fetchExecutiveAnalytics as unknown as vi.MockedFunction<
+  typeof fetchExecutiveAnalytics
 >;
 
 describe("DashboardPage integration", () => {
@@ -98,10 +115,65 @@ describe("DashboardPage integration", () => {
       },
     };
 
+    const executive: ExecutiveAnalyticsSnapshot = {
+      version: "59.1-v1",
+      generatedAt: "2026-06-19T00:00:00.000Z",
+      sourceSnapshotVersion: "58.2-v1",
+      sourceForecastVersion: "58.5-v1",
+      summary: {
+        revenueScore: { value: 82, signal: "excellent", drivers: ["Conversión sólida"] },
+        growthScore: { value: 68, signal: "healthy", drivers: ["Crecimiento estable"] },
+        opportunityIndex: { value: 74, signal: "healthy", drivers: ["Servicios activos"] },
+      },
+      rankings: {
+        sources: [
+          { name: "hero-button", leads: 6, completed: 4, conversionRate: 80, score: 91 },
+        ],
+        services: [
+          {
+            name: "Implantes Dentales",
+            leads: 4,
+            completed: 3,
+            conversionRate: 75,
+            estimatedPipelineValue: 12000,
+            score: 88,
+          },
+        ],
+      },
+      alerts: [
+        {
+          title: "Conversión ejecutiva saludable",
+          message: "La conversión se mantiene por encima del umbral ejecutivo.",
+          severity: "low",
+          recommendedAction: "Mantener monitoreo semanal.",
+        },
+      ],
+      opportunities: [
+        {
+          title: "Escalar fuente: hero-button",
+          description: "hero-button muestra conversión alta con volumen relevante.",
+          priority: "high",
+          scoreImpact: 80,
+        },
+      ],
+      governance: {
+        readOnly: true,
+        sourceOfTruth: "Leads",
+        revenueType: "estimated",
+        limitations: ["Executive Analytics es read-only."],
+      },
+    };
+
     mockedFetchRevenueDashboardMetrics.mockResolvedValue(metrics);
+    mockedFetchExecutiveAnalytics.mockResolvedValue({ success: true, period: "all", executive });
 
     render(<DashboardPage />);
 
+    expect(await screen.findByText("Executive Analytics")).toBeDefined();
+    expect(await screen.findByText("Revenue Score")).toBeDefined();
+    expect(await screen.findByText("82")).toBeDefined();
+    expect(await screen.findByText("Ranking ejecutivo de fuentes")).toBeDefined();
+    expect((await screen.findAllByText(/hero-button/)).length).toBeGreaterThan(0);
     expect(await screen.findByText("Puntaje medio de lead")).toBeDefined();
     expect(await screen.findByText("72%")).toBeDefined();
     expect(await screen.findByText("Puntaje de lead caliente")).toBeDefined();
