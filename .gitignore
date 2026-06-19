@@ -50,3 +50,7 @@ dist-ssr
 .env.*
 !.env.example
 !.env.*.example
+
+.env.cutover.prod
+.env.relational.prod
+.env.production.local
