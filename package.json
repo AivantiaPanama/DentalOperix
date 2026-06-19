@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest --hookTimeout=30000 --testTimeout=30000",
-    "validate:relational-env": "node scripts/validate-relational-env.mjs"
+    "validate:relational-env": "node scripts/validate-relational-env.mjs",
+    "validate:relational-connectivity": "node scripts/validate-relational-connectivity.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -69,7 +70,8 @@
     "tw-animate-css": "^1.3.4",
     "vaul": "^1.1.2",
     "vite-tsconfig-paths": "^6.0.2",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
