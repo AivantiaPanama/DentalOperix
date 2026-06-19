@@ -288,3 +288,25 @@ Result expectation:
 Result: PASS
 Persisted rows after rollback: 0
 ```
+
+---
+
+## 57.8 Controlled Cutover Execution
+
+```text
+STATUS: IMPLEMENTED AS CONTROLLED RUNTIME READINESS PACKAGE
+```
+
+57.8 adds guarded relational runtime capability to `RelationalLeadPersistenceAdapter`.
+
+The adapter remains fail-closed unless all 57.8 runtime flags are explicitly enabled:
+
+```env
+LEADS_PERSISTENCE_MODE=relational-db
+RELATIONAL_CUTOVER_APPROVED=true
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
+```
+
+This remains a physical persistence transition only. Leads remains the Source of Truth.
+
+Rollback is documented in `57.8_ROLLBACK_RUNBOOK.md`.

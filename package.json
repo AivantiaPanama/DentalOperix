@@ -17,7 +17,8 @@
     "validate:relational-connectivity": "node scripts/validate-relational-connectivity.mjs",
     "deploy:relational-schema": "node scripts/deploy-relational-schema.mjs",
     "validate:relational-schema": "node scripts/validate-relational-schema.mjs",
-    "validate:relational-dry-run": "node scripts/validate-relational-dry-run.mjs"
+    "validate:relational-dry-run": "node scripts/validate-relational-dry-run.mjs",
+    "validate:relational-runtime-flags": "node scripts/validate-relational-runtime-flags.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -235,3 +235,41 @@ Local execution command:
 ```bash
 npm run validate:relational-dry-run -- .env.relational.local
 ```
+
+---
+
+## 57.8 Controlled Cutover Execution Update
+
+```text
+STATUS: IMPLEMENTED AS CONTROLLED RUNTIME READINESS PACKAGE
+RESULT: CODE GENERATED / TARGETED TESTS PASSED / NO LIVE CUTOVER EXECUTED IN THIS ARTIFACT
+```
+
+### Evidence
+
+- 57.7-B Relational Connectivity Validation: PASS.
+- 57.7-C Supabase Schema Deployment: PASS.
+- 57.7-D Relational Dry-Run Validation: PASS.
+- 57.7-E Final Cutover Readiness Review: GO.
+- 57.8 runtime guardrails implemented.
+
+### Runtime Activation Flags
+
+Relational runtime activation requires all flags:
+
+```env
+LEADS_PERSISTENCE_MODE=relational-db
+RELATIONAL_CUTOVER_APPROVED=true
+RELATIONAL_RUNTIME_ACTIVATION_APPROVED=true
+```
+
+### Governance
+
+```text
+Leads = Source of Truth
+No Dual Write
+No Multiple Sources of Truth
+No Projection Engine
+No Product Migration
+Rollback documented
+```
