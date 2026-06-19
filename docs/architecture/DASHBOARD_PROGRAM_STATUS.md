@@ -214,3 +214,24 @@ Leads = Source of Truth
 
 No runtime activation is authorized by 57.6.
 
+
+---
+
+## 57.7-D Relational Dry-Run Validation Update
+
+STATUS: IMPLEMENTATION PACKAGE PREPARED / READY FOR LOCAL EXECUTION
+
+Governance posture:
+
+- Google Sheet remains active physical persistence.
+- Relational Database remains prepared future physical persistence.
+- `LEADS_PERSISTENCE_MODE=google-sheet` remains required.
+- `RELATIONAL_CUTOVER_APPROVED=false` remains required.
+- No cutover is authorized by this package.
+- No dual write is introduced.
+
+Local execution command:
+
+```bash
+npm run validate:relational-dry-run -- .env.relational.local
+```

@@ -262,3 +262,29 @@ Leads -> Relational Database
 
 The future state requires explicit executive approval before activation.
 
+
+---
+
+## 57.7-D Relational Dry-Run Validation
+
+STATUS: IMPLEMENTATION PACKAGE PREPARED / READY FOR LOCAL EXECUTION
+
+The dry-run validation verifies Supabase relational write/read/update/audit capability using synthetic data inside a rolled-back transaction.
+
+This validation does not migrate production data and does not activate relational persistence.
+
+Required governance flags:
+
+```text
+LEADS_PERSISTENCE_MODE=google-sheet
+RELATIONAL_CUTOVER_APPROVED=false
+RELATIONAL_DRY_RUN_APPROVED=true
+RELATIONAL_DRY_RUN_ENABLED=true
+```
+
+Result expectation:
+
+```text
+Result: PASS
+Persisted rows after rollback: 0
+```
