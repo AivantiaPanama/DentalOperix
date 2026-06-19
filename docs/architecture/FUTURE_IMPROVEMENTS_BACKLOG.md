@@ -284,3 +284,11 @@ Implemented 60.3 Data Quality and Encoding Audit with conservative read-side nor
 Governance note:
 
 No persistence, source-of-truth, Google Sheets write path, lead creation path, or protected component was modified.
+
+## Resolved During 60.3-HF1
+
+### FI-ENC-001 Incomplete Mojibake Pattern Expansion
+
+Status: RESOLVED
+
+Expanded conservative read-side normalization for observed incomplete mojibake values such as `OdontologÃa` and `MartÃnes`. No persistence writes were introduced.

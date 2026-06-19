@@ -1,3 +1,12 @@
+const CONTEXTUAL_MOJIBAKE_REPLACEMENTS: ReadonlyArray<[RegExp, string]> = [
+  // Some legacy CRM rows lost the byte after `Ã`, leaving incomplete mojibake.
+  // Keep these replacements contextual so valid Spanish text is not rewritten broadly.
+  [/ologÃa/g, "ología"],
+  [/MartÃnes/g, "Martínes"],
+  [/AlimaÃ±a/g, "Alimaña"],
+  [/RevisiÃn/g, "Revisión"],
+];
+
 const MOJIBAKE_REPLACEMENTS: ReadonlyArray<[RegExp, string]> = [
   [/Ã¡/g, "á"],
   [/Ã©/g, "é"],
@@ -20,9 +29,14 @@ const MOJIBAKE_REPLACEMENTS: ReadonlyArray<[RegExp, string]> = [
 ];
 
 export function normalizeMojibakeText(value: string): string {
-  return MOJIBAKE_REPLACEMENTS.reduce(
+  const contextuallyNormalized = CONTEXTUAL_MOJIBAKE_REPLACEMENTS.reduce(
     (current, [pattern, replacement]) => current.replace(pattern, replacement),
     value,
+  );
+
+  return MOJIBAKE_REPLACEMENTS.reduce(
+    (current, [pattern, replacement]) => current.replace(pattern, replacement),
+    contextuallyNormalized,
   );
 }
 
