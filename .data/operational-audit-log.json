@@ -1,5 +1,60 @@
 [
   {
+    "id": "audit_mql9a61v_tgat4c4n",
+    "timestamp": "2026-06-19T18:22:11.491Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mql8nj3t_7p7v6ywr",
+    "timestamp": "2026-06-19T18:04:35.321Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mql8ne2s_co4wvx7z",
+    "timestamp": "2026-06-19T18:04:28.804Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mql8nba7_bicahhki",
+    "timestamp": "2026-06-19T18:04:25.183Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
+    "id": "audit_mql8n4hq_1mt913w6",
+    "timestamp": "2026-06-19T18:04:16.382Z",
+    "action": "report.operational.viewed",
+    "resourceType": "report",
+    "resourceId": "operational",
+    "actorRole": "admin",
+    "metadata": {
+      "format": "json"
+    }
+  },
+  {
     "id": "audit_mql7nglr_wjdll14e",
     "timestamp": "2026-06-19T17:36:32.463Z",
     "action": "report.operational.viewed",

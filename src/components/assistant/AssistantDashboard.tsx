@@ -143,7 +143,8 @@ export function AssistantDashboard() {
       const appointments = leads.map(mapLeadToAppointment).sort(compareAppointments);
       const patientProfiles = derivePatientAdministrativeProfiles(leads);
 
-      const isFallbackResponse = payload.fallback === true;
+      const hasRealLeads = leads.length > 0;
+      const isFallbackResponse = payload.fallback === true && !hasRealLeads;
 
       setState({
         appointments,
