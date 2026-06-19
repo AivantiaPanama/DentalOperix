@@ -214,3 +214,34 @@ Restrictions:
 - Do not modify protected components.
 - Do not change persistence.
 - Do not change Leads source-of-truth governance.
+
+### FI-007 - Dashboard Filter State Synchronization
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: UI State / Dashboard Consistency  
+Risk: LOW  
+Impact: Admin dashboard filter accuracy
+
+Observed behavior:
+
+```text
+The visual active period chip can differ from the effective period shown by the dashboard.
+```
+
+Example symptom:
+
+```text
+Visual button: Hoy
+Effective period label: Todo
+```
+
+Recommended future action:
+
+```text
+Open 60.2-HF6 Dashboard Filter State Synchronization after 60.2-HF5 validation.
+```
+
+Governance note:
+
+This item is not part of 60.2-HF5. It must be handled as a separate approved change because it affects UI state behavior, not endpoint resilience.

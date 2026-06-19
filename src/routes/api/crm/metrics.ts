@@ -225,14 +225,53 @@ export async function GET(request: Request) {
       },
     );
   } catch (error) {
-    console.error("Failed to load CRM metrics:", error);
+    console.error("Failed to load CRM metrics; returning degraded empty CRM metrics:", error);
     return new Response(
       JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        success: true,
+        degraded: true,
+        source: "empty-fallback",
+        totals: {
+          leads: 0,
+          agendadas: 0,
+          completadas: 0,
+          canceladas: 0,
+          noAsistio: 0,
+        },
+        conversionRate: 0,
+        attendanceRate: 0,
+        pipelineValue: 0,
+        averageLeadScore: 0,
+        leadScoreDistribution: {
+          hot: 0,
+          warm: 0,
+          cold: 0,
+        },
+        sources: [],
+        sourceConversions: [],
+        services: [],
+        serviceConversions: [],
+        serviceTrend: [],
+        urgency: {
+          alta: 0,
+          media: 0,
+          baja: 0,
+        },
+        trend: {
+          daily: [],
+          weekly: [],
+          monthly: [],
+        },
+        comparison: {
+          leads: { current: 0, previous: 0, changePercent: 0 },
+          agendadas: { current: 0, previous: 0, changePercent: 0 },
+          completadas: { current: 0, previous: 0, changePercent: 0 },
+          canceladas: { current: 0, previous: 0, changePercent: 0 },
+          conversionRate: { current: 0, previous: 0, changePercent: 0 },
+        },
       }),
       {
-        status: 500,
+        status: 200,
         headers: { "Content-Type": "application/json" },
       },
     );

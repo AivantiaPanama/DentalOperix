@@ -110,4 +110,26 @@ describe("/api/crm/metrics endpoint", () => {
     expect(payload.comparison.agendadas.changePercent).toBe(0);
     expect(payload.comparison.completadas.changePercent).toBe(0);
   });
+
+  it("returns degraded empty CRM metrics when Google Sheets is unavailable", async () => {
+    readLeadsFromSheet.mockRejectedValue(new Error("Sheets unavailable"));
+
+    const response = await GET(new Request("http://localhost/api/crm/metrics?period=thisMonth"));
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload.success).toBe(true);
+    expect(payload.degraded).toBe(true);
+    expect(payload.source).toBe("empty-fallback");
+    expect(payload.totals).toEqual({
+      leads: 0,
+      agendadas: 0,
+      completadas: 0,
+      canceladas: 0,
+      noAsistio: 0,
+    });
+    expect(payload.trend).toEqual({ daily: [], weekly: [], monthly: [] });
+    expect(payload.leadScoreDistribution).toEqual({ hot: 0, warm: 0, cold: 0 });
+  });
+
 });

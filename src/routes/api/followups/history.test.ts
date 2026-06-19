@@ -57,4 +57,25 @@ describe("/api/followups/history", () => {
     expect(body).toEqual({ success: true, records: [record] });
     expect(readAutomationRunRecords).toHaveBeenCalledOnce();
   });
+
+  it("returns degraded empty history when automation records are unavailable", async () => {
+    readAutomationRunRecords.mockRejectedValue(new Error("Sheets unavailable"));
+
+    const response = await GET(
+      new Request("http://localhost/api/followups/history", {
+        headers: { "x-api-key": "test-key" },
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    const body = await response.json();
+    expect(body).toEqual({
+      success: true,
+      degraded: true,
+      source: "empty-fallback",
+      records: [],
+    });
+    expect(readAutomationRunRecords).toHaveBeenCalledOnce();
+  });
+
 });
