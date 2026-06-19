@@ -1,5 +1,5 @@
+import { fetchCRMmetrics, type CrmDashboardMetrics } from "@/lib/api/crm-metrics";
 import { fetchRevenueIntelligence } from "@/lib/api/revenue-intelligence";
-import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
 import type { RevenueSnapshotV1 } from "@/lib/revenue-intelligence";
 
 function createComparison(current: number) {
@@ -74,6 +74,14 @@ export function mapRevenueSnapshotToCrmDashboardMetrics(
 export async function fetchRevenueDashboardMetrics(
   period: string | null = null,
 ): Promise<CrmDashboardMetrics> {
-  const { snapshot } = await fetchRevenueIntelligence(period);
-  return mapRevenueSnapshotToCrmDashboardMetrics(snapshot);
+  try {
+    const { snapshot } = await fetchRevenueIntelligence(period);
+    return mapRevenueSnapshotToCrmDashboardMetrics(snapshot);
+  } catch (error) {
+    console.warn(
+      "Revenue Intelligence metrics unavailable; falling back to CRM metrics.",
+      error,
+    );
+    return fetchCRMmetrics(period);
+  }
 }
