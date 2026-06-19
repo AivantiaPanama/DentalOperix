@@ -54,9 +54,11 @@ describe("/api/analytics/executive endpoint", () => {
     expect(response.status).toBe(200);
     expect(payload.success).toBe(true);
     expect(payload.period).toBe("all");
-    expect(payload.executive.version).toBe("59.1-v1");
+    expect(payload.executive.version).toBe("59.3-v1");
     expect(payload.executive.sourceSnapshotVersion).toBe("58.2-v1");
     expect(payload.executive.sourceForecastVersion).toBe("58.5-v1");
+    expect(payload.executive.interpretation.healthStatus).toBeDefined();
+    expect(Array.isArray(payload.executive.priorityActions)).toBe(true);
     expect(payload.executive.governance.readOnly).toBe(true);
     expect(payload.executive.governance.sourceOfTruth).toBe("Leads");
   });
@@ -94,6 +96,6 @@ describe("/api/analytics/executive endpoint", () => {
 
     expect(response.status).toBe(200);
     expect(payload.period).toBe("last7days");
-    expect(payload.executive.version).toBe("59.1-v1");
+    expect(payload.executive.version).toBe("59.3-v1");
   });
 });

@@ -2,6 +2,7 @@ import type {
   ExecutiveAnalyticsSnapshot,
   ExecutiveDecisionAlert,
   ExecutiveOpportunity,
+  ExecutivePriorityAction,
   ExecutiveRankingItem,
   ExecutiveScore,
 } from "@/lib/executive-analytics";
@@ -23,6 +24,22 @@ const priorityLabels: Record<ExecutiveOpportunity["priority"], string> = {
   low: "Baja",
   medium: "Media",
   high: "Alta",
+};
+
+const healthLabels: Record<ExecutiveAnalyticsSnapshot["interpretation"]["healthStatus"], string> = {
+  excellent: "Excelente",
+  healthy: "Saludable",
+  "attention-required": "Requiere atención",
+  critical: "Crítico",
+};
+
+const categoryLabels: Record<ExecutivePriorityAction["category"], string> = {
+  conversion: "Conversión",
+  attendance: "Asistencia",
+  pipeline: "Pipeline",
+  growth: "Crecimiento",
+  "data-quality": "Calidad de datos",
+  opportunity: "Oportunidad",
 };
 
 function ScoreCard({ label, score }: { label: string; score: ExecutiveScore }) {
@@ -111,6 +128,31 @@ export function ExecutiveAnalyticsPanel({
         </div>
       ) : executive ? (
         <div className="space-y-6">
+          <div className="rounded-2xl border border-border bg-slate-50 p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Interpretación ejecutiva</p>
+                <h3 className="mt-2 text-xl font-semibold text-deep">
+                  {healthLabels[executive.interpretation.healthStatus]}
+                </h3>
+                <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+                  {executive.interpretation.narrative}
+                </p>
+              </div>
+              <div className="grid gap-2 text-xs text-muted-foreground sm:grid-cols-3 lg:min-w-[360px]">
+                <span className="rounded-full border border-border bg-white px-3 py-2">
+                  Riesgo: {priorityLabels[executive.interpretation.riskLevel]}
+                </span>
+                <span className="rounded-full border border-border bg-white px-3 py-2">
+                  Oportunidad: {priorityLabels[executive.interpretation.opportunityLevel]}
+                </span>
+                <span className="rounded-full border border-border bg-white px-3 py-2">
+                  Foco: {executive.interpretation.primaryFocus}
+                </span>
+              </div>
+            </div>
+          </div>
+
           <div className="grid gap-4 md:grid-cols-3">
             <ScoreCard label="Revenue Score" score={executive.summary.revenueScore} />
             <ScoreCard label="Growth Score" score={executive.summary.growthScore} />
@@ -120,6 +162,31 @@ export function ExecutiveAnalyticsPanel({
           <div className="grid gap-4 lg:grid-cols-2">
             <RankingList title="Ranking ejecutivo de fuentes" items={executive.rankings.sources} />
             <RankingList title="Ranking ejecutivo de servicios" items={executive.rankings.services} />
+          </div>
+
+          <div className="rounded-2xl border border-border bg-slate-50 p-5">
+            <h3 className="text-base font-semibold text-deep">Acciones prioritarias</h3>
+            <div className="mt-4 grid gap-3 md:grid-cols-2">
+              {executive.priorityActions.length > 0 ? (
+                executive.priorityActions.slice(0, 4).map((action) => (
+                  <div key={`${action.title}-${action.category}`} className="rounded-xl bg-white p-4 text-sm">
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="font-semibold text-deep">{action.title}</p>
+                      <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
+                        {priorityLabels[action.priority]}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                      {categoryLabels[action.category]}
+                    </p>
+                    <p className="mt-2 text-muted-foreground">{action.rationale}</p>
+                    <p className="mt-2 text-xs font-medium text-deep">{action.expectedOutcome}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-muted-foreground">No hay acciones prioritarias activas.</p>
+              )}
+            </div>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">

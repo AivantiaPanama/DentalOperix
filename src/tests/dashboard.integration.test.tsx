@@ -116,7 +116,7 @@ describe("DashboardPage integration", () => {
     };
 
     const executive: ExecutiveAnalyticsSnapshot = {
-      version: "59.1-v1",
+      version: "59.3-v1",
       generatedAt: "2026-06-19T00:00:00.000Z",
       sourceSnapshotVersion: "58.2-v1",
       sourceForecastVersion: "58.5-v1",
@@ -125,6 +125,22 @@ describe("DashboardPage integration", () => {
         growthScore: { value: 68, signal: "healthy", drivers: ["Crecimiento estable"] },
         opportunityIndex: { value: 74, signal: "healthy", drivers: ["Servicios activos"] },
       },
+      interpretation: {
+        healthStatus: "healthy",
+        riskLevel: "low",
+        opportunityLevel: "high",
+        narrative: "Salud ejecutiva saludable con oportunidades claras.",
+        primaryFocus: "Escalar fuente: hero-button",
+      },
+      priorityActions: [
+        {
+          title: "Escalar fuente: hero-button",
+          category: "opportunity",
+          priority: "high",
+          rationale: "hero-button muestra conversión alta con volumen relevante.",
+          expectedOutcome: "Priorizar recursos hacia el mayor potencial comercial detectado.",
+        },
+      ],
       rankings: {
         sources: [
           { name: "hero-button", leads: 6, completed: 4, conversionRate: 80, score: 91 },
@@ -171,6 +187,8 @@ describe("DashboardPage integration", () => {
 
     expect(await screen.findByText("Executive Analytics")).toBeDefined();
     expect(await screen.findByText("Revenue Score")).toBeDefined();
+    expect(await screen.findByText("Interpretación ejecutiva")).toBeDefined();
+    expect(await screen.findByText("Acciones prioritarias")).toBeDefined();
     expect(await screen.findByText("82")).toBeDefined();
     expect(await screen.findByText("Ranking ejecutivo de fuentes")).toBeDefined();
     expect((await screen.findAllByText(/hero-button/)).length).toBeGreaterThan(0);

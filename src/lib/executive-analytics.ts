@@ -1,10 +1,13 @@
-import type { RevenueForecastSnapshot, RevenueForecastRiskSeverity } from "./revenue-forecast";
+import type { RevenueForecastRiskSeverity } from "./revenue-forecast";
+import type { RevenueForecastSnapshot } from "./revenue-forecast";
 import type { RevenueServicePerformance, RevenueSnapshotV1, RevenueSourcePerformance } from "./revenue-intelligence";
 
-export const EXECUTIVE_ANALYTICS_VERSION = "59.1-v1" as const;
+export const EXECUTIVE_ANALYTICS_VERSION = "59.3-v1" as const;
 
 export type ExecutiveScoreSignal = "excellent" | "healthy" | "watch" | "critical";
 export type ExecutivePriority = "low" | "medium" | "high";
+export type ExecutiveHealthStatus = "excellent" | "healthy" | "attention-required" | "critical";
+export type ExecutiveActionCategory = "conversion" | "attendance" | "pipeline" | "growth" | "data-quality" | "opportunity";
 
 export type ExecutiveScore = {
   value: number;
@@ -35,6 +38,22 @@ export type ExecutiveDecisionAlert = {
   recommendedAction: string;
 };
 
+export type ExecutivePriorityAction = {
+  title: string;
+  category: ExecutiveActionCategory;
+  priority: ExecutivePriority;
+  rationale: string;
+  expectedOutcome: string;
+};
+
+export type ExecutiveInterpretation = {
+  healthStatus: ExecutiveHealthStatus;
+  riskLevel: ExecutivePriority;
+  opportunityLevel: ExecutivePriority;
+  narrative: string;
+  primaryFocus: string;
+};
+
 export type ExecutiveAnalyticsSnapshot = {
   version: typeof EXECUTIVE_ANALYTICS_VERSION;
   generatedAt: string;
@@ -45,6 +64,8 @@ export type ExecutiveAnalyticsSnapshot = {
     growthScore: ExecutiveScore;
     opportunityIndex: ExecutiveScore;
   };
+  interpretation: ExecutiveInterpretation;
+  priorityActions: ExecutivePriorityAction[];
   rankings: {
     sources: ExecutiveRankingItem[];
     services: ExecutiveRankingItem[];
@@ -249,6 +270,132 @@ function buildOpportunities(snapshot: RevenueSnapshotV1): ExecutiveOpportunity[]
   return opportunities.slice(0, 6);
 }
 
+function highestPriority(priorities: ExecutivePriority[], fallback: ExecutivePriority): ExecutivePriority {
+  if (priorities.includes("high")) return "high";
+  if (priorities.includes("medium")) return "medium";
+  if (priorities.includes("low")) return "low";
+  return fallback;
+}
+
+function healthFromScores(revenueScore: ExecutiveScore, growthScore: ExecutiveScore, alerts: ExecutiveDecisionAlert[]): ExecutiveHealthStatus {
+  if (alerts.some((alert) => alert.severity === "high") || revenueScore.value < 35) return "critical";
+  if (revenueScore.value < 55 || growthScore.value < 45 || alerts.some((alert) => alert.severity === "medium")) {
+    return "attention-required";
+  }
+  if (revenueScore.value >= 80 && growthScore.value >= 60) return "excellent";
+  return "healthy";
+}
+
+function buildInterpretation(
+  revenueSnapshot: RevenueSnapshotV1,
+  forecastSnapshot: RevenueForecastSnapshot,
+  revenueScore: ExecutiveScore,
+  growthScore: ExecutiveScore,
+  opportunityIndex: ExecutiveScore,
+  alerts: ExecutiveDecisionAlert[],
+  opportunities: ExecutiveOpportunity[],
+): ExecutiveInterpretation {
+  const healthStatus = healthFromScores(revenueScore, growthScore, alerts);
+  const riskLevel = highestPriority(
+    alerts.map((alert) => (alert.severity === "high" ? "high" : alert.severity === "medium" ? "medium" : "low")),
+    "low",
+  );
+  const opportunityLevel = highestPriority(opportunities.map((opportunity) => opportunity.priority), "low");
+  const topOpportunity = opportunities[0]?.title ?? "mantener monitoreo de Revenue Intelligence";
+  const topRisk = alerts[0]?.title ?? "sin riesgos ejecutivos críticos";
+  const primaryFocus = riskLevel === "high" || riskLevel === "medium" ? topRisk : topOpportunity;
+
+  const narrative =
+    revenueSnapshot.totals.leads === 0
+      ? "No hay volumen suficiente de leads para una interpretación ejecutiva robusta; conservar monitoreo read-only hasta contar con datos operativos."
+      : `Salud ejecutiva ${healthStatus}; revenue score ${revenueScore.value}/100, growth score ${growthScore.value}/100 y confianza forecast ${forecastSnapshot.quality.confidenceScore}/100.`;
+
+  return {
+    healthStatus,
+    riskLevel,
+    opportunityLevel: opportunityIndex.value >= 65 ? opportunityLevel : opportunityLevel === "high" ? "medium" : opportunityLevel,
+    narrative,
+    primaryFocus,
+  };
+}
+
+function buildPriorityActions(
+  snapshot: RevenueSnapshotV1,
+  forecast: RevenueForecastSnapshot,
+  alerts: ExecutiveDecisionAlert[],
+  opportunities: ExecutiveOpportunity[],
+): ExecutivePriorityAction[] {
+  const actions: ExecutivePriorityAction[] = [];
+
+  if (snapshot.totals.leads > 0 && snapshot.conversion.leadToAppointmentRate < 45) {
+    actions.push({
+      title: "Elevar conversión Lead → Cita",
+      category: "conversion",
+      priority: "high",
+      rationale: `Conversión actual: ${snapshot.conversion.leadToAppointmentRate}%.`,
+      expectedOutcome: "Incrementar citas sin aumentar inversión de captación.",
+    });
+  }
+
+  if (snapshot.totals.scheduled > 0 && snapshot.conversion.appointmentToAttendanceRate < 65) {
+    actions.push({
+      title: "Mejorar asistencia a citas",
+      category: "attendance",
+      priority: "medium",
+      rationale: `Attendance actual: ${snapshot.conversion.appointmentToAttendanceRate}%.`,
+      expectedOutcome: "Reducir no-shows y proteger revenue esperado.",
+    });
+  }
+
+  if (forecast.risks.some((risk) => risk.code === "DATA_QUALITY")) {
+    actions.push({
+      title: "Corregir calidad de datos ejecutiva",
+      category: "data-quality",
+      priority: "medium",
+      rationale: "Existen registros incompletos o no reconocidos en el snapshot.",
+      expectedOutcome: "Mejorar confiabilidad de rankings, forecast y decisiones ejecutivas.",
+    });
+  }
+
+  const negativeTrend = forecast.trends.find((trend) => trend.direction === "down");
+  if (negativeTrend) {
+    actions.push({
+      title: `Revisar tendencia negativa: ${negativeTrend.metric}`,
+      category: "growth",
+      priority: negativeTrend.metric === "leadVolume" ? "medium" : "high",
+      rationale: `${negativeTrend.metric} cayó ${Math.abs(negativeTrend.changePercent)}% contra el periodo previo comparable.`,
+      expectedOutcome: "Detener deterioro temprano antes de afectar metas mensuales.",
+    });
+  }
+
+  opportunities.slice(0, 2).forEach((opportunity) => {
+    actions.push({
+      title: opportunity.title,
+      category: "opportunity",
+      priority: opportunity.priority,
+      rationale: opportunity.description,
+      expectedOutcome: "Priorizar recursos hacia el mayor potencial comercial detectado.",
+    });
+  });
+
+  if (alerts.length === 0 && actions.length === 0) {
+    actions.push({
+      title: "Mantener cadencia ejecutiva semanal",
+      category: "pipeline",
+      priority: "low",
+      rationale: "No se detectan riesgos ejecutivos relevantes en el snapshot actual.",
+      expectedOutcome: "Conservar visibilidad ejecutiva sin introducir cambios operativos innecesarios.",
+    });
+  }
+
+  return actions
+    .sort((a, b) => {
+      const weight = { high: 3, medium: 2, low: 1 } as const;
+      return weight[b.priority] - weight[a.priority] || a.title.localeCompare(b.title);
+    })
+    .slice(0, 6);
+}
+
 export function createExecutiveAnalyticsSnapshot(
   revenueSnapshot: RevenueSnapshotV1,
   forecastSnapshot: RevenueForecastSnapshot,
@@ -257,6 +404,22 @@ export function createExecutiveAnalyticsSnapshot(
   const revenueScore = calculateRevenueScore(revenueSnapshot, forecastSnapshot);
   const growthScore = calculateGrowthScore(forecastSnapshot);
   const opportunityIndex = calculateOpportunityIndex(revenueSnapshot, forecastSnapshot);
+  const rankings = {
+    sources: revenueSnapshot.performance.bySource.map(rankSource).sort(sortRanking).slice(0, 10),
+    services: revenueSnapshot.performance.byService.map(rankService).sort(sortRanking).slice(0, 10),
+  };
+  const alerts = buildAlerts(revenueSnapshot, forecastSnapshot);
+  const opportunities = buildOpportunities(revenueSnapshot);
+  const interpretation = buildInterpretation(
+    revenueSnapshot,
+    forecastSnapshot,
+    revenueScore,
+    growthScore,
+    opportunityIndex,
+    alerts,
+    opportunities,
+  );
+  const priorityActions = buildPriorityActions(revenueSnapshot, forecastSnapshot, alerts, opportunities);
 
   return {
     version: EXECUTIVE_ANALYTICS_VERSION,
@@ -268,12 +431,11 @@ export function createExecutiveAnalyticsSnapshot(
       growthScore,
       opportunityIndex,
     },
-    rankings: {
-      sources: revenueSnapshot.performance.bySource.map(rankSource).sort(sortRanking).slice(0, 10),
-      services: revenueSnapshot.performance.byService.map(rankService).sort(sortRanking).slice(0, 10),
-    },
-    alerts: buildAlerts(revenueSnapshot, forecastSnapshot),
-    opportunities: buildOpportunities(revenueSnapshot),
+    interpretation,
+    priorityActions,
+    rankings,
+    alerts,
+    opportunities,
     governance: {
       readOnly: true,
       sourceOfTruth: "Leads",
@@ -281,6 +443,7 @@ export function createExecutiveAnalyticsSnapshot(
       limitations: [
         "Executive Analytics consume RevenueSnapshotV1 y RevenueForecastSnapshot; no escribe datos maestros.",
         "Scores ejecutivos son indicadores derivados para priorización, no registros financieros oficiales.",
+        "59.3 agrega interpretación ejecutiva y acciones prioritarias sin persistencia nueva.",
       ],
     },
   };

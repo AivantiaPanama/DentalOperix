@@ -71,6 +71,9 @@ describe("executive analytics", () => {
     expect(executive.rankings.sources.length).toBeGreaterThan(0);
     expect(executive.rankings.services.length).toBeGreaterThan(0);
     expect(executive.opportunities.length).toBeGreaterThan(0);
+    expect(executive.interpretation.healthStatus).toBeDefined();
+    expect(executive.interpretation.primaryFocus.length).toBeGreaterThan(0);
+    expect(executive.priorityActions.length).toBeGreaterThan(0);
     expect(executive.governance.readOnly).toBe(true);
     expect(executive.governance.sourceOfTruth).toBe("Leads");
     expect(executive.governance.revenueType).toBe("estimated");
@@ -84,6 +87,8 @@ describe("executive analytics", () => {
     expect(executive.summary.revenueScore.value).toBeGreaterThanOrEqual(0);
     expect(executive.rankings.sources).toEqual([]);
     expect(executive.rankings.services).toEqual([]);
+    expect(executive.interpretation.healthStatus).toBeDefined();
+    expect(executive.priorityActions.length).toBeGreaterThanOrEqual(1);
     expect(executive.governance.limitations[0]).toContain("no escribe datos maestros");
   });
 });
