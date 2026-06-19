@@ -1,11 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { CrmLeadRow } from "@/lib/crm-metrics";
 
-const readLeadsFromSheet = vi.fn();
+const listLeads = vi.fn();
 const getServerConfig = vi.fn();
 
-vi.mock("@/server/google/sheets", () => ({
-  readLeadsFromSheet,
+vi.mock("@/server/leads/persistence", () => ({
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      listLeads,
+      getHealth: vi.fn(() => ({ active: true })),
+    })),
+  },
 }));
 
 vi.mock("@/lib/config.server", () => ({
@@ -46,7 +51,7 @@ describe("/api/analytics/executive endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(new Request("http://localhost/api/analytics/executive"));
     const payload = await response.json();
@@ -91,7 +96,7 @@ describe("/api/analytics/executive endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(new Request("http://localhost/api/analytics/executive?period=last7days"));
     const payload = await response.json();
@@ -102,7 +107,7 @@ describe("/api/analytics/executive endpoint", () => {
   });
 
   it("returns a degraded empty executive snapshot instead of 500 when the analytics source fails", async () => {
-    readLeadsFromSheet.mockRejectedValue(new Error("Google Sheets unavailable"));
+    listLeads.mockRejectedValue(new Error("Google Sheets unavailable"));
 
     const response = await GET(new Request("http://localhost/api/analytics/executive?period=all"));
     const payload = await response.json();

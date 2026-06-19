@@ -1,6 +1,6 @@
 import type { MockLead } from "@/lib/mock/leads";
 import { mockLeads } from "@/lib/mock/leads";
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider, LeadPersistenceNotConfiguredError } from "@/server/leads/persistence";
 import { getServerConfig } from "@/lib/config.server";
 import {
   createForbiddenResponse,
@@ -14,9 +14,10 @@ export async function GET(request: Request) {
   try {
     requirePermissionOrInternalApiKey(request, "leads:read");
     const config = getServerConfig();
-    if (config.nodeEnv === "production" && !config.googleRefreshToken) {
+    const adapter = leadPersistenceProvider.getActiveLeadPersistenceAdapter();
+    if (config.nodeEnv === "production" && !adapter.getHealth().active) {
       return new Response(
-        JSON.stringify({ success: false, error: "Leads access is restricted in production." }),
+        JSON.stringify({ success: false, error: "Leads persistence is not active in production." }),
         {
           status: 403,
           headers: { "Content-Type": "application/json" },
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const leads = await readLeadsFromSheet();
+    const leads = await adapter.listLeads();
     if (!leads.length) {
       throw new Error("No hay leads en la hoja de cálculo.");
     }
@@ -41,13 +42,20 @@ export async function GET(request: Request) {
       return createForbiddenResponse();
     }
 
+    if (error instanceof LeadPersistenceNotConfiguredError && getServerConfig().nodeEnv === "production") {
+      return new Response(JSON.stringify({ success: false, error: error.message }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     console.warn("Falling back to mock leads:", error);
 
     return new Response(
       JSON.stringify({
         leads: mockLeads,
         fallback: true,
-        message: "No se pudo leer Google Sheets, usando demo.",
+        message: "No se pudo leer la persistencia certificada de Leads, usando demo.",
       }),
       {
         status: 200,

@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const readLeadsFromSheet = vi.fn();
+const listLeads = vi.fn();
 const getServerConfig = vi.fn();
-vi.mock("@/server/google/sheets", () => ({
-  readLeadsFromSheet,
+vi.mock("@/server/leads/persistence", () => ({
+  LeadPersistenceNotConfiguredError: class LeadPersistenceNotConfiguredError extends Error {},
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      listLeads,
+      getHealth: vi.fn(() => ({ active: true })),
+    })),
+  },
 }));
 vi.mock("@/lib/config.server", () => ({
   getServerConfig,
@@ -33,12 +39,12 @@ describe("/api/leads/list", () => {
 
     const body = await response.json();
     expect(body).toEqual({ success: false, error: "Unauthorized" });
-    expect(readLeadsFromSheet).not.toHaveBeenCalled();
+    expect(listLeads).not.toHaveBeenCalled();
   });
 
   it("returns leads when x-api-key is valid", async () => {
     const leads = [{ id: "lead-1", name: "Ana" }];
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(
       new Request("http://localhost/api/leads/list", {
@@ -49,6 +55,6 @@ describe("/api/leads/list", () => {
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body).toEqual({ leads });
-    expect(readLeadsFromSheet).toHaveBeenCalledOnce();
+    expect(listLeads).toHaveBeenCalledOnce();
   });
 });

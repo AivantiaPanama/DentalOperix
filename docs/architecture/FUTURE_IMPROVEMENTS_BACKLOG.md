@@ -370,3 +370,22 @@ docs/architecture/IMPLEMENTATION_CHECKLIST.md
 ```
 
 This is now the reusable development baseline for avoiding repeated investigation of already certified patterns.
+
+
+### FI-004 - Runtime Persistence Observability
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: Observability / Governance  
+Risk: LOW  
+Impact: Operational traceability
+
+60.4 aligned runtime lead access to the certified persistence provider and restricted Google Sheets to rollback mode. A future improvement can add structured telemetry for active persistence mode, rollback activation, and fail-closed relational configuration errors.
+
+Constraints:
+
+- no analytics writes
+- no dual write
+- no new source of truth
+- no logging of secrets or patient-sensitive payloads
+

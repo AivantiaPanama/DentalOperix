@@ -1,11 +1,16 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import type { CrmLeadRow } from "@/lib/crm-metrics";
 
-const readLeadsFromSheet = vi.fn();
+const listLeads = vi.fn();
 const getServerConfig = vi.fn();
 
-vi.mock("@/server/google/sheets", () => ({
-  readLeadsFromSheet,
+vi.mock("@/server/leads/persistence", () => ({
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      listLeads,
+      getHealth: vi.fn(() => ({ active: true })),
+    })),
+  },
 }));
 
 vi.mock("@/lib/config.server", () => ({
@@ -46,7 +51,7 @@ describe("/api/analytics/revenue-forecast endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(new Request("http://localhost/api/analytics/revenue-forecast"));
     const payload = await response.json();
@@ -85,7 +90,7 @@ describe("/api/analytics/revenue-forecast endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(
       new Request("http://localhost/api/analytics/revenue-forecast?period=last7days"),

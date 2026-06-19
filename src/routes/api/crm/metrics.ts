@@ -1,4 +1,4 @@
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 import {
   createForbiddenResponse,
   createUnauthorizedResponse,
@@ -74,7 +74,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const leads = await readLeadsFromSheet();
+    const leads = await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads();
     if (!leads.length) {
       return new Response(
         JSON.stringify({

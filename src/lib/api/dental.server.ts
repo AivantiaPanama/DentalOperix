@@ -1,6 +1,6 @@
 import { CRM_STATUS } from "@/server/google/types";
 import type { GoogleLeadPayload } from "@/lib/google/schemas";
-import { appendLeadToSheet as appendCRMLeadToSheet, updateLeadInSheet } from "@/server/google/crm";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 import { createGoogleCalendarEvent, sendConfirmationEmail } from "../google/google.server";
 
 export type DentalLeadPayload = GoogleLeadPayload & {
@@ -53,7 +53,8 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     console.log("LEAD RECORD:", leadRecord);
   }
 
-  await appendCRMLeadToSheet(leadRecord);
+  const leadPersistence = leadPersistenceProvider.getActiveLeadPersistenceAdapter();
+  await leadPersistence.appendLead(leadRecord);
 
   const isDev = process.env.NODE_ENV !== "production";
   let event;
@@ -67,7 +68,7 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     event = await createGoogleCalendarEvent(completePayload);
     calendarEventId = event.id ?? "";
     updatedStatus = CRM_STATUS.AGENDADA;
-    await updateLeadInSheet(leadRecord.id, {
+    await leadPersistence.updateLead(leadRecord.id, {
       status: updatedStatus,
       calendarEventId,
     });
@@ -82,7 +83,7 @@ export async function processDentalLead(payload: DentalLeadPayload) {
   try {
     await sendConfirmationEmail(completePayload, event?.htmlLink ?? "");
     emailSent = true;
-    await updateLeadInSheet(leadRecord.id, {
+    await leadPersistence.updateLead(leadRecord.id, {
       emailSent: true,
     });
   } catch (error) {

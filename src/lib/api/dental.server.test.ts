@@ -7,17 +7,23 @@ vi.mock("../google/google.server", () => ({
   sendConfirmationEmail: vi.fn(),
 }));
 
-vi.mock("../../server/google/crm", () => ({
-  appendLeadToSheet: vi.fn(),
-  updateLeadInSheet: vi.fn(),
+const appendLead = vi.fn();
+const updateLead = vi.fn();
+
+vi.mock("@/server/leads/persistence", () => ({
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      appendLead,
+      updateLead,
+    })),
+  },
 }));
 
 const googleServer = await import("../google/google.server");
-const crmServer = await import("../../server/google/crm");
 const mockedCreateGoogleCalendarEvent = vi.mocked(googleServer.createGoogleCalendarEvent);
 const mockedSendConfirmationEmail = vi.mocked(googleServer.sendConfirmationEmail);
-const mockedAppendCRMLeadToSheet = vi.mocked(crmServer.appendLeadToSheet);
-const mockedUpdateLeadInSheet = vi.mocked(crmServer.updateLeadInSheet);
+const mockedAppendLead = vi.mocked(appendLead);
+const mockedUpdateLead = vi.mocked(updateLead);
 
 describe("processDentalLead", () => {
   beforeEach(() => {
@@ -43,8 +49,8 @@ describe("processDentalLead", () => {
 
     const result = await processDentalLead(payload);
 
-    expect(mockedAppendCRMLeadToSheet).toHaveBeenCalledOnce();
-    expect(mockedAppendCRMLeadToSheet.mock.calls[0][0]).toMatchObject({
+    expect(mockedAppendLead).toHaveBeenCalledOnce();
+    expect(mockedAppendLead.mock.calls[0][0]).toMatchObject({
       treatment: "limpieza",
       name: "Lucía",
       email: "lucia@example.com",
@@ -53,7 +59,7 @@ describe("processDentalLead", () => {
     });
 
     expect(mockedCreateGoogleCalendarEvent).toHaveBeenCalledOnce();
-    expect(mockedUpdateLeadInSheet).toHaveBeenCalledTimes(2);
+    expect(mockedUpdateLead).toHaveBeenCalledTimes(2);
     expect(mockedSendConfirmationEmail).toHaveBeenCalledOnce();
 
     expect(result).toMatchObject({
@@ -85,7 +91,7 @@ describe("processDentalLead", () => {
 
     await processDentalLead(payload);
 
-    expect(mockedAppendCRMLeadToSheet).toHaveBeenCalledOnce();
+    expect(mockedAppendLead).toHaveBeenCalledOnce();
     expect(consoleLogSpy).toHaveBeenCalledWith(
       "LEAD RECORD:",
       expect.objectContaining({
@@ -116,8 +122,8 @@ describe("processDentalLead", () => {
 
     await processDentalLead(payload);
 
-    expect(mockedAppendCRMLeadToSheet).toHaveBeenCalledOnce();
-    expect(mockedAppendCRMLeadToSheet.mock.calls[0][0]).toMatchObject({
+    expect(mockedAppendLead).toHaveBeenCalledOnce();
+    expect(mockedAppendLead.mock.calls[0][0]).toMatchObject({
       treatment: "implante dental",
     });
   });

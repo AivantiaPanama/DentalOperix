@@ -9,7 +9,7 @@ import {
   type PatientAdministrativeVerification,
 } from "@/lib/patients/admin-profile";
 import { getServerConfig } from "@/lib/config.server";
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 
 export class PatientNotFoundError extends Error {}
 
@@ -47,7 +47,7 @@ async function readBaseProfiles(): Promise<PatientAdministrativeProfile[]> {
       throw new Error("Patient access is restricted in production.");
     }
 
-    const leads = await readLeadsFromSheet();
+    const leads = await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads();
     if (!leads.length) throw new Error("No hay leads para derivar pacientes.");
     return derivePatientAdministrativeProfiles(leads);
   } catch (error) {

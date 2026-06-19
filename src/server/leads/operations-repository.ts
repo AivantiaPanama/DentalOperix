@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { mockLeads, type MockLead } from "@/lib/mock/leads";
 import { getServerConfig } from "@/lib/config.server";
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 import type { LeadOperationPriority, LeadOperationalStatus, LeadOperationsUpdate } from "./api-validation";
 
 export class LeadNotFoundError extends Error {}
@@ -59,7 +59,7 @@ async function readBaseLeads(): Promise<LeadOperationsProfile["lead"][]> {
       throw new Error("Lead operations access is restricted in production.");
     }
 
-    const leads = await readLeadsFromSheet();
+    const leads = await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads();
     if (!leads.length) throw new Error("No hay leads para gestionar operativamente.");
     return leads;
   } catch (error) {

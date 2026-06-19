@@ -287,3 +287,17 @@ Document used:
 ## Governance Decision
 
 These patterns are now part of the DentalOperix development baseline. Future implementations should cite this document when applying any certified pattern listed here.
+
+
+## Runtime Persistence Alignment Pattern
+
+Lead runtime access must resolve through `LeadPersistenceProvider`. Direct Google Sheets reads or writes are permitted only inside the Google Sheets adapter or explicitly approved diagnostic tooling. After 60.4, Google Sheets is a rollback path, not the default active persistence.
+
+Required controls:
+
+- default runtime selection resolves to `RelationalLeadPersistenceAdapter`
+- relational runtime fails closed when certified flags are missing
+- Google Sheets requires explicit rollback approval
+- no dual write or parallel source of truth is allowed
+- derived analytics remain read-only
+

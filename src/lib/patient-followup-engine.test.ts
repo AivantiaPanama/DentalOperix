@@ -2,13 +2,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { FollowupRecord } from "@/server/google/followups";
 
-const readLeadsFromSheet = vi.fn();
+const listLeads = vi.fn();
 const readFollowupRecords = vi.fn();
 const appendFollowupRecord = vi.fn();
 const sendFollowupEmail = vi.fn();
 
-vi.mock("@/server/google/sheets", () => ({
-  readLeadsFromSheet,
+vi.mock("@/server/leads/persistence", () => ({
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      listLeads,
+      getHealth: vi.fn(() => ({ active: true })),
+    })),
+  },
 }));
 
 vi.mock("@/server/google/followups", () => ({
@@ -110,7 +115,7 @@ describe("patient followup engine", () => {
   });
 
   it("skips sending followups in dryRun mode", async () => {
-    readLeadsFromSheet.mockResolvedValue([
+    listLeads.mockResolvedValue([
       {
         id: "lead-1",
         name: "Ana",
@@ -129,7 +134,7 @@ describe("patient followup engine", () => {
   });
 
   it("does not fail when PatientFollowUps sheet is missing", async () => {
-    readLeadsFromSheet.mockResolvedValue([
+    listLeads.mockResolvedValue([
       {
         id: "lead-1",
         name: "Ana",
@@ -148,7 +153,7 @@ describe("patient followup engine", () => {
   });
 
   it("sends followups when dryRun is false and records sent actions", async () => {
-    readLeadsFromSheet.mockResolvedValue([
+    listLeads.mockResolvedValue([
       {
         id: "lead-1",
         name: "Ana",

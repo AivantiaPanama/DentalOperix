@@ -65,6 +65,8 @@ Confirm the change does not modify these components unless explicitly approved:
 
 ## 5. Google Sheets / External Data
 
+After 60.4, Google Sheets may be used only as an explicitly approved rollback or external diagnostic path. Certified runtime lead access must use `LeadPersistenceProvider` by default.
+
 When Google Sheets or external data is involved:
 
 ```text
@@ -73,8 +75,8 @@ When Google Sheets or external data is involved:
 [ ] Sheet ID confirmed.
 [ ] Worksheet/tab names confirmed.
 [ ] Read endpoint manually probed.
-[ ] Write path is not changed unless explicitly approved.
-[ ] OAuth scope requirements understood.
+[ ] Google Sheets write path is not used unless rollback is explicitly approved.
+[ ] `GOOGLE_SHEETS_ROLLBACK_APPROVED=true` is present only for rollback validation, never for dual write.
 [ ] Missing sheet/tab is distinguished from UI stale state.
 ```
 

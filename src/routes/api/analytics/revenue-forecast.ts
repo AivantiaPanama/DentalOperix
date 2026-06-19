@@ -10,7 +10,7 @@ import type { CrmLeadRow } from "@/lib/crm-metrics";
 import { filterLeadsByPeriod, normalizeDashboardPeriod } from "@/lib/date-filters";
 import { createRevenueForecastSnapshot } from "@/lib/revenue-forecast";
 import { createRevenueSnapshotV1 } from "@/lib/revenue-intelligence";
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 
 export async function GET(request: Request) {
   try {
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
 
   try {
     const period = normalizeDashboardPeriod(new URL(request.url).searchParams.get("period"));
-    const leads = (await readLeadsFromSheet()) as CrmLeadRow[];
+    const leads = (await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads()) as CrmLeadRow[];
     const filteredLeads = filterLeadsByPeriod(leads, period);
     const snapshot = createRevenueSnapshotV1(filteredLeads);
     const forecast = createRevenueForecastSnapshot(snapshot);

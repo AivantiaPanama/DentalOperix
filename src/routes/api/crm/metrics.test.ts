@@ -1,11 +1,16 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import type { CrmLeadRow } from "@/lib/crm-metrics";
 
-const readLeadsFromSheet = vi.fn();
+const listLeads = vi.fn();
 const getServerConfig = vi.fn();
 
-vi.mock("@/server/google/sheets", () => ({
-  readLeadsFromSheet,
+vi.mock("@/server/leads/persistence", () => ({
+  leadPersistenceProvider: {
+    getActiveLeadPersistenceAdapter: vi.fn(() => ({
+      listLeads,
+      getHealth: vi.fn(() => ({ active: true })),
+    })),
+  },
 }));
 
 vi.mock("@/lib/config.server", () => ({
@@ -21,7 +26,7 @@ describe("/api/crm/metrics endpoint", () => {
   });
 
   it("returns emptyCRM response with trend, comparison, and lead score fields", async () => {
-    readLeadsFromSheet.mockResolvedValue([]);
+    listLeads.mockResolvedValue([]);
 
     const response = await GET(new Request("http://localhost/api/crm/metrics"));
     const payload = await response.json();
@@ -56,7 +61,7 @@ describe("/api/crm/metrics endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(new Request("http://localhost/api/crm/metrics"));
     const payload = await response.json();
@@ -90,7 +95,7 @@ describe("/api/crm/metrics endpoint", () => {
       },
     ];
 
-    readLeadsFromSheet.mockResolvedValue(leads);
+    listLeads.mockResolvedValue(leads);
 
     const response = await GET(new Request("http://localhost/api/crm/metrics?period=last7days"));
     const payload = await response.json();
@@ -112,7 +117,7 @@ describe("/api/crm/metrics endpoint", () => {
   });
 
   it("returns degraded empty CRM metrics when Google Sheets is unavailable", async () => {
-    readLeadsFromSheet.mockRejectedValue(new Error("Sheets unavailable"));
+    listLeads.mockRejectedValue(new Error("Sheets unavailable"));
 
     const response = await GET(new Request("http://localhost/api/crm/metrics?period=thisMonth"));
     const payload = await response.json();

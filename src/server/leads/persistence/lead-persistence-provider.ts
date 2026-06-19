@@ -2,10 +2,10 @@ import type { LeadPersistenceMode, LeadPersistencePort } from "./lead-persistenc
 import { googleSheetLeadPersistenceAdapter } from "./google-sheet-lead-persistence-adapter";
 import { relationalLeadPersistenceAdapter } from "./relational-lead-persistence-adapter";
 
-const DEFAULT_LEAD_PERSISTENCE_MODE: LeadPersistenceMode = "google-sheet";
+const DEFAULT_LEAD_PERSISTENCE_MODE: LeadPersistenceMode = "relational-db";
 
 function normalizeLeadPersistenceMode(raw: string | undefined): LeadPersistenceMode {
-  if (raw === "relational-db") return "relational-db";
+  if (raw === "google-sheet") return "google-sheet";
   return DEFAULT_LEAD_PERSISTENCE_MODE;
 }
 
@@ -13,27 +13,33 @@ export function getConfiguredLeadPersistenceMode(): LeadPersistenceMode {
   return normalizeLeadPersistenceMode(process.env.LEADS_PERSISTENCE_MODE);
 }
 
+export function isGoogleSheetRollbackApproved(): boolean {
+  return (
+    process.env.LEADS_PERSISTENCE_MODE === "google-sheet" &&
+    process.env.GOOGLE_SHEETS_ROLLBACK_APPROVED === "true"
+  );
+}
+
 export function getLeadPersistenceAdapter(
   mode: LeadPersistenceMode = getConfiguredLeadPersistenceMode(),
 ): LeadPersistencePort {
-  if (mode === "relational-db") return relationalLeadPersistenceAdapter;
-  return googleSheetLeadPersistenceAdapter;
+  if (mode === "google-sheet") return googleSheetLeadPersistenceAdapter;
+  return relationalLeadPersistenceAdapter;
 }
 
 export function getActiveLeadPersistenceAdapter(): LeadPersistencePort {
-  const adapter = getLeadPersistenceAdapter();
+  const mode = getConfiguredLeadPersistenceMode();
 
-  if (adapter.mode === "relational-db") {
-    // 57.x governance: relational persistence is present as infrastructure only.
-    // It must not become active without an explicit cutover decision.
-    return relationalLeadPersistenceAdapter;
+  if (mode === "google-sheet" && isGoogleSheetRollbackApproved()) {
+    return googleSheetLeadPersistenceAdapter;
   }
 
-  return adapter;
+  return relationalLeadPersistenceAdapter;
 }
 
 export const leadPersistenceProvider = {
   getConfiguredLeadPersistenceMode,
   getLeadPersistenceAdapter,
   getActiveLeadPersistenceAdapter,
+  isGoogleSheetRollbackApproved,
 };

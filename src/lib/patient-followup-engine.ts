@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { readLeadsFromSheet } from "@/server/google/sheets";
+import { leadPersistenceProvider } from "@/server/leads/persistence";
 import {
   appendFollowupRecord,
   readFollowupRecords,
@@ -251,7 +251,7 @@ export async function runPatientFollowups(
   const parsed = followupRunSchema.parse(input);
   const dryRun = parsed.dryRun;
 
-  const leads = await readLeadsFromSheet();
+  const leads = await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads();
   const errors: string[] = [];
   let existingFollowups: FollowupRecord[] = [];
 
