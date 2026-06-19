@@ -152,4 +152,35 @@ describe("revenue intelligence", () => {
     expect(rows[0].treatment).toBe("");
     expect(rows[0].status).toBe("Scheduled");
   });
+
+  it("normalizes mojibake service names in revenue service rankings", () => {
+    const rows: CrmLeadRow[] = [
+      {
+        id: "1",
+        date: "2026-06-14",
+        name: "Ana",
+        phone: "+507 60000000",
+        email: "ana@example.com",
+        treatment: "RevisiÃ³n Dental",
+        message: "Consulta",
+        status: "agendada",
+        source: "web-form",
+      },
+    ];
+
+    const snapshot = createRevenueSnapshotV1(rows);
+
+    expect(snapshot.performance.byService).toEqual([
+      {
+        service: "Revisión Dental",
+        leads: 1,
+        scheduled: 1,
+        completed: 0,
+        conversionRate: 100,
+        estimatedPipelineValue: 50,
+      },
+    ]);
+    expect(snapshot.pipeline.estimatedPipelineValue).toBe(50);
+  });
+
 });

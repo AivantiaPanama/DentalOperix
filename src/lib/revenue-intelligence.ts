@@ -10,6 +10,7 @@ import {
   type CrmLeadRow,
   type TrendPoint,
 } from "./crm-metrics";
+import { normalizeDisplayText, normalizeServiceName } from "./text-normalization";
 
 export const REVENUE_INTELLIGENCE_VERSION = "58.2-v1" as const;
 
@@ -108,8 +109,8 @@ function normalizeLeadRows(rows: CrmLeadRow[]): CrmLeadRow[] {
     return {
       ...row,
       status,
-      source: row.source?.toString().trim() || "unknown",
-      treatment: row.treatment?.toString().trim() || "unknown",
+      source: normalizeDisplayText(row.source) || "unknown",
+      treatment: normalizeServiceName(row.treatment),
     };
   });
 }
@@ -117,8 +118,8 @@ function normalizeLeadRows(rows: CrmLeadRow[]): CrmLeadRow[] {
 function calculateQuality(rows: CrmLeadRow[]): RevenueQualityReport {
   return rows.reduce(
     (acc, row) => {
-      if (!row.source?.toString().trim()) acc.missingSource += 1;
-      if (!row.treatment?.toString().trim()) acc.missingService += 1;
+      if (!normalizeDisplayText(row.source)) acc.missingSource += 1;
+      if (!normalizeDisplayText(row.treatment)) acc.missingService += 1;
       if (!row.status?.toString().trim()) {
         acc.missingStatus += 1;
       } else if (normalizeStatus(row.status.toString()) === "unknown") {

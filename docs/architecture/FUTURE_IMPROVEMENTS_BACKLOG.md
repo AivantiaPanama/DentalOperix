@@ -266,3 +266,21 @@ Implemented `60.2-HF6 Assistant Fallback State Cleanup` to clear stale fallback 
 Governance note:
 
 No persistence, Google Sheets write path, lead ingestion, or protected components were modified.
+
+## FI-009 Data Quality Encoding Audit
+
+Priority: HIGH  
+Status: RESOLVED IN 60.3  
+Category: Data Quality / Analytics Consistency
+
+Description:
+
+Manual validation identified mojibake values such as `OdontologÃa`, `DiseÃ±o`, and `RevisiÃ³n` in CRM-derived reads.
+
+Resolution:
+
+Implemented 60.3 Data Quality and Encoding Audit with conservative read-side normalization and CRM metrics service grouping normalization.
+
+Governance note:
+
+No persistence, source-of-truth, Google Sheets write path, lead creation path, or protected component was modified.

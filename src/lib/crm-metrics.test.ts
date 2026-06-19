@@ -328,4 +328,34 @@ describe("crm metrics", () => {
       conversionRate: { current: 0, previous: 100, changePercent: -100 },
     });
   });
+  it("normalizes mojibake service names before grouping and valuation", () => {
+    const rows: CrmLeadRow[] = [
+      {
+        id: "1",
+        date: "2026-06-14",
+        name: "Ana",
+        phone: "+507 60000000",
+        email: "ana@example.com",
+        treatment: "DiseÃ±o de Sonrisa",
+        message: "Consulta",
+        status: "agendada",
+      },
+      {
+        id: "2",
+        date: "2026-06-14",
+        name: "Bruno",
+        phone: "+507 60000001",
+        email: "bruno@example.com",
+        treatment: "Diseño de Sonrisa",
+        message: "Consulta",
+        status: "completada",
+      },
+    ];
+
+    expect(calculateServicePerformance(rows)).toEqual([
+      { service: "Diseño de Sonrisa", leads: 2, scheduled: 2, completed: 1, conversionRate: 100 },
+    ]);
+    expect(calculateEstimatedPipelineValue(rows)).toBe(2400);
+  });
+
 });

@@ -1,6 +1,7 @@
 import type { LeadSource } from "./analytics";
 import { format, startOfMonth, startOfWeek } from "date-fns";
 import { SERVICE_ESTIMATED_VALUE } from "./service-values";
+import { normalizeServiceName } from "./text-normalization";
 
 export type CrmLeadStatus =
   | "nuevo"
@@ -275,14 +276,14 @@ export type ServiceTrendPoint = {
 
 function getServiceEstimatedValue(service?: string) {
   if (!service) return 0;
-  return SERVICE_ESTIMATED_VALUE[service] ?? 0;
+  return SERVICE_ESTIMATED_VALUE[normalizeServiceName(service)] ?? 0;
 }
 
 export function calculateServicePerformance(rows: CrmLeadRow[]) {
   const grouped: Record<string, ServicePerformanceItem> = {};
 
   rows.forEach((row) => {
-    const service = row.treatment || "unknown";
+    const service = normalizeServiceName(row.treatment);
     const entry = grouped[service] ?? {
       service,
       leads: 0,
@@ -360,7 +361,7 @@ export function calculateServiceConversion(rows: CrmLeadRow[]) {
   const grouped: Record<string, ServiceConversionItem> = {};
 
   rows.forEach((row) => {
-    const service = row.treatment || "unknown";
+    const service = normalizeServiceName(row.treatment);
     const entry = grouped[service] ?? {
       service,
       leads: 0,

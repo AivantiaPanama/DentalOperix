@@ -8,6 +8,7 @@ import {
   type GoogleCRMLeadPayload,
 } from "./types";
 import { z } from "zod";
+import { normalizeDisplayText } from "@/lib/text-normalization";
 
 const CRM_COLUMNS = [
   "ID",
@@ -273,20 +274,20 @@ export async function readLeadsFromSheet() {
       ] = row;
 
       return {
-        id: id?.toString() ?? `sheet-${index + 1}`,
-        createdAt: createdAt?.toString() ?? new Date().toISOString(),
-        name: name?.toString() ?? "",
-        email: email?.toString() ?? "",
-        phone: phone?.toString() ?? "",
-        treatment: treatment?.toString() ?? "",
-        status: normalizeCRMStatus(status?.toString()),
-        source: source?.toString() ?? "sheet",
-        preferredDate: preferredDate?.toString() ?? "",
-        message: message?.toString() ?? "",
-        urgency: urgency?.toString() ?? "",
-        aiSummary: aiSummary?.toString() ?? "",
-        calendarEventId: calendarEventId?.toString() ?? "",
-        emailSent: emailSent === "TRUE",
+        id: normalizeDisplayText(id) || `sheet-${index + 1}`,
+        createdAt: normalizeDisplayText(createdAt) || new Date().toISOString(),
+        name: normalizeDisplayText(name),
+        email: normalizeDisplayText(email),
+        phone: normalizeDisplayText(phone),
+        treatment: normalizeDisplayText(treatment),
+        status: normalizeCRMStatus(normalizeDisplayText(status)),
+        source: normalizeDisplayText(source) || "sheet",
+        preferredDate: normalizeDisplayText(preferredDate),
+        message: normalizeDisplayText(message),
+        urgency: normalizeDisplayText(urgency),
+        aiSummary: normalizeDisplayText(aiSummary),
+        calendarEventId: normalizeDisplayText(calendarEventId),
+        emailSent: normalizeDisplayText(emailSent) === "TRUE",
       };
     });
 }
