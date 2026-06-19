@@ -10,6 +10,7 @@ import * as googleCallbackHandler from "./routes/api/google/callback";
 import * as leadsCreateHandler from "./routes/api/leads/create";
 import * as leadsListHandler from "./routes/api/leads/list";
 import * as crmMetricsHandler from "./routes/api/crm/metrics";
+import * as revenueAnalyticsHandler from "./routes/api/analytics/revenue";
 import * as calendarCreateEventHandler from "./routes/api/calendar/create-event";
 import * as gmailSendConfirmationHandler from "./routes/api/gmail/send-confirmation";
 import * as followupRunHandler from "./routes/api/followups/run";
@@ -176,6 +177,10 @@ export default {
 
       if (url.pathname === "/api/crm/metrics" && request.method === "GET") {
         return await crmMetricsHandler.GET(request);
+      }
+
+      if (url.pathname === "/api/analytics/revenue" && request.method === "GET") {
+        return await revenueAnalyticsHandler.GET(request);
       }
 
       if (url.pathname === "/api/goals/get" && request.method === "GET") {

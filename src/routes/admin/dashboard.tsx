@@ -18,7 +18,8 @@ import { GoalInsights } from "@/components/admin/GoalInsights";
 import { GoalRiskPanel } from "@/components/admin/GoalRiskPanel";
 import { GoalSettingsPanel } from "@/components/admin/GoalSettingsPanel";
 import { GoalsOverview } from "@/components/admin/GoalsOverview";
-import { fetchCRMmetrics, type CrmDashboardMetrics } from "@/lib/api/crm-metrics";
+import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
+import { fetchRevenueDashboardMetrics } from "@/lib/api/revenue-dashboard-metrics";
 import { getPeriodLabel, type DashboardPeriod } from "@/lib/date-filters";
 import {
   currencyFormatter,
@@ -87,7 +88,7 @@ export function DashboardPage() {
 
   const loadMetrics = (selectedPeriod: string) => {
     setLoading(true);
-    fetchCRMmetrics(selectedPeriod)
+    fetchRevenueDashboardMetrics(selectedPeriod)
       .then((data) => {
         setMetrics(data);
         setError(null);
@@ -197,7 +198,7 @@ export function DashboardPage() {
                 Dashboard de métricas
               </h1>
               <p className="mt-3 max-w-2xl text-muted-foreground">
-                Visión en tiempo real del CRM desde Google Sheets.
+                Visión ejecutiva del CRM desde Revenue Intelligence.
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Periodo actual: {getPeriodLabel(period)}
@@ -244,7 +245,7 @@ export function DashboardPage() {
 
           {loading ? (
             <div className="rounded-3xl border border-border bg-white p-10 text-center text-lg font-medium text-muted-foreground shadow-soft">
-              Cargando métricas del CRM...
+              Cargando métricas de Revenue Intelligence...
             </div>
           ) : error ? (
             <div className="rounded-3xl border border-destructive bg-destructive/10 p-10 text-center text-lg font-medium text-destructive shadow-soft">
