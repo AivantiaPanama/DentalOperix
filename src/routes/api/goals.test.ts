@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { GoalSettings } from "@/lib/goal-config";
+import { DEFAULT_GOAL_CONFIGURATION, type GoalSettings } from "@/lib/goal-config";
 
 vi.mock("@/server/google/goals", () => ({
   readGoalSettingsFromSheet: vi.fn(),
@@ -35,15 +35,17 @@ describe("/api/goals", () => {
     expect(body).toEqual({ success: true, goals: validGoals });
   });
 
-  it("returns 500 when sheet load fails", async () => {
+  it("returns safe default goals when sheet load fails", async () => {
     readGoalSettingsFromSheet.mockRejectedValue(new Error("sheet unavailable"));
 
     const response = await getGoals();
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(200);
 
     const body = await response.json();
-    expect(body.success).toBe(false);
-    expect(body.error).toContain("sheet unavailable");
+    expect(body.success).toBe(true);
+    expect(body.goals).toEqual(DEFAULT_GOAL_CONFIGURATION);
+    expect(body.fallback).toBe("default-goal-configuration");
+    expect(body.warning).toContain("safe defaults");
   });
 
   it("saves goals to sheet", async () => {

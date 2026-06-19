@@ -1,4 +1,5 @@
 import { readGoalSettingsFromSheet } from "@/server/google/goals";
+import { getDefaultGoals } from "@/lib/goal-config";
 import {
   createForbiddenResponse,
   createUnauthorizedResponse,
@@ -22,14 +23,16 @@ export async function GET(request: Request) {
     if (error instanceof ForbiddenError) {
       return createForbiddenResponse();
     }
-    console.error("Failed to load goal settings from sheet:", error);
+    console.warn("Goal settings sheet unavailable; returning default goal configuration:", error);
     return new Response(
       JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        success: true,
+        goals: getDefaultGoals(),
+        fallback: "default-goal-configuration",
+        warning: "Goal settings sheet unavailable; returned safe defaults.",
       }),
       {
-        status: 500,
+        status: 200,
         headers: { "Content-Type": "application/json" },
       },
     );
