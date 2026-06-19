@@ -3,14 +3,16 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { DashboardPage } from "@/routes/admin/dashboard";
-import { fetchCRMmetrics, type CrmDashboardMetrics } from "@/lib/api/crm-metrics";
+import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
+import { fetchRevenueDashboardMetrics } from "@/lib/api/revenue-dashboard-metrics";
 
-vi.mock("@/lib/api/crm-metrics", async () => {
-  const actual =
-    await vi.importActual<typeof import("@/lib/api/crm-metrics")>("@/lib/api/crm-metrics");
+vi.mock("@/lib/api/revenue-dashboard-metrics", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/api/revenue-dashboard-metrics")>(
+    "@/lib/api/revenue-dashboard-metrics",
+  );
   return {
     ...actual,
-    fetchCRMmetrics: vi.fn(),
+    fetchRevenueDashboardMetrics: vi.fn(),
   };
 });
 
@@ -38,8 +40,8 @@ class ResizeObserverMock {
 
 globalThis.ResizeObserver = ResizeObserverMock as any;
 
-const mockedFetchCRMmetrics = fetchCRMmetrics as unknown as vi.MockedFunction<
-  typeof fetchCRMmetrics
+const mockedFetchRevenueDashboardMetrics = fetchRevenueDashboardMetrics as unknown as vi.MockedFunction<
+  typeof fetchRevenueDashboardMetrics
 >;
 
 describe("DashboardPage integration", () => {
@@ -96,7 +98,7 @@ describe("DashboardPage integration", () => {
       },
     };
 
-    mockedFetchCRMmetrics.mockResolvedValue(metrics);
+    mockedFetchRevenueDashboardMetrics.mockResolvedValue(metrics);
 
     render(<DashboardPage />);
 
