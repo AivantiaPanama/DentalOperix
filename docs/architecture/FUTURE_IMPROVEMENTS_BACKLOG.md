@@ -504,3 +504,7 @@ Constraints:
 - no new source of truth
 - no storage of email bodies in analytics
 - no rollback of lead persistence due to notification visibility issues
+
+## Future Improvement: Rich ICS RSVP Semantics
+
+60.4-HF4 attaches `invite.ics` to the unified patient confirmation email using a portable publish-style calendar attachment. A future improvement may evaluate full RSVP semantics (`METHOD:REQUEST`, organizer/attendee metadata, and provider-specific deliverability behavior) if the clinic wants formal accept/decline tracking from patient calendars. This must remain downstream of Leads as Source of Truth.

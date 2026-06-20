@@ -186,3 +186,16 @@ Before completing a clinic notification change, verify:
 - [ ] Gmail modify permission requirements are documented if Inbox/Unread marking is used.
 - [ ] Failure to mark a self-notification as Inbox/Unread does not roll back lead persistence.
 - [ ] Patient and clinic delivery states remain independently testable.
+
+## Unified Patient Confirmation Email Checklist
+
+Use this checklist when changing booking notification flows:
+
+- [ ] Patient receives one confirmation email per confirmed booking.
+- [ ] Patient confirmation email includes appointment details.
+- [ ] Patient confirmation email includes `invite.ics`.
+- [ ] Calendar API does not send a duplicate patient notification when Gmail already sends the unified email.
+- [ ] Clinic Calendar event is still created.
+- [ ] Clinic operational email is still sent separately.
+- [ ] Lead persistence remains through the certified persistence adapter.
+- [ ] Email failures remain fail-soft after lead persistence.

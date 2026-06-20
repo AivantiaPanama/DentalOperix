@@ -134,6 +134,61 @@ function addMinutesToTime(date: string, time: string, minutes: number) {
   return `${baseDate.getFullYear()}-${paddedMonth}-${paddedDay}T${paddedHours}:${paddedMinutes}:00`;
 }
 
+function toIcsDateTime(localDateTime: string) {
+  return localDateTime.replace(/[-:]/g, "").replace("T", "T");
+}
+
+function escapeIcsText(text: string) {
+  return text
+    .replace(/\\/g, "\\\\")
+    .replace(/\r?\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+function createInviteIcs(payload: DentalAppointmentPayload, eventLink: string) {
+  const config = getServerConfig();
+  const startDateTime = formatDateTime(payload.date, payload.time);
+  const endDateTime = addMinutesToTime(payload.date, payload.time, 60);
+  const uid = `${payload.appointmentId}@dentaloperix`;
+  const description = [
+    `Cita DentalOperix para ${payload.service}`,
+    `Paciente: ${payload.name}`,
+    `Telefono: ${payload.phone}`,
+    payload.notes ? `Notas: ${payload.notes}` : "",
+    eventLink ? `Evento: ${eventLink}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//DentalOperix//Booking Confirmation//ES",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${escapeIcsText(uid)}`,
+    `DTSTAMP:${new Date()
+      .toISOString()
+      .replace(/[-:]/g, "")
+      .replace(/\.\d{3}Z$/, "Z")}`,
+    `DTSTART;TZID=${config.googleCalendarTimeZone}:${toIcsDateTime(startDateTime)}`,
+    `DTEND;TZID=${config.googleCalendarTimeZone}:${toIcsDateTime(endDateTime)}`,
+    `SUMMARY:${escapeIcsText(`Cita DentalOperix: ${payload.service}`)}`,
+    `DESCRIPTION:${escapeIcsText(description)}`,
+    eventLink ? `URL:${eventLink}` : "",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]
+    .filter(Boolean)
+    .join("\r\n");
+}
+
+function encodeMimeWord(text: string) {
+  const encoded = Buffer.from(text, "utf-8").toString("base64");
+  return `=?UTF-8?B?${encoded}?=`;
+}
+
 export async function appendLeadToSheet(payload: DentalAppointmentPayload) {
   await appendLeadToCRM({
     id: payload.appointmentId,
@@ -162,7 +217,9 @@ export async function createGoogleCalendarEvent(payload: DentalAppointmentPayloa
   const calendarId = config.googleCalendarId || "primary";
   const event = await getCalendar().events.insert({
     calendarId,
-    sendUpdates: "all",
+    // Patient notifications are delivered through the unified Gmail confirmation email
+    // with invite.ics attached. Avoid Calendar API duplicate emails.
+    sendUpdates: "none",
     requestBody: {
       summary: `Cita DentalOperix: ${payload.service}`,
       description: `Reserva realizada por ${payload.name} (${payload.email})\nTeléfono: ${payload.phone}\nNotas: ${payload.notes ?? "N/A"}`,
@@ -245,11 +302,6 @@ export async function sendConfirmationEmail(
           ${safeEventLink ? `<p><a href="${safeEventLink}">Ver evento en Google Calendar</a></p>` : ""}
         `;
 
-    function encodeMimeWord(text: string) {
-      const encoded = Buffer.from(text, "utf-8").toString("base64");
-      return `=?UTF-8?B?${encoded}?=`;
-    }
-
     const encodedSubject = encodeMimeWord(subject);
     const encodedHtml = Buffer.from(html, "utf-8").toString("base64");
     const messageParts = [
@@ -259,11 +311,36 @@ export async function sendConfirmationEmail(
       `Subject: ${encodedSubject}`,
       `X-DentalOperix-Notification-Audience: ${audience}`,
       "MIME-Version: 1.0",
-      "Content-Type: text/html; charset=UTF-8",
-      "Content-Transfer-Encoding: base64",
-      "",
-      encodedHtml,
     ];
+
+    if (audience === "patient") {
+      const boundary = `dentaloperix-${payload.appointmentId}`;
+      const inviteIcs = createInviteIcs(payload, eventLink);
+      const encodedIcs = Buffer.from(inviteIcs, "utf-8").toString("base64");
+      messageParts.push(
+        `Content-Type: multipart/mixed; boundary="${boundary}"`,
+        "",
+        `--${boundary}`,
+        "Content-Type: text/html; charset=UTF-8",
+        "Content-Transfer-Encoding: base64",
+        "",
+        encodedHtml,
+        `--${boundary}`,
+        "Content-Type: text/calendar; charset=UTF-8; method=PUBLISH; name=invite.ics",
+        "Content-Transfer-Encoding: base64",
+        "Content-Disposition: attachment; filename=invite.ics",
+        "",
+        encodedIcs,
+        `--${boundary}--`,
+      );
+    } else {
+      messageParts.push(
+        "Content-Type: text/html; charset=UTF-8",
+        "Content-Transfer-Encoding: base64",
+        "",
+        encodedHtml,
+      );
+    }
 
     const raw = Buffer.from(messageParts.join("\r\n"), "utf-8")
       .toString("base64")

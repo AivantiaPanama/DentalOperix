@@ -362,3 +362,11 @@ Rules:
 Certified example:
 
 - `60.4-HF3 Clinic Email Delivery Guarantee`
+
+## Unified Patient Notification Pattern
+
+Introduced by `60.4-HF4 Unified Patient Confirmation Email`.
+
+For public booking flows, do not send multiple patient-facing notifications for the same appointment unless explicitly required. The preferred contract is a single patient confirmation email that contains the human-readable appointment confirmation and the portable calendar artifact (`invite.ics`).
+
+Calendar API event creation may include attendees for event context, but automatic Calendar attendee email delivery should be suppressed when a first-party Gmail confirmation already carries the calendar attachment. This prevents duplicate emails and keeps the patient experience consistent for both Google and non-Google recipients.

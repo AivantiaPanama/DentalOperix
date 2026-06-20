@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockSend = vi.fn();
 const mockModify = vi.fn();
+const mockCalendarInsert = vi.fn();
 
 vi.mock("googleapis", () => {
   function MockOAuth2(this: any) {
@@ -22,17 +23,23 @@ vi.mock("googleapis", () => {
           },
         },
       })),
+      calendar: vi.fn(() => ({
+        events: {
+          insert: mockCalendarInsert,
+        },
+      })),
     },
   };
 });
 
-import { sendConfirmationEmail } from "./google.server";
+import { createGoogleCalendarEvent, sendConfirmationEmail } from "./google.server";
 
 const requiredEnv = {
   GOOGLE_CLIENT_ID: "test-client-id",
   GOOGLE_CLIENT_SECRET: "test-client-secret",
   GOOGLE_REDIRECT_URI: "https://example.com/oauth2callback",
-  GOOGLE_SCOPES: "https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify",
+  GOOGLE_SCOPES:
+    "https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify",
   GOOGLE_REFRESH_TOKEN: "test-refresh-token",
   GOOGLE_SHEET_ID: "sheet-id",
   GOOGLE_SHEET_NAME: "Leads",
@@ -85,6 +92,11 @@ describe("sendConfirmationEmail", () => {
 
     expect(patientMessage).toContain("To: paciente@example.com");
     expect(patientMessage).toContain("X-DentalOperix-Notification-Audience: patient");
+    expect(patientMessage).toContain("Content-Type: multipart/mixed");
+    expect(patientMessage).toContain(
+      "Content-Type: text/calendar; charset=UTF-8; method=PUBLISH; name=invite.ics",
+    );
+    expect(patientMessage).toContain("Content-Disposition: attachment; filename=invite.ics");
     expect(clinicMessage).toContain("To: clinica@example.com");
     expect(clinicMessage).toContain("X-DentalOperix-Notification-Audience: clinic");
     expect(mockModify).toHaveBeenCalledWith({
@@ -108,5 +120,36 @@ describe("sendConfirmationEmail", () => {
       clinicEmailSent: true,
     });
     expect(mockModify).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("createGoogleCalendarEvent", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    withDefaultEnv();
+  });
+
+  it("creates the clinic calendar event without sending duplicate Calendar API emails", async () => {
+    mockCalendarInsert.mockResolvedValue({
+      data: {
+        id: "event-123",
+        htmlLink: "https://calendar.example/event/123",
+        start: {},
+        end: {},
+      },
+    });
+
+    const event = await createGoogleCalendarEvent(payload);
+
+    expect(event.id).toBe("event-123");
+    expect(mockCalendarInsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        calendarId: "primary",
+        sendUpdates: "none",
+        requestBody: expect.objectContaining({
+          attendees: [{ email: "paciente@example.com" }, { email: "clinica@example.com" }],
+        }),
+      }),
+    );
   });
 });

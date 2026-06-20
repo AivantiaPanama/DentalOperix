@@ -140,3 +140,17 @@ Operational recommendation:
 Prefer CLINIC_NOTIFICATION_EMAIL as a monitored clinic inbox or Google Group distinct from GMAIL_SENDER.
 If the same account is used for both, include Gmail modify permission when refreshing OAuth credentials.
 ```
+
+## Unified Patient Confirmation Email Expectation
+
+The final booking implementation must avoid duplicate patient notifications.
+
+Expected behavior after a successful public booking:
+
+1. Supabase stores the lead/booking record.
+2. The clinic Calendar receives the event.
+3. The patient receives exactly one confirmation email.
+4. The patient email includes the appointment details and an `invite.ics` attachment.
+5. The clinic receives a separate operational notification email.
+
+The patient may or may not use Google. Therefore, patient calendar support must not depend exclusively on Google Calendar attendee delivery. The `invite.ics` attachment is the portable calendar handoff for non-Google recipients.
