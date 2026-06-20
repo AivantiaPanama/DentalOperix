@@ -433,3 +433,74 @@ No analytics writes to source-of-truth tables
 No patient-sensitive payload logging
 No bypass of RBAC
 ```
+
+### FI-004 - External Email Deliverability Monitoring
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: Observability / Notifications  
+Risk: LOW  
+Impact: Operational visibility
+
+60.4-HF2 sends patient and clinic booking emails separately and exposes delivery state. A future improvement can add structured delivery telemetry or an operational dashboard to detect recurring external email delivery failures.
+
+Recommended future action:
+
+```text
+Track patient and clinic notification delivery outcomes in operational logs or a derived read-only monitoring view.
+```
+
+Constraints:
+
+- no new source of truth
+- no analytics write path to Leads
+- no blocking of primary lead persistence
+- no storage of secrets or email bodies in telemetry
+
+### FI-005 - ICS Attachment for Non-Google Patients
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: Patient Experience  
+Risk: LOW  
+Impact: Calendar compatibility
+
+60.4-HF2 invites patient emails through Google Calendar and sends a confirmation email through Gmail. A future enhancement can attach a standard `.ics` calendar file to the patient confirmation email for recipients whose email provider does not automatically recognize Google Calendar invitations.
+
+Recommended future action:
+
+```text
+Generate and attach a standards-compliant ICS invite to patient booking confirmations.
+```
+
+Constraints:
+
+- Gmail remains a notification channel only
+- no persistence re-architecture
+- no new source of truth
+- preserve fail-soft behavior for notification errors
+
+### FI-006 - Dedicated Clinic Notification Mailbox
+
+Status: OPEN  
+Priority: MEDIUM  
+Category: Notifications / Operations  
+Risk: LOW  
+Impact: Clinic delivery reliability
+
+60.4-HF3 improves visibility for clinic self-notifications when `CLINIC_NOTIFICATION_EMAIL` equals `GMAIL_SENDER`. A future operational improvement is to use a dedicated clinic notification mailbox or Google Group that is different from the sender account.
+
+Recommended future action:
+
+```text
+Set CLINIC_NOTIFICATION_EMAIL to a monitored clinic inbox or group distinct from GMAIL_SENDER.
+Keep GMAIL_SENDER as the authenticated sender/alias.
+Validate inbox delivery with patient email different from clinic email.
+```
+
+Constraints:
+
+- Gmail remains a downstream notification channel only
+- no new source of truth
+- no storage of email bodies in analytics
+- no rollback of lead persistence due to notification visibility issues

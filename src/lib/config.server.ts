@@ -32,6 +32,7 @@ const serverEnv = z.object({
   GOOGLE_CALENDAR_ID: z.string().min(1).default("primary"),
   GOOGLE_CALENDAR_TIMEZONE: z.string().min(1).default("America/Panama"),
   GMAIL_SENDER: z.string().email(),
+  CLINIC_NOTIFICATION_EMAIL: z.string().email().optional(),
   GOOGLE_AUTOMATION_SHEET_NAME: z.string().min(1).default("AutomationRuns"),
   INTERNAL_API_KEY: z.string().min(1).optional(),
   ADMIN_PASSWORD: z.string().min(1).optional(),
@@ -51,6 +52,7 @@ export type ServerConfig = {
   googleCalendarId: string;
   googleCalendarTimeZone: string;
   gmailSender: string;
+  clinicNotificationEmail: string;
   googleAutomationSheetName: string;
   internalApiKey?: string;
   adminPassword?: string;
@@ -76,6 +78,7 @@ export function getServerConfig(): ServerConfig {
     googleCalendarId: parsed.data.GOOGLE_CALENDAR_ID,
     googleCalendarTimeZone: parsed.data.GOOGLE_CALENDAR_TIMEZONE,
     gmailSender: parsed.data.GMAIL_SENDER,
+    clinicNotificationEmail: parsed.data.CLINIC_NOTIFICATION_EMAIL ?? parsed.data.GMAIL_SENDER,
     googleAutomationSheetName: parsed.data.GOOGLE_AUTOMATION_SHEET_NAME,
     internalApiKey: parsed.data.INTERNAL_API_KEY,
     adminPassword: parsed.data.ADMIN_PASSWORD,

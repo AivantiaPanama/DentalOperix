@@ -8,6 +8,29 @@ function getGoogleCalendar() {
   return google.calendar({ version: "v3", auth: getGoogleAuth() });
 }
 
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
+}
+
+function uniqueEmails(...emails: Array<string | undefined | null>) {
+  const seen = new Set<string>();
+  return emails
+    .map((email) => email?.trim())
+    .filter((email): email is string => Boolean(email))
+    .filter((email) => {
+      const normalized = normalizeEmail(email);
+      if (seen.has(normalized)) {
+        return false;
+      }
+      seen.add(normalized);
+      return true;
+    });
+}
+
+function getClinicNotificationEmail(config: ReturnType<typeof getServerConfig>) {
+  return config.clinicNotificationEmail || config.gmailSender;
+}
+
 export async function createDentalAppointment(input: unknown) {
   const config = getServerConfig();
   const calendar = getGoogleCalendar();
@@ -32,7 +55,9 @@ export async function createDentalAppointment(input: unknown) {
         dateTime: `${endDate.getFullYear()}-${String(endDate.getMonth() + 1).padStart(2, "0")}-${String(endDate.getDate()).padStart(2, "0")}T${String(endDate.getHours()).padStart(2, "0")}:${String(endDate.getMinutes()).padStart(2, "0")}:00`,
         timeZone: config.googleCalendarTimeZone,
       },
-      attendees: payload.email ? [{ email: payload.email }] : [],
+      attendees: uniqueEmails(payload.email, getClinicNotificationEmail(config)).map((email) => ({
+        email,
+      })),
       reminders: {
         useDefault: true,
       },

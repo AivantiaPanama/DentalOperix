@@ -35,7 +35,10 @@ describe("processDentalLead", () => {
       id: "evt_123",
       htmlLink: "https://calendar.example/evt_123",
     });
-    mockedSendConfirmationEmail.mockResolvedValue(undefined);
+    mockedSendConfirmationEmail.mockResolvedValue({
+      patientEmailSent: true,
+      clinicEmailSent: true,
+    });
 
     const payload: DentalLeadPayload = {
       name: "Lucía",
@@ -77,7 +80,10 @@ describe("processDentalLead", () => {
       id: "evt_123",
       htmlLink: "https://calendar.example/evt_123",
     });
-    mockedSendConfirmationEmail.mockResolvedValue(undefined);
+    mockedSendConfirmationEmail.mockResolvedValue({
+      patientEmailSent: true,
+      clinicEmailSent: true,
+    });
 
     const payload: DentalLeadPayload = {
       name: "María",
@@ -107,7 +113,10 @@ describe("processDentalLead", () => {
       id: "evt_456",
       htmlLink: "https://calendar.example/evt_456",
     });
-    mockedSendConfirmationEmail.mockResolvedValue(undefined);
+    mockedSendConfirmationEmail.mockResolvedValue({
+      patientEmailSent: true,
+      clinicEmailSent: true,
+    });
 
     const payload: DentalLeadPayload = {
       name: "Javier",
@@ -125,6 +134,44 @@ describe("processDentalLead", () => {
     expect(mockedAppendLead).toHaveBeenCalledOnce();
     expect(mockedAppendLead.mock.calls[0][0]).toMatchObject({
       treatment: "implante dental",
+    });
+  });
+
+  it("keeps lead/calendar success but marks email delivery incomplete when patient notification fails", async () => {
+    mockedCreateGoogleCalendarEvent.mockResolvedValue({
+      id: "evt_789",
+      htmlLink: "https://calendar.example/evt_789",
+    });
+    mockedSendConfirmationEmail.mockRejectedValue(
+      Object.assign(new Error("One or more booking notification emails failed."), {
+        delivery: { patientEmailSent: false, clinicEmailSent: true },
+      }),
+    );
+
+    const payload: DentalLeadPayload = {
+      name: "Paciente Externo",
+      email: "paciente@external.example",
+      phone: "+507 65555555",
+      service: "limpieza",
+      date: "2026-06-29",
+      time: "09:00",
+      source: "web-form",
+    };
+
+    const result = await processDentalLead(payload);
+
+    expect(mockedAppendLead).toHaveBeenCalledOnce();
+    expect(mockedCreateGoogleCalendarEvent).toHaveBeenCalledOnce();
+    expect(mockedUpdateLead).toHaveBeenCalledWith(
+      expect.stringContaining("dental_"),
+      expect.objectContaining({ emailSent: false }),
+    );
+    expect(result).toMatchObject({
+      calendarCreated: true,
+      emailSent: false,
+      patientEmailSent: false,
+      clinicEmailSent: true,
+      crmSaved: true,
     });
   });
 });

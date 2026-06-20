@@ -326,3 +326,39 @@ Do not introduce Dual Write
 Do not log patient-sensitive payloads in analytics
 Do not modify protected components without explicit approval
 ```
+
+### 7. Booking Notification Delivery Pattern
+
+Use this pattern for public booking confirmation flows that must notify both patient and clinic.
+
+Rules:
+
+- Lead persistence remains authoritative and must use `LeadPersistenceProvider`.
+- Calendar and Gmail are downstream notifications only.
+- The clinic calendar event should include the patient as attendee when a valid patient email exists.
+- The clinic notification email should be included unless duplicated.
+- Calendar updates should request attendee delivery with `sendUpdates: "all"`.
+- Patient and clinic emails should be attempted independently so one delivery failure does not hide the other.
+- Booking UI must not claim that all emails were sent unless delivery is known to be complete.
+- Notification failures must not remove or roll back the saved lead.
+
+Certified example:
+
+- `60.4-HF2 Patient Calendar & Email Notification Delivery`
+
+### 8. Clinic Self-Notification Visibility Pattern
+
+Use this pattern when an operational Gmail notification is sent to the same mailbox used as the authenticated sender.
+
+Rules:
+
+- Do not rely on Calendar notification alone for clinic awareness.
+- Send an explicit clinic operational email.
+- If the clinic recipient equals the Gmail sender and Gmail returns a message id, attempt to mark the message as `INBOX` and `UNREAD`.
+- Treat Inbox/Unread marking as best-effort because it may require Gmail modify permission.
+- Do not roll back lead persistence or Calendar creation if clinic inbox marking fails.
+- Prefer a dedicated `CLINIC_NOTIFICATION_EMAIL` that is different from `GMAIL_SENDER`.
+
+Certified example:
+
+- `60.4-HF3 Clinic Email Delivery Guarantee`

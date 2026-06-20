@@ -61,6 +61,8 @@ export async function processDentalLead(payload: DentalLeadPayload) {
   let calendarEventId = "";
   let updatedStatus: CRM_STATUS.NUEVO | CRM_STATUS.AGENDADA = CRM_STATUS.NUEVO;
   let emailSent = false;
+  let patientEmailSent = false;
+  let clinicEmailSent = false;
   let calendarError: string | undefined;
   let emailError: string | undefined;
 
@@ -81,23 +83,35 @@ export async function processDentalLead(payload: DentalLeadPayload) {
   }
 
   try {
-    await sendConfirmationEmail(completePayload, event?.htmlLink ?? "");
-    emailSent = true;
+    const delivery = await sendConfirmationEmail(completePayload, event?.htmlLink ?? "");
+    patientEmailSent = delivery.patientEmailSent;
+    clinicEmailSent = delivery.clinicEmailSent;
+    emailSent = patientEmailSent && clinicEmailSent;
     await leadPersistence.updateLead(leadRecord.id, {
-      emailSent: true,
+      emailSent,
     });
   } catch (error) {
     console.error("Error enviando correo Gmail:", error);
+    const delivery =
+      typeof error === "object" && error !== null && "delivery" in error
+        ? (error as { delivery?: { patientEmailSent?: boolean; clinicEmailSent?: boolean } })
+            .delivery
+        : undefined;
+    patientEmailSent = Boolean(delivery?.patientEmailSent);
+    clinicEmailSent = Boolean(delivery?.clinicEmailSent);
     emailError =
       error instanceof Error
         ? error.message
         : "Error desconocido al enviar el correo de confirmación.";
+    await leadPersistence.updateLead(leadRecord.id, {
+      emailSent: false,
+    });
   }
 
   const message = calendarEventId
     ? emailSent
       ? "Tu cita fue registrada y enviamos la confirmación a tu correo."
-      : "Tu cita fue registrada. No pudimos enviar el correo de confirmación, pero nos pondremos en contacto contigo."
+      : "Tu cita fue registrada. La clínica fue notificada, pero no pudimos confirmar el envío de todos los correos. Nos pondremos en contacto contigo."
     : "Recibimos tu solicitud. Nuestro equipo confirmará la disponibilidad contigo.";
 
   const responseBody: {
@@ -106,6 +120,8 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     eventLink: string | null;
     calendarCreated: boolean;
     emailSent: boolean;
+    patientEmailSent: boolean;
+    clinicEmailSent: boolean;
     crmSaved: true;
     message: string;
     calendarError?: string;
@@ -116,6 +132,8 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     eventLink: event?.htmlLink ?? null,
     calendarCreated: Boolean(calendarEventId),
     emailSent,
+    patientEmailSent,
+    clinicEmailSent,
     crmSaved: true,
     message,
   };

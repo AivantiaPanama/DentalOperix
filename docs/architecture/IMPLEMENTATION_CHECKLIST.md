@@ -158,3 +158,31 @@ Before completing any booking or public conversion action change, verify:
 - [ ] Success path shows a visible confirmation.
 - [ ] Focused tests cover click-to-submit and validation blocked states.
 - [ ] No Source of Truth, persistence adapter, Calendar, or Gmail behavior changed unless explicitly approved.
+
+## Booking Notification Delivery Checklist
+
+Before completing a booking notification change, verify:
+
+- [ ] Lead is persisted through `LeadPersistenceProvider`.
+- [ ] Calendar/Gmail remain downstream notifications, not source of truth.
+- [ ] Clinic calendar event is created on configured `GOOGLE_CALENDAR_ID`.
+- [ ] Patient email is included as a calendar attendee when valid.
+- [ ] Clinic notification email is included unless duplicated.
+- [ ] Calendar event creation uses attendee update delivery.
+- [ ] Patient confirmation email is sent independently.
+- [ ] Clinic notification email is sent independently.
+- [ ] Partial notification failure is visible in response/logs.
+- [ ] Lead persistence is not rolled back due to notification failure.
+- [ ] Development runtime loads relational and Google variables from active `.env.local` or `.env`.
+
+## Clinic Email Delivery Guarantee Checklist
+
+Before completing a clinic notification change, verify:
+
+- [ ] Clinic notification does not rely only on Google Calendar attendee delivery.
+- [ ] Gmail sends an explicit operational clinic email.
+- [ ] `CLINIC_NOTIFICATION_EMAIL` resolution is documented.
+- [ ] Self-notification behavior is handled when clinic recipient equals `GMAIL_SENDER`.
+- [ ] Gmail modify permission requirements are documented if Inbox/Unread marking is used.
+- [ ] Failure to mark a self-notification as Inbox/Unread does not roll back lead persistence.
+- [ ] Patient and clinic delivery states remain independently testable.

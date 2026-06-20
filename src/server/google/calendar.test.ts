@@ -70,6 +70,11 @@ describe("createDentalAppointment", () => {
 
     expect(mockInsert).toHaveBeenCalledOnce();
     expect(mockInsert.mock.calls[0][0].calendarId).toBe("primary");
+    expect(mockInsert.mock.calls[0][0].sendUpdates).toBe("all");
+    expect(mockInsert.mock.calls[0][0].requestBody.attendees).toEqual([
+      { email: "carlos@example.com" },
+      { email: "no-reply@example.com" },
+    ]);
     expect(consoleSpy).toHaveBeenCalledWith(
       "CALENDAR EVENT:",
       expect.objectContaining({

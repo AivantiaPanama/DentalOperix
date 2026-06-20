@@ -69,6 +69,39 @@ export type DentalAppointmentPayload = {
   source?: string;
   preferredDate?: string;
 };
+export type NotificationDeliveryResult = {
+  patientEmailSent: boolean;
+  clinicEmailSent: boolean;
+  patientEmailError?: string;
+  clinicEmailError?: string;
+};
+
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
+}
+
+function uniqueEmails(...emails: Array<string | undefined | null>) {
+  const seen = new Set<string>();
+  return emails
+    .map((email) => email?.trim())
+    .filter((email): email is string => Boolean(email))
+    .filter((email) => {
+      const normalized = normalizeEmail(email);
+      if (seen.has(normalized)) {
+        return false;
+      }
+      seen.add(normalized);
+      return true;
+    });
+}
+
+function getClinicNotificationEmail(config: ReturnType<typeof getServerConfig>) {
+  return config.clinicNotificationEmail || config.gmailSender;
+}
+
+function isSameEmail(left?: string | null, right?: string | null) {
+  return normalizeEmail(left) === normalizeEmail(right);
+}
 
 function formatDateTime(date: string, time: string) {
   return `${date}T${time}:00`;
@@ -141,7 +174,9 @@ export async function createGoogleCalendarEvent(payload: DentalAppointmentPayloa
         dateTime: endDateTime,
         timeZone: config.googleCalendarTimeZone,
       },
-      attendees: [{ email: payload.email }],
+      attendees: uniqueEmails(payload.email, getClinicNotificationEmail(config)).map((email) => ({
+        email,
+      })),
       reminders: {
         useDefault: true,
       },
@@ -165,54 +200,136 @@ export async function createGoogleCalendarEvent(payload: DentalAppointmentPayloa
   return event.data;
 }
 
-export async function sendConfirmationEmail(payload: DentalAppointmentPayload, eventLink: string) {
+export async function sendConfirmationEmail(
+  payload: DentalAppointmentPayload,
+  eventLink: string,
+): Promise<NotificationDeliveryResult> {
   const config = getServerConfig();
-  const safeName = escapeHtml(payload.name);
-  const safeService = escapeHtml(payload.service);
-  const safeDate = escapeHtml(payload.date);
-  const safeTime = escapeHtml(payload.time);
-  const safeNotes = payload.notes ? escapeHtml(payload.notes) : "";
-  const safeEventLink = escapeHtml(eventLink);
-  const subject = `Confirmación de cita DentalOperix (${safeService})`;
-  const formattedDate = formatDateMX(payload.date);
-  const html = `
-    <p>Hola ${safeName},</p>
-    <p>Tu cita ha sido confirmada para el <strong>${formattedDate}</strong> a las <strong>${safeTime}</strong>.</p>
-    <p>Servicio: <strong>${safeService}</strong></p>
-    ${safeNotes ? `<p>Notas: ${safeNotes}</p>` : ""}
-    <p><a href="${safeEventLink}">Ver evento en Google Calendar</a></p>
-    <p>Si necesitas cambiar tu cita, responde este correo o contáctanos.</p>
-    <p>Saludos,<br />Equipo DentalOperix</p>
-  `;
+  const clinicEmail = getClinicNotificationEmail(config);
+  const result: NotificationDeliveryResult = {
+    patientEmailSent: false,
+    clinicEmailSent: false,
+  };
 
-  function encodeMimeWord(text: string) {
-    const encoded = Buffer.from(text, "utf-8").toString("base64");
-    return `=?UTF-8?B?${encoded}?=`;
+  async function sendMessage(recipient: string, audience: "patient" | "clinic") {
+    const safeName = escapeHtml(payload.name);
+    const safeService = escapeHtml(payload.service);
+    const safeTime = escapeHtml(payload.time);
+    const safeNotes = payload.notes ? escapeHtml(payload.notes) : "";
+    const safeEventLink = eventLink ? escapeHtml(eventLink) : "";
+    const subject =
+      audience === "patient"
+        ? `Confirmación de cita DentalOperix (${safeService})`
+        : `Nueva cita agendada - DentalOperix (${safeService})`;
+    const formattedDate = escapeHtml(formatDateMX(payload.date));
+    const html =
+      audience === "patient"
+        ? `
+          <p>Hola ${safeName},</p>
+          <p>Tu cita ha sido registrada para el <strong>${formattedDate}</strong> a las <strong>${safeTime}</strong>.</p>
+          <p>Servicio: <strong>${safeService}</strong></p>
+          ${safeNotes ? `<p>Notas: ${safeNotes}</p>` : ""}
+          ${safeEventLink ? `<p><a href="${safeEventLink}">Ver evento en Google Calendar</a></p>` : ""}
+          <p>Si necesitas cambiar tu cita, responde este correo o contáctanos.</p>
+          <p>Saludos,<br />Equipo DentalOperix</p>
+        `
+        : `
+          <p>Nueva cita agendada desde DentalOperix.</p>
+          <p><strong>Paciente:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
+          <p><strong>Teléfono:</strong> ${escapeHtml(payload.phone)}</p>
+          <p><strong>Servicio:</strong> ${safeService}</p>
+          <p><strong>Fecha:</strong> ${formattedDate}</p>
+          <p><strong>Hora:</strong> ${safeTime}</p>
+          ${safeNotes ? `<p><strong>Notas:</strong> ${safeNotes}</p>` : ""}
+          ${safeEventLink ? `<p><a href="${safeEventLink}">Ver evento en Google Calendar</a></p>` : ""}
+        `;
+
+    function encodeMimeWord(text: string) {
+      const encoded = Buffer.from(text, "utf-8").toString("base64");
+      return `=?UTF-8?B?${encoded}?=`;
+    }
+
+    const encodedSubject = encodeMimeWord(subject);
+    const encodedHtml = Buffer.from(html, "utf-8").toString("base64");
+    const messageParts = [
+      `From: ${config.gmailSender}`,
+      `To: ${recipient}`,
+      `Reply-To: ${config.gmailSender}`,
+      `Subject: ${encodedSubject}`,
+      `X-DentalOperix-Notification-Audience: ${audience}`,
+      "MIME-Version: 1.0",
+      "Content-Type: text/html; charset=UTF-8",
+      "Content-Transfer-Encoding: base64",
+      "",
+      encodedHtml,
+    ];
+
+    const raw = Buffer.from(messageParts.join("\r\n"), "utf-8")
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
+    const gmail = getGmail();
+    const response = await gmail.users.messages.send({
+      userId: "me",
+      requestBody: {
+        raw,
+      },
+    });
+
+    if (audience === "clinic" && isSameEmail(recipient, config.gmailSender) && response.data.id) {
+      try {
+        await gmail.users.messages.modify({
+          userId: "me",
+          id: response.data.id,
+          requestBody: {
+            addLabelIds: ["INBOX", "UNREAD"],
+          },
+        });
+      } catch (error) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn(
+            "Clinic self-notification was sent but could not be marked as inbox/unread:",
+            error,
+          );
+        }
+      }
+    }
   }
 
-  const encodedSubject = encodeMimeWord(subject);
-  const encodedHtml = Buffer.from(html, "utf-8").toString("base64");
-  const messageParts = [
-    `From: ${config.gmailSender}`,
-    `To: ${payload.email}`,
-    `Subject: ${encodedSubject}`,
-    "MIME-Version: 1.0",
-    "Content-Type: text/html; charset=UTF-8",
-    "Content-Transfer-Encoding: base64",
-    "",
-    encodedHtml,
-  ];
+  try {
+    await sendMessage(payload.email, "patient");
+    result.patientEmailSent = true;
+  } catch (error) {
+    result.patientEmailError =
+      error instanceof Error ? error.message : "Unknown patient email error";
+  }
 
-  const raw = Buffer.from(messageParts.join("\r\n"), "utf-8")
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/, "");
+  if (isSameEmail(payload.email, clinicEmail)) {
+    result.clinicEmailSent = result.patientEmailSent;
+    result.clinicEmailError = result.patientEmailError;
+    if (!result.patientEmailSent) {
+      throw Object.assign(new Error("Booking notification email failed."), {
+        delivery: result,
+      });
+    }
+    return result;
+  }
 
-  await getGmail().users.messages.send({
-    userId: "me",
-    requestBody: {
-      raw,
-    },
-  });
+  try {
+    await sendMessage(clinicEmail, "clinic");
+    result.clinicEmailSent = true;
+  } catch (error) {
+    result.clinicEmailError = error instanceof Error ? error.message : "Unknown clinic email error";
+  }
+
+  if (!result.patientEmailSent || !result.clinicEmailSent) {
+    throw Object.assign(new Error("One or more booking notification emails failed."), {
+      delivery: result,
+    });
+  }
+
+  return result;
 }

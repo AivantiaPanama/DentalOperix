@@ -1,0 +1,142 @@
+# DentalOperix Project Scope and Expected Behavior
+
+## Purpose
+
+This document is the living continuity reference for DentalOperix. It records what the system is expected to do so future chats, reviews, and hotfixes do not lose project scope.
+
+## Current Certified Baseline
+
+```text
+Program 57.x: CLOSED and CERTIFIED
+Persistence Transition: CLOSED
+Production Cutover: CERTIFIED
+Source of Truth: Leads
+```
+
+Certified persistence architecture:
+
+```text
+Leads
+  -> LeadPersistencePort
+  -> LeadPersistenceProvider
+  -> RelationalLeadPersistenceAdapter
+  -> Supabase PostgreSQL
+```
+
+## Non-Negotiable Constraints
+
+```text
+Dual Write: NO
+Product Migration: NO
+Lead Replacement: NO
+New Source of Truth: NO
+RBAC Bypass: NO
+Analytics Writes: NO
+```
+
+Protected components require explicit approval before modification:
+
+```text
+BookingDialog
+processDentalLead
+/api/leads/create
+Calendar
+Gmail
+FloatingDentalAIChat
+Home
+siteServices.ts
+```
+
+## Public Booking Expected Behavior
+
+When a patient books a dental appointment from the public site:
+
+1. Patient enters valid contact and treatment data.
+2. Patient selects date and time.
+3. Confirm button provides immediate loading feedback.
+4. System creates the lead through the certified persistence provider.
+5. Supabase PostgreSQL stores the lead as the source of truth.
+6. Clinic calendar receives the event.
+7. Patient is added as a calendar attendee.
+8. Clinic notification email is added as a calendar attendee unless duplicated.
+9. Calendar update notifications are requested for all attendees.
+10. Patient receives a confirmation email even if the patient does not use Google Calendar.
+11. Clinic receives an operational notification email.
+12. UI confirmation must reflect actual known delivery state.
+
+Expected booking chain:
+
+```text
+BookingDialog
+  -> createDentalAppointment
+  -> processDentalLead
+  -> LeadPersistenceProvider
+  -> RelationalLeadPersistenceAdapter
+  -> Supabase PostgreSQL
+  -> Google Calendar
+  -> Gmail patient confirmation
+  -> Gmail clinic notification
+```
+
+## Notification Policy
+
+Calendar and Gmail are downstream operational integrations. They do not define the source of truth.
+
+If notification delivery fails:
+
+- the lead must remain saved;
+- the calendar result must remain visible if created;
+- the response must not claim that all emails were sent;
+- the clinic must be able to identify incomplete delivery from response/logs.
+
+## Runtime Environment Policy
+
+In development, active runtime variables must be available through `.env.local` or `.env`.
+
+Historical cutover files such as `.env.cutover.prod` may remain as local references but are not automatically loaded unless explicitly wired by the runtime.
+
+Required active runtime groups:
+
+```text
+Relational persistence variables
+Google OAuth variables
+Google Calendar variables
+Gmail sender variables
+Clinic notification email variable
+```
+
+## Documentation Update Rule
+
+Every hotfix must update:
+
+```text
+1. Specific hotfix or initiative document
+2. 60.0_CLINICAL_INTELLIGENCE_PROGRAM_PLAN.md
+3. FUTURE_IMPROVEMENTS_BACKLOG.md
+```
+
+If a reusable pattern or governance rule is introduced, update:
+
+```text
+DEVELOPMENT_GOVERNANCE_PATTERNS.md
+IMPLEMENTATION_CHECKLIST.md
+```
+
+## Clinic Email Delivery Expectation
+
+The final booking implementation must notify the clinic independently from Calendar. Calendar presence alone is not enough.
+
+Expected clinic notification behavior:
+
+```text
+A Gmail operational notification is sent to CLINIC_NOTIFICATION_EMAIL.
+If CLINIC_NOTIFICATION_EMAIL is absent, it falls back to GMAIL_SENDER.
+If the clinic recipient equals GMAIL_SENDER, the system attempts to mark the sent self-notification as INBOX and UNREAD when Gmail permissions allow it.
+```
+
+Operational recommendation:
+
+```text
+Prefer CLINIC_NOTIFICATION_EMAIL as a monitored clinic inbox or Google Group distinct from GMAIL_SENDER.
+If the same account is used for both, include Gmail modify permission when refreshing OAuth credentials.
+```

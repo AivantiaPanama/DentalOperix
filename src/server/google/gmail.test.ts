@@ -63,7 +63,7 @@ describe("sendDentalConfirmationEmail", () => {
       notes: "Prueba",
     });
 
-    expect(mockSend).toHaveBeenCalledOnce();
+    expect(mockSend).toHaveBeenCalledTimes(2);
 
     const raw = mockSend.mock.calls[0][0].requestBody.raw as string;
     const decoded = Buffer.from(raw.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString(
@@ -73,9 +73,17 @@ describe("sendDentalConfirmationEmail", () => {
     const encodedHtmlBody = decoded.slice(htmlStart).trim();
     const htmlBody = Buffer.from(encodedHtmlBody, "base64").toString("utf8");
 
+    expect(decoded).toContain("To: ana@example.com");
     expect(decoded).toContain("Subject: =?UTF-8?B?");
     expect(decoded).toContain("Content-Type: text/html; charset=UTF-8");
     expect(decoded).toContain("Content-Transfer-Encoding: base64");
     expect(htmlBody).toContain("<p>Hola Ana,</p>");
+
+    const clinicRaw = mockSend.mock.calls[1][0].requestBody.raw as string;
+    const clinicDecoded = Buffer.from(
+      clinicRaw.replace(/-/g, "+").replace(/_/g, "/"),
+      "base64",
+    ).toString("utf8");
+    expect(clinicDecoded).toContain("To: no-reply@example.com");
   });
 });

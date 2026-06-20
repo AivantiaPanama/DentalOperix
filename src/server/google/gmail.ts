@@ -31,6 +31,8 @@ function encodeMimeWord(text: string) {
 function buildMessage(
   payload: GoogleDentalConfirmationInput,
   config: ReturnType<typeof getServerConfig>,
+  recipient: string,
+  audience: "patient" | "clinic",
 ) {
   const name = escapeHtml(payload.name);
   const service = escapeHtml(payload.service);
@@ -38,25 +40,42 @@ function buildMessage(
   const time = escapeHtml(payload.time);
   const eventLink = escapeHtml(payload.eventLink);
   const notes = payload.notes ? escapeHtml(payload.notes) : "";
-  const subject = encodeMimeWord("Confirmación de solicitud - DentalOperix");
+  const subject = encodeMimeWord(
+    audience === "patient"
+      ? "Confirmación de solicitud - DentalOperix"
+      : "Nueva cita agendada - DentalOperix",
+  );
 
-  const html = `
-    <p>Hola ${name},</p>
-    <p>Gracias por solicitar una valoración dental con DentalOperix.</p>
-    <p><strong>Tratamiento solicitado:</strong> ${service}</p>
-    <p><strong>Fecha:</strong> ${date}</p>
-    <p><strong>Hora:</strong> ${time}</p>
-    <p><strong>Ver detalles:</strong> <a href="${eventLink}">evento en Google Calendar</a></p>
-    ${notes ? `<p><strong>Notas:</strong> ${notes}</p>` : ""}
-    <p>Pronto nos pondremos en contacto para confirmar disponibilidad del horario y los detalles de la cita.</p>
-    <p>Si tienes alguna pregunta, puedes responder a este correo o llamarnos.</p>
-    <p>Saludos,<br/>Equipo DentalOperix</p>
-  `;
+  const html =
+    audience === "patient"
+      ? `
+        <p>Hola ${name},</p>
+        <p>Gracias por solicitar una valoración dental con DentalOperix.</p>
+        <p><strong>Tratamiento solicitado:</strong> ${service}</p>
+        <p><strong>Fecha:</strong> ${date}</p>
+        <p><strong>Hora:</strong> ${time}</p>
+        <p><strong>Ver detalles:</strong> <a href="${eventLink}">evento en Google Calendar</a></p>
+        ${notes ? `<p><strong>Notas:</strong> ${notes}</p>` : ""}
+        <p>Pronto nos pondremos en contacto para confirmar disponibilidad del horario y los detalles de la cita.</p>
+        <p>Si tienes alguna pregunta, puedes responder a este correo o llamarnos.</p>
+        <p>Saludos,<br/>Equipo DentalOperix</p>
+      `
+      : `
+        <p>Nueva cita agendada desde DentalOperix.</p>
+        <p><strong>Paciente:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${escapeHtml(payload.email)}</p>
+        <p><strong>Tratamiento solicitado:</strong> ${service}</p>
+        <p><strong>Fecha:</strong> ${date}</p>
+        <p><strong>Hora:</strong> ${time}</p>
+        <p><strong>Ver detalles:</strong> <a href="${eventLink}">evento en Google Calendar</a></p>
+        ${notes ? `<p><strong>Notas:</strong> ${notes}</p>` : ""}
+      `;
 
   const encodedHtml = Buffer.from(html, "utf-8").toString("base64");
   const messageParts = [
     `From: ${config.gmailSender}`,
-    `To: ${payload.email}`,
+    `To: ${recipient}`,
+    `Reply-To: ${config.gmailSender}`,
     `Subject: ${subject}`,
     "MIME-Version: 1.0",
     "Content-Type: text/html; charset=UTF-8",
@@ -70,6 +89,10 @@ function buildMessage(
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+}
+
+function normalizeEmail(email?: string | null) {
+  return email?.trim().toLowerCase() ?? "";
 }
 
 function buildRawEmailMessage(payload: {
@@ -102,12 +125,22 @@ export async function sendDentalConfirmationEmail(input: unknown) {
   const config = getServerConfig();
   const gmail = google.gmail({ version: "v1", auth: getGoogleAuth() });
   const payload = googleDentalConfirmationSchema.parse(input);
-  const raw = buildMessage(payload, config);
+  const clinicEmail = config.clinicNotificationEmail || config.gmailSender;
+  const recipients =
+    normalizeEmail(payload.email) === normalizeEmail(clinicEmail)
+      ? [{ email: payload.email, audience: "patient" as const }]
+      : [
+          { email: payload.email, audience: "patient" as const },
+          { email: clinicEmail, audience: "clinic" as const },
+        ];
 
-  await gmail.users.messages.send({
-    userId: "me",
-    requestBody: { raw },
-  });
+  for (const recipient of recipients) {
+    const raw = buildMessage(payload, config, recipient.email, recipient.audience);
+    await gmail.users.messages.send({
+      userId: "me",
+      requestBody: { raw },
+    });
+  }
 }
 
 export async function sendFollowupEmail(input: {
