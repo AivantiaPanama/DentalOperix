@@ -370,3 +370,38 @@ Introduced by `60.4-HF4 Unified Patient Confirmation Email`.
 For public booking flows, do not send multiple patient-facing notifications for the same appointment unless explicitly required. The preferred contract is a single patient confirmation email that contains the human-readable appointment confirmation and the portable calendar artifact (`invite.ics`).
 
 Calendar API event creation may include attendees for event context, but automatic Calendar attendee email delivery should be suppressed when a first-party Gmail confirmation already carries the calendar attachment. This prevents duplicate emails and keeps the patient experience consistent for both Google and non-Google recipients.
+
+## AI Delivery Governance Pattern
+
+Status: ACTIVE  
+Added: 2026-06-20
+
+DentalOperix may use AI tools such as ChatGPT, Claude, Cursor, v0, Figma AI, or similar assistants to accelerate delivery. AI-assisted delivery must follow a controlled governance pattern.
+
+### Pattern Rules
+
+1. Every AI task must receive the AI Context Package.
+2. Every AI task must be tied to a documented iteration or module spec.
+3. Every AI task must define allowed and forbidden files.
+4. AI outputs are candidate deliverables, not accepted implementation.
+5. ChatGPT/Architecture review is required before integration.
+6. Protected components still require explicit approval before modification.
+7. AI must not change source-of-truth boundaries.
+
+### Required References
+
+- `docs/ai-context/DENTALOPERIX_AI_CONTEXT.md`
+- `docs/ai-governance/61.0_AI_WORKFLOW_CONTROL_CENTER.md`
+- `docs/ai-governance/61.0_AI_DELIVERY_PROCESS.md`
+- `docs/ai-prompts/CURSOR_IMPLEMENTATION_PROMPT.md`
+
+### Failure Conditions
+
+Reject AI output if it:
+
+- introduces Dual Write;
+- replaces Leads;
+- bypasses RBAC;
+- writes from Analytics;
+- modifies protected components without approval;
+- invents undocumented architecture.

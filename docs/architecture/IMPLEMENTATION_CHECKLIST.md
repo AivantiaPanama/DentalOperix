@@ -199,3 +199,24 @@ Use this checklist when changing booking notification flows:
 - [ ] Clinic operational email is still sent separately.
 - [ ] Lead persistence remains through the certified persistence adapter.
 - [ ] Email failures remain fail-soft after lead persistence.
+
+## 11. AI-Assisted Delivery Checklist
+
+Use this section when any part of the work was generated or assisted by an external AI tool.
+
+```text
+[ ] AI Context Package loaded.
+[ ] Iteration package loaded.
+[ ] Module specification loaded.
+[ ] Allowed files listed.
+[ ] Forbidden files listed.
+[ ] Protected components checked.
+[ ] Source-of-truth boundaries checked.
+[ ] RBAC implications reviewed.
+[ ] Prompt used is stored or referenced.
+[ ] AI deliverable reviewed by ChatGPT/Architecture.
+[ ] Tests or validation plan included.
+[ ] Documentation updated.
+```
+
+AI output must not be integrated only because it compiles. It must also pass DentalOperix governance.

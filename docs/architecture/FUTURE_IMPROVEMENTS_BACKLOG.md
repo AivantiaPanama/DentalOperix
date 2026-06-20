@@ -508,3 +508,29 @@ Constraints:
 ## Future Improvement: Rich ICS RSVP Semantics
 
 60.4-HF4 attaches `invite.ics` to the unified patient confirmation email using a portable publish-style calendar attachment. A future improvement may evaluate full RSVP semantics (`METHOD:REQUEST`, organizer/attendee metadata, and provider-specific deliverability behavior) if the clinic wants formal accept/decline tracking from patient calendars. This must remain downstream of Leads as Source of Truth.
+
+### FI-061 - Product Governance and AI Delivery Framework
+
+Status: ACTIVE  
+Priority: HIGH  
+Category: Product Governance / AI Delivery  
+Risk: LOW  
+Impact: Delivery acceleration and continuity
+
+DentalOperix now tracks 61.x as the product governance and AI-assisted delivery program.
+
+New documented initiatives:
+
+- `61.1 Users & RBAC Foundation`
+- `61.2 Assistant Operations Dashboard`
+- `61.3 Patient Management`
+- `61.4 Admin Starter Dashboard UX Redesign`
+- `61.5 Appointment Lifecycle Analytics`
+
+Primary references:
+
+- `docs/product-governance/61.0_MASTER_PRODUCT_ROADMAP.md`
+- `docs/ai-governance/61.0_AI_WORKFLOW_CONTROL_CENTER.md`
+- `docs/ai-governance/61.0_AI_TASK_BOARD.md`
+
+No implementation is approved by this backlog entry alone. Each initiative still requires the standard DentalOperix proposal and explicit approval process.

@@ -154,3 +154,39 @@ Expected behavior after a successful public booking:
 5. The clinic receives a separate operational notification email.
 
 The patient may or may not use Google. Therefore, patient calendar support must not depend exclusively on Google Calendar attendee delivery. The `invite.ics` attachment is the portable calendar handoff for non-Google recipients.
+
+## 61.x Product Governance and AI Delivery Continuity
+
+Status: ACTIVE  
+Added: 2026-06-20
+
+DentalOperix now maintains a formal 61.x product governance layer for roadmap, AI-assisted delivery, role-based dashboards, users/RBAC, patient management, and sellable release planning.
+
+New governing references:
+
+- `docs/product-governance/61.0_MASTER_PRODUCT_ROADMAP.md`
+- `docs/product-governance/61.0_PRODUCT_GOVERNANCE_DASHBOARD.md`
+- `docs/product-governance/61.0_MODULE_CATALOG.md`
+- `docs/product-governance/61.0_PRODUCT_RELEASE_PLAN.md`
+- `docs/ai-governance/61.0_AI_DRIVEN_PRODUCT_DEVELOPMENT_STRATEGY.md`
+- `docs/ai-context/DENTALOPERIX_AI_CONTEXT.md`
+
+61.x does not modify the certified persistence architecture. The current product direction is:
+
+```text
+DentalOperix Starter
+  -> Leads
+  -> Booking
+  -> Calendar/Gmail/ICS
+  -> Users/RBAC
+  -> Assistant Dashboard
+  -> Admin Starter Dashboard
+```
+
+The next prioritized initiatives are:
+
+1. `61.1 Users & RBAC Foundation`
+2. `61.2 Assistant Operations Dashboard`
+3. `61.3 Patient Management`
+
+AI-assisted development is allowed only through the documented workflow and must remain compatible with all certified architecture constraints.
