@@ -95,3 +95,24 @@ Reference:
 
 61.0\_PRODUCT\_GLOSSARY.md
 
+
+---
+
+## Multi-AI Operating Model
+
+Authoritative reference:
+
+```text
+docs/product-governance/61.0_MULTI_AI_OPERATING_MODEL.md
+```
+
+DentalOperix uses a coordinated multi-AI delivery model:
+
+- ChatGPT: architecture, governance, technical review, AI delivery coordination, final certification.
+- Claude: user stories, acceptance criteria, business rules, functional specifications, permission matrices.
+- Cursor: controlled implementation, refactoring, tests, pull request preparation.
+- v0 / Figma: UX flows, wireframes, dashboards, visual component proposals.
+
+All AI outputs must comply with the certified architecture, Product Governance, Software Factory Operating Model, and the Multi-AI Operating Model.
+
+If there is a conflict between ad hoc prompts and repository documentation, repository governance documents take precedence.

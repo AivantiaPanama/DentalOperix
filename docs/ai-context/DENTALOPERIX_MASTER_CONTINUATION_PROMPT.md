@@ -33,7 +33,8 @@ Lee y evalúa, en este orden:
 13. `docs/ai-context/DENTALOPERIX_ARCHITECTURE_CONTEXT.md`
 14. `docs/ai-context/DENTALOPERIX_GOVERNANCE_CONTEXT.md`
 15. `docs/ai-governance/61.0_SOFTWARE_FACTORY_OPERATING_MODEL.md`
-16. `docs/iterations/ITERATION_61.1_USERS_RBAC.md`
+16. `docs/product-governance/61.0_MULTI_AI_OPERATING_MODEL.md`
+17. `docs/iterations/ITERATION_61.1_USERS_RBAC.md`
 
 Si alguno de estos documentos falta, debes indicarlo explícitamente y explicar qué riesgo genera su ausencia.
 
@@ -263,47 +264,53 @@ Después:
 
 ---
 
-## Uso de IA Múltiple
+## Modelo Operativo Multi-IA Oficial
 
-DentalOperix utiliza una estrategia coordinada de IA.
+El documento normativo y autoritativo para coordinación multi-IA es:
 
-### ChatGPT
+```text
+docs/product-governance/61.0_MULTI_AI_OPERATING_MODEL.md
+```
 
-Responsable de:
+Todas las responsabilidades, handoffs, approval gates, ownership y límites de ejecución entre ChatGPT, Claude, Cursor y v0 / Figma deben seguir ese documento.
 
-* Arquitectura
-* Gobierno
-* Revisión técnica
-* Integración de iniciativas
+### Responsabilidades oficiales
 
-### Claude
+ChatGPT:
 
-Responsable de:
+* Arquitectura.
+* Gobierno.
+* Revisión técnica.
+* Coordinación de entrega IA.
+* Integración de iniciativas.
+* Certificación final.
 
-* Documentación
-* Historias de usuario
-* Reglas de negocio
-* Especificaciones funcionales
+Claude:
 
-### Cursor
+* Documentación funcional.
+* Historias de usuario.
+* Reglas de negocio.
+* Criterios de aceptación.
+* Matrices de roles y permisos.
 
-Responsable de:
+Cursor:
 
-* Implementación controlada
-* Refactoring
-* Tests
-* Integración técnica
+* Implementación controlada.
+* Refactoring.
+* Tests.
+* Integración técnica.
+* Pull Request preparation.
 
-### v0 / Figma
+v0 / Figma:
 
-Responsable de:
+* UX.
+* Dashboards.
+* Wireframes.
+* Componentes visuales.
 
-* UX
-* Dashboards
-* Wireframes
-* Componentes visuales
+Ninguna IA puede modificar arquitectura certificada sin revisión y aprobación explícita.
 
-Ninguna IA puede modificar arquitectura certificada sin revisión.
+Si existe conflicto entre este prompt y la documentación de gobierno versionada, prevalece la documentación versionada del repositorio.
 
 ---
 
