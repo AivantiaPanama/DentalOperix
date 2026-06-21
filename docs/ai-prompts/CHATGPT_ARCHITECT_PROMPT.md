@@ -24,3 +24,4 @@ Respect:
 - No RBAC bypass
 - No protected component changes without explicit approval
 ```
+
