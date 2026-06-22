@@ -46,13 +46,13 @@ IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
 Luego:
 
 ```text
-Maintain 61.1 certification and prepare implementation package
+Execute controlled 61.1 implementation under IAR-61.1
 ```
 
 Despues:
 
 ```text
-Implement 61.1 Users + RBAC + Dashboard Routing
+Create Cursor Implementation Task Package 61.1
 ```
 
 ---
@@ -93,11 +93,17 @@ Completed:
 
 ## 61.1 Users & RBAC Foundation
 
-Status: READY_FOR_IMPLEMENTATION
+Status: AUTHORIZED_FOR_IMPLEMENTATION
 
 Functional Baseline: APPROVED
 
 Architecture Certification: READY_FOR_IMPLEMENTATION
+
+Implementation Readiness Review: PASS
+
+Implementation Authorization Review: PASS
+
+Implementation Authorization: AUTHORIZED_FOR_IMPLEMENTATION
 
 Resolved Blocking Item:
 
@@ -116,6 +122,9 @@ Completed:
 - ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0
 - ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md
 - ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
+- IMPLEMENTATION-READINESS-REVIEW-61.1-V1.0
+- IMPLEMENTATION-AUTHORIZATION-REVIEW-61.1-V1.0
+- IMPLEMENTATION-BLUEPRINT-61.1-USERS-RBAC-V1.0
 
 Ready areas:
 
@@ -123,11 +132,13 @@ Ready areas:
 - Dashboard Routing Rules
 - User <-> Lead Boundaries
 
-Pending:
+Authorized for implementation:
 
 - Users Foundation Implementation
 - RBAC Enforcement Implementation
 - Dashboard Routing Implementation
+
+Code generation and repository changes must follow the authorized implementation sequence and protected component restrictions defined in IAR-61.1.
 
 ---
 
