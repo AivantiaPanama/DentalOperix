@@ -43,6 +43,17 @@ describe("admin-auth.server", () => {
       });
     });
 
+    it("creates a signed token for assistant role without changing RBAC semantics", () => {
+      const now = Math.floor(Date.now() / 1000);
+      const token = createAdminSessionToken(now, "assistant");
+
+      expect(verifyAdminSessionToken(token)).toEqual({
+        role: "assistant",
+        iat: now,
+        exp: now + 60 * 60 * 8,
+      });
+    });
+
     it("throws when ADMIN_SESSION_SECRET is not configured", () => {
       getServerConfig.mockReturnValue({ adminSessionSecret: undefined });
 

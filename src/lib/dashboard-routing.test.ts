@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { getDashboardRoutingDecision, resolveDashboardRouteForRole } from "./dashboard-routing";
+import {
+  getDashboardRoleForPath,
+  getDashboardRoutingDecision,
+  resolveDashboardRouteForRole,
+} from "./dashboard-routing";
 
 // PR-4 Dashboard Routing validation package.
 describe("61.1-ROUTING-001 Dashboard Resolver", () => {
@@ -65,5 +69,18 @@ describe("61.1-ROUTING-002 Unauthorized Dashboard Access", () => {
       status: "blocked",
       reason: "INVALID_ROLE",
     });
+  });
+});
+
+describe("61.2-ASSISTANT-SHELL Dashboard path role resolver", () => {
+  it("resolves assistant workspace paths without changing dashboard routes", () => {
+    expect(getDashboardRoleForPath("/assistant")).toBe("assistant");
+    expect(getDashboardRoleForPath("/assistant/today")).toBe("assistant");
+  });
+
+  it("does not infer roles for public or unknown paths", () => {
+    expect(getDashboardRoleForPath("/")).toBeNull();
+    expect(getDashboardRoleForPath("/portal/asistente")).toBeNull();
+    expect(getDashboardRoleForPath("/unknown")).toBeNull();
   });
 });

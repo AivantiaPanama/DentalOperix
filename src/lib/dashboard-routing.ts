@@ -33,6 +33,18 @@ export function resolveDashboardRouteForRole(role: Role): DashboardRoute {
   return DASHBOARD_ROUTES[role];
 }
 
+export function getDashboardRoleForPath(pathname: string): Role | null {
+  const normalizedPath = pathname.trim() || "/";
+
+  for (const [role, route] of Object.entries(DASHBOARD_ROUTES) as Array<[Role, DashboardRoute]>) {
+    if (normalizedPath === route || normalizedPath.startsWith(`${route}/`)) {
+      return role;
+    }
+  }
+
+  return null;
+}
+
 export function getDashboardRoutingDecision(role: unknown): DashboardRoutingDecision {
   if (role === undefined || role === null || role === "") {
     return { status: "blocked", reason: "UNDEFINED_ROLE" };

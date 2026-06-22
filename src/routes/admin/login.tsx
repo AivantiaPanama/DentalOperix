@@ -1,6 +1,8 @@
 import { FormEvent, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { LockKeyhole } from "lucide-react";
+import { resolveDashboardRouteForRole } from "@/lib/dashboard-routing";
+import { isRole, type Role } from "@/lib/rbac/roles";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/admin/login")({
 function AdminLoginPage() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<Role>("administrator");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,13 +36,14 @@ function AdminLoginPage() {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, role }),
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || payload.success === false) {
         throw new Error(payload.error ?? "No se pudo iniciar sesión.");
       }
-      navigate({ to: "/admin/dashboard", replace: true });
+      const resolvedRole = isRole(payload.role) ? payload.role : role;
+      navigate({ to: resolveDashboardRouteForRole(resolvedRole), replace: true });
     } catch (loginError) {
       setError(loginError instanceof Error ? loginError.message : "Error de autenticación.");
     } finally {
@@ -69,6 +73,23 @@ function AdminLoginPage() {
                 autoComplete="current-password"
                 required
               />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="admin-role">Workspace</Label>
+              <select
+                id="admin-role"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                value={role}
+                onChange={(event) => {
+                  const selectedRole = event.target.value;
+                  if (isRole(selectedRole)) setRole(selectedRole);
+                }}
+              >
+                <option value="administrator">Administración</option>
+                <option value="assistant">Asistente / Front Desk</option>
+                <option value="doctor">Doctor</option>
+                <option value="patient">Paciente</option>
+              </select>
             </div>
             {error ? (
               <p className="rounded-xl bg-destructive/10 p-3 text-sm text-destructive">{error}</p>

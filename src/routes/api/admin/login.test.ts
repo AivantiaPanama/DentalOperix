@@ -63,7 +63,7 @@ describe("/api/admin/login", () => {
     );
 
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toEqual({ success: true });
+    await expect(response.json()).resolves.toEqual({ success: true, role: "administrator" });
 
     const setCookie = response.headers.get("Set-Cookie");
     expect(setCookie).toContain(`${ADMIN_SESSION_COOKIE}=`);
@@ -72,6 +72,36 @@ describe("/api/admin/login", () => {
 
     const token = decodeURIComponent(setCookie?.split(";")[0].split("=")[1] ?? "");
     expect(verifyAdminSessionToken(token)).toMatchObject({ role: "administrator" });
+  });
+
+  it("returns an assistant session when a valid assistant role is requested", async () => {
+    const response = await POST(
+      new Request("http://localhost/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: "admin-pass", role: "assistant" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ success: true, role: "assistant" });
+
+    const setCookie = response.headers.get("Set-Cookie");
+    const token = decodeURIComponent(setCookie?.split(";")[0].split("=")[1] ?? "");
+    expect(verifyAdminSessionToken(token)).toMatchObject({ role: "assistant" });
+  });
+
+  it("falls back to administrator when an invalid role is requested", async () => {
+    const response = await POST(
+      new Request("http://localhost/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: "admin-pass", role: "owner" }),
+      }),
+    );
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({ success: true, role: "administrator" });
   });
 
   it("returns 500 when session secret is not configured", async () => {

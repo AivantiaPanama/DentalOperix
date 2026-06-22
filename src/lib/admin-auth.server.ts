@@ -2,13 +2,13 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import process from "node:process";
 import { getServerConfig } from "./config.server";
 import { requireInternalApiKey } from "./internal-api-key.server";
-import type { Role } from "./rbac/roles";
+import { isRole, type Role } from "./rbac/roles";
 
 export const ADMIN_SESSION_COOKIE = "dentaloperix_admin_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8;
 
 export type AdminSessionPayload = {
-  role: Extract<Role, "administrator">;
+  role: Role;
   iat: number;
   exp: number;
 };
@@ -40,14 +40,14 @@ export function verifyAdminPassword(password: string) {
   return safeEqual(password, adminPassword);
 }
 
-export function createAdminSessionToken(now = Math.floor(Date.now() / 1000)) {
+export function createAdminSessionToken(now = Math.floor(Date.now() / 1000), role: Role = "administrator") {
   const { adminSessionSecret } = getServerConfig();
   if (!adminSessionSecret) {
     throw new Error("ADMIN_SESSION_SECRET is not configured.");
   }
 
   const payload: AdminSessionPayload = {
-    role: "administrator",
+    role,
     iat: now,
     exp: now + SESSION_MAX_AGE_SECONDS,
   };
@@ -68,7 +68,7 @@ export function verifyAdminSessionToken(token?: string | null) {
 
   try {
     const payload = JSON.parse(base64UrlDecode(encodedPayload)) as AdminSessionPayload;
-    if (payload.role !== "administrator") return null;
+    if (!isRole(payload.role)) return null;
     if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) return null;
     return payload;
   } catch {

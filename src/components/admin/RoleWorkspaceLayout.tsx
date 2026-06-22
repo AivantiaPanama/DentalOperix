@@ -32,7 +32,6 @@ const roleNavigation: Record<Role, Array<{ label: string; icon: typeof Home }>> 
     { label: "Agenda diaria", icon: CalendarDays },
     { label: "Confirmaciones", icon: HeartHandshake },
     { label: "Check-in / Check-out", icon: LogIn },
-    { label: "Pacientes", icon: UserRound },
   ],
   patient: [
     { label: "Mis citas", icon: CalendarDays },
