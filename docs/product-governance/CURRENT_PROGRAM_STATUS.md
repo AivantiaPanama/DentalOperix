@@ -40,13 +40,13 @@ Ninguna iniciativa puede introducir:
 # Current Priority
 
 ```text
-RESOLVE BLOCK-61.1-001
+IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
 ```
 
 Luego:
 
 ```text
-Certify 61.1 as READY_FOR_IMPLEMENTATION
+Maintain 61.1 certification and prepare implementation package
 ```
 
 Despues:
@@ -93,17 +93,17 @@ Completed:
 
 ## 61.1 Users & RBAC Foundation
 
-Status: CONDITIONALLY_READY
+Status: READY_FOR_IMPLEMENTATION
 
 Functional Baseline: APPROVED
 
-Architecture Certification: CONDITIONALLY READY
+Architecture Certification: READY_FOR_IMPLEMENTATION
 
-Blocking Item:
+Resolved Blocking Item:
 
 ```text
 BLOCK-61.1-001
-Role Assignment Workflow is undefined as a process, despite the permission being defined.
+Role Assignment Workflow resolved via Option A — Administrator-Created Users.
 ```
 
 Completed:
@@ -115,6 +115,7 @@ Completed:
 - Acceptance Criteria
 - ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0
 - ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md
+- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
 
 Ready areas:
 
@@ -124,8 +125,6 @@ Ready areas:
 
 Pending:
 
-- Architecture decision for Role Assignment Workflow
-- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
 - Users Foundation Implementation
 - RBAC Enforcement Implementation
 - Dashboard Routing Implementation
@@ -170,20 +169,22 @@ Pending Architecture Review:
 1. Doctor <-> Patient Assignment Model
 2. Lead <-> Patient Relationship Model
 3. Retention / Soft Delete Policy
-4. Role Assignment Workflow
-5. Real-Time Update Mechanism
-6. Global Search Scope
+4. Real-Time Update Mechanism
+5. Global Search Scope
 
-Current active blocker:
+Resolved item:
 
 ```text
 BLOCK-61.1-001: Role Assignment Workflow
+STATUS: RESOLVED
+Decision: Option A — Administrator-Created Users
+Reference: docs/architecture/ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.md
 ```
 
-Status:
+Remaining Open Items Status:
 
 ```text
-DEFERRED except BLOCK-61.1-001, which is ACTIVE
+DEFERRED
 ```
 
 ---
@@ -218,8 +219,7 @@ DentalOperix Starter Status: NOT READY
 
 Blockers:
 
-- Resolve BLOCK-61.1-001
-- Certify 61.1 as READY_FOR_IMPLEMENTATION
+- Maintain 61.1 certification and implementation package
 - Implement Users Foundation
 - Implement RBAC Enforcement
 - Implement Dashboard Routing
@@ -236,5 +236,5 @@ More certification and implementation readiness.
 Immediate action:
 
 ```text
-Resolve BLOCK-61.1-001
+Implement 61.1 Users + RBAC + Dashboard Routing under ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
 ```

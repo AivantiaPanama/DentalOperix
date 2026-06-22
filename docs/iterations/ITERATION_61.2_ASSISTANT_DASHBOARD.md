@@ -91,9 +91,16 @@ The following remain intentionally unresolved and must be handled by Architectur
 1. Doctor <-> Patient Assignment Model.
 2. Lead <-> Patient Relationship Model.
 3. Retention / Soft Delete Policy.
-4. Role Assignment Workflow.
-5. Real-Time Update Mechanism.
-6. Global Search.
+4. Real-Time Update Mechanism.
+5. Global Search.
+
+Resolved for 61.1:
+
+```text
+Role Assignment Workflow
+Decision: Option A — Administrator-Created Users
+Reference: docs/architecture/ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.md
+```
 
 ## Dependency gate
 

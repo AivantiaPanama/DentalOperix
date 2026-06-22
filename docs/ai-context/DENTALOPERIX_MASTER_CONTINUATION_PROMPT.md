@@ -18,28 +18,28 @@ No debes asumir contexto no documentado.
 
 Lee y evalua, en este orden:
 
-1. `docs/ai-context/DENTALOPERIX\_QUICK\_START.md`
-2. `docs/product-governance/CURRENT\_PROGRAM\_STATUS.md`
-3. `docs/product-governance/61.0\_CURRENT\_PROJECT\_STATUS.md`
-4. `docs/product-governance/61.0\_PRODUCT\_MEMORY.md`
-5. `docs/product-governance/61.0\_PRODUCT\_DECISION\_LOG.md`
-6. `docs/product-governance/61.0\_MASTER\_PRODUCT\_ROADMAP.md`
-7. `docs/product-governance/61.0\_PRODUCT\_GOVERNANCE\_DASHBOARD.md`
-8. `docs/product-governance/61.0\_RELEASE\_READINESS\_CHECKLIST.md`
-9. `docs/product-governance/61.0\_MODULE\_DEPENDENCY\_MAP.md`
-10. `docs/product-governance/61.0\_COMMERCIAL\_PACKAGING.md`
-11. `docs/product-governance/61.0\_PRODUCT\_GLOSSARY.md`
-12. `docs/product-governance/61.0\_PRODUCT\_SUCCESS\_METRICS.md`
-13. `docs/ai-context/DENTALOPERIX\_AI\_CONTEXT.md`
-14. `docs/ai-context/DENTALOPERIX\_ARCHITECTURE\_CONTEXT.md`
-15. `docs/ai-context/DENTALOPERIX\_GOVERNANCE\_CONTEXT.md`
-16. `docs/ai-governance/61.0\_SOFTWARE\_FACTORY\_OPERATING\_MODEL.md`
-17. `docs/product-governance/61.0\_MULTI\_AI\_OPERATING\_MODEL.md`
-18. `docs/iterations/ITERATION\_61.1\_USERS\_RBAC.md`
-19. `docs/iterations/ITERATION\_61.2\_ASSISTANT\_DASHBOARD.md`
-20. `docs/product-governance/61.2\_DOCUMENTATION\_STATUS.md`
+1. `docs/ai-context/DENTALOPERIX\\\_QUICK\\\_START.md`
+2. `docs/product-governance/CURRENT\\\_PROGRAM\\\_STATUS.md`
+3. `docs/product-governance/61.0\\\_CURRENT\\\_PROJECT\\\_STATUS.md`
+4. `docs/product-governance/61.0\\\_PRODUCT\\\_MEMORY.md`
+5. `docs/product-governance/61.0\\\_PRODUCT\\\_DECISION\\\_LOG.md`
+6. `docs/product-governance/61.0\\\_MASTER\\\_PRODUCT\\\_ROADMAP.md`
+7. `docs/product-governance/61.0\\\_PRODUCT\\\_GOVERNANCE\\\_DASHBOARD.md`
+8. `docs/product-governance/61.0\\\_RELEASE\\\_READINESS\\\_CHECKLIST.md`
+9. `docs/product-governance/61.0\\\_MODULE\\\_DEPENDENCY\\\_MAP.md`
+10. `docs/product-governance/61.0\\\_COMMERCIAL\\\_PACKAGING.md`
+11. `docs/product-governance/61.0\\\_PRODUCT\\\_GLOSSARY.md`
+12. `docs/product-governance/61.0\\\_PRODUCT\\\_SUCCESS\\\_METRICS.md`
+13. `docs/ai-context/DENTALOPERIX\\\_AI\\\_CONTEXT.md`
+14. `docs/ai-context/DENTALOPERIX\\\_ARCHITECTURE\\\_CONTEXT.md`
+15. `docs/ai-context/DENTALOPERIX\\\_GOVERNANCE\\\_CONTEXT.md`
+16. `docs/ai-governance/61.0\\\_SOFTWARE\\\_FACTORY\\\_OPERATING\\\_MODEL.md`
+17. `docs/product-governance/61.0\\\_MULTI\\\_AI\\\_OPERATING\\\_MODEL.md`
+18. `docs/iterations/ITERATION\\\_61.1\\\_USERS\\\_RBAC.md`
+19. `docs/iterations/ITERATION\\\_61.2\\\_ASSISTANT\\\_DASHBOARD.md`
+20. `docs/product-governance/61.2\\\_DOCUMENTATION\\\_STATUS.md`
 21. `docs/architecture/ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.md`
-22. `docs/architecture/ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001\_ROLE\_ASSIGNMENT\_WORKFLOW.md`
+22. `docs/architecture/ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001\\\_ROLE\\\_ASSIGNMENT\\\_WORKFLOW.md`
 
 Si alguno de estos documentos falta, debes indicarlo explicitamente y explicar que riesgo genera su ausencia.
 
@@ -133,9 +133,9 @@ Incluye:
 Status:
 
 ```text
-FUNCTIONAL\_BASELINE\_APPROVED
-ARCHITECTURE\_CERTIFICATION: CONDITIONALLY\_READY
-BLOCKING\_ITEM: BLOCK-61.1-001
+READY\\\_FOR\\\_IMPLEMENTATION
+ARCHITECTURE\\\_CERTIFICATION: READY\\\_FOR\\\_IMPLEMENTATION
+RESOLVED\\\_ITEM: BLOCK-61.1-001
 ```
 
 Completado:
@@ -147,6 +147,7 @@ Completado:
 * Acceptance Criteria.
 * ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.
 * ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001\_ROLE\_ASSIGNMENT\_WORKFLOW.md.
+* ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.
 
 Certificado como READY:
 
@@ -154,15 +155,16 @@ Certificado como READY:
 * Dashboard Routing Rules.
 * User <-> Lead Boundaries.
 
-No listo aun:
+Resuelto:
 
 * Role Assignment Workflow.
 
-Bloque actual:
+Bloque resuelto:
 
 ```text
 BLOCK-61.1-001
-Role Assignment Workflow is undefined as a process, despite the permission being defined.
+Decision: Option A — Administrator-Created Users
+Status: RESOLVED
 ```
 
 Regla ya definida:
@@ -171,10 +173,12 @@ Regla ya definida:
 user.role.assign = Administrator only
 ```
 
-Pendiente antes de implementar completamente 61.1:
+Pendiente antes de completar 61.1:
 
-* Resolver BLOCK-61.1-001 mediante decision de Architecture Review.
-* Emitir ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1 con status READY\_FOR\_IMPLEMENTATION.
+* Implementar Users Foundation.
+* Implementar RBAC Enforcement.
+* Implementar Dashboard Routing.
+* Validar 61.1 despues de implementacion.
 
 \---
 
@@ -183,8 +187,8 @@ Pendiente antes de implementar completamente 61.1:
 Status:
 
 ```text
-FUNCTIONAL\_PACKAGE\_COMPLETE
-IMPLEMENTATION\_BLOCKED\_BY\_61.1
+FUNCTIONAL\\\_PACKAGE\\\_COMPLETE
+IMPLEMENTATION\\\_BLOCKED\\\_UNTIL\\\_61.1\\\_IMPLEMENTATION\\\_COMPLETE
 ```
 
 Artefactos completados:
@@ -215,7 +219,7 @@ Dependencia:
 Status:
 
 ```text
-NOT\_STARTED
+NOT\\\_STARTED
 ```
 
 No iniciar 61.3 hasta resolver dependencias arquitectonicas, especialmente:
@@ -267,7 +271,7 @@ Artefactos creados:
 Madurez:
 
 ```text
-LOW\_FIDELITY
+LOW\\\_FIDELITY
 ```
 
 Pendiente:
@@ -312,7 +316,7 @@ Usa este formato:
 
 ```text
 Documentacion suficiente: SI / NO / PARCIAL
-Nivel de continuidad estimado: \_\_%
+Nivel de continuidad estimado: \\\_\\\_%
 Riesgo de perdida de contexto: Bajo / Medio / Alto
 ```
 
@@ -401,7 +405,7 @@ Resolver BLOCK-61.1-001
 Luego:
 
 ```text
-Certificar 61.1 como READY\_FOR\_IMPLEMENTATION
+Certificar 61.1 como READY\\\_FOR\\\_IMPLEMENTATION
 ```
 
 Despues:
@@ -429,7 +433,7 @@ No iniciar implementacion de 61.2 hasta que 61.1 este implementado y validado.
 Documento autoritativo:
 
 ```text
-docs/product-governance/61.0\_MULTI\_AI\_OPERATING\_MODEL.md
+docs/product-governance/61.0\\\_MULTI\\\_AI\\\_OPERATING\\\_MODEL.md
 ```
 
 Responsabilidades oficiales:
@@ -585,15 +589,15 @@ STATUS: COMPLETE
 DentalOperix-Lab
 STATUS: ACTIVE
 
-61.1 Users \& RBAC Foundation
-STATUS: CONDITIONALLY\_READY
-BLOCKER: BLOCK-61.1-001
+61.1 Users \\\& RBAC Foundation
+STATUS: CONDITIONALLY\\\_READY
+RESOLVED: BLOCK-61.1-001
 
 61.2 Assistant Dashboard
-STATUS: FUNCTIONAL\_PACKAGE\_COMPLETE
+STATUS: FUNCTIONAL\\\_PACKAGE\\\_COMPLETE
 IMPLEMENTATION: BLOCKED BY 61.1
 
 Current Priority:
-RESOLVE BLOCK-61.1-001
+IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
 ```
 

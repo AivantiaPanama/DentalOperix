@@ -4,7 +4,7 @@
 
 Version: 1.0
 
-Status: PENDING ARCHITECTURE DECISION
+Status: RESOLVED
 
 Related Iteration: 61.1 Users & RBAC Foundation
 
@@ -220,22 +220,28 @@ Rationale:
 
 ---
 
-# 8. Requested Architecture Decision
+# 8. Architecture Decision
 
-Architecture Review must formally select one of:
+Architecture Review formally selected:
 
 ```text
 APPROVED: OPTION A
-APPROVED: OPTION B
-APPROVED: OPTION C
-REQUIRES FURTHER ANALYSIS
+Administrator-Created Users
 ```
+
+Decision rationale:
+
+- Minimizes scope and architectural risk for 61.1.
+- Preserves `Leads = Source of Truth`.
+- Keeps Users as identity only.
+- Keeps RBAC as authorization only.
+- Avoids self-registration, invitation tokens, role delegation, and approval workflow complexity in 61.1.
 
 ---
 
 # 9. Expected Outcome
 
-If approved:
+Approved outcome:
 
 ```text
 BLOCK-61.1-001 = RESOLVED
@@ -244,30 +250,22 @@ BLOCK-61.1-001 = RESOLVED
 and:
 
 ```text
-ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
+docs/architecture/ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.md
+STATUS: READY_FOR_IMPLEMENTATION
 ```
 
-may be updated from:
-
-```text
-CONDITIONALLY READY
-```
-
-to:
-
-```text
-READY FOR IMPLEMENTATION
-```
-
-subject to all existing governance constraints.
+All existing governance constraints remain active.
 
 ---
 
 # 10. Cursor Guardrail Until Decision
 
-Until this brief is formally decided:
+After this brief is resolved:
 
-- Cursor may implement permission checks for user.role.assign.
+- Cursor may proceed only after explicit implementation authorization.
+- Implementation must follow `ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.md`.
+- `user.role.assign = Administrator only` remains mandatory.
+- Self-registration, invitation workflow, role delegation, and dual-approval workflow remain out of scope for 61.1.
 - Cursor must not implement registration.
 - Cursor must not implement invitation flows.
 - Cursor must not implement onboarding screens.

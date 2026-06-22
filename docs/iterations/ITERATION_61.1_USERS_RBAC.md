@@ -1,9 +1,9 @@
 # Iteration 61.1 - Users & RBAC Foundation
 
-Status: `FUNCTIONAL_BASELINE_APPROVED`
+Status: `READY_FOR_IMPLEMENTATION`
 Priority: `P0`
 Owner: Architecture / Product Governance
-Last updated: 2026-06-21
+Last updated: 2026-06-22
 
 ## Objective
 
@@ -44,6 +44,9 @@ RBAC-MATRIX-V1.1
 Functional Approval: PASS
 Architecture Compatibility: PASS
 Leads = Source of Truth: PASS
+
+ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
+Status: READY_FOR_IMPLEMENTATION
 ```
 
 ## Scope
@@ -149,4 +152,10 @@ Completed as part of `DUP-61.1-RBAC`:
 1. Doctor <-> Patient Assignment Model.
 2. Lead <-> Patient Relationship Model.
 3. Retention / Soft Delete Policy.
-4. Role Assignment Workflow.
+
+## Resolved Architecture Questions
+
+1. Role Assignment Workflow.
+   - Status: `RESOLVED`
+   - Decision: `Option A — Administrator-Created Users`
+   - Reference: `docs/architecture/ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.md`
