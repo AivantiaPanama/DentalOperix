@@ -29,7 +29,9 @@ Implementation Baseline: 61.1-GOVERNANCE-PACKAGE-V1.2
 Frozen Date: 2026-06-22
 Architecture Status: CERTIFIED
 Implementation Status: AUTHORIZED_FOR_IMPLEMENTATION
-Current Execution Target: PR-3 RBAC Enforcement
+Current Execution Target:
+PR-4 Dashboard Routing
+STATUS: CERTIFIED
 ```
 
 ---
@@ -236,6 +238,7 @@ PR-1 Users Foundation
 PR-2 Authentication
 ✓
 PR-3 RBAC Enforcement
+STATUS: CERTIFIED
 - current target
 PR-4 Dashboard Routing
 PR-5 Validation & Hardening
@@ -274,6 +277,7 @@ Follow all referenced governance documents.
 
 Current execution target:
 PR-3 RBAC Enforcement
+STATUS: CERTIFIED
 
 Tasks:
 - 61.1-RBAC-001 Role Model
