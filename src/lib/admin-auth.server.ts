@@ -8,7 +8,7 @@ export const ADMIN_SESSION_COOKIE = "dentaloperix_admin_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8;
 
 export type AdminSessionPayload = {
-  role: Extract<Role, "admin">;
+  role: Extract<Role, "administrator">;
   iat: number;
   exp: number;
 };
@@ -47,7 +47,7 @@ export function createAdminSessionToken(now = Math.floor(Date.now() / 1000)) {
   }
 
   const payload: AdminSessionPayload = {
-    role: "admin",
+    role: "administrator",
     iat: now,
     exp: now + SESSION_MAX_AGE_SECONDS,
   };
@@ -68,7 +68,7 @@ export function verifyAdminSessionToken(token?: string | null) {
 
   try {
     const payload = JSON.parse(base64UrlDecode(encodedPayload)) as AdminSessionPayload;
-    if (payload.role !== "admin") return null;
+    if (payload.role !== "administrator") return null;
     if (!payload.exp || payload.exp < Math.floor(Date.now() / 1000)) return null;
     return payload;
   } catch {
@@ -106,7 +106,7 @@ function canBypassAdminAuthInDevelopment() {
 
 export function requireAdminSession(request?: Request) {
   if (canBypassAdminAuthInDevelopment()) {
-    return { role: "admin", iat: 0, exp: Number.MAX_SAFE_INTEGER } as const;
+    return { role: "administrator", iat: 0, exp: Number.MAX_SAFE_INTEGER } as const;
   }
 
   if (!request) {

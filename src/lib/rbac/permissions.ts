@@ -1,10 +1,17 @@
 import type { Role } from "./roles";
 
+/**
+ * 61.1-RBAC-002 Authorization permissions.
+ *
+ * Governance boundary:
+ * - RBAC grants access only; it does not define source-of-truth ownership.
+ * - Leads remain the source of truth for lead data.
+ * - Users remain identity only.
+ */
 export const PERMISSIONS = [
   "crm:read",
   "crm:write",
   "leads:read",
-  "leads:create",
   "leads:update",
   "appointments:read",
   "appointments:create",
@@ -27,6 +34,7 @@ export const PERMISSIONS = [
   "dataQuality:read",
   "users:read",
   "users:write",
+  "user.role.assign",
   "patients:read",
   "patients:selfRead",
   "patients:update",
@@ -43,7 +51,7 @@ export const PERMISSIONS = [
 export type Permission = (typeof PERMISSIONS)[number];
 
 export const ROLE_PERMISSIONS: Record<Role, readonly Permission[]> = {
-  admin: PERMISSIONS,
+  administrator: PERMISSIONS,
   doctor: [
     "appointments:read",
     "appointments:update",
@@ -83,4 +91,8 @@ export function getPermissionsForRole(role: Role): readonly Permission[] {
 
 export function hasPermission(role: Role, permission: Permission): boolean {
   return getPermissionsForRole(role).includes(permission);
+}
+
+export function canAssignUserRole(role: Role): boolean {
+  return hasPermission(role, "user.role.assign");
 }

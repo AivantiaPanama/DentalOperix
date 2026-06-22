@@ -71,7 +71,7 @@ describe("/api/admin/login", () => {
     expect(setCookie).toContain("Max-Age=28800");
 
     const token = decodeURIComponent(setCookie?.split(";")[0].split("=")[1] ?? "");
-    expect(verifyAdminSessionToken(token)).toMatchObject({ role: "admin" });
+    expect(verifyAdminSessionToken(token)).toMatchObject({ role: "administrator" });
   });
 
   it("returns 500 when session secret is not configured", async () => {

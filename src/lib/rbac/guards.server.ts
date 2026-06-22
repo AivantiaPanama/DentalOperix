@@ -5,8 +5,8 @@ import {
 } from "@/lib/admin-auth.server";
 import { requireInternalApiKey, UnauthorizedApiKeyError } from "@/lib/internal-api-key.server";
 import type { Permission } from "./permissions";
-import { getPermissionsForRole, hasPermission } from "./permissions";
-import { isRoleAllowed, type Role } from "./roles";
+import { canAssignUserRole, getPermissionsForRole, hasPermission } from "./permissions";
+import { isAdministrator, isRoleAllowed, type Role } from "./roles";
 
 export type AuthSession = {
   role: Role;
@@ -20,10 +20,21 @@ export type AuthSession = {
   exp?: number;
 };
 
-export class UnauthorizedError extends Error {}
-export class ForbiddenError extends Error {}
+export class UnauthorizedError extends Error {
+  constructor(message = "Unauthorized") {
+    super(message);
+    this.name = "UnauthorizedError";
+  }
+}
 
-function toAuthSession(session: { role: "admin"; iat: number; exp: number }): AuthSession {
+export class ForbiddenError extends Error {
+  constructor(message = "Forbidden") {
+    super(message);
+    this.name = "ForbiddenError";
+  }
+}
+
+function toAuthSession(session: { role: Role; iat: number; exp: number }): AuthSession {
   return {
     role: session.role,
     permissions: getPermissionsForRole(session.role),
@@ -44,7 +55,7 @@ export function requireAuth(request?: Request): AuthSession {
     return toAuthSession(session);
   } catch (error) {
     if (error instanceof UnauthorizedAdminError) {
-      throw new UnauthorizedError("Unauthorized");
+      throw new UnauthorizedError();
     }
     throw error;
   }
@@ -53,7 +64,7 @@ export function requireAuth(request?: Request): AuthSession {
 export function requireRole(request: Request, allowedRoles: readonly Role[]): AuthSession {
   const session = requireAuth(request);
   if (!isRoleAllowed(session.role, allowedRoles)) {
-    throw new ForbiddenError("Forbidden");
+    throw new ForbiddenError();
   }
   return session;
 }
@@ -61,7 +72,23 @@ export function requireRole(request: Request, allowedRoles: readonly Role[]): Au
 export function requirePermission(request: Request, permission: Permission): AuthSession {
   const session = requireAuth(request);
   if (!hasPermission(session.role, permission)) {
-    throw new ForbiddenError("Forbidden");
+    throw new ForbiddenError();
+  }
+  return session;
+}
+
+export function requireAdministrator(request: Request): AuthSession {
+  const session = requireAuth(request);
+  if (!isAdministrator(session.role)) {
+    throw new ForbiddenError();
+  }
+  return session;
+}
+
+export function requireRoleAssignmentAuthority(request: Request): AuthSession {
+  const session = requireAuth(request);
+  if (!canAssignUserRole(session.role)) {
+    throw new ForbiddenError("Only Administrator may assign user roles.");
   }
   return session;
 }
@@ -73,7 +100,7 @@ export function requirePermissionOrInternalApiKey(
   const session = getAuthSessionFromRequest(request);
   if (session) {
     if (!hasPermission(session.role, permission)) {
-      throw new ForbiddenError("Forbidden");
+      throw new ForbiddenError();
     }
     return session;
   }
@@ -83,7 +110,7 @@ export function requirePermissionOrInternalApiKey(
     return null;
   } catch (error) {
     if (error instanceof UnauthorizedApiKeyError) {
-      throw new UnauthorizedError("Unauthorized");
+      throw new UnauthorizedError();
     }
     throw error;
   }
@@ -94,9 +121,9 @@ export function requireOwnership(
   resourceOwnerId: string | undefined | null,
   ownerKey: "patientId" | "doctorId" | "userId" = "patientId",
 ): AuthSession {
-  if (session.role === "admin") return session;
+  if (isAdministrator(session.role)) return session;
   if (!resourceOwnerId || session[ownerKey] !== resourceOwnerId) {
-    throw new ForbiddenError("Forbidden");
+    throw new ForbiddenError();
   }
   return session;
 }

@@ -23,7 +23,7 @@ describe("operational audit trail", () => {
         resourceId: "patient-1",
         metadata: { updatedFields: "phone,email", ignored: undefined },
       },
-      { role: "admin", email: "admin@dentaloperix.test" },
+      { role: "administrator", email: "admin@dentaloperix.test" },
     );
 
     expect(event.action).toBe("patient.admin_profile.updated");
@@ -32,7 +32,7 @@ describe("operational audit trail", () => {
 
     const events = await listOperationalAuditEvents({ limit: 10, resourceType: "patient" });
     expect(events).toHaveLength(1);
-    expect(events[0].actorRole).toBe("admin");
+    expect(events[0].actorRole).toBe("administrator");
   });
 
   it("parses safe read filters with bounded limits", () => {

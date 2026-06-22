@@ -23,7 +23,7 @@ function AdminRouteShell() {
   }
 
   return (
-    <RoleRouteGuard allowedRoles={["admin"]} checkingLabel="Validando acceso administrativo...">
+    <RoleRouteGuard allowedRoles={["administrator"]} checkingLabel="Validando acceso administrativo...">
       <AdminLayout>
         <AdminHomeDashboard />
       </AdminLayout>

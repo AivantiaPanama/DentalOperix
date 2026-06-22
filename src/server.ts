@@ -36,7 +36,7 @@ import * as operationalKpisHandler from "./routes/api/kpis/operational";
 import * as operationalDataQualityHandler from "./routes/api/data-quality/operational";
 
 const DASHBOARD_ROUTE_POLICIES: Array<{ prefix: string; allowedRoles: readonly Role[] }> = [
-  { prefix: "/admin", allowedRoles: ["admin"] },
+  { prefix: "/admin", allowedRoles: ["administrator"] },
   { prefix: "/assistant", allowedRoles: ["assistant"] },
   { prefix: "/doctor", allowedRoles: ["doctor"] },
   { prefix: "/patient", allowedRoles: ["patient"] },

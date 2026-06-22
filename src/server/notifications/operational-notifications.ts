@@ -15,7 +15,7 @@ export const OPERATIONAL_NOTIFICATION_TYPES = [
 
 export type OperationalNotificationType = (typeof OPERATIONAL_NOTIFICATION_TYPES)[number];
 export type OperationalNotificationSeverity = "info" | "attention" | "warning";
-export type OperationalNotificationAudience = "admin" | "assistant";
+export type OperationalNotificationAudience = "administrator" | "assistant";
 
 export type OperationalNotification = {
   id: string;
@@ -107,7 +107,7 @@ function buildLeadNotifications(leadOperations: LeadOperationsProfile[], created
     createdAt,
     resourceType: "lead",
     resourceId: item.leadId,
-    audience: ["admin", "assistant"],
+    audience: ["administrator", "assistant"],
     metadata: {
       status: item.operationalStatus,
       priority: item.priority,
@@ -127,7 +127,7 @@ function buildLeadNotifications(leadOperations: LeadOperationsProfile[], created
       createdAt,
       resourceType: "lead",
       resourceId: item.leadId,
-      audience: ["admin", "assistant"],
+      audience: ["administrator", "assistant"],
       metadata: {
         status: item.operationalStatus,
         nextFollowUpAt: item.nextFollowUpAt || null,
@@ -150,7 +150,7 @@ function buildPatientNotifications(patients: PatientAdministrativeProfile[], cre
       createdAt,
       resourceType: "patient",
       resourceId: patient.id,
-      audience: ["admin", "assistant"],
+      audience: ["administrator", "assistant"],
       metadata: {
         completionPercentage: patient.completionPercentage,
         missingFields: patient.missingFields.join(", "),
@@ -169,7 +169,7 @@ function buildPatientNotifications(patients: PatientAdministrativeProfile[], cre
       createdAt,
       resourceType: "patient",
       resourceId: patient.id,
-      audience: ["admin", "assistant"],
+      audience: ["administrator", "assistant"],
       metadata: {
         completionPercentage: patient.completionPercentage,
       },
@@ -190,7 +190,7 @@ async function buildAuditNotifications(createdAt: string) {
     createdAt: event.timestamp || createdAt,
     resourceType: event.resourceType === "report" ? "report" : "audit",
     resourceId: event.resourceId,
-    audience: ["admin"],
+    audience: ["administrator"],
     metadata: {
       action: event.action,
       actorRole: event.actorRole,

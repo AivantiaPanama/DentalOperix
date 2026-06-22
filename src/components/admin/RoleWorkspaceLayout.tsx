@@ -4,21 +4,21 @@ import { CalendarDays, FileText, HeartHandshake, Home, LogIn, ShieldCheck, UserR
 import type { Role } from "@/lib/rbac/roles";
 
 const roleLabels: Record<Role, string> = {
-  admin: "Administración",
+  administrator: "Administración",
   doctor: "Doctor",
   assistant: "Asistente",
   patient: "Paciente",
 };
 
 const roleDescriptions: Record<Role, string> = {
-  admin: "Vista administrativa protegida para operación, métricas y configuración.",
+  administrator: "Vista administrativa protegida para operación, métricas y configuración.",
   doctor: "Espacio clínico preparado para agenda, pacientes, tratamientos y notas clínicas.",
   assistant: "Espacio operativo preparado para agenda, confirmaciones, check-in y check-out.",
   patient: "Portal preparado para próximas citas, indicaciones, documentos y solicitudes propias.",
 };
 
 const roleNavigation: Record<Role, Array<{ label: string; icon: typeof Home }>> = {
-  admin: [
+  administrator: [
     { label: "Resumen", icon: Home },
     { label: "Métricas", icon: FileText },
     { label: "Configuración", icon: ShieldCheck },
@@ -94,7 +94,7 @@ export function RoleWorkspaceLayout({
             >
               Volver al sitio público
             </Link>
-            {role === "admin" ? (
+            {role === "administrator" ? (
               <Link
                 to="/admin/dashboard"
                 className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"

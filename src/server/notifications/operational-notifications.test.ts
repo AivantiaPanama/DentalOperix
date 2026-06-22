@@ -28,7 +28,7 @@ describe("operational notifications", () => {
   });
 
   it("allows only internal operational roles to read notifications", () => {
-    expect(hasPermission("admin", "notifications:read")).toBe(true);
+    expect(hasPermission("administrator", "notifications:read")).toBe(true);
     expect(hasPermission("assistant", "notifications:read")).toBe(true);
     expect(hasPermission("doctor", "notifications:read")).toBe(false);
     expect(hasPermission("patient", "notifications:read")).toBe(false);

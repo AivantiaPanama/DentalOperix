@@ -37,7 +37,7 @@ describe("admin-auth.server", () => {
       const payload = verifyAdminSessionToken(token);
 
       expect(payload).toEqual({
-        role: "admin",
+        role: "administrator",
         iat: now,
         exp: now + 60 * 60 * 8,
       });
