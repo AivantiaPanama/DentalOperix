@@ -1,0 +1,14 @@
+Modified/added files for PR-4:
+src/lib/dashboard-routing.ts
+src/lib/dashboard-routing.test.ts
+src/routes/dashboard.tsx
+docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_1.md
+docs/implementation/61.1/61.1_IMPLEMENTATION_STATUS.md
+docs/implementation/61.1/61.1_REQUIREMENTS_TRACEABILITY_MATRIX.md
+PR4_DASHBOARD_ROUTING_CHANGELOG.md
+
+Validation attempt:
+npm test -- --run src/lib/dashboard-routing.test.ts src/lib/rbac/rbac-pr3.test.ts
+Result: BLOCKED_ENVIRONMENT - vitest not found; node_modules not installed.
+
+Protected components touched: NO
