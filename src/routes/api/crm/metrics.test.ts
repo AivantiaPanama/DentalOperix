@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import type { CrmLeadRow } from "@/lib/crm-metrics";
 
 const listLeads = vi.fn();
@@ -21,8 +21,18 @@ const { GET } = await import("./metrics");
 
 describe("/api/crm/metrics endpoint", () => {
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-06-20T12:00:00.000Z"));
+  
     vi.resetAllMocks();
-    getServerConfig.mockReturnValue({ nodeEnv: "development", googleRefreshToken: "token" });
+    getServerConfig.mockReturnValue({
+      nodeEnv: "development",
+      googleRefreshToken: "token",
+    });
+  });
+  
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it("returns emptyCRM response with trend, comparison, and lead score fields", async () => {
