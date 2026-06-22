@@ -1,59 +1,112 @@
-# Iteration 61.2 - Assistant Operations Dashboard
+# DentalOperix - Iteration 61.2 Assistant Dashboard
 
-Status: READY_FOR_DESIGN
-Priority: P0
-Owner: Product / UX Governance
-Last updated: 2026-06-20
+## Status
+
+```text
+Functional package: COMPLETE
+Architecture Review Summary: READY FOR ARCHITECTURE REVIEW
+Test Case Package: READY FOR ARCHITECTURE REVIEW
+Implementation: NOT STARTED
+```
 
 ## Objective
 
-Design and implement the daily operational dashboard for clinic assistants.
-
-## Business Reason
-
-The assistant dashboard is the fastest path to a sellable Starter product because it helps the clinic operate today's appointments and follow-up work.
+Define the functional, UX, RBAC, business-rule, architecture-review, and test-case baseline for the Assistant / Front Desk Workspace.
 
 ## Scope
 
-Dashboard should show:
+Iteration 61.2 defines the Assistant-facing workspace after the 61.1 Users & RBAC Foundation is implemented.
 
-- Today's appointments.
-- Pending confirmations.
-- New leads.
-- Reschedules.
-- No-shows.
-- Patients needing contact.
-- Quick actions.
-
-## AI Assignments
-
-| Work | AI |
-|---|---|
-| UI mockup | v0 |
-| Data contract | ChatGPT |
-| User stories | Claude |
-| Integration candidate | Cursor after approval |
-
-## Design Rule
-
-Do not start with large tables. Start with action-oriented cards:
+Primary dashboard surface:
 
 ```text
-What is happening?
-What needs attention?
-What should the assistant do now?
+Assistant -> Front Desk Workspace / Assistant Operations Dashboard
 ```
 
-## Acceptance Criteria
+## Source artifacts
 
-- Dashboard is role-specific for Assistant.
-- No hidden fallback data.
-- Empty states appear only after real load/reconciliation.
-- Uses read-only data unless explicit operational action is approved.
-- Mobile responsive.
+Canonical artifacts are stored under:
 
-## Required Documentation Updates
+```text
+docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/
+```
 
-- `ASSISTANT_DASHBOARD_SPEC.md`
-- `61.0_PRODUCT_GOVERNANCE_DASHBOARD.md`
-- `PROJECT_SCOPE_AND_EXPECTED_BEHAVIOR.md`
+Included artifacts:
+
+1. `RBAC-MATRIX-V1.1`
+2. `UX-SPEC-61.2-V1.0`
+3. `USER-STORIES-61.2-V1.0`
+4. `BUSINESS-RULES-61.2-V1.0`
+5. `ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0`
+6. `TEST-CASE-PACKAGE-61.2-V1.0`
+
+## Functional coverage
+
+The package defines:
+
+- 8 user goals.
+- 12 user stories.
+- 12 business rules.
+- 14 acceptance criteria.
+- 14 test cases.
+- Full traceability across Goal -> AC -> User Story -> Business Rule -> Test Case -> RBAC permission.
+
+## Architecture compatibility
+
+The package preserves the certified architecture:
+
+```text
+Leads
+-> LeadPersistencePort
+-> LeadPersistenceProvider
+-> RelationalLeadPersistenceAdapter
+-> Supabase PostgreSQL
+```
+
+Permanent rule:
+
+```text
+Leads = Source of Truth
+```
+
+No artifact in this package proposes a persistence change, a new source of truth, Dual Write, Lead Replacement, or Analytics Write Back.
+
+## Protected components impact
+
+```text
+BookingDialog: NOT TOUCHED
+processDentalLead: NOT TOUCHED
+/api/leads/create: NOT TOUCHED
+Calendar: NOT TOUCHED
+Gmail: NOT TOUCHED
+FloatingDentalAIChat: NOT TOUCHED
+Home: NOT TOUCHED
+siteServices.ts: NOT TOUCHED
+```
+
+## Open architecture items
+
+The following remain intentionally unresolved and must be handled by Architecture Review or later iterations:
+
+1. Doctor <-> Patient Assignment Model.
+2. Lead <-> Patient Relationship Model.
+3. Retention / Soft Delete Policy.
+4. Role Assignment Workflow.
+5. Real-Time Update Mechanism.
+6. Global Search.
+
+## Dependency gate
+
+61.2 implementation remains dependent on:
+
+```text
+61.1 Users & RBAC Foundation
+-> Authentication Foundation
+-> Role Resolution
+-> RBAC Enforcement
+-> Dashboard Routing
+```
+
+## Recommended next step
+
+Proceed with Architecture Review of the 61.2 functional package before implementation planning.

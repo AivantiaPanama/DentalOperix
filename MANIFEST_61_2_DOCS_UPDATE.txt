@@ -1,0 +1,17 @@
+./MANIFEST_61_2_DOCS_UPDATE.txt
+./README_61_2_DOCS_UPDATE.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/README.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/BUSINESS-RULES-61.2-V1.0.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/RBAC-MATRIX-V1.1.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/TEST-CASE-PACKAGE-61.2-V1.0.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/USER-STORIES-61.2-V1.0.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/docx/UX-SPEC-61.2-V1.0.docx
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/BUSINESS-RULES-61.2-V1.0.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/RBAC-MATRIX-V1.1.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/TEST-CASE-PACKAGE-61.2-V1.0.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/USER-STORIES-61.2-V1.0.md
+./docs/ai-outputs/CLAUDE/61.2-assistant-dashboard/md/UX-SPEC-61.2-V1.0.md
+./docs/iterations/ITERATION_61.2_ASSISTANT_DASHBOARD.md
+./docs/product-governance/61.2_DOCUMENTATION_STATUS.md
