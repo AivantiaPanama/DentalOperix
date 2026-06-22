@@ -1,44 +1,65 @@
-# DentalOperix 61.1 Implementation Governance Package V1.2
+# DentalOperix 61.1 Governance Package V1.2 - Certified Closure
 
-This package is prepared for new implementation chat and Cursor execution continuity.
+## Status
 
-Primary entry point:
+```text
+61.1 Users + Authentication + RBAC + Dashboard Routing: CLOSED / CERTIFIED
+61.2 Assistant / Front Desk Workspace: IMPLEMENTATION_AUTHORIZED
+```
+
+## Final Evidence
+
+```text
+npm test
+Test Files  107 passed (107)
+Tests       464 passed (464)
+Duration    37.70s
+
+npm run build
+Client build PASS
+SSR build PASS
+```
+
+## Certified PR Sequence
+
+```text
+PR-1 Users Foundation: PASS / CERTIFIED
+PR-2 Authentication Foundation: PASS / CERTIFIED
+PR-3 RBAC Enforcement: PASS / CERTIFIED
+PR-4 Dashboard Routing: PASS / CERTIFIED
+PR-5 Validation & Hardening: PASS / CERTIFIED
+```
+
+## Start Next Chat Here
+
+Read:
 
 ```text
 docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_1.md
+docs/implementation/61.1/61.1_GOVERNANCE_CLOSURE_REPORT.md
+docs/implementation/61.1/61.1_CERTIFICATION_PACKAGE.md
+docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_2.md
 ```
 
-New chat prompt:
-
-```text
-docs/ai-context/61.1_NEW_CHAT_CODE_GENERATION_PROMPT.md
-```
-
-Current certified state:
-
-```text
-PR-1 Users Foundation: PASS
-PR-2 Authentication Foundation: PASS
-PR-3 RBAC Enforcement: PASS / CERTIFIED
-PR-4 Dashboard Routing: PASS / CERTIFIED
-```
-
-Current execution target:
-
-```text
-PR-5 Validation & Hardening
-STATUS: READY_FOR_ARCHITECTURE_REVIEW
-```
-
-PR-5 code or documentation closure changes are not authorized until the new chat completes the required pre-code architecture compliance review and receives explicit approval.
-
-Governance invariant:
+## Architecture Invariant
 
 ```text
 Leads = Source of Truth
 ```
 
-Protected components remain protected:
+Certified architecture:
+
+```text
+Leads
+-> LeadPersistencePort
+-> LeadPersistenceProvider
+-> RelationalLeadPersistenceAdapter
+-> Supabase PostgreSQL
+```
+
+## Protected Components
+
+Do not modify without explicit authorization:
 
 ```text
 BookingDialog
