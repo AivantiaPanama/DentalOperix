@@ -133,9 +133,11 @@ Incluye:
 Status:
 
 ```text
-READY\\\_FOR\\\_IMPLEMENTATION
-ARCHITECTURE\\\_CERTIFICATION: READY\\\_FOR\\\_IMPLEMENTATION
-RESOLVED\\\_ITEM: BLOCK-61.1-001
+AUTHORIZED_FOR_IMPLEMENTATION
+ARCHITECTURE_CERTIFICATION: READY_FOR_IMPLEMENTATION
+IMPLEMENTATION_READINESS_REVIEW: PASS
+IMPLEMENTATION_AUTHORIZATION_REVIEW: PASS
+RESOLVED_ITEM: BLOCK-61.1-001
 ```
 
 Completado:
@@ -148,8 +150,11 @@ Completado:
 * ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.
 * ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001\_ROLE\_ASSIGNMENT\_WORKFLOW.md.
 * ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.
+* IMPLEMENTATION-READINESS-REVIEW-61.1-V1.0.
+* IMPLEMENTATION-AUTHORIZATION-REVIEW-61.1-V1.0.
+* IMPLEMENTATION-BLUEPRINT-61.1-USERS-RBAC-V1.0.
 
-Certificado como READY:
+Certificado como READY / AUTHORIZED:
 
 * User Lifecycle States.
 * Dashboard Routing Rules.
@@ -175,10 +180,12 @@ user.role.assign = Administrator only
 
 Pendiente antes de completar 61.1:
 
+* Crear Cursor Implementation Task Package 61.1.
 * Implementar Users Foundation.
-* Implementar RBAC Enforcement.
+* Implementar Authentication.
+* Implementar RBAC Enforcement frontend + backend.
 * Implementar Dashboard Routing.
-* Validar 61.1 despues de implementacion.
+* Validar y certificar 61.1 despues de implementacion.
 
 \---
 
@@ -249,7 +256,18 @@ DEFERRED
 Open Item prioritario actual:
 
 ```text
-BLOCK-61.1-001: Role Assignment Workflow
+No active architecture blocker for 61.1 implementation.
+BLOCK-61.1-001: RESOLVED via Option A — Administrator-Created Users.
+```
+
+Open items remaining deferred for future iterations:
+
+```text
+Doctor <-> Patient Assignment Model
+Lead <-> Patient Relationship Model
+Retention / Soft Delete Policy
+Real-Time Update Mechanism
+Global Search Scope
 ```
 
 \---
@@ -399,19 +417,19 @@ Si falta informacion, solicita unicamente lo estrictamente necesario.
 Prioridad actual:
 
 ```text
-Resolver BLOCK-61.1-001
+Create Cursor Implementation Task Package 61.1
 ```
 
 Luego:
 
 ```text
-Certificar 61.1 como READY\\\_FOR\\\_IMPLEMENTATION
+Implement controlled implementation of 61.1 Users + RBAC + Dashboard Routing under IAR-61.1
 ```
 
 Despues:
 
 ```text
-Implementar 61.1 Users + RBAC + Dashboard Routing
+Validate and certify 61.1 implementation, then unlock 61.2 Assistant Dashboard implementation planning
 ```
 
 Cadena obligatoria:
@@ -590,14 +608,16 @@ DentalOperix-Lab
 STATUS: ACTIVE
 
 61.1 Users \\\& RBAC Foundation
-STATUS: CONDITIONALLY\\\_READY
+STATUS: AUTHORIZED_FOR_IMPLEMENTATION
 RESOLVED: BLOCK-61.1-001
+IAR: PASS
 
 61.2 Assistant Dashboard
 STATUS: FUNCTIONAL\\\_PACKAGE\\\_COMPLETE
 IMPLEMENTATION: BLOCKED BY 61.1
 
 Current Priority:
-IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
+CREATE CURSOR IMPLEMENTATION TASK PACKAGE 61.1
+THEN IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
 ```
 
