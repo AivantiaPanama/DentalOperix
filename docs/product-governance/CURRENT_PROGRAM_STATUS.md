@@ -1,396 +1,240 @@
-\# DentalOperix Current Program Status
-
-
+# DentalOperix Current Program Status
 
 Last Updated: 2026-06-22
 
+---
 
-
-\---
-
-
-
-\# Executive Summary
-
-
+# Executive Summary
 
 DentalOperix mantiene una arquitectura certificada basada en Supabase PostgreSQL.
 
+El programa 57.x esta oficialmente cerrado y certificado.
 
+Persistencia oficial:
 
-El programa 57.x está oficialmente cerrado y certificado.
-
-
-
-La persistencia oficial es:
-
-
-
+```text
 Leads
-
-→ LeadPersistencePort
-
-→ LeadPersistenceProvider
-
-→ RelationalLeadPersistenceAdapter
-
-→ Supabase PostgreSQL
-
-
+-> LeadPersistencePort
+-> LeadPersistenceProvider
+-> RelationalLeadPersistenceAdapter
+-> Supabase PostgreSQL
+```
 
 Regla permanente:
 
-
-
+```text
 Leads = Source of Truth
-
-
+```
 
 Ninguna iniciativa puede introducir:
 
+- Dual Write
+- Lead Replacement
+- Product Migration
+- New Source of Truth
+- Analytics Write Back
+- Persistence Re-Architecture
 
+---
 
-\* Dual Write
+# Current Priority
 
-\* Lead Replacement
+```text
+RESOLVE BLOCK-61.1-001
+```
 
-\* Product Migration
+Luego:
 
-\* New Source of Truth
+```text
+Certify 61.1 as READY_FOR_IMPLEMENTATION
+```
 
-\* Analytics Write Back
+Despues:
 
-\* Persistence Re-Architecture
+```text
+Implement 61.1 Users + RBAC + Dashboard Routing
+```
 
+---
 
+# Program Status
 
-\---
+## 57.x Persistence Program
 
+Status: CLOSED CERTIFIED
 
+Certified architecture:
 
-\# Current Project Status
+```text
+Leads
+-> LeadPersistencePort
+-> LeadPersistenceProvider
+-> RelationalLeadPersistenceAdapter
+-> Supabase PostgreSQL
+```
 
+Do not reopen without formal executive approval.
 
+---
 
-\## 61.0 Documentation Governance Consolidation
-
-
+## 61.0 Documentation Governance Consolidation
 
 Status: COMPLETE
 
+Completed:
 
+- Product Governance Framework
+- Multi-AI Operating Model
+- Software Factory Operating Model
+- GitHub Governance
+- Documentation Structure
 
-Entregables:
+---
 
+## 61.1 Users & RBAC Foundation
 
+Status: CONDITIONALLY_READY
 
-\* Product Governance Framework
+Functional Baseline: APPROVED
 
-\* Multi-AI Operating Model
+Architecture Certification: CONDITIONALLY READY
 
-\* Software Factory Operating Model
+Blocking Item:
 
-\* GitHub Governance
+```text
+BLOCK-61.1-001
+Role Assignment Workflow is undefined as a process, despite the permission being defined.
+```
 
-\* Documentation Structure
+Completed:
 
+- RBAC-MATRIX-V1.1
+- Roles oficiales
+- Permission Matrix
+- Dashboard Routing Definitions
+- Acceptance Criteria
+- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0
+- ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md
 
+Ready areas:
 
-\---
+- User Lifecycle States
+- Dashboard Routing Rules
+- User <-> Lead Boundaries
 
+Pending:
 
+- Architecture decision for Role Assignment Workflow
+- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1
+- Users Foundation Implementation
+- RBAC Enforcement Implementation
+- Dashboard Routing Implementation
 
-\## 61.1 Users \& RBAC Foundation
+---
 
+## 61.2 Assistant / Front Desk Workspace
 
+Status: FUNCTIONAL_PACKAGE_COMPLETE
 
-Status: FUNCTIONAL\_BASELINE\_APPROVED
+Implementation: BLOCKED BY 61.1
 
+Completed:
 
+- UX-SPEC-61.2-V1.0
+- USER-STORIES-61.2-V1.0
+- BUSINESS-RULES-61.2-V1.0
+- ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0
+- TEST-CASE-PACKAGE-61.2-V1.0
+- Initial low-fidelity Figma wireframes
 
-Completado:
+Dependency:
 
-
-
-\* RBAC-MATRIX-V1.1
-
-\* Roles oficiales
-
-\* Permission Matrix
-
-\* Dashboard Routing Definitions
-
-\* Acceptance Criteria
-
-
-
-Pendiente:
-
-
-
-\* Users Foundation Implementation
-
-\* RBAC Enforcement
-
-\* Dashboard Routing Implementation
-
-
-
-Prioridad: P0
-
-
-
-\---
-
-
-
-\## 61.2 Assistant / Front Desk Workspace
-
-
-
-Status: FUNCTIONAL\_PACKAGE\_COMPLETE
-
-
-
-Completado:
-
-
-
-\* UX-SPEC-61.2-V1.0
-
-\* USER-STORIES-61.2-V1.0
-
-\* BUSINESS-RULES-61.2-V1.0
-
-\* ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0
-
-\* TEST-CASE-PACKAGE-61.2-V1.0
-
-
-
-Implementación:
-
-
-
-BLOCKED
-
-
-
-Dependencia:
-
-
-
+```text
 61.1 Users + RBAC + Dashboard Routing
+```
 
+---
 
-
-Prioridad: P0
-
-
-
-\---
-
-
-
-\## 61.3 Patient Management
-
-
+## 61.3 Patient Management
 
 Status: NOT STARTED
 
+Do not start until key architecture Open Items are resolved.
 
+---
 
-Dependencias:
+# Open Items Registry
 
+Pending Architecture Review:
 
+1. Doctor <-> Patient Assignment Model
+2. Lead <-> Patient Relationship Model
+3. Retention / Soft Delete Policy
+4. Role Assignment Workflow
+5. Real-Time Update Mechanism
+6. Global Search Scope
 
-\* 61.1
+Current active blocker:
 
-\* 61.2
-
-\* Resolución de Open Items arquitectónicos
-
-
-
-\---
-
-
-
-\# Open Items Registry
-
-
-
-Pendientes de Architecture Review.
-
-
-
-No aprobados.
-
-
-
-No deben asumirse durante implementación.
-
-
-
-1\. Doctor ↔ Patient Assignment Model
-
-2\. Lead ↔ Patient Relationship Model
-
-3\. Retention / Soft Delete Policy
-
-4\. Role Assignment Workflow
-
-5\. Real-Time Update Mechanism
-
-6\. Global Search Scope
-
-
+```text
+BLOCK-61.1-001: Role Assignment Workflow
+```
 
 Status:
 
+```text
+DEFERRED except BLOCK-61.1-001, which is ACTIVE
+```
 
+---
 
-DEFERRED
-
-
-
-\---
-
-
-
-\# Figma Status
-
-
+# Figma Status
 
 Workspace: DentalOperix
 
+Existing artifacts:
 
+- Information Architecture
+- RBAC Routing
+- Assistant Dashboard Wireframes
 
-Artefactos existentes:
+Maturity:
 
+```text
+LOW_FIDELITY
+```
 
+Pending:
 
-\* Information Architecture
+- High Fidelity
+- Interactive Prototype
+- Design System Alignment
 
-\* RBAC Routing
+---
 
-\* Assistant Dashboard Wireframes
+# Starter Readiness
 
+DentalOperix Starter Status: NOT READY
 
+Blockers:
 
-Madurez:
+- Resolve BLOCK-61.1-001
+- Certify 61.1 as READY_FOR_IMPLEMENTATION
+- Implement Users Foundation
+- Implement RBAC Enforcement
+- Implement Dashboard Routing
+- Implement Assistant / Front Desk Workspace
 
+---
 
+# Recommended Focus
 
-LOW FIDELITY
+Less documentation.
 
+More certification and implementation readiness.
 
+Immediate action:
 
-Pendiente:
-
-
-
-\* High Fidelity
-
-\* Interactive Prototype
-
-\* Design System Alignment
-
-
-
-\---
-
-
-
-\# Current Development Priority
-
-
-
-IMPLEMENT 61.1
-
-
-
-Secuencia obligatoria:
-
-
-
-Users Foundation
-
-↓
-
-RBAC Enforcement
-
-↓
-
-Dashboard Routing
-
-↓
-
-Assistant Dashboard
-
-
-
-\---
-
-
-
-\# Release Readiness
-
-
-
-DentalOperix Starter
-
-
-
-Estado:
-
-
-
-NOT READY
-
-
-
-Bloqueadores:
-
-
-
-\* Users Foundation
-
-\* RBAC Enforcement
-
-\* Dashboard Routing
-
-\* Assistant Dashboard Implementation
-
-
-
-\---
-
-
-
-\# Recommended Focus
-
-
-
-Menos documentación.
-
-Más implementación.
-
-
-
-Prioridad inmediata:
-
-
-
-61.1 Users \& RBAC Foundation
-
-
-
-Objetivo:
-
-
-
-Desbloquear implementación de 61.2 Assistant Dashboard.
-
-
-
+```text
+Resolve BLOCK-61.1-001
+```
