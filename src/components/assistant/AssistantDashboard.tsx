@@ -1,6 +1,7 @@
 import { CalendarClock, ClipboardList, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TodayScheduleWidget } from "@/components/assistant/TodayScheduleWidget";
+import { LeadQueueWidget } from "@/components/assistant/LeadQueueWidget";
 
 const shellCards = [
   {
@@ -15,7 +16,7 @@ const shellCards = [
   },
   {
     title: "Cola de leads",
-    description: "Reservado para PR-61.2-03. Leads permanecen como Source of Truth.",
+    description: "Activo desde PR-61.2-03 como vista read-only. Leads permanecen como Source of Truth.",
     icon: ClipboardList,
   },
 ] as const;
@@ -33,6 +34,8 @@ export function AssistantDashboard() {
       </section>
 
       <TodayScheduleWidget />
+
+      <LeadQueueWidget />
 
       <section className="grid gap-4 md:grid-cols-3" aria-label="Módulos del workspace asistente">
         {shellCards.map((item) => {

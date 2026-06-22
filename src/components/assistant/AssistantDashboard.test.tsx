@@ -23,53 +23,48 @@ describe("AssistantDashboard 61.2 shell", () => {
     render(<AssistantDashboard />);
 
     expect(screen.getAllByText("Front Desk Workspace").length).toBeGreaterThan(0);
-    expect(screen.getByText("Agenda de hoy")).toBeDefined();
+    expect(screen.getAllByText("Agenda diaria").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Cola de leads").length).toBeGreaterThan(0);
     expect(screen.queryByText("Patient Management")).toBeNull();
     expect(screen.queryByText("Clinical Records")).toBeNull();
     expect(screen.queryByText("Pacientes")).toBeNull();
 
     await waitFor(() => {
       expect(screen.getByText("No hay citas programadas para hoy.")).toBeDefined();
+      expect(screen.getByText("No hay leads disponibles en la cola.")).toBeDefined();
     });
   });
 
-  it("shows today appointments read-only from the certified leads source", async () => {
-    const today = new Date().toISOString().slice(0, 10);
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue(
-        new Response(
-          JSON.stringify({
-            leads: [
-              {
-                id: "LEAD-001",
-                name: "Ana Perez",
-                treatment: "Ortodoncia",
-                preferredDate: `${today}T09:30:00.000Z`,
-                status: "agendada",
-              },
-              {
-                id: "LEAD-002",
-                name: "Bruno Rios",
-                treatment: "Implantes",
-                preferredDate: `${today}T11:00:00.000Z`,
-                status: "cancelada",
-              },
-            ],
-          }),
-          {
-            status: 200,
-            headers: { "Content-Type": "application/json" },
-          },
-        ),
+  it("keeps Today's Schedule on appointments-store and Lead Queue on /api/leads/list", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          leads: [
+            {
+              id: "LEAD-001",
+              name: "Ana Perez",
+              treatment: "Ortodoncia",
+              preferredDate: "2026-06-22T09:30:00.000Z",
+              status: "nuevo",
+              source: "web",
+              email: "ana@example.com",
+              phone: "+52 55 1111 2222",
+            },
+          ],
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        },
       ),
     );
+    vi.stubGlobal("fetch", fetchMock);
 
     render(<AssistantDashboard />);
 
     expect(await screen.findByText("Ana Perez")).toBeDefined();
     expect(screen.getByText("Ortodoncia")).toBeDefined();
-    expect(screen.queryByText("Bruno Rios")).toBeNull();
-    expect(screen.queryByRole("button", { name: /cancelar|editar|eliminar/i })).toBeNull();
+    expect(fetchMock).toHaveBeenCalledWith("/api/leads/list", { credentials: "same-origin" });
+    expect(screen.queryByRole("button", { name: /cancelar|editar|eliminar|agendar|asignar/i })).toBeNull();
   });
 });
