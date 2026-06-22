@@ -1,4 +1,4 @@
-# DentalOperix New Chat Handoff - 61.1 PR-4 Dashboard Routing Readiness
+# DentalOperix New Chat Handoff - 61.1 PR-3 Readiness
 
 ## START HERE
 
@@ -7,15 +7,16 @@ Use this file as the single entry point when starting a new ChatGPT or Cursor se
 Read in this order:
 
 1. `docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_1.md`
-2. `docs/implementation/61.1/61.1_PR3_CERTIFICATION_REPORT.md`
-3. `docs/implementation/61.1/61.1_IMPLEMENTATION_TASK_PACKAGE_V1.0.md`
-4. `docs/implementation/61.1/61.1_CURSOR_EXECUTION_PLAN.md`
-5. `docs/implementation/61.1/61.1_REQUIREMENTS_TRACEABILITY_MATRIX.md`
-6. `docs/implementation/61.1/61.1_TEST_STRATEGY.md`
-7. `docs/implementation/61.1/61.1_CERTIFICATION_CHECKLIST.md`
-8. `docs/implementation/61.1/61.1_IMPLEMENTATION_STATUS.md`
-9. `docs/implementation/61.1/61.1_IMPLEMENTATION_DECISION_LOG.md`
-10. `docs/implementation/61.1/61.1_RISK_REGISTER.md`
+2. `docs/ai-context/61.1_NEW_CHAT_CODE_GENERATION_PROMPT.md`
+3. `docs/implementation/61.1/61.1_AUDIT_HANDOFF_FOR_PR3.md`
+4. `docs/implementation/61.1/61.1_IMPLEMENTATION_TASK_PACKAGE_V1.0.md`
+5. `docs/implementation/61.1/61.1_CURSOR_EXECUTION_PLAN.md`
+6. `docs/implementation/61.1/61.1_REQUIREMENTS_TRACEABILITY_MATRIX.md`
+7. `docs/implementation/61.1/61.1_TEST_STRATEGY.md`
+8. `docs/implementation/61.1/61.1_CERTIFICATION_CHECKLIST.md`
+9. `docs/implementation/61.1/61.1_IMPLEMENTATION_STATUS.md`
+10. `docs/implementation/61.1/61.1_IMPLEMENTATION_DECISION_LOG.md`
+11. `docs/implementation/61.1/61.1_RISK_REGISTER.md`
 
 Do not read historical documents unless explicitly required by an architecture or governance question.
 
@@ -30,16 +31,7 @@ Architecture Status: CERTIFIED
 Implementation Status: AUTHORIZED_FOR_IMPLEMENTATION
 Current Execution Target:
 PR-4 Dashboard Routing
-STATUS: READY_FOR_ARCHITECTURE_REVIEW
-```
-
-Correction note:
-
-```text
-Previous handoff versions contained conflicting PR-3 and PR-4 status language.
-Authoritative audit result:
-PR-3 RBAC Enforcement is CERTIFIED.
-PR-4 Dashboard Routing is the current execution target and is NOT CERTIFIED yet.
+STATUS: CERTIFIED
 ```
 
 ---
@@ -63,7 +55,6 @@ Production Cutover: CERTIFIED
 ```text
 PR-1 Users Foundation: PASS
 PR-2 Authentication Foundation: PASS
-PR-3 RBAC Enforcement: PASS / CERTIFIED
 ```
 
 PR-1 evidence:
@@ -79,16 +70,6 @@ PR-2 evidence:
 ```text
 16 authentication tests passed
 Production build passed
-```
-
-PR-3 evidence:
-
-```text
-61.1-RBAC-001 PASS
-61.1-RBAC-002 PASS
-61.1-RBAC-003 PASS
-Build PASS
-Regression PASS
 ```
 
 Known unrelated regression context:
@@ -146,7 +127,7 @@ siteServices.ts
 Expected result during 61.1:
 
 ```text
-NO FUNCTIONAL CHANGE outside the authorized Users/RBAC/Dashboard Routing scope.
+NO FUNCTIONAL CHANGE
 ```
 
 ---
@@ -233,18 +214,19 @@ Retention Policies
 ## Current Execution Target
 
 ```text
-PR-4: Dashboard Routing
+PR-3: RBAC Enforcement
 Status: READY_FOR_ARCHITECTURE_REVIEW
 ```
 
 Authorized tasks:
 
 ```text
-61.1-ROUTING-001 - Dashboard Resolver / Role Router
-61.1-ROUTING-002 - Dashboard Entry Points
+61.1-RBAC-001 - Role Model
+61.1-RBAC-002 - Authorization Middleware
+61.1-RBAC-003 - Frontend Route Protection
 ```
 
-PR-4 must not implement Patient Management, 61.2 Assistant Dashboard, Lead-to-Patient conversion, Doctor-to-Patient assignment, new persistence behavior, or analytics write-back.
+PR-3 must not implement Dashboard Routing, Patient Management, 61.2 Assistant Dashboard, Lead-to-Patient conversion, or Doctor-to-Patient assignment.
 
 ---
 
@@ -252,17 +234,13 @@ PR-4 must not implement Patient Management, 61.2 Assistant Dashboard, Lead-to-Pa
 
 ```text
 PR-1 Users Foundation
-STATUS: PASS
 ✓
 PR-2 Authentication
-STATUS: PASS
 ✓
 PR-3 RBAC Enforcement
 STATUS: CERTIFIED
-✓
-PR-4 Dashboard Routing
-STATUS: READY_FOR_ARCHITECTURE_REVIEW
 - current target
+PR-4 Dashboard Routing
 PR-5 Validation & Hardening
 61.1 Certification
 Unlock 61.2 Assistant Dashboard
@@ -274,9 +252,9 @@ No PR may skip its required validation gate.
 
 ## Mandatory Pre-Code Protocol for a New Chat
 
-Before generating PR-4 code, the new chat must produce:
+Before generating code, the new chat must produce:
 
-1. Architecture compliance review for PR-4.
+1. Architecture compliance review for PR-3.
 2. Affected dependencies.
 3. Risks.
 4. Technical impact.
@@ -294,24 +272,23 @@ Use this prompt to start the implementation chat:
 
 ```text
 Read docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_1.md.
-Read docs/implementation/61.1/61.1_PR3_CERTIFICATION_REPORT.md.
-Read docs/implementation/61.1/61.1_IMPLEMENTATION_TASK_PACKAGE_V1.0.md.
+Read docs/implementation/61.1/61.1_AUDIT_HANDOFF_FOR_PR3.md.
 Follow all referenced governance documents.
 
 Current execution target:
-PR-4 Dashboard Routing
-STATUS: READY_FOR_ARCHITECTURE_REVIEW
+PR-3 RBAC Enforcement
+STATUS: CERTIFIED
 
 Tasks:
-- 61.1-ROUTING-001 Dashboard Resolver / Role Router
-- 61.1-ROUTING-002 Dashboard Entry Points
+- 61.1-RBAC-001 Role Model
+- 61.1-RBAC-002 Authorization Middleware
+- 61.1-RBAC-003 Frontend Route Protection
 
 Generate the architecture compliance review, affected dependencies, risks, technical impact, and implementation plan only.
 Do not generate code until explicit approval is given.
 Preserve Leads = Source of Truth.
 Do not modify protected components.
-Enforce Dashboard Routing = Role-based navigation only.
-Preserve user.role.assign = Administrator only.
+Enforce user.role.assign = Administrator only.
 ```
 
 ---
