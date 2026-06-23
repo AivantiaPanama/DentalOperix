@@ -35,7 +35,7 @@ import * as operationalNotificationsHandler from "./routes/api/notifications/ope
 import * as operationalKpisHandler from "./routes/api/kpis/operational";
 import * as operationalDataQualityHandler from "./routes/api/data-quality/operational";
 import * as leadsUpdateStatusHandler from "./routes/api/leads/update-status";
-
+import * as leadsUpdateNotesHandler from "./routes/api/leads/update-notes";
 
 const DASHBOARD_ROUTE_POLICIES: Array<{ prefix: string; allowedRoles: readonly Role[] }> = [
   { prefix: "/admin", allowedRoles: ["administrator"] },
@@ -182,7 +182,11 @@ export default {
 
       if (url.pathname === "/api/leads/update-status" && request.method === "POST") {
         return await leadsUpdateStatusHandler.POST(request);
-      }      
+      }     
+      
+      if (url.pathname === "/api/leads/update-notes" && request.method === "POST") {
+        return leadsUpdateNotesHandler.POST(request);
+      }
 
       if (url.pathname === "/api/crm/metrics" && request.method === "GET") {
         return await crmMetricsHandler.GET(request);

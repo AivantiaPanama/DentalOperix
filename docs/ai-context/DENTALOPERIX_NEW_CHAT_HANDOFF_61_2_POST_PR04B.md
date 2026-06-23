@@ -636,3 +636,31 @@ CLOSED / VALIDATED
   
 New Chat Continuity Package:  
 CERTIFIED
+---
+
+# Post PR-61.2-05 Implementation Note
+
+Date: 2026-06-22
+Status: PR-61.2-05 IMPLEMENTED / VALIDATION BLOCKED BY MISSING LOCAL DEPENDENCIES
+
+PR-61.2-05 Lead Notes was implemented as a single-field operational notes extension owned by Leads.
+
+Key files:
+
+- `src/server/leads/persistence/lead-persistence-port.ts`
+- `src/server/leads/persistence/relational-lead-persistence-adapter.ts`
+- `src/routes/api/leads/update-notes.ts`
+- `src/routes/api/leads/update-notes.test.ts`
+- `src/components/assistant/LeadDetailPanel.tsx`
+- `src/components/assistant/LeadQueueWidget.tsx`
+- `docs/architecture/sql/61_2_PR05_add_lead_notes_column.sql`
+- `docs/implementation/61.2/61.2_PR05_STATUS_REPORT.md`
+- `docs/implementation/61.2/61.2_PR05_VALIDATION_REPORT.md`
+- `docs/implementation/61.2/61.2_PR05_CHANGELOG.md`
+
+Governance preserved:
+
+- Leads remains Source of Truth.
+- No protected components were modified.
+- No new source of truth was introduced.
+- No dual write, Lead replacement, or persistence re-architecture was introduced.

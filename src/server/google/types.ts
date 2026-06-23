@@ -44,6 +44,7 @@ export const googleCRMLeadSchema = z.object({
   email: z.string().email(),
   treatment: z.string().min(1),
   message: z.string().optional(),
+  notes: z.string().optional(),
   urgency: z.enum(LEAD_URGENCY_VALUES).optional(),
   preferredDate: z.string().optional(),
   status: z.enum(CRM_STATUS_VALUES),

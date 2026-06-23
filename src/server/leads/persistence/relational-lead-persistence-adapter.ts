@@ -151,6 +151,7 @@ type RelationalLeadRow = {
   email: string;
   treatment: string;
   message: string | null;
+  notes: string | null;
   urgency: string | null;
   preferred_date: string | null;
   status: string;
@@ -170,6 +171,7 @@ function rowToLead(row: RelationalLeadRow): GoogleCRMLeadPayload {
     email: row.email,
     treatment: row.treatment,
     message: row.message ?? "",
+    notes: row.notes ?? "",
     urgency: normalizeUrgency(row.urgency),
     preferredDate: row.preferred_date ?? "",
     status: normalizeCRMStatus(row.status),
@@ -195,7 +197,8 @@ export class RelationalLeadPersistenceAdapter implements LeadPersistencePort {
       phone: payload.phone,
       email: payload.email,
       treatment,
-      message: payload.message ?? payload.notes ?? "",
+      message: payload.message ?? "",
+      notes: payload.notes ?? "",
       urgency: payload.urgency ?? "media",
       preferredDate: payload.preferredDate ?? `${payload.date ?? ""} ${payload.time ?? ""}`.trim(),
       status: payload.status ? normalizeCRMStatus(payload.status) : "nuevo",
@@ -211,13 +214,13 @@ export class RelationalLeadPersistenceAdapter implements LeadPersistencePort {
       await client.connect();
       await client.query(
         `INSERT INTO leads (
-           id, created_at, name, phone, email, treatment, message, urgency,
+           id, created_at, name, phone, email, treatment, message, notes, urgency,
            preferred_date, status, source, ai_summary, calendar_event_id, email_sent,
            physical_source, source_record_hash, schema_version
          ) VALUES (
-           $1, $2, $3, $4, $5, $6, $7, $8,
-           $9, $10, $11, $12, $13, $14,
-           'relational-db', NULL, $15
+           $1, $2, $3, $4, $5, $6, $7, $8, $9,
+           $10, $11, $12, $13, $14, $15,
+           'relational-db', NULL, $16
          )`,
         [
           lead.id,
@@ -227,6 +230,7 @@ export class RelationalLeadPersistenceAdapter implements LeadPersistencePort {
           lead.email,
           lead.treatment,
           lead.message,
+          lead.notes,
           lead.urgency,
           lead.preferredDate,
           lead.status,
@@ -265,6 +269,11 @@ export class RelationalLeadPersistenceAdapter implements LeadPersistencePort {
       assignments.push(`email_sent = $${values.length}`);
     }
 
+    if (update.notes !== undefined) {
+      values.push(update.notes);
+      assignments.push(`notes = $${values.length}`);
+    }
+
     if (assignments.length === 0) return;
 
     values.push(id);
@@ -293,7 +302,7 @@ export class RelationalLeadPersistenceAdapter implements LeadPersistencePort {
     try {
       await client.connect();
       const result = await client.query<RelationalLeadRow>(
-        `SELECT id, created_at, name, phone, email, treatment, message, urgency,
+        `SELECT id, created_at, name, phone, email, treatment, message, notes, urgency,
                 preferred_date, status, source, ai_summary, calendar_event_id, email_sent
            FROM leads
           ORDER BY created_at DESC`,

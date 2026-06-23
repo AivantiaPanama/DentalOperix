@@ -123,6 +123,15 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
     );
   }
 
+  function handleNotesUpdated(leadId: string, notes: string) {
+    setLeads((currentLeads) =>
+      currentLeads.map((lead) => (lead.id === leadId ? { ...lead, notes } : lead)),
+    );
+    setSelectedLead((currentLead) =>
+      currentLead?.id === leadId ? { ...currentLead, notes } : currentLead,
+    );
+  }
+
   if (selectedLead) {
     return (
       <Card aria-label={`Detalle read-only de lead ${normalize(selectedLead.name)}`} className="shadow-soft">
@@ -131,6 +140,7 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
             lead={selectedLead}
             onBack={() => setSelectedLead(null)}
             onStatusUpdated={handleStatusUpdated}
+            onNotesUpdated={handleNotesUpdated}
           />
         </CardContent>
       </Card>

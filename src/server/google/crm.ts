@@ -196,8 +196,13 @@ export async function updateLeadInSheet(
     status?: CRMStatus;
     calendarEventId?: string;
     emailSent?: boolean;
+    notes?: string;
   },
 ) {
+  if (update.notes !== undefined) {
+    throw new Error("Lead notes update requires relational Leads persistence; Google Sheet rollback does not support separate internal notes.");
+  }
+
   const config = getServerConfig();
   const sheets = getSheets();
   const idRange = `${config.googleSheetName}!A:A`;

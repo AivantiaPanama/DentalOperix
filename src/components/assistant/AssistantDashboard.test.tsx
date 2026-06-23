@@ -123,7 +123,7 @@ describe("AssistantDashboard 61.2 shell", () => {
     expect(fetchMock).toHaveBeenCalledWith("/api/leads/update-status", expect.objectContaining({ method: "POST" }));
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
-    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar|reasignar|nota/i })).toBeNull();
+    expect(screen.queryByRole("button", { name: /crear|eliminar|agendar|asignar|reasignar/i })).toBeNull();
   });
 
 });

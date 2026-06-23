@@ -4,6 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import type { LeadQueueItem } from "./LeadQueueWidget";
 
 const LEAD_STATUS_OPTIONS = [
@@ -58,23 +59,27 @@ type LeadDetailPanelProps = {
   lead: LeadQueueItem;
   onBack: () => void;
   onStatusUpdated?: (leadId: string, status: LeadStatusOption) => void;
+  onNotesUpdated?: (leadId: string, notes: string) => void;
 };
 
-export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPanelProps) {
+export function LeadDetailPanel({ lead, onBack, onStatusUpdated, onNotesUpdated }: LeadDetailPanelProps) {
   const initialStatus = isLeadStatusOption(lead.status) ? lead.status : "nuevo";
   const [selectedStatus, setSelectedStatus] = useState<LeadStatusOption>(initialStatus);
-  const [saving, setSaving] = useState(false);
+  const [savingStatus, setSavingStatus] = useState(false);
+  const [notesDraft, setNotesDraft] = useState(lead.notes ?? "");
+  const [savingNotes, setSavingNotes] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setSelectedStatus(isLeadStatusOption(lead.status) ? lead.status : "nuevo");
+    setNotesDraft(lead.notes ?? "");
     setMessage(null);
     setError(null);
-  }, [lead.id, lead.status]);
+  }, [lead.id, lead.status, lead.notes]);
 
   async function handleStatusSubmit() {
-    setSaving(true);
+    setSavingStatus(true);
     setMessage(null);
     setError(null);
 
@@ -96,7 +101,35 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
     } catch (statusError) {
       setError(statusError instanceof Error ? statusError.message : "No se pudo actualizar el estado del lead.");
     } finally {
-      setSaving(false);
+      setSavingStatus(false);
+    }
+  }
+
+
+  async function handleNotesSubmit() {
+    setSavingNotes(true);
+    setMessage(null);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/leads/update-notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ leadId: lead.id, notes: notesDraft }),
+      });
+      const payload = (await response.json().catch(() => ({}))) as { error?: string; notes?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error || "No se pudieron actualizar las notas del lead.");
+      }
+
+      onNotesUpdated?.(lead.id, payload.notes ?? notesDraft);
+      setMessage("Notas del lead actualizadas correctamente.");
+    } catch (notesError) {
+      setError(notesError instanceof Error ? notesError.message : "No se pudieron actualizar las notas del lead.");
+    } finally {
+      setSavingNotes(false);
     }
   }
 
@@ -113,7 +146,7 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
             <h3 className="text-lg font-semibold text-deep">{normalize(lead.name)}</h3>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            Vista del lead seleccionado con actualización controlada de estado. No edita notas, asignaciones ni datos clínicos.
+            Vista del lead seleccionado con actualización controlada de estado y notas internas. No edita asignaciones ni datos clínicos.
           </p>
         </div>
         <Badge variant="outline">{normalize(lead.status)}</Badge>
@@ -131,7 +164,7 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
               <select
                 aria-label="Estado del lead"
                 className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm"
-                disabled={saving}
+                disabled={savingStatus}
                 value={selectedStatus}
                 onChange={(event) => setSelectedStatus(event.target.value as LeadStatusOption)}
               >
@@ -142,8 +175,8 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
                 ))}
               </select>
             </label>
-            <Button disabled={saving || selectedStatus === lead.status} onClick={handleStatusSubmit} type="button">
-              {saving ? "Actualizando..." : "Actualizar estado"}
+            <Button disabled={savingStatus || selectedStatus === lead.status} onClick={handleStatusSubmit} type="button">
+              {savingStatus ? "Actualizando..." : "Actualizar estado"}
             </Button>
           </div>
 
@@ -157,6 +190,32 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           ) : null}
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-none">
+        <CardHeader>
+          <CardTitle className="text-base text-deep">Notas internas del lead</CardTitle>
+          <CardDescription>Notas operativas de Front Desk guardadas en Leads. No crea historial, pacientes ni fuentes paralelas.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <label className="space-y-2 text-sm font-medium text-deep">
+            Notas operativas
+            <Textarea
+              aria-label="Notas internas del lead"
+              disabled={savingNotes}
+              maxLength={5000}
+              placeholder="Agrega contexto operativo para seguimiento del lead"
+              value={notesDraft}
+              onChange={(event) => setNotesDraft(event.target.value)}
+            />
+          </label>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-muted-foreground">{notesDraft.length}/5000 caracteres</p>
+            <Button disabled={savingNotes || notesDraft === (lead.notes ?? "")} onClick={handleNotesSubmit} type="button">
+              {savingNotes ? "Guardando..." : "Guardar notas"}
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
@@ -200,7 +259,7 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
       <Card className="shadow-none">
         <CardHeader>
           <CardTitle className="text-base text-deep">Solicitud</CardTitle>
-          <CardDescription>Contexto operativo del lead sin edición de notas, pacientes ni asignaciones.</CardDescription>
+          <CardDescription>Contexto operativo del lead sin edición de pacientes ni asignaciones.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <dl className="grid gap-3 md:grid-cols-3">
@@ -214,7 +273,7 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated }: LeadDetailPan
 
           <dl className="grid gap-3">
             <DetailField label="Mensaje" value={lead.message} />
-            <DetailField label="Notas" value={lead.notes} />
+            <DetailField label="Notas guardadas" value={lead.notes} />
             <DetailField label="Resumen IA" value={lead.aiSummary} />
           </dl>
         </CardContent>

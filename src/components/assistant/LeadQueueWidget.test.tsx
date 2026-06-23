@@ -33,7 +33,7 @@ const queueLeads: LeadQueueItem[] = [
   },
 ];
 
-describe("LeadQueueWidget PR-61.2-04A", () => {
+describe("LeadQueueWidget PR-61.2-05", () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
@@ -79,7 +79,7 @@ describe("LeadQueueWidget PR-61.2-04A", () => {
   });
 
 
-  it("opens a Lead Detail panel with only controlled status update writes", async () => {
+  it("opens a Lead Detail panel with controlled status and notes update writes", async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ leads: queueLeads }), {
         status: 200,
@@ -94,14 +94,15 @@ describe("LeadQueueWidget PR-61.2-04A", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
 
     expect(screen.getByRole("button", { name: "Volver a la cola de leads" })).toBeDefined();
-    expect(screen.getByText("Vista del lead seleccionado con actualización controlada de estado. No edita notas, asignaciones ni datos clínicos.")).toBeDefined();
+    expect(screen.getByText("Vista del lead seleccionado con actualización controlada de estado y notas internas. No edita asignaciones ni datos clínicos.")).toBeDefined();
     expect(screen.getByText("Quiere evaluación inicial.")).toBeDefined();
     expect(screen.getByText("Lead interesado en ortodoncia.")).toBeDefined();
-    expect(screen.getByText("Prefiere WhatsApp.")).toBeDefined();
+    expect(screen.getByDisplayValue("Prefiere WhatsApp.")).toBeDefined();
     expect(screen.getByText("evt-001")).toBeDefined();
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("button", { name: "Actualizar estado" })).toBeDefined();
-    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar|reasignar|nota/i })).toBeNull();
+    expect(screen.getByRole("button", { name: "Guardar notas" })).toBeDefined();
+    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar|reasignar/i })).toBeNull();
   });
 
 
@@ -141,6 +142,49 @@ describe("LeadQueueWidget PR-61.2-04A", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Volver a la cola de leads" }));
     expect(screen.getByText("contactado")).toBeDefined();
+    expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
+  });
+
+
+  it("updates Lead notes through /api/leads/update-notes and updates local state", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ leads: queueLeads }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ success: true, leadId: "LEAD-001", notes: "Enviar recordatorio por WhatsApp" }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<LeadQueueWidget />);
+
+    await screen.findByText("Ana Perez");
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+    fireEvent.change(screen.getByLabelText("Notas internas del lead"), {
+      target: { value: "Enviar recordatorio por WhatsApp" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Guardar notas" }));
+
+    await screen.findByText("Notas del lead actualizadas correctamente.");
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/leads/update-notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ leadId: "LEAD-001", notes: "Enviar recordatorio por WhatsApp" }),
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    fireEvent.click(screen.getByRole("button", { name: "Volver a la cola de leads" }));
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+    expect(screen.getByDisplayValue("Enviar recordatorio por WhatsApp")).toBeDefined();
     expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
   });
 

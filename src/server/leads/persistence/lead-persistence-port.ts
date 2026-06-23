@@ -17,6 +17,7 @@ export type LeadPersistenceUpdateInput = {
   status?: CRMStatus;
   calendarEventId?: string;
   emailSent?: boolean;
+  notes?: string;
 };
 
 export type LeadPersistenceListItem = GoogleCRMLeadPayload;
