@@ -36,6 +36,10 @@ import * as operationalKpisHandler from "./routes/api/kpis/operational";
 import * as operationalDataQualityHandler from "./routes/api/data-quality/operational";
 import * as leadsUpdateStatusHandler from "./routes/api/leads/update-status";
 import * as leadsUpdateNotesHandler from "./routes/api/leads/update-notes";
+import * as appointmentsRequestHandler from "./routes/api/appointments/request";
+import * as appointmentsCheckAvailabilityHandler from "./routes/api/appointments/check-availability";
+import * as appointmentsConfirmHandler from "./routes/api/appointments/confirm";
+import * as appointmentsMarkReviewHandler from "./routes/api/appointments/mark-review";
 
 const DASHBOARD_ROUTE_POLICIES: Array<{ prefix: string; allowedRoles: readonly Role[] }> = [
   { prefix: "/admin", allowedRoles: ["administrator"] },
@@ -186,6 +190,22 @@ export default {
       
       if (url.pathname === "/api/leads/update-notes" && request.method === "POST") {
         return leadsUpdateNotesHandler.POST(request);
+      }
+
+      if (url.pathname === "/api/appointments/request" && request.method === "POST") {
+        return appointmentsRequestHandler.POST(request);
+      }
+
+      if (url.pathname === "/api/appointments/check-availability" && request.method === "POST") {
+        return appointmentsCheckAvailabilityHandler.POST(request);
+      }
+
+      if (url.pathname === "/api/appointments/confirm" && request.method === "POST") {
+        return appointmentsConfirmHandler.POST(request);
+      }
+
+      if (url.pathname === "/api/appointments/mark-review" && request.method === "POST") {
+        return appointmentsMarkReviewHandler.POST(request);
       }
 
       if (url.pathname === "/api/crm/metrics" && request.method === "GET") {

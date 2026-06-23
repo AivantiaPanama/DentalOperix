@@ -102,7 +102,8 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("button", { name: "Actualizar estado" })).toBeDefined();
     expect(screen.getByRole("button", { name: "Guardar notas" })).toBeDefined();
-    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar|reasignar/i })).toBeNull();
+    expect(screen.getByText("Flujo de cita asistida")).toBeDefined();
+    expect(screen.queryByRole("button", { name: /editar|eliminar|asignar|reasignar/i })).toBeNull();
   });
 
 

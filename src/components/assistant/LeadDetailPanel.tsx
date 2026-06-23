@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import type { LeadQueueItem } from "./LeadQueueWidget";
+import { AssistantAppointmentWorkflowCard } from "./AssistantAppointmentWorkflowCard";
 
 const LEAD_STATUS_OPTIONS = [
   { value: "nuevo", label: "Nuevo" },
@@ -218,6 +219,8 @@ export function LeadDetailPanel({ lead, onBack, onStatusUpdated, onNotesUpdated 
           </div>
         </CardContent>
       </Card>
+
+      <AssistantAppointmentWorkflowCard lead={lead} />
 
       <Card className="shadow-none">
         <CardHeader>
