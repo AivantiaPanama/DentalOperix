@@ -3,7 +3,9 @@ import { getGoogleAuth } from "./auth";
 import { getServerConfig } from "@/lib/config.server";
 import {
   CRM_STATUS_VALUES,
+  LEAD_URGENCY_VALUES,
   googleCRMLeadSchema,
+  normalizeLeadUrgency,
   type CRMStatus,
   type GoogleCRMLeadPayload,
 } from "./types";
@@ -70,13 +72,23 @@ function isCRMHeaderRow(row: unknown[]): row is string[] {
 const LEGACY_CRM_STATUS_MAP: Record<string, CRMStatus> = {
   nuevo: "nuevo",
   new: "nuevo",
+  contactado: "contactado",
+  contacted: "contactado",
+  seguimiento: "seguimiento",
+  followup: "seguimiento",
+  "follow-up": "seguimiento",
+  follow_up: "seguimiento",
   agendada: "agendada",
   scheduled: "agendada",
   completada: "completada",
   closed: "completada",
-  contacted: "nuevo",
   cancelada: "cancelada",
   cancelled: "cancelada",
+  "no interesado": "no interesado",
+  "no-interesado": "no interesado",
+  no_interesado: "no interesado",
+  not_interested: "no interesado",
+  "not interested": "no interesado",
   "no asistió": "no asistió",
   "no asistio": "no asistió",
   "no-show": "no asistió",
@@ -108,7 +120,7 @@ const googleCRMLeadWriteInputSchema = googleCRMLeadSchema
     aiSummary: z.string().optional(),
     calendarEventId: z.string().optional(),
     emailSent: z.boolean().optional(),
-    urgency: z.enum(["low", "media", "high"]).optional(),
+    urgency: z.enum(LEAD_URGENCY_VALUES).optional(),
     service: z.string().min(1).optional(),
     date: z
       .string()
@@ -284,7 +296,7 @@ export async function readLeadsFromSheet() {
         source: normalizeDisplayText(source) || "sheet",
         preferredDate: normalizeDisplayText(preferredDate),
         message: normalizeDisplayText(message),
-        urgency: normalizeDisplayText(urgency),
+        urgency: normalizeLeadUrgency(normalizeDisplayText(urgency)),
         aiSummary: normalizeDisplayText(aiSummary),
         calendarEventId: normalizeDisplayText(calendarEventId),
         emailSent: normalizeDisplayText(emailSent) === "TRUE",

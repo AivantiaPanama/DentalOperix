@@ -11,7 +11,6 @@ import {
 
 declare global {
   var localStorage: Storage;
-  var window: { localStorage: Storage };
   function fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
 }
 
@@ -47,7 +46,11 @@ describe("goal config", () => {
   beforeEach(() => {
     const storage = createLocalStorageMock();
     globalThis.localStorage = storage;
-    globalThis.window = { localStorage: storage } as any;
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      writable: true,
+      value: { localStorage: storage },
+    });
     globalThis.fetch = vi.fn() as any;
   });
 

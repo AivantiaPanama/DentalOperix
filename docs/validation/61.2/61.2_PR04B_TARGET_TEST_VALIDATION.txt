@@ -1,0 +1,27 @@
+[33mThe plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the [1mresolve.tsconfigPaths[22m option. You can remove the plugin and set [1mresolve.tsconfigPaths: true[22m in your Vite config instead.[39m
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.9 [39m[90m/mnt/data/work_04b[39m
+
+[90mstderr[2m | src/routes/api/leads/update-status.test.ts[2m > [22m[2m/api/leads/update-status[2m > [22m[2mreturns 500 when the certified adapter fails
+[22m[39mFailed to update lead status: Error: Lead not found
+    at [90m/mnt/data/work_04b/[39msrc/routes/api/leads/update-status.test.ts:84:34
+    at [90mfile:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:302:11
+    at [90mfile:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:1903:26
+    at [90mfile:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel [90m(file:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:2323:10[90m)[39m
+    at [90mfile:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:2272:10[90m)[39m
+    at [90mfile:///mnt/data/work_04b/[39mnode_modules/[4m@vitest[24m/runner/dist/chunk-artifact.js:2955:64
+
+ [32m✓[39m src/routes/api/leads/update-status.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1088[2mms[22m[39m
+     [33m[2m✓[22m[39m returns 401 when neither session nor internal key is present [33m 1077[2mms[22m[39m
+ [32m✓[39m src/components/assistant/AssistantDashboard.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 306[2mms[22m[39m
+ [32m✓[39m src/components/assistant/LeadQueueWidget.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[33m 480[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m19 passed[39m[22m[90m (19)[39m
+[2m   Start at [22m 01:23:36
+[2m   Duration [22m 3.51s[2m (transform 3.14s, setup 0ms, import 2.79s, tests 1.87s, environment 2.63s)[22m
+

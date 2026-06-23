@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, type MockedFunction } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { DashboardPage } from "@/routes/admin/dashboard";
 import type { CrmDashboardMetrics } from "@/lib/api/crm-metrics";
@@ -53,11 +53,11 @@ class ResizeObserverMock {
 
 globalThis.ResizeObserver = ResizeObserverMock as any;
 
-const mockedFetchRevenueDashboardMetrics = fetchRevenueDashboardMetrics as unknown as vi.MockedFunction<
+const mockedFetchRevenueDashboardMetrics = fetchRevenueDashboardMetrics as unknown as MockedFunction<
   typeof fetchRevenueDashboardMetrics
 >;
 
-const mockedFetchExecutiveAnalytics = fetchExecutiveAnalytics as unknown as vi.MockedFunction<
+const mockedFetchExecutiveAnalytics = fetchExecutiveAnalytics as unknown as MockedFunction<
   typeof fetchExecutiveAnalytics
 >;
 

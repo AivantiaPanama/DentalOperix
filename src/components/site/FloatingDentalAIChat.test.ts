@@ -266,6 +266,9 @@ describe("googleLeadPayloadSchema", () => {
 
     const result = googleLeadPayloadSchema.safeParse(payload);
     expect(result.success).toBe(false);
+    if (result.success) {
+      throw new Error("Expected validation to fail for blank service.");
+    }
     expect(result.error.errors[0]?.message).toBe("Describe el tratamiento que buscas.");
   });
 });

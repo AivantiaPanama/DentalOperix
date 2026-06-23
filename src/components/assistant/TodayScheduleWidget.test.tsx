@@ -50,7 +50,7 @@ describe("61.2 PR-02 Today's Schedule widget", () => {
   it("lists today's non-cancelled appointments ordered by start time", () => {
     const schedule = getTodayScheduleAppointments(appointments, "2026-06-22");
 
-    expect(schedule.map((appointment) => appointment.id)).toEqual(["early", "late"]);
+    expect(schedule.map((appointment: Appointment) => appointment.id)).toEqual(["early", "late"]);
   });
 
   it("renders patient name, time, and provider for today's appointments", () => {

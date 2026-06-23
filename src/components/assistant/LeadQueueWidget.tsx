@@ -3,8 +3,10 @@ import { AlertCircle, ClipboardList, Search } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { LeadDetailPanel, type LeadStatusOption } from "./LeadDetailPanel";
 
 export type LeadQueueItem = {
   id: string;
@@ -15,6 +17,13 @@ export type LeadQueueItem = {
   status?: string | null;
   source?: string | null;
   preferredDate?: string | null;
+  createdAt?: string | null;
+  message?: string | null;
+  urgency?: string | null;
+  aiSummary?: string | null;
+  calendarEventId?: string | null;
+  emailSent?: boolean | null;
+  notes?: string | null;
 };
 
 type LeadQueueResponse = {
@@ -61,6 +70,7 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
   const [fallbackMessage, setFallbackMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [selectedLead, setSelectedLead] = useState<LeadQueueItem | null>(null);
 
   useEffect(() => {
     if (initialLeads) {
@@ -103,6 +113,29 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
 
   const filteredLeads = useMemo(() => filterLeadQueue(leads, query), [leads, query]);
   const isLoading = state === "idle" || state === "loading";
+
+  function handleStatusUpdated(leadId: string, status: LeadStatusOption) {
+    setLeads((currentLeads) =>
+      currentLeads.map((lead) => (lead.id === leadId ? { ...lead, status } : lead)),
+    );
+    setSelectedLead((currentLead) =>
+      currentLead?.id === leadId ? { ...currentLead, status } : currentLead,
+    );
+  }
+
+  if (selectedLead) {
+    return (
+      <Card aria-label={`Detalle read-only de lead ${normalize(selectedLead.name)}`} className="shadow-soft">
+        <CardContent className="pt-6">
+          <LeadDetailPanel
+            lead={selectedLead}
+            onBack={() => setSelectedLead(null)}
+            onStatusUpdated={handleStatusUpdated}
+          />
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card aria-label={`Cola de leads, ${filteredLeads.length} leads`} className="shadow-soft">
@@ -180,6 +213,7 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
                 <TableHead>Estado</TableHead>
                 <TableHead>Fuente</TableHead>
                 <TableHead>Fecha preferida</TableHead>
+                <TableHead>Detalle</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -199,6 +233,17 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
                   </TableCell>
                   <TableCell>{normalize(lead.source)}</TableCell>
                   <TableCell>{formatPreferredDate(lead.preferredDate)}</TableCell>
+                  <TableCell>
+                    <Button
+                      aria-label={`Ver detalle de ${normalize(lead.name)}`}
+                      onClick={() => setSelectedLead(lead)}
+                      size="sm"
+                      type="button"
+                      variant="outline"
+                    >
+                      Ver detalle
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

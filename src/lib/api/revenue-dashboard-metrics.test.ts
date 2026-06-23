@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi, type MockedFunction } from "vitest";
 import { fetchCRMmetrics } from "@/lib/api/crm-metrics";
 import { fetchRevenueIntelligence } from "@/lib/api/revenue-intelligence";
 import {
@@ -108,10 +108,10 @@ const fallbackMetrics: CrmDashboardMetrics = {
   emptyCRM: false,
 };
 
-const mockedFetchRevenueIntelligence = fetchRevenueIntelligence as unknown as vi.MockedFunction<
+const mockedFetchRevenueIntelligence = fetchRevenueIntelligence as unknown as MockedFunction<
   typeof fetchRevenueIntelligence
 >;
-const mockedFetchCRMmetrics = fetchCRMmetrics as unknown as vi.MockedFunction<
+const mockedFetchCRMmetrics = fetchCRMmetrics as unknown as MockedFunction<
   typeof fetchCRMmetrics
 >;
 

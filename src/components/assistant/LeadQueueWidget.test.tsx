@@ -13,6 +13,13 @@ const queueLeads: LeadQueueItem[] = [
     preferredDate: "2026-06-22T09:30:00.000Z",
     status: "nuevo",
     source: "web",
+    createdAt: "2026-06-20T10:00:00.000Z",
+    message: "Quiere evaluación inicial.",
+    urgency: "media",
+    aiSummary: "Lead interesado en ortodoncia.",
+    calendarEventId: "evt-001",
+    emailSent: true,
+    notes: "Prefiere WhatsApp.",
   },
   {
     id: "LEAD-002",
@@ -26,7 +33,7 @@ const queueLeads: LeadQueueItem[] = [
   },
 ];
 
-describe("LeadQueueWidget PR-61.2-03", () => {
+describe("LeadQueueWidget PR-61.2-04A", () => {
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
@@ -68,6 +75,122 @@ describe("LeadQueueWidget PR-61.2-03", () => {
 
     expect(screen.queryByText("Ana Perez")).toBeNull();
     expect(screen.getByText("Bruno Rios")).toBeDefined();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+
+  it("opens a Lead Detail panel with only controlled status update writes", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ leads: queueLeads }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<LeadQueueWidget />);
+
+    await screen.findByText("Ana Perez");
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+
+    expect(screen.getByRole("button", { name: "Volver a la cola de leads" })).toBeDefined();
+    expect(screen.getByText("Vista del lead seleccionado con actualización controlada de estado. No edita notas, asignaciones ni datos clínicos.")).toBeDefined();
+    expect(screen.getByText("Quiere evaluación inicial.")).toBeDefined();
+    expect(screen.getByText("Lead interesado en ortodoncia.")).toBeDefined();
+    expect(screen.getByText("Prefiere WhatsApp.")).toBeDefined();
+    expect(screen.getByText("evt-001")).toBeDefined();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("button", { name: "Actualizar estado" })).toBeDefined();
+    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar|reasignar|nota/i })).toBeNull();
+  });
+
+
+  it("updates Lead status through /api/leads/update-status and updates local state", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ leads: queueLeads }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ success: true, leadId: "LEAD-001", status: "contactado" }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<LeadQueueWidget />);
+
+    await screen.findByText("Ana Perez");
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+    fireEvent.change(screen.getByLabelText("Estado del lead"), { target: { value: "contactado" } });
+    fireEvent.click(screen.getByRole("button", { name: "Actualizar estado" }));
+
+    await screen.findByText("Estado del lead actualizado correctamente.");
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/leads/update-status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ leadId: "LEAD-001", status: "contactado" }),
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    fireEvent.click(screen.getByRole("button", { name: "Volver a la cola de leads" }));
+    expect(screen.getByText("contactado")).toBeDefined();
+    expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
+  });
+
+  it("shows API errors without changing local Lead status", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ leads: queueLeads }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ success: false, error: "Status inválido" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<LeadQueueWidget />);
+
+    await screen.findByText("Ana Perez");
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+    fireEvent.change(screen.getByLabelText("Estado del lead"), { target: { value: "seguimiento" } });
+    fireEvent.click(screen.getByRole("button", { name: "Actualizar estado" }));
+
+    expect(await screen.findByText("Status inválido")).toBeDefined();
+
+    fireEvent.click(screen.getByRole("button", { name: "Volver a la cola de leads" }));
+    expect(screen.getAllByText("nuevo").length).toBeGreaterThan(0);
+  });
+
+  it("returns from Lead Detail to the queue preserving the list", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(JSON.stringify({ leads: queueLeads }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<LeadQueueWidget />);
+
+    await screen.findByText("Ana Perez");
+    fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
+    fireEvent.click(screen.getByRole("button", { name: "Volver a la cola de leads" }));
+
+    expect(screen.getByText("Bruno Rios")).toBeDefined();
+    expect(screen.getByRole("button", { name: "Ver detalle de Bruno Rios" })).toBeDefined();
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 

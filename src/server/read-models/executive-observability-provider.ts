@@ -121,6 +121,10 @@ function getAggregateEvents(events: ReadObservabilityEvent[]) {
   return events.filter(isAggregateEvent);
 }
 
+function hasAggregate(event: ReadObservabilityEvent): event is ReadTelemetryEvent | FallbackTelemetryEvent | AggregateTelemetryEvent {
+  return "aggregate" in event && typeof event.aggregate === "string" && event.aggregate.length > 0;
+}
+
 function getDomainEvents(events: ReadObservabilityEvent[]) {
   return events.filter(isDomainEvent);
 }
@@ -171,10 +175,11 @@ function buildDomainHealth(events: ReadObservabilityEvent[]): DomainHealthMetric
 }
 
 function buildAggregateHealth(events: ReadObservabilityEvent[]): AggregateHealthMetric[] {
-  const aggregateNames = Array.from(new Set(events.map((event) => event.aggregate).filter(Boolean))).sort();
+  const eventsWithAggregate = events.filter(hasAggregate);
+  const aggregateNames = Array.from(new Set(eventsWithAggregate.map((event) => event.aggregate))).sort();
 
   return aggregateNames.map((aggregate) => {
-    const aggregateEvents = events.filter((event) => event.aggregate === aggregate);
+    const aggregateEvents = eventsWithAggregate.filter((event) => event.aggregate === aggregate);
     const readEvents = aggregateEvents.filter(isReadEvent);
     const fallbackEvents = aggregateEvents.filter(isFallbackEvent);
     const aggregateTelemetryEvents = aggregateEvents.filter(isAggregateEvent);

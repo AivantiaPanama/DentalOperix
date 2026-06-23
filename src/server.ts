@@ -163,7 +163,7 @@ export default {
       }
 
       if (url.pathname === "/api/google/login" && request.method === "GET") {
-        return await googleLoginHandler.GET(request);
+        return await googleLoginHandler.GET();
       }
 
       if (url.pathname === "/api/google/callback" && request.method === "GET") {

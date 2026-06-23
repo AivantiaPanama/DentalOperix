@@ -73,7 +73,10 @@ describe("patient followup engine", () => {
     ];
     const existing: FollowupRecord[] = [
       {
+        id: "followup-1",
         leadId: "lead-1",
+        name: "Ana",
+        email: "ana@example.com",
         type: "attendance_confirmation",
         channel: "email",
         recipient: "ana@example.com",
@@ -100,7 +103,10 @@ describe("patient followup engine", () => {
     ];
     const existing: FollowupRecord[] = [
       {
+        id: "followup-2",
         leadId: "lead-1",
+        name: "Ana",
+        email: "ana@example.com",
         type: "appointment_reminder",
         channel: "email",
         recipient: "ana@example.com",

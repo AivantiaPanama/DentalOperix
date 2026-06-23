@@ -421,13 +421,17 @@ function Step2({ data, setData, errors }: StepProps) {
           <Label>¿Prefieres Brackets convencionales o Alineadores Invisibles?</Label>
           <RadioGroup
             value={data.orthoType ?? ""}
-            onValueChange={(v) => setData({ ...data, orthoType: v })}
+            onValueChange={(v) => {
+              if (v === "brackets" || v === "alineadores") {
+                setData({ ...data, orthoType: v });
+              }
+            }}
             className="mt-3 grid grid-cols-2 gap-3"
           >
-            {[
+            {([
               { v: "brackets", l: "Brackets" },
               { v: "alineadores", l: "Alineadores Invisibles" },
-            ].map((o) => (
+            ] satisfies Array<{ v: "brackets" | "alineadores"; l: string }>).map((o) => (
               <label
                 key={o.v}
                 className={`flex cursor-pointer items-center gap-2 rounded-xl border p-3 text-sm transition ${data.orthoType === o.v ? "border-primary bg-primary/5" : "border-border bg-white"}`}
@@ -444,13 +448,17 @@ function Step2({ data, setData, errors }: StepProps) {
           <Label>¿Has tenido sensibilidad dental antes?</Label>
           <RadioGroup
             value={data.sensitivity ?? ""}
-            onValueChange={(v) => setData({ ...data, sensitivity: v })}
+            onValueChange={(v) => {
+              if (v === "si" || v === "no") {
+                setData({ ...data, sensitivity: v });
+              }
+            }}
             className="mt-3 grid grid-cols-2 gap-3"
           >
-            {[
+            {([
               { v: "si", l: "Sí" },
               { v: "no", l: "No" },
-            ].map((o) => (
+            ] satisfies Array<{ v: "si" | "no"; l: string }>).map((o) => (
               <label
                 key={o.v}
                 className={`flex cursor-pointer items-center gap-2 rounded-xl border p-3 text-sm transition ${data.sensitivity === o.v ? "border-primary bg-primary/5" : "border-border bg-white"}`}

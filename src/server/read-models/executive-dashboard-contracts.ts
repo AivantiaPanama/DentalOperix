@@ -70,7 +70,11 @@ export const FORBIDDEN_EXECUTIVE_DASHBOARD_PAYLOAD_KEYS = [
   "adapters",
 ] as const;
 
-function envelope<TDashboard>(audience: DashboardAudience, dashboard: TDashboard, generatedAt: string) {
+function envelope<TDashboard>(
+  audience: DashboardAudience,
+  dashboard: TDashboard,
+  generatedAt: string,
+): DashboardContractEnvelope<TDashboard> {
   return {
     version: EXECUTIVE_DASHBOARD_CONTRACT_VERSION,
     audience,

@@ -26,7 +26,7 @@ export type CrmLeadRow = {
   source?: LeadSource | string;
   aiSummary?: string;
   calendarEventId?: string;
-  emailSent?: string;
+  emailSent?: boolean | string;
 };
 
 export type TrendPoint = {

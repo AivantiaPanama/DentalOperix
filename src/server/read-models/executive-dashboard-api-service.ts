@@ -15,6 +15,26 @@ export type ExecutiveDashboardApiPayload =
   | ExecutiveDashboardApiResponse<ExecutiveDashboardContracts>;
 
 export function createExecutiveDashboardApiPayload(
+  audience: "executive",
+  generatedAt?: string,
+): ExecutiveDashboardApiResponse<ExecutiveDashboardContracts["executive"]>;
+export function createExecutiveDashboardApiPayload(
+  audience: "operational",
+  generatedAt?: string,
+): ExecutiveDashboardApiResponse<ExecutiveDashboardContracts["operational"]>;
+export function createExecutiveDashboardApiPayload(
+  audience: "governance",
+  generatedAt?: string,
+): ExecutiveDashboardApiResponse<ExecutiveDashboardContracts["governance"]>;
+export function createExecutiveDashboardApiPayload(
+  audience: "snapshot",
+  generatedAt?: string,
+): ExecutiveDashboardApiResponse<ExecutiveDashboardContracts>;
+export function createExecutiveDashboardApiPayload(
+  audience: ExecutiveDashboardApiAudience,
+  generatedAt?: string,
+): ExecutiveDashboardApiPayload;
+export function createExecutiveDashboardApiPayload(
   audience: ExecutiveDashboardApiAudience,
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardApiPayload {

@@ -61,7 +61,11 @@ async function readBaseLeads(): Promise<LeadOperationsProfile["lead"][]> {
 
     const leads = await leadPersistenceProvider.getActiveLeadPersistenceAdapter().listLeads();
     if (!leads.length) throw new Error("No hay leads para gestionar operativamente.");
-    return leads;
+    return leads.map((lead) => ({
+      ...lead,
+      source: lead.source ?? "unknown",
+      preferredDate: lead.preferredDate ?? "",
+    }));
   } catch (error) {
     if (getServerConfig().nodeEnv === "production") throw error;
     console.warn("Falling back to mock lead operations:", error);

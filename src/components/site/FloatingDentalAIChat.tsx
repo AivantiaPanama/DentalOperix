@@ -529,7 +529,7 @@ export function FloatingDentalAIChat({
     if (nextStage === "ready_to_book") {
       track("booking_intent", { query: value });
       if (stage === "urgency_check" || isUrgencyMessage(value)) {
-        track("urgency_detected", { urgency: getUrgencyLevel(value) });
+        track("urgency_detected", { urgency: getUrgencyLevel(value) ?? undefined });
         nextData = createUrgencyBookingData(value);
       } else if (normalizeText(value).includes("abrir formulario")) {
         nextData = createReviewDentalBookingData();

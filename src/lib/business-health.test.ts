@@ -23,6 +23,8 @@ const baseMetrics: CrmDashboardMetrics = {
   services: [],
   serviceConversions: [],
   serviceTrend: [],
+  averageLeadScore: 0,
+  leadScoreDistribution: { hot: 0, warm: 0, cold: 0 },
   urgency: { alta: 0, media: 0, baja: 0 },
   trend: {
     daily: [],

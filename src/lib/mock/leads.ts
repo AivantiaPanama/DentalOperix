@@ -1,4 +1,4 @@
-export type LeadStatus = "nuevo" | "agendada" | "completada" | "cancelada" | "no asistió";
+export type LeadStatus = "nuevo" | "contactado" | "seguimiento" | "agendada" | "completada" | "cancelada" | "no interesado" | "no asistió";
 
 export type MockLead = {
   id: string;

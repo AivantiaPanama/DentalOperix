@@ -46,6 +46,8 @@ describe("/api/leads/create", () => {
       eventLink: null,
       calendarCreated: false,
       emailSent: false,
+      patientEmailSent: false,
+      clinicEmailSent: false,
       crmSaved: true,
       message: "Recibimos tu solicitud. Nuestro equipo confirmará la disponibilidad contigo.",
     });
@@ -74,6 +76,8 @@ describe("/api/leads/create", () => {
       eventLink: null,
       calendarCreated: false,
       emailSent: false,
+      patientEmailSent: false,
+      clinicEmailSent: false,
       crmSaved: true,
       message: "Recibimos tu solicitud. Nuestro equipo confirmará la disponibilidad contigo.",
     });

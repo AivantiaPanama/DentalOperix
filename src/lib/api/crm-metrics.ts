@@ -28,7 +28,7 @@ export type CrmDashboardMetrics = {
     conversionRate: number;
     estimatedPipelineValue: number;
   }>;
-  serviceTrend: Array<{ service: string; leads: number }>;
+  serviceTrend: Array<{ service: string; leads: number; period?: string }>;
   urgency: {
     alta: number;
     media: number;

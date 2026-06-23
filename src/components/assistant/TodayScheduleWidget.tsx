@@ -27,8 +27,9 @@ function formatTime(time: string) {
 
 export function getTodayScheduleAppointments(appointments: Appointment[], today = getTodayDate()) {
   return appointments
-    .filter((appointment) => appointment.date === today && appointment.status !== "cancelled")
-    .toSorted((a, b) => a.time.localeCompare(b.time));
+    .filter((appointment: Appointment) => appointment.date === today && appointment.status !== "cancelled")
+    .slice()
+    .sort((a: Appointment, b: Appointment) => a.time.localeCompare(b.time));
 }
 
 export function TodayScheduleWidget({
@@ -70,7 +71,7 @@ export function TodayScheduleWidget({
           </div>
         ) : (
           <ol className="space-y-3" aria-label="Citas programadas para hoy">
-            {todayAppointments.map((appointment) => (
+            {todayAppointments.map((appointment: Appointment) => (
               <li
                 key={appointment.id}
                 className="grid gap-3 rounded-2xl border border-border bg-background/70 p-4 sm:grid-cols-[90px_minmax(0,1fr)_minmax(140px,auto)] sm:items-center"

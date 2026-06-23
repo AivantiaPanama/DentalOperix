@@ -1,4 +1,5 @@
 import { CRM_STATUS } from "@/server/google/types";
+import type { CRMStatus } from "@/server/google/types";
 import type { GoogleLeadPayload } from "@/lib/google/schemas";
 import { leadPersistenceProvider } from "@/server/leads/persistence";
 import { createGoogleCalendarEvent, sendConfirmationEmail } from "../google/google.server";
@@ -6,6 +7,7 @@ import { createGoogleCalendarEvent, sendConfirmationEmail } from "../google/goog
 export type DentalLeadPayload = GoogleLeadPayload & {
   appointmentId?: string;
   source?: string;
+  treatment?: string;
 };
 
 export async function processDentalLead(payload: DentalLeadPayload) {
@@ -16,6 +18,7 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     appointmentId,
     source: payload.source ?? "web-form",
     service,
+    treatment: payload.treatment,
   };
 
   const treatment = (payload.treatment?.trim() || service).trim();
@@ -29,8 +32,8 @@ export async function processDentalLead(payload: DentalLeadPayload) {
     urgency: "media",
     preferredDate:
       completePayload.preferredDate ?? `${completePayload.date} ${completePayload.time}`,
-    status: CRM_STATUS.NUEVO as const,
-    source: completePayload.source as const,
+    status: CRM_STATUS.NUEVO,
+    source: completePayload.source,
     aiSummary: "",
     calendarEventId: "",
     emailSent: false,
@@ -59,7 +62,7 @@ export async function processDentalLead(payload: DentalLeadPayload) {
   const isDev = process.env.NODE_ENV !== "production";
   let event;
   let calendarEventId = "";
-  let updatedStatus: CRM_STATUS.NUEVO | CRM_STATUS.AGENDADA = CRM_STATUS.NUEVO;
+  let updatedStatus: CRMStatus = CRM_STATUS.NUEVO;
   let emailSent = false;
   let patientEmailSent = false;
   let clinicEmailSent = false;

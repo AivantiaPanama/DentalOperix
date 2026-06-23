@@ -2,14 +2,39 @@ import { z } from "zod";
 
 export const CRM_STATUS = {
   NUEVO: "nuevo",
+  CONTACTADO: "contactado",
+  SEGUIMIENTO: "seguimiento",
   AGENDADA: "agendada",
   COMPLETADA: "completada",
   CANCELADA: "cancelada",
+  NO_INTERESADO: "no interesado",
   NO_ASISTIO: "no asistió",
 } as const;
 
-export type CRMStatus = (typeof CRM_STATUS)[keyof typeof CRM_STATUS];
-export const CRM_STATUS_VALUES = Object.values(CRM_STATUS) as CRMStatus[];
+export const CRM_STATUS_VALUES = [
+  CRM_STATUS.NUEVO,
+  CRM_STATUS.CONTACTADO,
+  CRM_STATUS.SEGUIMIENTO,
+  CRM_STATUS.AGENDADA,
+  CRM_STATUS.COMPLETADA,
+  CRM_STATUS.CANCELADA,
+  CRM_STATUS.NO_INTERESADO,
+  CRM_STATUS.NO_ASISTIO,
+] as const;
+
+export type CRMStatus = (typeof CRM_STATUS_VALUES)[number];
+
+export const LEAD_URGENCY_VALUES = ["low", "media", "high"] as const;
+export type LeadUrgency = (typeof LEAD_URGENCY_VALUES)[number];
+
+export function normalizeLeadUrgency(raw?: string | null): LeadUrgency | undefined {
+  const normalized = raw?.toString().trim().toLowerCase() ?? "";
+  if (!normalized) return undefined;
+  if (normalized === "baja") return "low";
+  if (normalized === "alta") return "high";
+  if (normalized === "low" || normalized === "media" || normalized === "high") return normalized;
+  return "media";
+}
 
 export const googleCRMLeadSchema = z.object({
   id: z.string().min(1),
@@ -19,7 +44,7 @@ export const googleCRMLeadSchema = z.object({
   email: z.string().email(),
   treatment: z.string().min(1),
   message: z.string().optional(),
-  urgency: z.enum(["low", "media", "high"]).optional(),
+  urgency: z.enum(LEAD_URGENCY_VALUES).optional(),
   preferredDate: z.string().optional(),
   status: z.enum(CRM_STATUS_VALUES),
   source: z.string().optional(),

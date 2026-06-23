@@ -97,7 +97,7 @@ function buildHealthSummary(params: {
   incompletePatients: number;
   verificationRate: number;
   conversionRate: number;
-}) {
+}): OperationalExecutiveKpis["health"] {
   const risks = [params.dueFollowUps, params.pendingVerification, params.incompletePatients].filter(
     (value) => value > 0,
   ).length;
@@ -114,7 +114,8 @@ function buildHealthSummary(params: {
     ),
   );
 
-  const status = score >= 80 && risks === 0 ? "stable" : score >= 60 ? "attention" : "watch";
+  const status: OperationalExecutiveKpis["health"]["status"] =
+    score >= 80 && risks === 0 ? "stable" : score >= 60 ? "attention" : "watch";
   const recommendations: string[] = [];
 
   if (params.dueFollowUps > 0) {

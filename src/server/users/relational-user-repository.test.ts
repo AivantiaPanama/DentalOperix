@@ -5,9 +5,9 @@ type QueryCall = { text: string; values?: unknown[] };
 
 function createClient(row: Record<string, unknown> | null, calls: QueryCall[]): UserPersistenceClient {
   return {
-    async query(text, values) {
+    async query<T = Record<string, unknown>>(text: string, values?: unknown[]) {
       calls.push({ text, values });
-      return { rows: row ? [row] : [], rowCount: row ? 1 : 0 };
+      return { rows: row ? [row as T] : [], rowCount: row ? 1 : 0 };
     },
   };
 }

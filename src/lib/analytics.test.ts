@@ -17,13 +17,19 @@ describe("analytics track", () => {
         return true;
       }),
     };
-    // @ts-expect-error mock window for test environment
-    globalThis.window = mockWindow;
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      writable: true,
+      value: mockWindow,
+    });
   });
 
   afterEach(() => {
-    // @ts-expect-error restore original window
-    globalThis.window = originalWindow;
+    Object.defineProperty(globalThis, "window", {
+      configurable: true,
+      writable: true,
+      value: originalWindow,
+    });
     vi.restoreAllMocks();
   });
 

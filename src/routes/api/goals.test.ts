@@ -13,6 +13,8 @@ const goalsModule = await import("@/server/google/goals");
 const readGoalSettingsFromSheet = goalsModule.readGoalSettingsFromSheet as ReturnType<typeof vi.fn>;
 const writeGoalSettingsToSheet = goalsModule.writeGoalSettingsToSheet as ReturnType<typeof vi.fn>;
 
+const goalsReadRequest = new Request("http://localhost/api/goals");
+
 const validGoals: GoalSettings = {
   monthlyLeadsGoal: 80,
   conversionGoal: 45,
@@ -28,7 +30,7 @@ describe("/api/goals", () => {
   it("returns goals from sheet", async () => {
     readGoalSettingsFromSheet.mockResolvedValue(validGoals);
 
-    const response = await getGoals();
+    const response = await getGoals(goalsReadRequest);
     expect(response.status).toBe(200);
 
     const body = await response.json();
@@ -38,7 +40,7 @@ describe("/api/goals", () => {
   it("returns safe default goals when sheet load fails", async () => {
     readGoalSettingsFromSheet.mockRejectedValue(new Error("sheet unavailable"));
 
-    const response = await getGoals();
+    const response = await getGoals(goalsReadRequest);
     expect(response.status).toBe(200);
 
     const body = await response.json();

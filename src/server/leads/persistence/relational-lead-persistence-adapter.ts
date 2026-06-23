@@ -1,9 +1,12 @@
 import { z } from "zod";
 import {
   CRM_STATUS_VALUES,
+  LEAD_URGENCY_VALUES,
   googleCRMLeadSchema,
+  normalizeLeadUrgency,
   type CRMStatus,
   type GoogleCRMLeadPayload,
+  type LeadUrgency,
 } from "@/server/google/types";
 import type {
   LeadPersistenceAppendInput,
@@ -18,13 +21,23 @@ const RELATIONAL_RUNTIME_SCHEMA_VERSION = "57.8" as const;
 const LEGACY_CRM_STATUS_MAP: Record<string, CRMStatus> = {
   nuevo: "nuevo",
   new: "nuevo",
+  contactado: "contactado",
+  contacted: "contactado",
+  seguimiento: "seguimiento",
+  followup: "seguimiento",
+  "follow-up": "seguimiento",
+  follow_up: "seguimiento",
   agendada: "agendada",
   scheduled: "agendada",
   completada: "completada",
   closed: "completada",
-  contacted: "nuevo",
   cancelada: "cancelada",
   cancelled: "cancelada",
+  "no interesado": "no interesado",
+  "no-interesado": "no interesado",
+  no_interesado: "no interesado",
+  not_interested: "no interesado",
+  "not interested": "no interesado",
   "no asistió": "no asistió",
   "no asistio": "no asistió",
   "no-show": "no asistió",
@@ -51,7 +64,7 @@ const relationalLeadWriteInputSchema = googleCRMLeadSchema
     aiSummary: z.string().optional(),
     calendarEventId: z.string().optional(),
     emailSent: z.boolean().optional(),
-    urgency: z.enum(["low", "media", "high"]).optional(),
+    urgency: z.enum(LEAD_URGENCY_VALUES).optional(),
     service: z.string().min(1).optional(),
     date: z
       .string()
@@ -90,13 +103,8 @@ function normalizeCRMStatus(raw?: string): CRMStatus {
   return LEGACY_CRM_STATUS_MAP[normalized] ?? "nuevo";
 }
 
-function normalizeUrgency(raw?: string | null): "low" | "media" | "high" | undefined {
-  const normalized = raw?.toString().trim().toLowerCase() ?? "";
-  if (!normalized) return undefined;
-  if (normalized === "baja") return "low";
-  if (normalized === "alta") return "high";
-  if (normalized === "low" || normalized === "media" || normalized === "high") return normalized;
-  return "media";
+function normalizeUrgency(raw?: string | null): LeadUrgency | undefined {
+  return normalizeLeadUrgency(raw);
 }
 
 function getDatabaseUrl() {
