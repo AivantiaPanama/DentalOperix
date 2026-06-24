@@ -1,8 +1,8 @@
 # DentalOperix — New Chat Handoff 61.3 Discovery Complete
 
-**Status:** 61.3-00 COMPLETE / APPROVED  
+Status: 61.3 PHASE CLOSED / CERTIFIED  
 **Date:** 2026-06-23  
-**Next Recommended Work:** 61.3-01 Patient Identity Foundation
+Next Recommended Work: Await 61.4 Program Opening
 
 ---
 
@@ -179,12 +179,23 @@ Then wait for explicit implementation authorization.
 
 ---
 
-## 9. Next Phase
-
-Open:
+## 9. Historical Record
 
 ```text
 61.3-01 Patient Identity Foundation
+CLOSED / CERTIFIED
+
+61.3-02
+CLOSED / CERTIFIED
+
+61.3-03-A
+CLOSED / CERTIFIED
+
+61.3-03-B
+CLOSED / CERTIFIED
+
+61.3 PHASE
+CLOSED / CERTIFIED
 ```
 
 Recommended scope:
@@ -215,3 +226,23 @@ Persistence
 Tests
 UI later
 ```
+
+## 10. Phase Status Update
+
+61.3-02 CLOSED / CERTIFIED
+
+61.3-03-A CLOSED / CERTIFIED
+
+(Application Contracts + Shared Types)
+
+61.3-03-B CLOSED / CERTIFIED
+
+(Application Services)
+
+61.3 PHASE CLOSED / CERTIFIED
+
+Closure Documentation:
+
+- docs/governance/61.3/61.3_GOVERNANCE_RETROSPECTIVE_REVIEW.md
+- docs/governance/61.3/61.3_PHASE_CLOSURE_REVIEW.md
+
