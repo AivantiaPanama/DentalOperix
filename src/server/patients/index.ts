@@ -21,3 +21,4 @@ export * from "./application/contracts/prepare-patient-merge-command";
 export * from "./application/contracts/merge-preparation-result";
 export * from "./application/contracts/register-patient-audit-event-command";
 export * from "./application/contracts/register-patient-audit-event-result";
+export * from "./application/services";
