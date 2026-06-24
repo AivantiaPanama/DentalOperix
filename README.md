@@ -67,3 +67,28 @@ See:
 - docs/governance/69.0/
 - docs/audits/69.0/69.2_DOCUMENTATION_STRUCTURE_AUDIT.md
 - docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_69_2.md
+
+---
+
+## Documentation Update Notice — 70.1 / 71.5
+
+This package includes a documentation and governance consolidation update generated on 2026-06-24.
+
+Active technical baseline remains: `DENTALOPERIX_BASELINE_69_2`.
+
+Added governance structure:
+
+- Governance Master Index
+- DentalOperix Governance Framework v1.0
+- Governance Maturity Model GML-1
+- Document Registry
+- Certification Register
+- Baseline Transition Register
+- Governance Change Log
+- 70.1 Cross-Reference Validation Report
+- 71.2 Patients Functional Specification
+- 71.3 Architecture Validation evidence
+- 71.4 Implementation Planning
+- 71.5 Controlled Development start record
+
+No runtime product code was intentionally modified by this documentation update.
