@@ -1,9 +1,9 @@
 # Patient Ownership Matrix
 
-**Program:** DentalOperix 61.3 Patient Management  
-**Phase:** 61.3-02B Patient Ownership & Legacy Classification  
-**Baseline:** `DENTALOPERIX_BASELINE_61_3_DISCOVERY_COMPLETE`  
-**Status:** ADOPTED / OWNERSHIP CLASSIFIED  
+**Program:** DentalOperix 61.3 Patient Management
+**Phase:** 61.3-02B Patient Ownership & Legacy Classification
+**Baseline:** `DENTALOPERIX_BASELINE_61_3_DISCOVERY_COMPLETE`
+**Status:** ADOPTED / OWNERSHIP CLASSIFIED
 
 ## 1. Purpose
 
