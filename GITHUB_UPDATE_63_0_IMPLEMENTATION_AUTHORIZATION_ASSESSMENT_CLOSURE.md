@@ -36,3 +36,34 @@ IMPLEMENTATION AUTHORIZATION: NOT FORMALLY GRANTED
 - No production approval granted.
 - No protected components changed.
 - No architecture change introduced.
+
+## Closure Formalization Update
+
+This package formalizes 63.0 closure by updating governance documentation from recommendation draft state to closed recommendation-issued state.
+
+```text
+63.0 STATUS: CLOSED
+GOVERNANCE OUTCOME: RECOMMENDATION ISSUED
+FINAL RECOMMENDATION: CONDITIONAL APPROVAL
+IMPLEMENTATION AUTHORIZATION: NOT FORMALLY GRANTED
+DOCUMENTATION CERTIFICATION: PASS
+```
+
+## Explicit Non-Authorizations
+
+The formalized 63.0 closure does not authorize:
+
+- code generation
+- development execution
+- database schema changes
+- API changes
+- UI changes
+- migrations
+- deployment
+- production release
+- protected component modification
+- certified architecture modification
+
+## Next Candidate Phase
+
+64.0 Implementation Planning may only be opened through separate formal governance authorization.

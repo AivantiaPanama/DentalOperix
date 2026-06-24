@@ -2,7 +2,7 @@
 
 ## Current State
 
-57.x, 61.x, 62.0-62.4 are certified/closed as previously documented. 63.0 Implementation Authorization Assessment is closed with final recommendation: CONDITIONAL APPROVAL.
+57.x, 61.x, 62.0-62.4 are certified/closed as previously documented. 63.0 Implementation Authorization Assessment is CLOSED with governance outcome RECOMMENDATION ISSUED and final recommendation: CONDITIONAL APPROVAL.
 
 ## Critical Interpretation
 
@@ -47,3 +47,15 @@ Dual Write, Lead Replacement, New Lead Source of Truth, Persistence Re-Architect
 ## Next Recommended Phase
 
 64.0 Implementation Planning may be opened only with formal governance authorization. It must define executable scope, implementation strategy, deployment strategy, rollback, validation criteria, certification plan, and evidence plan.
+
+## Formal 63.0 Closure Certification
+
+```text
+63.0 STATUS: CLOSED
+GOVERNANCE OUTCOME: RECOMMENDATION ISSUED
+FINAL RECOMMENDATION: CONDITIONAL APPROVAL
+IMPLEMENTATION AUTHORIZATION: NOT FORMALLY GRANTED
+DOCUMENTATION CERTIFICATION: PASS
+```
+
+Any future 64.0 Implementation Planning phase requires separate formal governance authorization before planning work may be interpreted as implementation permission.
