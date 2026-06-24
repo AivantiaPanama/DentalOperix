@@ -54,4 +54,16 @@ describe("DentalOperix architecture guards", () => {
       expect(content).not.toContain("sessionStorage");
     }
   });
+  it("keeps 71.5.1 Patient Domain Foundation isolated from protected runtime boundaries", () => {
+    const patientFoundationIndex = read("src/server/patients/domain/index.ts");
+    const patientFoundationPort = read("src/server/patients/domain/patient-persistence-port.ts");
+
+    expect(patientFoundationIndex).not.toContain("supabase");
+    expect(patientFoundationIndex).not.toContain("RelationalPatientPersistenceAdapter");
+    expect(patientFoundationIndex).not.toContain("LeadPersistencePort");
+    expect(patientFoundationPort).not.toContain("supabase");
+    expect(patientFoundationPort).not.toContain("RelationalPatientPersistenceAdapter");
+    expect(patientFoundationPort).not.toContain("LeadPersistencePort");
+  });
+
 });

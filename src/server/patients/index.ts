@@ -1,3 +1,4 @@
+export * as PatientDomainFoundation from "./domain";
 export * from "./patient-domain";
 export * from "./patient-repository";
 export * from "./patient-service";
