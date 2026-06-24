@@ -129,3 +129,17 @@ Never assume architecture changes without documentary evidence.
 - 68.1 Patient Implementation Readiness Assessment: COMPLETED.
 - Implementation remains NOT AUTHORIZED.
 - Code, database changes, migrations and protected component changes remain prohibited without explicit future authorization.
+
+## Baseline 69.2 Update
+
+- 68.2 Patient Implementation Strategy: CLOSED / CERTIFIED.
+- 68.3 Patient Risk & Rollback Plan: CLOSED / CERTIFIED.
+- 68.4 Patient Validation & Evidence Plan: CLOSED / CERTIFIED.
+- 68.5 Patient Implementation Authorization Package: CLOSED / CERTIFIED.
+- 69.0 Patient Implementation Authorization Review: CLOSED / AUTHORIZATION REVIEW APPROVED.
+- 69.1 Implementation Planning Certification: CLOSED / IMPLEMENTATION PLANNING CERTIFIED.
+- 69.2 Implementation Execution Authorization: CLOSED / IMPLEMENTATION EXECUTION AUTHORIZED.
+- Implementation execution is authorized only for the Patients domain.
+- Patient architecture is certified as PatientPersistencePort -> PatientPersistenceProvider -> RelationalPatientPersistenceAdapter -> Supabase PostgreSQL.
+- Protected components remain out of scope.
+- Any implementation increment must include architecture analysis, affected dependencies, risks, technical impact, compatibility with DENTALOPERIX_BASELINE_69_2, governance determination, validation and evidence.

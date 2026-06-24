@@ -1,80 +1,69 @@
-# DentalOperix Followup Automation
+# DentalOperix
 
-## API endpoint
+## Current Governance Baseline
 
-- `POST /api/followups/run`
-- Body: JSON
-  - `dryRun`: boolean (default `true`)
-
-### Ejemplos
-
-Dry run (no envía correos):
-
-```json
-{ "dryRun": true }
+```text
+DENTALOPERIX_BASELINE_69_2
+IMPLEMENTATION PLANNING: CERTIFIED
+IMPLEMENTATION EXECUTION: AUTHORIZED FOR PATIENTS DOMAIN ONLY
+GOVERNANCE: ACTIVE
+ARCHITECTURE: CERTIFIED
 ```
 
-Ejecución real (envía correos):
+## Certified architectures
 
-```json
-{ "dryRun": false }
+### Leads
+
+```text
+LeadPersistencePort
+→ LeadPersistenceProvider
+→ RelationalLeadPersistenceAdapter
+→ Supabase PostgreSQL
 ```
 
-### Respuesta
+### Patients
 
-La API devuelve un resumen de las acciones generadas y su estado:
-
-```json
-{
-  "success": true,
-  "summary": {
-    "generated": 5,
-    "sent": 3,
-    "omitted": 0,
-    "failed": 0
-  },
-  "actions": [
-    {
-      "leadId": "lead-1",
-      "type": "appointment_reminder",
-      "channel": "email",
-      "recipient": "paciente@example.com",
-      "subject": "Recordatorio de cita DentalOperix",
-      "message": "...",
-      "scheduledAt": "2026-06-14T10:00:00.000Z"
-    }
-  ]
-}
+```text
+PatientPersistencePort
+→ PatientPersistenceProvider
+→ RelationalPatientPersistenceAdapter
+→ Supabase PostgreSQL
 ```
 
-## Hoja de Google Sheets: `PatientFollowUps`
+## Sources of Truth
 
-La hoja utilizada para persistir los registros de seguimiento debe tener las siguientes columnas:
+- Leads = Acquisition / Marketing / Lead Lifecycle
+- Patients = Person Identity
+- Appointments = Scheduled Operational Events
 
-1. `leadId`
-2. `type`
-3. `channel`
-4. `recipient`
-5. `message`
-6. `status`
-7. `scheduledAt`
-8. `executedAt`
-9. `error`
+## Protected components
 
-### Comportamiento
+Do not modify without a new governance review:
 
-- Si `dryRun` es `true`, el endpoint genera las acciones pero no envía correos.
-- Si `dryRun` es `false`, el endpoint envía correos usando Gmail y registra cada intento en `PatientFollowUps`.
-- No se generan correos duplicados para un mismo `leadId` y `type` ya registrado.
+- BookingDialog
+- processDentalLead
+- /api/leads/create
+- Calendar
+- Gmail
+- FloatingDentalAIChat
+- Home
+- siteServices.ts
 
-## Variables de entorno relevantes
+## Permanent restrictions
 
-- `GOOGLE_SHEET_ID`
-- `GOOGLE_SHEET_NAME`
-- `GOOGLE_FOLLOWUPS_SHEET_NAME` (por defecto `PatientFollowUps`)
-- `GOOGLE_REFRESH_TOKEN`
-- `GMAIL_SENDER`
+- No Dual Write.
+- No Lead Replacement.
+- No New Lead Source of Truth.
+- No Persistence Re-Architecture.
+- No RBAC Bypass.
+- No Automated Patient Merge.
 
-## Notas
+## Latest documentation package
 
-El seguimiento automático está desacoplado del flujo de `BookingDialog`, de la creación de eventos de Calendar y del chatbot. El `BookingDialog` sigue siendo el único mecanismo para crear citas.
+See:
+
+- DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md
+- docs/implementation/68.0/
+- docs/governance/69.0/
+- docs/audits/69.0/69.2_DOCUMENTATION_STRUCTURE_AUDIT.md
+- docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_69_2.md
