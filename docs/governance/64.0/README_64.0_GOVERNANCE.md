@@ -1,35 +1,34 @@
-# 64.0 Governance Package
+# 64.0 Governance
 
 ## DentalOperix
 
-Version: 1.0  
-Status: CLOSED / GOVERNANCE RECORDED  
-Program Phase: 64.0 Implementation Planning
+Version: 1.1  
+Status: CLOSED / RECORDED
 
 ## Purpose
 
-This folder contains the governance artifacts created to resolve the authorization traceability gap identified between 62.4 and 63.0 and to support formal review of the 64.5 Governance Authorization Package.
+This folder contains the 64.0 governance artifacts that resolved the authorization gap between 62.4 and 63.0, recorded the Program Governance Authority decision, and hardened governance traceability for the transition into 65.0 Implementation Execution.
 
 ## Included Artifacts
 
 - `64.0-A_FORMAL_IMPLEMENTATION_AUTHORIZATION_REVIEW.md`
 - `64.0-A_GOVERNANCE_RESOLUTION.md`
 - `64.0_GOVERNANCE_RETROSPECTIVE_REVIEW.md`
+- `64.0_GOVERNANCE_STATE_MATRIX.md`
+- `64.0_DECISION_REGISTRY.md`
 - `PROGRAM_GOVERNANCE_AUTHORITY_DECISION.md`
 
-## Governance Status
+## Governance Result
 
 ```text
-64.0 IMPLEMENTATION PLANNING: CLOSED
-GOVERNANCE RETROSPECTIVE: COMPLETE
 AUTHORIZATION GAP 62.4 <-> 63.0: CLOSED
-PROGRAM GOVERNANCE AUTHORITY DECISION: RECORDED
+64.0 IMPLEMENTATION PLANNING: CLOSED / CERTIFIED
+64.5 AUTHORIZATION PACKAGE: APPROVED
 IMPLEMENTATION AUTHORIZATION: APPROVED
+65.0 IMPLEMENTATION EXECUTION: OPEN / CHARTERED
 ```
 
-## Continuing Constraints
-
-The following remain active:
+## Active Restrictions
 
 - No Dual Write
 - No Lead Replacement
@@ -40,12 +39,11 @@ The following remain active:
 - Protected component modification requires explicit impact review and approval
 - Deployment requires deployment-specific approval
 
-## Certified Architecture
+## Traceability Additions
 
-```text
-Leads
--> LeadPersistencePort
--> LeadPersistenceProvider
--> RelationalLeadPersistenceAdapter
--> Supabase PostgreSQL
-```
+The following governance hardening artifacts were added after the 65.0 documentation audit:
+
+- `64.0_GOVERNANCE_STATE_MATRIX.md`
+- `64.0_DECISION_REGISTRY.md`
+
+These additions satisfy the 64.0 retrospective recommendations to maintain a formal governance state matrix and decision registry.
