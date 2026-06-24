@@ -141,3 +141,16 @@ No RBAC Bypass.
 No Analytics Write Back.
 No Patient UI introduced in 61.3-01.
 ```
+
+
+---
+
+## 61.3 Status Update
+
+```text
+61.3-00 Discovery: CLOSED
+61.3-00A Audit: PASS
+61.3-01 Patient Identity Foundation: CLOSED
+61.3-02 Patient Persistence & Infrastructure Validation: CLOSED / CERTIFIED
+61.3-03 Patient Application Services: OPEN / IMPLEMENTATION AUTHORIZED
+```
