@@ -20,7 +20,8 @@
     "validate:relational-dry-run": "node scripts/validate-relational-dry-run.mjs",
     "validate:relational-runtime-flags": "node scripts/validate-relational-runtime-flags.mjs",
     "validate:production-cutover-readiness": "node scripts/validate-production-cutover-readiness.mjs",
-    "validate:production-post-cutover": "node scripts/validate-production-post-cutover.mjs"
+    "validate:production-post-cutover": "node scripts/validate-production-post-cutover.mjs",
+    "test:governance-sdk": "vitest src/governance/sdk/__tests__ --run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
