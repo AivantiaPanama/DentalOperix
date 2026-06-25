@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 
 const root = process.cwd();
 const sdkRoot = join(root, "src/governance/sdk");
@@ -24,9 +24,20 @@ const collectFiles = (dir: string): string[] => {
   });
 };
 
+const normalizePath = (file: string): string => file.split(sep).join("/");
+
 describe("Governance SDK Core boundary", () => {
   it("stays isolated from certified functional runtime boundaries", () => {
-    const files = collectFiles(sdkRoot).filter((file) => file.endsWith(".ts") && !file.includes("/__tests__/"));
+    const files = collectFiles(sdkRoot).filter((file) => {
+      const normalized = normalizePath(file);
+
+      return (
+        normalized.endsWith(".ts") &&
+        !normalized.includes("/__tests__/") &&
+        !normalized.endsWith(".test.ts") &&
+        !normalized.endsWith(".spec.ts")
+      );
+    });
 
     for (const file of files) {
       const content = readFileSync(file, "utf8");
