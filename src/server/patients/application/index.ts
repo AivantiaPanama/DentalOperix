@@ -14,3 +14,8 @@ export * from "./contracts/merge-preparation-result";
 export * from "./contracts/register-patient-audit-event-command";
 export * from "./contracts/register-patient-audit-event-result";
 export * from "./services";
+export * from "./patient-application.types";
+export * from "./patient-application.errors";
+export * from "./patient-application-mappers";
+export * from "./patient-application-service";
+export * from "./patient-use-cases";

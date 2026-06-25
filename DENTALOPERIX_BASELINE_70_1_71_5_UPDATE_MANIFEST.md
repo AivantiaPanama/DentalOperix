@@ -82,3 +82,33 @@ Updated handoff/start documentation to record:
 ```
 
 This amendment is a minor roadmap sequencing update only. It does not modify the certified architecture, Baseline 69.2, protected components, sources of truth, or permanent restrictions.
+
+## 71.5.2 Patient Application Layer Implementation Amendment
+
+Implemented controlled application-layer files:
+
+```text
+src/server/patients/application/patient-application.types.ts
+src/server/patients/application/patient-application.errors.ts
+src/server/patients/application/patient-application-mappers.ts
+src/server/patients/application/patient-application-service.ts
+src/server/patients/application/patient-use-cases.ts
+src/server/patients/application/patient-application-layer.test.ts
+```
+
+Modified controlled exports and architecture guards:
+
+```text
+src/server/patients/application/index.ts
+src/server/patients/index.ts
+src/architecture-guards.test.ts
+```
+
+Added evidence documentation:
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_PATIENT_APPLICATION_LAYER_EVIDENCE.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_PATIENT_APPLICATION_LAYER_IMPLEMENTATION_SUMMARY.md
+```
+
+This implementation is application orchestration only and does not introduce Supabase, concrete persistence adapters, API routes, UI changes, Lead changes, or automated patient merge.

@@ -66,4 +66,29 @@ describe("DentalOperix architecture guards", () => {
     expect(patientFoundationPort).not.toContain("LeadPersistencePort");
   });
 
+  it("keeps 71.5.2 Patient Application Layer isolated from infrastructure and protected boundaries", () => {
+    const applicationFiles = [
+      "src/server/patients/application/patient-application.types.ts",
+      "src/server/patients/application/patient-application.errors.ts",
+      "src/server/patients/application/patient-application-mappers.ts",
+      "src/server/patients/application/patient-application-service.ts",
+      "src/server/patients/application/patient-use-cases.ts",
+      "src/server/patients/application/index.ts",
+    ];
+
+    for (const file of applicationFiles) {
+      const content = read(file);
+      expect(content).not.toContain("supabase");
+      expect(content).not.toContain("RelationalPatientPersistenceAdapter");
+      expect(content).not.toContain("PatientPersistenceProvider");
+      expect(content).not.toContain("LeadPersistencePort");
+      expect(content).not.toContain("server/leads");
+      expect(content).not.toContain("routes/api");
+      expect(content).not.toContain("components/");
+      expect(content).not.toContain("BookingDialog");
+      expect(content).not.toContain("processDentalLead");
+      expect(content).not.toContain("mergePatients");
+    }
+  });
+
 });
