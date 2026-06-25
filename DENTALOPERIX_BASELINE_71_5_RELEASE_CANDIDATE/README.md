@@ -20,10 +20,3 @@ The project ZIP has been updated with a `/governance` repository that materializ
 ### Closure state
 
 The Baseline Audit Package design is closed and governance-approved. Final audit certification remains conditional on ACR-E inspection of fully materialized RTM, TTM, CI catalog, release evidence, and cross-reference integrity.
-
-
----
-
-## Program 72.0 Initiation - 2026-06-24
-
-Program 72.0 Governance Platform has been initiated through 72.0.1 Governance Foundation. The implementation is transversal and non-invasive, limited to governance documentation, registries, indexes, and readiness evidence under `/governance`. No certified functional architecture, protected component, Source of Truth, API, persistence adapter, or runtime behavior is modified.
