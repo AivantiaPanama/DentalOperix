@@ -118,7 +118,7 @@ Rollback can be performed by reverting the 73.1-C patch. Since the implementatio
 
 ## Certification Recommendation
 
-73.1-C should remain `IMPLEMENTED - PENDING USER VALIDATION EVIDENCE` until the user provides local evidence for:
+73.1-C is `CLOSED & CERTIFIED` based on user-provided local evidence for:
 
 - `npm run build` PASS
 - `npx tsc --noEmit` PASS
