@@ -1,7 +1,7 @@
 ---
 document_id: DOX-72.1.3-STATUS
 title: Program 72.1.3 Baseline Compliance Validator Status Ledger
-version: 2.0
+version: 3.0
 status: CURRENT
 baseline: DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE
 issued_on: 2026-06-25
@@ -28,12 +28,11 @@ Program 72.1 implements the DentalOperix Governance Platform through controlled,
 | 72.1.3-I1 | Domain Foundation | CLOSED & CERTIFIED |
 | 72.1.3-I2 | Rule Registry Infrastructure | CLOSED & CERTIFIED |
 | 72.1.3-I3 | Governance Manifest Integration | CLOSED & CERTIFIED |
+| 72.1.3-I4 | Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED |
 
 ## Active / Next Increment
 
-| Increment | Capability | Status |
-|---|---|---|
-| 72.1.3-I4 | Manifest Validation & Compatibility Engine | APPROVED FOR IMPLEMENTATION PLANNING - CODE NOT YET AUTHORIZED |
+No active increment remains inside 72.1.3. Program 72.1.3 is complete and eligible for final closure.
 
 ## Evidence Summary
 
@@ -42,6 +41,7 @@ Program 72.1 implements the DentalOperix Governance Platform through controlled,
 | 72.1.3-I1/R1 | Typecheck, build, full suite | PASS - 135 Test Files / 583 Tests |
 | 72.1.3-I2 | npm install, build, typecheck, audit | PASS |
 | 72.1.3-I3 | npm install, build, typecheck, audit | PASS |
+| 72.1.3-I4 | npm install, build, typecheck | PASS |
 
 ## Protected Architecture Confirmation
 
@@ -56,6 +56,6 @@ The completed work did not modify or re-architect the functional DentalOperix do
 
 ## Certification Determination
 
-72.1.3-R1, 72.1.3-I1, 72.1.3-I2, and 72.1.3-I3 are CLOSED & CERTIFIED.
+72.1.3-R1, 72.1.3-I1, 72.1.3-I2, 72.1.3-I3, and 72.1.3-I4 are CLOSED & CERTIFIED.
 
-72.1.3-I4 is approved for implementation planning only. Code generation for I4 requires explicit future authorization after contract freeze.
+Program 72.1.3 has no remaining open increment.

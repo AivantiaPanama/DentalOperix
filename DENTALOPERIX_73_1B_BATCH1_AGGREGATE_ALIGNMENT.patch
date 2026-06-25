@@ -1,0 +1,985 @@
+diff -ruN "dental_original/DentalOperix - copia/src/server/patients/domain/patient.entity.ts" "dental_work/DentalOperix - copia/src/server/patients/domain/patient.entity.ts"
+--- "dental_original/DentalOperix - copia/src/server/patients/domain/patient.entity.ts"	2026-06-25 00:42:30.000000000 +0000
++++ "dental_work/DentalOperix - copia/src/server/patients/domain/patient.entity.ts"	2026-06-25 05:26:15.306546407 +0000
+@@ -1,114 +1,188 @@
+-import type { CreatePatientInput, Patient, PatientId, UpdatePatientInput } from "./patient.types";
+-import { buildDisplayName, normalizeEmail, normalizeIdentifier, normalizeName, normalizePhone, normalizePrimaryFlags } from "./patient.value-objects";
+-import { validateCreatePatientInput, validateUpdatePatientInput } from "./patient.validation";
+-
+-export function createPatientEntity(input: CreatePatientInput, options: { id?: PatientId; now?: string } = {}): Patient {
+-  const validated = validateCreatePatientInput(input);
+-  const now = options.now ?? new Date().toISOString();
+-  const id = validated.id ?? options.id ?? `patient_${Date.now()}`;
+-  const displayName = buildDisplayName(validated);
+-  const actor = validated.actor;
+-
+-  const phones = normalizePrimaryFlags(
+-    validated.phones.map((phone, index) => ({
+-      id: phone.id ?? `${id}_phone_${index + 1}`,
+-      patientId: id,
+-      phone: phone.phone,
+-      normalizedPhone: normalizePhone(phone.phone),
+-      label: phone.label,
+-      isPrimary: phone.isPrimary,
+-      status: phone.status,
+-      createdAt: now,
+-      updatedAt: now,
+-    })),
+-  );
+-
+-  const emails = normalizePrimaryFlags(
+-    validated.emails.map((email, index) => ({
+-      id: email.id ?? `${id}_email_${index + 1}`,
+-      patientId: id,
+-      email: email.email,
+-      normalizedEmail: normalizeEmail(email.email),
+-      label: email.label,
+-      isPrimary: email.isPrimary,
+-      status: email.status,
+-      createdAt: now,
+-      updatedAt: now,
+-    })),
+-  );
+-
+-  const addresses = normalizePrimaryFlags(
+-    validated.addresses.map((address, index) => ({
+-      id: address.id ?? `${id}_address_${index + 1}`,
+-      patientId: id,
+-      line1: address.line1,
+-      line2: address.line2,
+-      city: address.city,
+-      state: address.state,
+-      postalCode: address.postalCode,
+-      country: address.country,
+-      label: address.label,
+-      isPrimary: address.isPrimary,
+-      status: address.status,
+-      createdAt: now,
+-      updatedAt: now,
+-    })),
+-  );
+-
+-  const identifiers = normalizePrimaryFlags(
+-    validated.identifiers.map((identifier, index) => ({
+-      id: identifier.id ?? `${id}_identifier_${index + 1}`,
+-      patientId: id,
+-      type: identifier.type,
+-      value: identifier.value,
+-      normalizedValue: normalizeIdentifier(identifier.value),
+-      issuingAuthority: identifier.issuingAuthority,
+-      isPrimary: identifier.isPrimary,
+-      status: identifier.status,
+-      createdAt: now,
+-      updatedAt: now,
+-    })),
+-  );
+-
+-  return {
+-    id,
+-    displayName,
+-    firstName: validated.firstName,
+-    lastName: validated.lastName,
+-    secondLastName: validated.secondLastName,
+-    normalizedName: normalizeName(displayName),
+-    status: validated.status,
+-    source: validated.source,
+-    linkedLeadId: validated.linkedLeadId,
+-    linkedAppointmentId: validated.linkedAppointmentId,
+-    requiresInvoice: validated.requiresInvoice,
+-    isRetired: validated.isRetired,
+-    hasInsurance: validated.hasInsurance,
+-    createdByUserId: actor?.userId,
+-    createdByRole: actor?.role,
+-    createdVia: actor?.via ?? validated.source,
+-    createdAt: now,
+-    updatedAt: now,
+-    phones,
+-    emails,
+-    addresses,
+-    identifiers,
+-  };
+-}
+-
+-export function applyPatientUpdate(patient: Patient, input: UpdatePatientInput, now = new Date().toISOString()): Patient {
+-  const validated = validateUpdatePatientInput(input);
+-  const actor = validated.actor;
+-  const nextDisplayName = validated.displayName ?? patient.displayName;
+-
+-  return {
+-    ...patient,
+-    ...validated,
+-    displayName: nextDisplayName,
+-    normalizedName: normalizeName(nextDisplayName),
+-    updatedByUserId: actor?.userId ?? patient.updatedByUserId,
+-    updatedByRole: actor?.role ?? patient.updatedByRole,
+-    updatedVia: actor?.via ?? patient.updatedVia,
+-    updatedAt: now,
+-  };
+-}
++import type {
++  ArchivePatientInput,
++  CreatePatientAggregateOptions,
++  CreatePatientInput,
++  Patient,
++  PatientAggregateRoot,
++  PatientId,
++  UpdatePatientAggregateOptions,
++  UpdatePatientInput,
++} from "./patient.types";
++import { buildDisplayName, normalizeEmail, normalizeIdentifier, normalizeName, normalizePhone, normalizePrimaryFlags } from "./patient.value-objects";
++import { validateCreatePatientInput, validateUpdatePatientInput } from "./patient.validation";
++
++function resolveOperationTimestamp(now?: string): string {
++  return now ?? new Date().toISOString();
++}
++
++function resolvePatientId(inputId: PatientId | undefined, optionId: PatientId | undefined): PatientId {
++  return inputId ?? optionId ?? `patient_${Date.now()}`;
++}
++
++/**
++ * 73.1-B Aggregate Factory.
++ *
++ * Creates the existing Patient aggregate root without introducing a parallel
++ * Patients domain. This function remains the backward-compatible factory used
++ * by application and persistence layers.
++ */
++export function createPatientEntity(input: CreatePatientInput, options: CreatePatientAggregateOptions = {}): PatientAggregateRoot {
++  const validated = validateCreatePatientInput(input);
++  const now = resolveOperationTimestamp(options.now);
++  const id = resolvePatientId(validated.id, options.id);
++  const displayName = buildDisplayName(validated);
++  const actor = validated.actor;
++
++  const phones = normalizePrimaryFlags(
++    validated.phones.map((phone, index) => ({
++      id: phone.id ?? `${id}_phone_${index + 1}`,
++      patientId: id,
++      phone: phone.phone,
++      normalizedPhone: normalizePhone(phone.phone),
++      label: phone.label,
++      isPrimary: phone.isPrimary,
++      status: phone.status,
++      createdAt: now,
++      updatedAt: now,
++    })),
++  );
++
++  const emails = normalizePrimaryFlags(
++    validated.emails.map((email, index) => ({
++      id: email.id ?? `${id}_email_${index + 1}`,
++      patientId: id,
++      email: email.email,
++      normalizedEmail: normalizeEmail(email.email),
++      label: email.label,
++      isPrimary: email.isPrimary,
++      status: email.status,
++      createdAt: now,
++      updatedAt: now,
++    })),
++  );
++
++  const addresses = normalizePrimaryFlags(
++    validated.addresses.map((address, index) => ({
++      id: address.id ?? `${id}_address_${index + 1}`,
++      patientId: id,
++      line1: address.line1,
++      line2: address.line2,
++      city: address.city,
++      state: address.state,
++      postalCode: address.postalCode,
++      country: address.country,
++      label: address.label,
++      isPrimary: address.isPrimary,
++      status: address.status,
++      createdAt: now,
++      updatedAt: now,
++    })),
++  );
++
++  const identifiers = normalizePrimaryFlags(
++    validated.identifiers.map((identifier, index) => ({
++      id: identifier.id ?? `${id}_identifier_${index + 1}`,
++      patientId: id,
++      type: identifier.type,
++      value: identifier.value,
++      normalizedValue: normalizeIdentifier(identifier.value),
++      issuingAuthority: identifier.issuingAuthority,
++      isPrimary: identifier.isPrimary,
++      status: identifier.status,
++      createdAt: now,
++      updatedAt: now,
++    })),
++  );
++
++  return {
++    id,
++    displayName,
++    firstName: validated.firstName,
++    lastName: validated.lastName,
++    secondLastName: validated.secondLastName,
++    normalizedName: normalizeName(displayName),
++    status: validated.status,
++    source: validated.source,
++    linkedLeadId: validated.linkedLeadId,
++    linkedAppointmentId: validated.linkedAppointmentId,
++    requiresInvoice: validated.requiresInvoice,
++    isRetired: validated.isRetired,
++    hasInsurance: validated.hasInsurance,
++    createdByUserId: actor?.userId,
++    createdByRole: actor?.role,
++    createdVia: actor?.via ?? validated.source,
++    createdAt: now,
++    updatedAt: now,
++    phones,
++    emails,
++    addresses,
++    identifiers,
++  };
++}
++
++/**
++ * Semantic alias for the official aggregate factory. Kept separate from the
++ * legacy name so new domain code can express aggregate intent while existing
++ * callers remain unchanged.
++ */
++export const createPatientAggregate = createPatientEntity;
++
++/**
++ * 73.1-B Aggregate Update Operation.
++ *
++ * Applies state changes inside the Patient aggregate boundary. Boundary input
++ * validation and domain invariant collection are delegated to patient.validation
++ * so the aggregate operation only performs domain state transition assembly.
++ */
++export function applyPatientAggregateUpdate(
++  patient: PatientAggregateRoot,
++  input: UpdatePatientInput,
++  options: UpdatePatientAggregateOptions = {},
++): PatientAggregateRoot {
++  const validated = validateUpdatePatientInput(input);
++  const actor = validated.actor ?? options.actor;
++  const now = resolveOperationTimestamp(options.now);
++  const patientUpdates = Object.fromEntries(
++    Object.entries(validated).filter(([key, value]) => key !== "actor" && value !== undefined),
++  ) as Omit<UpdatePatientInput, "actor">;
++  const nextDisplayName = patientUpdates.displayName ?? patient.displayName;
++
++  return {
++    ...patient,
++    ...patientUpdates,
++    displayName: nextDisplayName,
++    normalizedName: normalizeName(nextDisplayName),
++    updatedByUserId: actor?.userId ?? patient.updatedByUserId,
++    updatedByRole: actor?.role ?? patient.updatedByRole,
++    updatedVia: actor?.via ?? patient.updatedVia,
++    updatedAt: now,
++  };
++}
++
++export function applyPatientUpdate(patient: Patient, input: UpdatePatientInput, now = new Date().toISOString()): Patient {
++  return applyPatientAggregateUpdate(patient, input, { now });
++}
++
++/**
++ * 73.1-B Aggregate Archive Operation.
++ *
++ * Archives the existing Patient aggregate by using the certified status model.
++ * This does not introduce domain events, persistence writes, repository changes,
++ * API changes, or UI behavior.
++ */
++export function archivePatientAggregate(
++  patient: PatientAggregateRoot,
++  input: ArchivePatientInput = {},
++  options: UpdatePatientAggregateOptions = {},
++): PatientAggregateRoot {
++  return applyPatientAggregateUpdate(
++    patient,
++    {
++      status: "archived",
++      actor: input.actor ?? options.actor,
++    },
++    options,
++  );
++}
++
++export const archivePatientEntity = archivePatientAggregate;
+diff -ruN "dental_original/DentalOperix - copia/src/server/patients/domain/patient.types.ts" "dental_work/DentalOperix - copia/src/server/patients/domain/patient.types.ts"
+--- "dental_original/DentalOperix - copia/src/server/patients/domain/patient.types.ts"	2026-06-25 00:42:30.000000000 +0000
++++ "dental_work/DentalOperix - copia/src/server/patients/domain/patient.types.ts"	2026-06-25 05:25:42.529166473 +0000
+@@ -1,160 +1,186 @@
+-import type {
+-  PatientActorRole,
+-  PatientContactPointStatus,
+-  PatientCreationSource,
+-  PatientIdentifierType,
+-  PatientStatus,
+-} from "./patient.enums";
+-
+-export type PatientId = string;
+-
+-export type PatientAuditActor = {
+-  userId?: string;
+-  role?: PatientActorRole;
+-  via: PatientCreationSource;
+-};
+-
+-export type PatientPhone = {
+-  id: string;
+-  patientId: PatientId;
+-  phone: string;
+-  normalizedPhone: string;
+-  label?: string;
+-  isPrimary: boolean;
+-  status: PatientContactPointStatus;
+-  createdAt: string;
+-  updatedAt: string;
+-};
+-
+-export type PatientEmail = {
+-  id: string;
+-  patientId: PatientId;
+-  email: string;
+-  normalizedEmail: string;
+-  label?: string;
+-  isPrimary: boolean;
+-  status: PatientContactPointStatus;
+-  createdAt: string;
+-  updatedAt: string;
+-};
+-
+-export type PatientAddress = {
+-  id: string;
+-  patientId: PatientId;
+-  line1: string;
+-  line2?: string;
+-  city?: string;
+-  state?: string;
+-  postalCode?: string;
+-  country?: string;
+-  label?: string;
+-  isPrimary: boolean;
+-  status: PatientContactPointStatus;
+-  createdAt: string;
+-  updatedAt: string;
+-};
+-
+-export type PatientIdentifier = {
+-  id: string;
+-  patientId: PatientId;
+-  type: PatientIdentifierType;
+-  value: string;
+-  normalizedValue: string;
+-  issuingAuthority?: string;
+-  isPrimary: boolean;
+-  status: PatientContactPointStatus;
+-  createdAt: string;
+-  updatedAt: string;
+-};
+-
+-export type Patient = {
+-  id: PatientId;
+-  displayName: string;
+-  firstName?: string;
+-  lastName?: string;
+-  secondLastName?: string;
+-  normalizedName: string;
+-  status: PatientStatus;
+-  source: PatientCreationSource;
+-  linkedLeadId?: string;
+-  linkedAppointmentId?: string;
+-  requiresInvoice: boolean;
+-  isRetired: boolean;
+-  hasInsurance: boolean;
+-  createdByUserId?: string;
+-  createdByRole?: PatientActorRole;
+-  createdVia: PatientCreationSource;
+-  updatedByUserId?: string;
+-  updatedByRole?: PatientActorRole;
+-  updatedVia?: PatientCreationSource;
+-  createdAt: string;
+-  updatedAt: string;
+-  phones: PatientPhone[];
+-  emails: PatientEmail[];
+-  addresses: PatientAddress[];
+-  identifiers: PatientIdentifier[];
+-};
+-
+-export type CreatePatientPhoneInput = {
+-  id?: string;
+-  phone: string;
+-  label?: string;
+-  isPrimary?: boolean;
+-  status?: PatientContactPointStatus;
+-};
+-
+-export type CreatePatientEmailInput = {
+-  id?: string;
+-  email: string;
+-  label?: string;
+-  isPrimary?: boolean;
+-  status?: PatientContactPointStatus;
+-};
+-
+-export type CreatePatientAddressInput = {
+-  id?: string;
+-  line1: string;
+-  line2?: string;
+-  city?: string;
+-  state?: string;
+-  postalCode?: string;
+-  country?: string;
+-  label?: string;
+-  isPrimary?: boolean;
+-  status?: PatientContactPointStatus;
+-};
+-
+-export type CreatePatientIdentifierInput = {
+-  id?: string;
+-  type: PatientIdentifierType;
+-  value: string;
+-  issuingAuthority?: string;
+-  isPrimary?: boolean;
+-  status?: PatientContactPointStatus;
+-};
+-
+-export type CreatePatientInput = {
+-  id?: PatientId;
+-  displayName?: string;
+-  firstName?: string;
+-  lastName?: string;
+-  secondLastName?: string;
+-  status?: PatientStatus;
+-  source: PatientCreationSource;
+-  linkedLeadId?: string;
+-  linkedAppointmentId?: string;
+-  requiresInvoice?: boolean;
+-  isRetired?: boolean;
+-  hasInsurance?: boolean;
+-  phones?: CreatePatientPhoneInput[];
+-  emails?: CreatePatientEmailInput[];
+-  addresses?: CreatePatientAddressInput[];
+-  identifiers?: CreatePatientIdentifierInput[];
+-  actor?: PatientAuditActor;
+-};
+-
+-export type UpdatePatientInput = Partial<
+-  Pick<Patient, "displayName" | "firstName" | "lastName" | "secondLastName" | "status" | "requiresInvoice" | "isRetired" | "hasInsurance">
+-> & {
+-  actor?: PatientAuditActor;
+-};
++import type {
++  PatientActorRole,
++  PatientContactPointStatus,
++  PatientCreationSource,
++  PatientIdentifierType,
++  PatientStatus,
++} from "./patient.enums";
++
++export type PatientId = string;
++
++export type PatientAuditActor = {
++  userId?: string;
++  role?: PatientActorRole;
++  via: PatientCreationSource;
++};
++
++export type PatientPhone = {
++  id: string;
++  patientId: PatientId;
++  phone: string;
++  normalizedPhone: string;
++  label?: string;
++  isPrimary: boolean;
++  status: PatientContactPointStatus;
++  createdAt: string;
++  updatedAt: string;
++};
++
++export type PatientEmail = {
++  id: string;
++  patientId: PatientId;
++  email: string;
++  normalizedEmail: string;
++  label?: string;
++  isPrimary: boolean;
++  status: PatientContactPointStatus;
++  createdAt: string;
++  updatedAt: string;
++};
++
++export type PatientAddress = {
++  id: string;
++  patientId: PatientId;
++  line1: string;
++  line2?: string;
++  city?: string;
++  state?: string;
++  postalCode?: string;
++  country?: string;
++  label?: string;
++  isPrimary: boolean;
++  status: PatientContactPointStatus;
++  createdAt: string;
++  updatedAt: string;
++};
++
++export type PatientIdentifier = {
++  id: string;
++  patientId: PatientId;
++  type: PatientIdentifierType;
++  value: string;
++  normalizedValue: string;
++  issuingAuthority?: string;
++  isPrimary: boolean;
++  status: PatientContactPointStatus;
++  createdAt: string;
++  updatedAt: string;
++};
++
++export type Patient = {
++  id: PatientId;
++  displayName: string;
++  firstName?: string;
++  lastName?: string;
++  secondLastName?: string;
++  normalizedName: string;
++  status: PatientStatus;
++  source: PatientCreationSource;
++  linkedLeadId?: string;
++  linkedAppointmentId?: string;
++  requiresInvoice: boolean;
++  isRetired: boolean;
++  hasInsurance: boolean;
++  createdByUserId?: string;
++  createdByRole?: PatientActorRole;
++  createdVia: PatientCreationSource;
++  updatedByUserId?: string;
++  updatedByRole?: PatientActorRole;
++  updatedVia?: PatientCreationSource;
++  createdAt: string;
++  updatedAt: string;
++  phones: PatientPhone[];
++  emails: PatientEmail[];
++  addresses: PatientAddress[];
++  identifiers: PatientIdentifier[];
++};
++
++/**
++ * Official Patients aggregate root type for 73.1-B Aggregate Alignment.
++ * This is an alias to the existing Patient model to preserve all certified
++ * application, persistence, and API contracts. Do not introduce a parallel
++ * Patients aggregate/domain model.
++ */
++export type PatientAggregateRoot = Patient;
++
++export type PatientAggregateLifecycleOperation = "create" | "update" | "archive";
++
++export type PatientAggregateOperationContext = {
++  now?: string;
++  actor?: PatientAuditActor;
++};
++
++export type CreatePatientAggregateOptions = {
++  id?: PatientId;
++  now?: string;
++};
++
++export type UpdatePatientAggregateOptions = PatientAggregateOperationContext;
++
++export type ArchivePatientInput = {
++  actor?: PatientAuditActor;
++};
++
++export type CreatePatientPhoneInput = {
++  id?: string;
++  phone: string;
++  label?: string;
++  isPrimary?: boolean;
++  status?: PatientContactPointStatus;
++};
++
++export type CreatePatientEmailInput = {
++  id?: string;
++  email: string;
++  label?: string;
++  isPrimary?: boolean;
++  status?: PatientContactPointStatus;
++};
++
++export type CreatePatientAddressInput = {
++  id?: string;
++  line1: string;
++  line2?: string;
++  city?: string;
++  state?: string;
++  postalCode?: string;
++  country?: string;
++  label?: string;
++  isPrimary?: boolean;
++  status?: PatientContactPointStatus;
++};
++
++export type CreatePatientIdentifierInput = {
++  id?: string;
++  type: PatientIdentifierType;
++  value: string;
++  issuingAuthority?: string;
++  isPrimary?: boolean;
++  status?: PatientContactPointStatus;
++};
++
++export type CreatePatientInput = {
++  id?: PatientId;
++  displayName?: string;
++  firstName?: string;
++  lastName?: string;
++  secondLastName?: string;
++  status?: PatientStatus;
++  source: PatientCreationSource;
++  linkedLeadId?: string;
++  linkedAppointmentId?: string;
++  requiresInvoice?: boolean;
++  isRetired?: boolean;
++  hasInsurance?: boolean;
++  phones?: CreatePatientPhoneInput[];
++  emails?: CreatePatientEmailInput[];
++  addresses?: CreatePatientAddressInput[];
++  identifiers?: CreatePatientIdentifierInput[];
++  actor?: PatientAuditActor;
++};
++
++export type UpdatePatientInput = Partial<
++  Pick<Patient, "displayName" | "firstName" | "lastName" | "secondLastName" | "status" | "requiresInvoice" | "isRetired" | "hasInsurance">
++> & {
++  actor?: PatientAuditActor;
++};
+diff -ruN "dental_original/DentalOperix - copia/src/server/patients/domain/patient.validation.ts" "dental_work/DentalOperix - copia/src/server/patients/domain/patient.validation.ts"
+--- "dental_original/DentalOperix - copia/src/server/patients/domain/patient.validation.ts"	2026-06-25 00:42:30.000000000 +0000
++++ "dental_work/DentalOperix - copia/src/server/patients/domain/patient.validation.ts"	2026-06-25 05:25:42.578810879 +0000
+@@ -1,148 +1,177 @@
+-import { z } from "zod";
+-import {
+-  PATIENT_ACTOR_ROLES,
+-  PATIENT_CONTACT_POINT_STATUSES,
+-  PATIENT_CREATION_SOURCES,
+-  PATIENT_IDENTIFIER_TYPES,
+-  PATIENT_STATUSES,
+-} from "./patient.enums";
+-import { PatientValidationError } from "./patient.errors";
+-
+-const optionalTrimmedString = z.string().trim().min(1).optional();
+-const requiredTrimmedString = z.string().trim().min(1);
+-
+-export const patientStatusSchema = z.enum(PATIENT_STATUSES);
+-export const patientCreationSourceSchema = z.enum(PATIENT_CREATION_SOURCES);
+-export const patientActorRoleSchema = z.enum(PATIENT_ACTOR_ROLES);
+-export const patientContactPointStatusSchema = z.enum(PATIENT_CONTACT_POINT_STATUSES);
+-export const patientIdentifierTypeSchema = z.enum(PATIENT_IDENTIFIER_TYPES);
+-
+-export const patientAuditActorSchema = z.object({
+-  userId: optionalTrimmedString,
+-  role: patientActorRoleSchema.optional(),
+-  via: patientCreationSourceSchema,
+-});
+-
+-export const createPatientPhoneInputSchema = z.object({
+-  id: optionalTrimmedString,
+-  phone: requiredTrimmedString,
+-  label: optionalTrimmedString,
+-  isPrimary: z.boolean().optional().default(false),
+-  status: patientContactPointStatusSchema.optional().default("active"),
+-});
+-
+-export const createPatientEmailInputSchema = z.object({
+-  id: optionalTrimmedString,
+-  email: z.string().trim().email().transform((value) => value.toLowerCase()),
+-  label: optionalTrimmedString,
+-  isPrimary: z.boolean().optional().default(false),
+-  status: patientContactPointStatusSchema.optional().default("active"),
+-});
+-
+-export const createPatientAddressInputSchema = z.object({
+-  id: optionalTrimmedString,
+-  line1: requiredTrimmedString,
+-  line2: optionalTrimmedString,
+-  city: optionalTrimmedString,
+-  state: optionalTrimmedString,
+-  postalCode: optionalTrimmedString,
+-  country: optionalTrimmedString,
+-  label: optionalTrimmedString,
+-  isPrimary: z.boolean().optional().default(false),
+-  status: patientContactPointStatusSchema.optional().default("active"),
+-});
+-
+-export const createPatientIdentifierInputSchema = z.object({
+-  id: optionalTrimmedString,
+-  type: patientIdentifierTypeSchema,
+-  value: requiredTrimmedString,
+-  issuingAuthority: optionalTrimmedString,
+-  isPrimary: z.boolean().optional().default(false),
+-  status: patientContactPointStatusSchema.optional().default("active"),
+-});
+-
+-export const createPatientInputSchema = z
+-  .object({
+-    id: optionalTrimmedString,
+-    displayName: optionalTrimmedString,
+-    firstName: optionalTrimmedString,
+-    lastName: optionalTrimmedString,
+-    secondLastName: optionalTrimmedString,
+-    status: patientStatusSchema.optional().default("active"),
+-    source: patientCreationSourceSchema,
+-    linkedLeadId: optionalTrimmedString,
+-    linkedAppointmentId: optionalTrimmedString,
+-    requiresInvoice: z.boolean().optional().default(false),
+-    isRetired: z.boolean().optional().default(false),
+-    hasInsurance: z.boolean().optional().default(false),
+-    phones: z.array(createPatientPhoneInputSchema).optional().default([]),
+-    emails: z.array(createPatientEmailInputSchema).optional().default([]),
+-    addresses: z.array(createPatientAddressInputSchema).optional().default([]),
+-    identifiers: z.array(createPatientIdentifierInputSchema).optional().default([]),
+-    actor: patientAuditActorSchema.optional(),
+-  })
+-  .superRefine((value, ctx) => {
+-    const hasName = Boolean(value.displayName || value.firstName || value.lastName || value.secondLastName);
+-    if (!hasName) {
+-      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["displayName"], message: "Patient name is required." });
+-    }
+-
+-    if (["web", "chat", "whatsapp"].includes(value.source) && value.emails.length === 0) {
+-      ctx.addIssue({
+-        code: z.ZodIssueCode.custom,
+-        path: ["emails"],
+-        message: "Public-channel patient creation requires at least one email.",
+-      });
+-    }
+-
+-    if (["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) && value.phones.length === 0) {
+-      ctx.addIssue({
+-        code: z.ZodIssueCode.custom,
+-        path: ["phones"],
+-        message: "Clinic/internal patient creation requires at least one phone.",
+-      });
+-    }
+-
+-    if (value.requiresInvoice && !value.identifiers.some((identifier) => identifier.type === "cid")) {
+-      ctx.addIssue({
+-        code: z.ZodIssueCode.custom,
+-        path: ["identifiers"],
+-        message: "CID identifier is required when invoice data is required.",
+-      });
+-    }
+-  });
+-
+-export const updatePatientInputSchema = z
+-  .object({
+-    displayName: optionalTrimmedString,
+-    firstName: optionalTrimmedString,
+-    lastName: optionalTrimmedString,
+-    secondLastName: optionalTrimmedString,
+-    status: patientStatusSchema.optional(),
+-    requiresInvoice: z.boolean().optional(),
+-    isRetired: z.boolean().optional(),
+-    hasInsurance: z.boolean().optional(),
+-    actor: patientAuditActorSchema.optional(),
+-  })
+-  .refine((value) => Object.keys(value).length > 0, {
+-    message: "At least one patient field must be provided for update.",
+-  });
+-
+-function validationErrorFromZod(error: z.ZodError): PatientValidationError {
+-  return new PatientValidationError(
+-    "Invalid patient data.",
+-    error.issues.map((issue) => issue.message),
+-  );
+-}
+-
+-export function validateCreatePatientInput(input: unknown) {
+-  const result = createPatientInputSchema.safeParse(input);
+-  if (!result.success) throw validationErrorFromZod(result.error);
+-  return result.data;
+-}
+-
+-export function validateUpdatePatientInput(input: unknown) {
+-  const result = updatePatientInputSchema.safeParse(input);
+-  if (!result.success) throw validationErrorFromZod(result.error);
+-  return result.data;
+-}
++import { z } from "zod";
++import {
++  PATIENT_ACTOR_ROLES,
++  PATIENT_CONTACT_POINT_STATUSES,
++  PATIENT_CREATION_SOURCES,
++  PATIENT_IDENTIFIER_TYPES,
++  PATIENT_STATUSES,
++} from "./patient.enums";
++import { PatientValidationError } from "./patient.errors";
++import type { CreatePatientInput, UpdatePatientInput } from "./patient.types";
++
++const optionalTrimmedString = z.string().trim().min(1).optional();
++const requiredTrimmedString = z.string().trim().min(1);
++
++export const patientStatusSchema = z.enum(PATIENT_STATUSES);
++export const patientCreationSourceSchema = z.enum(PATIENT_CREATION_SOURCES);
++export const patientActorRoleSchema = z.enum(PATIENT_ACTOR_ROLES);
++export const patientContactPointStatusSchema = z.enum(PATIENT_CONTACT_POINT_STATUSES);
++export const patientIdentifierTypeSchema = z.enum(PATIENT_IDENTIFIER_TYPES);
++
++export const patientAuditActorSchema = z.object({
++  userId: optionalTrimmedString,
++  role: patientActorRoleSchema.optional(),
++  via: patientCreationSourceSchema,
++});
++
++export const createPatientPhoneInputSchema = z.object({
++  id: optionalTrimmedString,
++  phone: requiredTrimmedString,
++  label: optionalTrimmedString,
++  isPrimary: z.boolean().optional().default(false),
++  status: patientContactPointStatusSchema.optional().default("active"),
++});
++
++export const createPatientEmailInputSchema = z.object({
++  id: optionalTrimmedString,
++  email: z.string().trim().email().transform((value) => value.toLowerCase()),
++  label: optionalTrimmedString,
++  isPrimary: z.boolean().optional().default(false),
++  status: patientContactPointStatusSchema.optional().default("active"),
++});
++
++export const createPatientAddressInputSchema = z.object({
++  id: optionalTrimmedString,
++  line1: requiredTrimmedString,
++  line2: optionalTrimmedString,
++  city: optionalTrimmedString,
++  state: optionalTrimmedString,
++  postalCode: optionalTrimmedString,
++  country: optionalTrimmedString,
++  label: optionalTrimmedString,
++  isPrimary: z.boolean().optional().default(false),
++  status: patientContactPointStatusSchema.optional().default("active"),
++});
++
++export const createPatientIdentifierInputSchema = z.object({
++  id: optionalTrimmedString,
++  type: patientIdentifierTypeSchema,
++  value: requiredTrimmedString,
++  issuingAuthority: optionalTrimmedString,
++  isPrimary: z.boolean().optional().default(false),
++  status: patientContactPointStatusSchema.optional().default("active"),
++});
++
++export type PatientDomainInvariantViolation = {
++  path: string[];
++  message: string;
++};
++
++export function collectCreatePatientDomainInvariantViolations(
++  value: Pick<CreatePatientInput, "displayName" | "firstName" | "lastName" | "secondLastName" | "source" | "requiresInvoice"> & {
++    emails: Array<unknown>;
++    phones: Array<unknown>;
++    identifiers: Array<{ type?: string }>;
++  },
++): PatientDomainInvariantViolation[] {
++  const violations: PatientDomainInvariantViolation[] = [];
++  const hasName = Boolean(value.displayName || value.firstName || value.lastName || value.secondLastName);
++
++  if (!hasName) {
++    violations.push({ path: ["displayName"], message: "Patient name is required." });
++  }
++
++  if (["web", "chat", "whatsapp"].includes(value.source) && value.emails.length === 0) {
++    violations.push({
++      path: ["emails"],
++      message: "Public-channel patient creation requires at least one email.",
++    });
++  }
++
++  if (["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) && value.phones.length === 0) {
++    violations.push({
++      path: ["phones"],
++      message: "Clinic/internal patient creation requires at least one phone.",
++    });
++  }
++
++  if (value.requiresInvoice && !value.identifiers.some((identifier) => identifier.type === "cid")) {
++    violations.push({
++      path: ["identifiers"],
++      message: "CID identifier is required when invoice data is required.",
++    });
++  }
++
++  return violations;
++}
++
++export function collectUpdatePatientDomainInvariantViolations(value: UpdatePatientInput): PatientDomainInvariantViolation[] {
++  if (Object.keys(value).length === 0) {
++    return [{ path: [], message: "At least one patient field must be provided for update." }];
++  }
++
++  return [];
++}
++
++export const createPatientInputSchema = z
++  .object({
++    id: optionalTrimmedString,
++    displayName: optionalTrimmedString,
++    firstName: optionalTrimmedString,
++    lastName: optionalTrimmedString,
++    secondLastName: optionalTrimmedString,
++    status: patientStatusSchema.optional().default("active"),
++    source: patientCreationSourceSchema,
++    linkedLeadId: optionalTrimmedString,
++    linkedAppointmentId: optionalTrimmedString,
++    requiresInvoice: z.boolean().optional().default(false),
++    isRetired: z.boolean().optional().default(false),
++    hasInsurance: z.boolean().optional().default(false),
++    phones: z.array(createPatientPhoneInputSchema).optional().default([]),
++    emails: z.array(createPatientEmailInputSchema).optional().default([]),
++    addresses: z.array(createPatientAddressInputSchema).optional().default([]),
++    identifiers: z.array(createPatientIdentifierInputSchema).optional().default([]),
++    actor: patientAuditActorSchema.optional(),
++  })
++  .superRefine((value, ctx) => {
++    collectCreatePatientDomainInvariantViolations(value).forEach((violation) => {
++      ctx.addIssue({ code: z.ZodIssueCode.custom, path: violation.path, message: violation.message });
++    });
++  });
++
++export const updatePatientInputSchema = z
++  .object({
++    displayName: optionalTrimmedString,
++    firstName: optionalTrimmedString,
++    lastName: optionalTrimmedString,
++    secondLastName: optionalTrimmedString,
++    status: patientStatusSchema.optional(),
++    requiresInvoice: z.boolean().optional(),
++    isRetired: z.boolean().optional(),
++    hasInsurance: z.boolean().optional(),
++    actor: patientAuditActorSchema.optional(),
++  })
++  .superRefine((value, ctx) => {
++    collectUpdatePatientDomainInvariantViolations(value).forEach((violation) => {
++      ctx.addIssue({ code: z.ZodIssueCode.custom, path: violation.path, message: violation.message });
++    });
++  });
++
++function validationErrorFromZod(error: z.ZodError): PatientValidationError {
++  return new PatientValidationError(
++    "Invalid patient data.",
++    error.issues.map((issue) => issue.message),
++  );
++}
++
++export function validateCreatePatientInput(input: unknown) {
++  const result = createPatientInputSchema.safeParse(input);
++  if (!result.success) throw validationErrorFromZod(result.error);
++  return result.data;
++}
++
++export function validateUpdatePatientInput(input: unknown) {
++  const result = updatePatientInputSchema.safeParse(input);
++  if (!result.success) throw validationErrorFromZod(result.error);
++  return result.data;
++}

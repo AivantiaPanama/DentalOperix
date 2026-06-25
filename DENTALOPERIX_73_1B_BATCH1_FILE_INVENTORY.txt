@@ -1,0 +1,10 @@
+docs/domain/patients/73.1B/DENTALOPERIX_73_1B_BATCH1_AGGREGATE_ALIGNMENT_IMPLEMENTATION_REPORT.md
+src/server/patients/domain/index.ts
+src/server/patients/domain/patient-domain-foundation.test.ts
+src/server/patients/domain/patient-persistence-port.ts
+src/server/patients/domain/patient.entity.ts
+src/server/patients/domain/patient.enums.ts
+src/server/patients/domain/patient.errors.ts
+src/server/patients/domain/patient.types.ts
+src/server/patients/domain/patient.validation.ts
+src/server/patients/domain/patient.value-objects.ts

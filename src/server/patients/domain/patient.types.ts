@@ -95,6 +95,32 @@ export type Patient = {
   identifiers: PatientIdentifier[];
 };
 
+/**
+ * Official Patients aggregate root type for 73.1-B Aggregate Alignment.
+ * This is an alias to the existing Patient model to preserve all certified
+ * application, persistence, and API contracts. Do not introduce a parallel
+ * Patients aggregate/domain model.
+ */
+export type PatientAggregateRoot = Patient;
+
+export type PatientAggregateLifecycleOperation = "create" | "update" | "archive";
+
+export type PatientAggregateOperationContext = {
+  now?: string;
+  actor?: PatientAuditActor;
+};
+
+export type CreatePatientAggregateOptions = {
+  id?: PatientId;
+  now?: string;
+};
+
+export type UpdatePatientAggregateOptions = PatientAggregateOperationContext;
+
+export type ArchivePatientInput = {
+  actor?: PatientAuditActor;
+};
+
 export type CreatePatientPhoneInput = {
   id?: string;
   phone: string;

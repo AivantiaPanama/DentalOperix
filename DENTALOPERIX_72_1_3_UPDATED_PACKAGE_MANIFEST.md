@@ -2,7 +2,7 @@
 
 ## Package Purpose
 
-Consolidated project package after documentation audit, 72.1.3-I2/I3 closure updates, I4 architecture planning record, local validation evidence summaries, source structure reconciliation, inventory refresh, and checksum refresh.
+Consolidated project package after documentation audit, 72.1.3-I4 certification, Program 72.1 closure update, Program 73 domain-discovery documentation, source structure reconciliation, inventory refresh, and checksum refresh.
 
 ## Current Baseline
 
@@ -18,7 +18,7 @@ Consolidated project package after documentation audit, 72.1.3-I2/I3 closure upd
 | 72.1.3-I1 Domain Foundation | CLOSED & CERTIFIED |
 | 72.1.3-I2 Rule Registry Infrastructure | CLOSED & CERTIFIED |
 | 72.1.3-I3 Governance Manifest Integration | CLOSED & CERTIFIED |
-| 72.1.3-I4 Manifest Validation & Compatibility Engine | APPROVED FOR IMPLEMENTATION PLANNING - CODE NOT YET AUTHORIZED |
+| 72.1.3-I4 Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED |
 
 ## Key Added/Updated Documentation
 
@@ -38,7 +38,7 @@ Consolidated project package after documentation audit, 72.1.3-I2/I3 closure upd
 - `src/governance/rule-registry`
 - `src/governance/manifest`
 
-No `src/governance/manifest-validation` implementation is included yet; I4 remains planning-only.
+`src/governance/manifest-validation` is present and certified as the read-only Manifest Validation & Compatibility Engine.
 
 ## Local Evidence Summary
 
@@ -47,10 +47,19 @@ Project-owner local evidence confirms:
 - I1/R1 consolidated typecheck/build/test: PASS, 135 Test Files / 583 Tests.
 - I2 install/build/typecheck/audit: PASS.
 - I3 install/build/typecheck/audit: PASS.
+- I4 install/build/typecheck: PASS.
 
 ## Policy Confirmation
 
 Test execution remains user-owned. Assistant deliverables include implementation artifacts, documentation, safeguards, evidence templates, and certification review based on user-submitted evidence.
+
+
+## Program 73 Transition Documentation Added
+
+- `docs/domain/patients/73.0/DENTALOPERIX_73_0_PATIENT_DOMAIN_DISCOVERY_AND_UBIQUITOUS_LANGUAGE_SPECIFICATION.md`
+- `docs/governance/domain-decisions/DENTALOPERIX_DDR_73_001_PATIENT_IDENTITY.md`
+- `docs/governance/domain-decisions/DENTALOPERIX_DOMAIN_GLOSSARY_REGISTRY_v1.md`
+- `docs/domain/patients/73.1/DENTALOPERIX_73_1_PATIENT_CORE_DOMAIN_ARCHITECTURE_READINESS.md`
 
 ## Inventory and Checksums
 
