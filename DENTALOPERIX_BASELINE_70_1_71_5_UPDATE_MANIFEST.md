@@ -218,3 +218,58 @@ npm run test -- src/routes/api/patients/create.test.ts src/routes/api/patients/u
 npm run test
 npm run build
 ```
+
+## 71.5 Documentation Audit, Closure, and 71.5.5 Start Refresh
+
+Date: 2026-06-25
+
+### Package Purpose
+
+This refresh audits the 71.5 documentation package, integrates documentation generated during the governance chat, updates increment closure states, and prepares the repository documentation for continued controlled development.
+
+### Updated Increment States
+
+```text
+71.5.1 — Patient Domain Foundation                 CLOSED / CERTIFIED
+71.5.2 — Patient Application Layer                 CLOSED / CERTIFIED
+71.5.3 — Patient Persistence                       CLOSED / CERTIFIED
+71.5.4 — Patient API Integration                   CLOSED / CERTIFIED
+71.5.5 — Patient Read Services & Query Integration IMPLEMENTATION IN PROGRESS
+```
+
+### Added / Updated Documentation
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_GOVERNANCE_CLOSURE_AND_CERTIFICATION.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_FUNCTIONAL_SPECIFICATION.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_PLAN.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_AUTHORIZATION_REVIEW.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_START.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENTATION_AUDIT_UPDATED_PACKAGE_REPORT.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
+```
+
+### Validation Evidence Integrated
+
+User-provided local validation evidence for 71.5.4:
+
+```text
+Test Files: 130 passed / 130
+Tests: 567 passed / 567
+Failed: 0
+Duration: 26.54s
+```
+
+### Governance Determination
+
+```text
+DOCUMENTATION AUDIT COMPLETED
+71.5.4 CLOSED / CERTIFIED
+71.5.5 IMPLEMENTATION IN PROGRESS
+BASELINE 69.2 REMAINS ACTIVE
+DGF v1.0 REMAINS ACTIVE
+GML-1 REMAINS ACTIVE
+CODE NOT MODIFIED BY THIS DOCUMENTATION AUDIT
+PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION AUDIT
+```

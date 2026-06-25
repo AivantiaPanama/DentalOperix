@@ -1,54 +1,55 @@
 # DENTALOPERIX 70.1 / 71.5 Package Audit Summary
 
-## Status
-UPDATED / REFRESHED
+## Audit Refresh
 
-## Date
-2026-06-25
+This package has been refreshed to integrate 71.5 chat-generated governance documentation, 71.5.4 closure evidence, and 71.5.5 implementation-start documentation.
 
 ## Active Baseline
+
 DENTALOPERIX_BASELINE_69_2
 
-## Audit Scope
-This package refresh audited the documentation package, integrated the governance and technical documentation generated during the ChatGPT-guided Program 71.5 workflow, updated closure states, and regenerated the file inventory and checksum records.
+## Governance Framework
 
-## Current Program 71.5 State
-| Increment | Status |
-|---|---|
-| 71.5.1 — Patient Domain Foundation | CLOSED / CERTIFIED |
-| 71.5.2 — Patient Application Layer | CLOSED / CERTIFIED |
-| 71.5.3 — Patient Persistence | CLOSED / CERTIFIED |
-| 71.5.4 — Patient API Integration | IN PROGRESS / PLANNING AUTHORIZED |
+DentalOperix Governance Framework (DGF v1.0), GML-1
+
+## Program Status
+
+| Increment | Name | Status |
+|---|---|---|
+| 71.5.1 | Patient Domain Foundation | CLOSED / CERTIFIED |
+| 71.5.2 | Patient Application Layer | CLOSED / CERTIFIED |
+| 71.5.3 | Patient Persistence | CLOSED / CERTIFIED |
+| 71.5.4 | Patient API Integration | CLOSED / CERTIFIED |
+| 71.5.5 | Patient Read Services & Query Integration | IMPLEMENTATION IN PROGRESS |
+
+## Latest Validation Evidence
+
+```text
+Test Files: 130 passed / 130
+Tests: 567 passed / 567
+Failures: 0
+Duration: 26.54s
+```
 
 ## Package Determination
+
 ```text
 DOCUMENTATION PACKAGE UPDATED
-GOVERNANCE STRUCTURE UPDATED
 CHAT-GENERATED DOCUMENTATION INTEGRATED
-CLOSURE STATES UPDATED
-BASELINE 69.2 REMAINS ACTIVE
-RUNTIME CODE NOT MODIFIED BY THIS DOCUMENTATION REFRESH
-PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION REFRESH
+71.5.4 CLOSED / CERTIFIED
+71.5.5 IMPLEMENTATION IN PROGRESS
+BASELINE 69.2 PRESERVED
+DGF v1.0 PRESERVED
+CODE NOT MODIFIED BY THIS DOCUMENTATION AUDIT
 ```
 
-## Key Added Documents
-- 71.5_PROGRAM_STATUS.md
-- 71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md
-- 71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
-- 71.5.1_CERTIFICATION_REPORT.md
-- 71.5.2_CERTIFICATION_REPORT.md
-- 71.5.3_CERTIFICATION_REPORT.md
-- 71.5.4_PATIENT_API_INTEGRATION_START.md
-- 71.5.4_PATIENT_API_INTEGRATION_TECHNICAL_PLAN.md
+## Key Updated Documents
 
-## Validation Evidence Integrated
-Latest consolidated chat validation:
-
-```text
-Test Files: 127 passed / 127
-Tests: 557 passed / 557
-Failed: 0
-```
-
-## Governance Determination
-The documentation package is suitable as the current updated handoff package for Program 71.5 continuation.
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENTATION_AUDIT_UPDATED_PACKAGE_REPORT.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_GOVERNANCE_CLOSURE_AND_CERTIFICATION.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_VALIDATION_EVIDENCE_130_FILES_567_TESTS.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_FUNCTIONAL_SPECIFICATION.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_PLAN.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_AUTHORIZATION_REVIEW.md`
+- `docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_START.md`
