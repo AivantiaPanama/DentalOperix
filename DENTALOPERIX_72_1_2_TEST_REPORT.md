@@ -1,21 +1,24 @@
 # DentalOperix 72.1.2 Test Report
 
-## Added Tests
-- Governance Validation Engine execution test
-- Deterministic validator ordering test
-- Evidence aggregation test
-- Empty registry NOT_APPLICABLE behavior test
-- Compliance report generator test
-- Boundary isolation test
+## Test Execution Ownership
+Per updated DentalOperix implementation policy, local test execution is performed by the project owner. The assistant reviews submitted evidence and performs governance certification.
 
-## Commands
-```bash
-npm run test:governance-engine
-npm run test
-```
+## Local Evidence Submitted
+The project owner submitted full local test execution evidence for `npm run test`.
 
-## Artifact Environment Result
-Not executed successfully in artifact runtime because Vite dependencies are unavailable in the extracted package environment.
+## Result
+PASS
 
-## Required Local Validation
-Run the commands above in the project workspace where node_modules are installed.
+## Local Suite Summary
+- Test Files: 135 passed / 135
+- Tests: 583 passed / 583
+- Duration: approximately 26 seconds
+
+## Governance Tests Confirmed
+- `src/governance/sdk/__tests__/governance-sdk-core.test.ts` PASS
+- `src/governance/sdk/__tests__/governance-sdk-boundary.test.ts` PASS
+- `src/governance/__tests__/governance-validation-engine.test.ts` PASS
+- `src/governance/__tests__/governance-validation-engine-boundary.test.ts` PASS
+
+## Notes
+Expected stderr output was present for controlled failure/fallback scenarios and did not cause test failures.

@@ -1,27 +1,29 @@
 # DentalOperix Baseline 72.1.2 Update Manifest
 
-## Increment
-72.1.2 - Governance Validation Engine
-
-## Baseline Source
+## Baseline Reference
 DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE
 
-## New Governance Capabilities
-- Validator orchestration engine
-- Deterministic validation pipeline
-- Session-based execution context
-- Execution result model
-- Compliance report generator adapter
-- Governance boundary test
+## Program State
+Program 72.1 - Governance Platform Implementation
 
-## Protected Architecture Impact
-None.
+## Certified Increments
+- 72.1.1 Governance SDK Core: CLOSED & CERTIFIED
+- 72.1.2 Governance Validation Engine: CLOSED & CERTIFIED
 
-## Source of Truth Impact
-None.
+## Added Governance Platform Capabilities
+- Governance SDK Core
+- Governance Validation Engine
+- Validator execution pipeline
+- Validation session/result aggregation
+- Compliance report generation
+- Boundary guards for SDK and engine isolation
 
-## Persistence Impact
-None.
+## Evidence
+- Project-owner local test evidence confirms 135/135 test files and 583/583 tests passed.
+- Raw evidence stored at `governance/14-evidence/72.1.2/72_1_2_LOCAL_TEST_EVIDENCE_2026_06_25.txt`.
 
-## Functional Runtime Impact
-None.
+## Restrictions Status
+No changes to protected components. No Source of Truth changes. No persistence re-architecture. No dual write. No lead replacement.
+
+## Determination
+Baseline documentation is updated to reflect 72.1.2 certification.

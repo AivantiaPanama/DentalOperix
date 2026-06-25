@@ -92,3 +92,11 @@ Added governance structure:
 - 71.5 Controlled Development start record
 
 No runtime product code was intentionally modified by this documentation update.
+
+
+## Governance Platform Status - 72.1.2 Certification
+
+- 72.1.1 Governance SDK Core: CLOSED & CERTIFIED
+- 72.1.2 Governance Validation Engine: CLOSED & CERTIFIED
+- Local evidence submitted by the project owner confirmed 135/135 test files and 583/583 tests passing.
+- Test execution evidence is user-owned for future DentalOperix increments; certification is performed after evidence review.
