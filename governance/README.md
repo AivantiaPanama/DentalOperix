@@ -27,6 +27,7 @@ source: ChatGPT governance consolidation session
 | 08-baselines | BAP-8 Baseline Evolution |
 | 09-audit | BAP-9, BAP-10, ACR, BAPC |
 | 10-metrics | Governance Metrics |
+| 11-registries | Governance Registry Layer |
 | templates | Governance templates |
 | schemas | TIF, BMS, BCRC standards |
 | scripts | Future governance-as-code scripts |
@@ -48,4 +49,5 @@ source: ChatGPT governance consolidation session
 | ACR-D | PASS |
 | ACR-E | DESIGN-LEVEL PASS / FINAL FILE INSPECTION RECOMMENDED |
 | BAPC | EXECUTED / PACKAGE UPDATED |
-| Program 72.0 | PROPOSED |
+| Program 72.0 | ACTIVE |
+| Program 72.0.1 Governance Foundation | IMPLEMENTED / PENDING CLOSURE REVIEW |
