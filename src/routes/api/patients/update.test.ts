@@ -53,7 +53,7 @@ describe("PATCH /api/patients/update", () => {
     );
 
     expect(response.status).toBe(200);
-    expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:write");
+    expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:update");
     expect(updatePatientUseCase).toHaveBeenCalledWith({ port: "patient" }, "PAT-001", { displayName: "Ana P." });
     expect(await response.json()).toEqual({ success: true, patient: { id: "PAT-001", displayName: "Ana P." } });
   });

@@ -1,0 +1,25 @@
+export type {
+  BaselineCertificationStatus,
+  BaselineDescriptor,
+  BaselineDescriptorMetadata,
+  BaselineReleaseType,
+  BaselineVersion,
+  ComplianceReport,
+  ComplianceReportSummary,
+  ComplianceRule,
+  ComplianceRuleContext,
+  ComplianceStatus,
+  GovernanceDecision,
+  RuleEvidence,
+  RuleIdentifier,
+  RuleResult,
+  RuleSeverity,
+} from "./domain";
+export type {
+  BaselineRepositoryPort,
+  ComplianceReportExporterPort,
+  ComplianceReportExportFormat,
+  ComplianceReportExportResult,
+  ComplianceRuleRegistryPort,
+  ValidationEnginePort,
+} from "./application/ports";

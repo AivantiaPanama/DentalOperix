@@ -16,7 +16,7 @@ import {
 
 export async function PATCH(request: Request) {
   try {
-    requirePermission(request, "patients:write");
+    requirePermission(request, "patients:update");
     const payload = await readJsonPayload(request);
     const { patientId, command } = parsePatientUpdatePayload(payload);
     const result = await updatePatientUseCase(createPatientPersistencePort(), patientId, command);

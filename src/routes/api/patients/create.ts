@@ -16,7 +16,7 @@ import {
 
 export async function POST(request: Request) {
   try {
-    requirePermission(request, "patients:write");
+    requirePermission(request, "patients:update");
     const payload = await readJsonPayload(request);
     const command = parsePatientCreatePayload(payload);
     const result = await createPatientUseCase(createPatientPersistencePort(), command);
