@@ -91,4 +91,27 @@ describe("DentalOperix architecture guards", () => {
     }
   });
 
+
+  it("keeps 71.5.3 Patient Persistence isolated from API, UI, Leads, and automated merge boundaries", () => {
+    const persistenceFiles = [
+      "src/server/patients/persistence/patient-persistence-mappers.ts",
+      "src/server/patients/persistence/patient-persistence-provider.ts",
+      "src/server/patients/persistence/relational-patient-persistence-adapter.ts",
+      "src/server/patients/persistence/index.ts",
+    ];
+
+    for (const file of persistenceFiles) {
+      const content = read(file);
+      expect(content).not.toContain("routes/api");
+      expect(content).not.toContain("components/");
+      expect(content).not.toContain("BookingDialog");
+      expect(content).not.toContain("FloatingDentalAIChat");
+      expect(content).not.toContain("processDentalLead");
+      expect(content).not.toContain("server/leads");
+      expect(content).not.toContain("LeadPersistencePort");
+      expect(content).not.toContain("mergePatients");
+      expect(content).not.toContain("AutomatedPatientMerge");
+    }
+  });
+
 });

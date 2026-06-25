@@ -1,5 +1,6 @@
 export * as PatientDomainFoundation from "./domain";
 export * as PatientApplicationLayer from "./application";
+export * as PatientPersistenceLayer from "./persistence";
 export * from "./patient-domain";
 export * from "./patient-repository";
 export * from "./patient-service";

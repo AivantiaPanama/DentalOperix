@@ -112,3 +112,13 @@ docs/implementation/71.0-patients-functional-development/71.5-controlled-develop
 ```
 
 This implementation is application orchestration only and does not introduce Supabase, concrete persistence adapters, API routes, UI changes, Lead changes, or automated patient merge.
+
+## 71.5.3 Patient Persistence
+
+- Status: IMPLEMENTED / PENDING EXTERNAL VALIDATION
+- Scope: PatientPersistenceProvider and RelationalPatientPersistenceAdapter.
+- Created: `src/server/patients/persistence/*`.
+- Modified: `src/server/patients/index.ts`, `src/architecture-guards.test.ts`.
+- Preserved: API, UI, Leads, Appointments, protected components, Supabase migrations.
+- Governance: Baseline 69.2 compatible; no dual write, no lead replacement, no persistence re-architecture, no RBAC bypass, no automated patient merge.
+
