@@ -10,7 +10,7 @@ DGF v1.0 ACTIVE
 GML-1 DEFINED
 GOVERNANCE MASTER INDEX APPROVED
 70.1 GOVERNANCE CONSOLIDATION CLOSED / CERTIFIED
-71.5 CONTROLLED DEVELOPMENT AUTHORIZED TO START
+71.5 CONTROLLED DEVELOPMENT ACTIVE
 ```
 
 ## Program Status
@@ -34,7 +34,10 @@ GOVERNANCE MASTER INDEX APPROVED
 71.2 PATIENTS FUNCTIONAL SPECIFICATION CLOSED / CERTIFIED
 71.3 ARCHITECTURE VALIDATION CLOSED / CERTIFIED
 71.4 IMPLEMENTATION PLANNING CLOSED / CERTIFIED
-71.5 CONTROLLED DEVELOPMENT AUTHORIZED TO START
+71.5.1 PATIENT DOMAIN FOUNDATION CLOSED / CERTIFIED
+71.5.2 PATIENT APPLICATION LAYER CLOSED / CERTIFIED
+71.5.3 PATIENT PERSISTENCE CLOSED / CERTIFIED
+71.5.4 PATIENT API INTEGRATION IN PROGRESS / PLANNING AUTHORIZED
 ```
 
 ## Certified Architectures
@@ -51,7 +54,9 @@ LeadPersistencePort
 ### Patients
 
 ```text
-PatientPersistencePort
+Patient Domain
+  -> Patient Application Layer
+  -> PatientPersistencePort
   -> PatientPersistenceProvider
   -> RelationalPatientPersistenceAdapter
   -> Supabase PostgreSQL
@@ -103,26 +108,52 @@ Always provide:
 8. Wait for explicit approval before generating code
 
 ## Active Development Increment
-71.5.2 — Patient Application Layer
+71.5.4 — Patient API Integration
 
-71.5.1 — Patient Domain Foundation is CLOSED / CERTIFIED.
+## Completed Controlled Development Increments
 
-Roadmap amendment: 71.5.2 has been reordered from Patient Persistence to Patient Application Layer. Patient Persistence is deferred to 71.5.3.
+- 71.5.1 — Patient Domain Foundation: CLOSED / CERTIFIED
+- 71.5.2 — Patient Application Layer: CLOSED / CERTIFIED
+- 71.5.3 — Patient Persistence: CLOSED / CERTIFIED
 
-Allowed:
-- Patient application services
-- Patient use cases
-- Internal application DTOs
-- Application-level mappers
-- Orchestration over PatientPersistencePort only
-- Unit tests with fake or in-memory PatientPersistencePort implementations
+## 71.5.4 Allowed Scope
 
-Excluded:
-- Concrete persistence
-- PatientPersistenceProvider
-- Supabase adapter
-- Database migrations
-- API
-- UI
+- Patient API routes
+- HTTP validation
+- Request / response DTO handling
+- Application-error to HTTP-status mapping
+- Patient API integration tests
+- Architecture guard updates
+- Evidence documentation
+
+## 71.5.4 Excluded Scope
+
+- UI components
+- BookingDialog
+- processDentalLead
+- /api/leads/create
+- Calendar
+- Gmail
+- FloatingDentalAIChat
+- Home
+- siteServices.ts
 - Leads changes
-- Protected component changes
+- Appointments changes
+- Supabase migrations
+- Automated Patient Merge
+- Dual Write
+
+## Latest Consolidated Evidence
+
+```text
+Test Files: 127 passed / 127
+Tests: 557 passed / 557
+Failed: 0
+```
+
+## Documentation Refresh
+See:
+
+- docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md
+- docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md
+- docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md

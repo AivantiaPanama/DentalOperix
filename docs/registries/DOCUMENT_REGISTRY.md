@@ -19,3 +19,12 @@ CONTROLLED RECORD / ACTIVE
 | REP-71.3-READINESS | docs/implementation/71.0-patients-functional-development/71.3-architecture-validation/DENTALOPERIX_71_3_IMPLEMENTATION_READINESS_ASSESSMENT.md | Evidence | Passed | 69.2 |
 | PLAN-71.4 | docs/implementation/71.0-patients-functional-development/71.4-implementation-planning/71_4_IMPLEMENTATION_PLANNING.md | Planning | Closed / Certified | 69.2 |
 | PLAN-71.5 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71_5_CONTROLLED_DEVELOPMENT_START.md | Planning | Authorized To Start | 69.2 |
+
+| STATUS-71.5 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md | Controlled Record | Active | 69.2 |
+| AUDIT-71.5 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md | Audit | Completed | 69.2 |
+| INDEX-71.5-CHAT | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md | Controlled Record | Active | 69.2 |
+| CERT-71.5.1 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.1_CERTIFICATION_REPORT.md | Certification | Closed / Certified | 69.2 |
+| CERT-71.5.2 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_CERTIFICATION_REPORT.md | Certification | Closed / Certified | 69.2 |
+| CERT-71.5.3 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.3_CERTIFICATION_REPORT.md | Certification | Closed / Certified | 69.2 |
+| PLAN-71.5.4 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_PATIENT_API_INTEGRATION_TECHNICAL_PLAN.md | Planning | Planning Authorized | 69.2 |
+| START-71.5.4 | docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_PATIENT_API_INTEGRATION_START.md | Planning | In Progress | 69.2 |

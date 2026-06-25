@@ -120,5 +120,59 @@ This implementation is application orchestration only and does not introduce Sup
 - Created: `src/server/patients/persistence/*`.
 - Modified: `src/server/patients/index.ts`, `src/architecture-guards.test.ts`.
 - Preserved: API, UI, Leads, Appointments, protected components, Supabase migrations.
-- Governance: Baseline 69.2 compatible; no dual write, no lead replacement, no persistence re-architecture, no RBAC bypass, no automated patient merge.
+- Governance: Baseline 69.2 compatible; no dual write, no lead replacement, no persistence re-architecture, no RBAC bypass, no automated patient merge.## 71.5 Documentation Audit Refresh
 
+Date: 2026-06-25
+
+This package refresh integrates documentation generated during the ChatGPT-governed 71.5 workflow and updates closure states.
+
+### Updated Increment States
+
+```text
+71.5.1 — Patient Domain Foundation      CLOSED / CERTIFIED
+71.5.2 — Patient Application Layer      CLOSED / CERTIFIED
+71.5.3 — Patient Persistence            CLOSED / CERTIFIED
+71.5.4 — Patient API Integration        IN PROGRESS / PLANNING AUTHORIZED
+```
+
+### Added Program 71.5 Documents
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
+```
+
+### Added 71.5.1 Documents
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.1_PATIENT_DOMAIN_FOUNDATION_IMPLEMENTATION_SUMMARY.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.1_GOVERNANCE_RETROSPECTIVE.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.1_CERTIFICATION_REPORT.md
+```
+
+### Added 71.5.2 Documents
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_PATIENT_APPLICATION_LAYER_TECHNICAL_PLAN.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_GOVERNANCE_RETROSPECTIVE.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_CERTIFICATION_REPORT.md
+```
+
+### Added 71.5.3 Documents
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.3_GOVERNANCE_RETROSPECTIVE.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.3_CERTIFICATION_REPORT.md
+```
+
+### Added 71.5.4 Documents
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_PATIENT_API_INTEGRATION_START.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_PATIENT_API_INTEGRATION_TECHNICAL_PLAN.md
+```
+
+### Governance Determination
+
+The update is documentation-only. Runtime code, database migrations, API behavior, UI components, Leads, Appointments, Google integrations, and protected components remain unchanged by this documentation refresh.

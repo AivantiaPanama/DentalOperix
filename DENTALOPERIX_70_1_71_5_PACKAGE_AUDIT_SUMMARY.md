@@ -1,31 +1,54 @@
-# DentalOperix 70.1 / 71.5 Package Audit Summary
+# DENTALOPERIX 70.1 / 71.5 Package Audit Summary
+
+## Status
+UPDATED / REFRESHED
 
 ## Date
-2026-06-24
-
-## Scope
-Documentation audit, structure update, integration of generated documents from the current governance session, state updates, and ZIP packaging.
-
-## Result
-PASSED
+2026-06-25
 
 ## Active Baseline
 DENTALOPERIX_BASELINE_69_2
 
-## Key Outcomes
+## Audit Scope
+This package refresh audited the documentation package, integrated the governance and technical documentation generated during the ChatGPT-guided Program 71.5 workflow, updated closure states, and regenerated the file inventory and checksum records.
 
-- Governance Master Index added.
-- DGF v1.0 added.
-- GML-1 added.
-- Governance master registries added.
-- 70.1 Governance Consolidation closed/certified.
-- 71.2, 71.3, 71.4, and 71.5 documentation integrated.
-- New handoff created for 70.1 / 71.5.
-- 57.9 retained as historical certified evidence.
-- No intentional runtime code changes introduced.
+## Current Program 71.5 State
+| Increment | Status |
+|---|---|
+| 71.5.1 — Patient Domain Foundation | CLOSED / CERTIFIED |
+| 71.5.2 — Patient Application Layer | CLOSED / CERTIFIED |
+| 71.5.3 — Patient Persistence | CLOSED / CERTIFIED |
+| 71.5.4 — Patient API Integration | IN PROGRESS / PLANNING AUTHORIZED |
 
-## Inventory
-See: DENTALOPERIX_70_1_71_5_UPDATED_FILE_INVENTORY.txt
+## Package Determination
+```text
+DOCUMENTATION PACKAGE UPDATED
+GOVERNANCE STRUCTURE UPDATED
+CHAT-GENERATED DOCUMENTATION INTEGRATED
+CLOSURE STATES UPDATED
+BASELINE 69.2 REMAINS ACTIVE
+RUNTIME CODE NOT MODIFIED BY THIS DOCUMENTATION REFRESH
+PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION REFRESH
+```
 
-## Checksums
-See: DENTALOPERIX_70_1_71_5_UPDATED_FILE_CHECKSUMS.sha256
+## Key Added Documents
+- 71.5_PROGRAM_STATUS.md
+- 71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md
+- 71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
+- 71.5.1_CERTIFICATION_REPORT.md
+- 71.5.2_CERTIFICATION_REPORT.md
+- 71.5.3_CERTIFICATION_REPORT.md
+- 71.5.4_PATIENT_API_INTEGRATION_START.md
+- 71.5.4_PATIENT_API_INTEGRATION_TECHNICAL_PLAN.md
+
+## Validation Evidence Integrated
+Latest consolidated chat validation:
+
+```text
+Test Files: 127 passed / 127
+Tests: 557 passed / 557
+Failed: 0
+```
+
+## Governance Determination
+The documentation package is suitable as the current updated handoff package for Program 71.5 continuation.

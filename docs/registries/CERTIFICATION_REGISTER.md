@@ -23,4 +23,9 @@ CONTROLLED RECORD / ACTIVE
 | 71.2 | CLOSED / CERTIFIED | Patients functional specification. |
 | 71.3 | CLOSED / CERTIFIED | Architecture validation passed. |
 | 71.4 | CLOSED / CERTIFIED | Implementation planning certified. |
-| 71.5 | AUTHORIZED TO START | Controlled Development enabled; first increment 71.5.1 pending implementation. |
+| 71.5 | ACTIVE | Controlled Development active; 71.5.1, 71.5.2, and 71.5.3 closed/certified; 71.5.4 in progress. |
+
+| 71.5.1 | CLOSED / CERTIFIED | Patient Domain Foundation. |
+| 71.5.2 | CLOSED / CERTIFIED | Patient Application Layer. |
+| 71.5.3 | CLOSED / CERTIFIED | Patient Persistence. |
+| 71.5.4 | IN PROGRESS / PLANNING AUTHORIZED | Patient API Integration. |
