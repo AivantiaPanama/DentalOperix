@@ -39,3 +39,16 @@ Read-only governance validation. No runtime, database, API, UI, or protected com
 - Validate ADR, RTM, TTM and baseline consistency.
 - Emit structured report with severities.
 - Execute without modifying files.
+
+## 72.1.3 Implementation Status Update - 2026-06-25
+
+The Baseline Compliance Validator implementation has started under Program 72.1.3.
+
+| Package | Status |
+|---|---|
+| 72.1.3-I1 Domain Foundation | CLOSED & CERTIFIED |
+| 72.1.3-R1 RBAC Permission Catalog Alignment | CLOSED & CERTIFIED |
+| 72.1.3-I2 Rule Registry Infrastructure | IMPLEMENTATION AUTHORIZED - NOT YET IMPLEMENTED |
+
+Final accepted local evidence for I1/R1: `npx tsc --noEmit` PASS, `npm run build` PASS, and `npm run test` PASS with 135 Test Files and 583 Tests.
+

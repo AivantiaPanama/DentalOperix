@@ -66,3 +66,17 @@ source: ChatGPT governance implementation session
 ## Governance Boundary
 
 The governance repository is a transversal layer. It does not modify certified functional architecture, runtime behavior, persistence, source-of-truth ownership, APIs, or protected UI/application components.
+
+## 72.1.3 Baseline Compliance Validator Update
+
+Current 72.1.3 documentation is available under:
+
+- `governance/13-implementation/72.1.3-baseline-compliance-validator/`
+- `governance/14-evidence/72.1.3/`
+
+Certified package states:
+
+- 72.1.3-I1 Domain Foundation: CLOSED & CERTIFIED
+- 72.1.3-R1 RBAC Permission Catalog Alignment: CLOSED & CERTIFIED
+- 72.1.3-I2 Rule Registry Infrastructure: IMPLEMENTATION AUTHORIZED - NOT YET IMPLEMENTED
+

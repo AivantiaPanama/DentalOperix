@@ -1,0 +1,622 @@
+PS C:\AIVANTIA\ClinicaDental\DentalOperix> npm run test
+
+> test
+> vitest --hookTimeout=30000 --testTimeout=30000
+
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin andset resolve.tsconfigPaths: true in your Vite config instead.
+
+ DEV  v4.1.9 C:/AIVANTIA/ClinicaDental/DentalOperix
+
+ ✓ src/components/assistant/AssistantAppointmentWorkflowCard.test.tsx (2 tests) 628ms
+     ✓ creates an appointment request, checks provider availability, and confirms when available  501ms
+ ✓ src/components/assistant/AssistantDashboard.test.tsx (3 tests) 738ms
+     ✓ opens PR-61.2-04B Lead Detail and updates status without changing Today's Schedule  307ms
+ ✓ src/components/site/BookingDialog.test.tsx (2 tests) 991ms
+     ✓ submits a selected appointment and renders the success confirmation  737ms
+ ✓ src/components/assistant/LeadQueueWidget.test.tsx (11 tests) 1504ms
+     ✓ loads and renders Leads from /api/leads/list as a read-only queue  354ms
+ ❯ src/routes/api/patients/create.test.ts (3 tests | 1 failed) 513ms
+     × creates a patient through the certified Patient Application Layer 500ms
+     ✓ rejects invalid payloads without invoking persistence 6ms
+     ✓ maps RBAC unauthorized errors to 401 4ms
+stderr | src/routes/api/leads/update-notes.test.ts > /api/leads/update-notes > returns 500 when the certified adapter fails
+Failed to update lead notes: Error: Lead not found
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/leads/update-notes.test.ts:97:34
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/leads/update-notes.test.ts (7 tests) 259ms
+ ❯ src/routes/api/patients/update.test.ts (3 tests | 1 failed) 173ms
+     × updates a patient through the certified Patient Application Layer 163ms
+     ✓ rejects empty updates 4ms
+     ✓ maps application not-found errors to 404 4ms
+stderr | src/routes/api/leads/update-status.test.ts > /api/leads/update-status > returns 500 when the certified adapter fails
+Failed to update lead status: Error: Lead not found
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/leads/update-status.test.ts:84:34
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/leads/update-status.test.ts (6 tests) 139ms
+stderr | src/routes/api/followups/history.test.ts > /api/followups/history > returns degraded empty history when automation records are unavailable
+{"timestamp":"2026-06-25T03:46:44.376Z","level":"error","scope":"followups.history","message":"Failed to load automation history; returning degraded empty history","metadata":{"error":"Sheets unavailable"}}
+
+ ✓ src/routes/api/followups/history.test.ts (3 tests) 120ms
+ ✓ src/routes/api/leads/list.test.ts (2 tests) 97ms
+ ✓ src/routes/api/calendar/create-event.test.ts (2 tests) 104ms
+[tanstack-router] These exports from "C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/admin/dashboard.tsx" will not be code-split and will increase your bundle size:
+- DashboardPage
+For the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.
+ ✓ src/routes/api/patients/search.test.ts (3 tests) 126ms
+ ✓ src/routes/api/patients/$id.test.ts (3 tests) 145ms
+ ✓ src/routes/api/gmail/send-confirmation.test.ts (2 tests) 95ms
+ ✓ src/routes/api/patients/list.test.ts (2 tests) 98ms
+ ✓ src/components/assistant/PatientManagementWorkspace.integration.test.tsx (3 tests) 270ms
+ ✓ src/server/audit/operational-audit.test.ts (3 tests) 53ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardFinalGovernanceClosurePack.test.tsx (8 tests) 66ms
+ ✓ src/routes/api/internal/executive-observability/-handler.test.ts (2 tests) 61ms
+stderr | src/tests/dashboard.integration.test.tsx                                                                                                                      
+[tanstack-router] These exports from "C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/admin/dashboard.tsx" will not be code-split and will increase your bundle size:
+- DashboardPage                                                                                                                                                        
+For the best optimization, these items should either have their export statements removed, or be imported from another location that is not a route file.              
+                                                                                                                                                                       
+stderr | src/tests/dashboard.integration.test.tsx > DashboardPage integration > renders average lead score, hot/warm/cold leads and forecast KPIs
+Falling back to localStorage for goal settings: [TypeError: Failed to parse URL from /api/goals/get] {
+  [cause]: TypeError: Invalid URL
+      at new URL (node:internal/url:819:25)
+      at new URL (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/vitest/dist/chunks/index.DC7d2Pf8.js:557:2)
+      at new Request (node:internal/deps/undici/undici:11832:25)
+      at fetch (node:internal/deps/undici/undici:12757:25)
+      at fetch (node:internal/deps/undici/undici:17407:10)
+      at fetch (node:internal/bootstrap/web/exposed-window-or-worker:83:12)
+      at loadGoalSettingsFromSheet (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:62:26)
+      at loadGoalSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:100:28)
+      at loadSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/admin/dashboard.tsx:185:30)
+      at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/admin/dashboard.tsx:191:5 {
+    code: 'ERR_INVALID_URL',
+    input: '/api/goals/get'
+  }
+}
+
+stderr | src/tests/dashboard.integration.test.tsx > DashboardPage integration > renders average lead score, hot/warm/cold leads and forecast KPIs
+The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+
+ ✓ src/tests/dashboard.integration.test.tsx (1 test) 640ms
+     ✓ renders average lead score, hot/warm/cold leads and forecast KPIs  638ms
+ ✓ src/routes/api/appointments/appointment-routes.test.ts (4 tests) 56ms
+stderr | src/routes/api/analytics/executive.test.ts > /api/analytics/executive endpoint > returns a degraded empty executive snapshot instead of 500 when the analytics source fails                                                                                                                                                          
+Executive Analytics source unavailable; returning degraded empty snapshot: Error: Google Sheets unavailable                                                            
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/analytics/executive.test.ts:110:33                                                                        
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11                                                        
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26                                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20                                                       
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/analytics/executive.test.ts (3 tests) 65ms
+ ✓ src/lib/patient-followup-engine.test.ts (10 tests) 37ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardControlledActivationPack.test.tsx (8 tests) 63ms
+stderr | src/routes/api/analytics/revenue.test.ts > /api/analytics/revenue endpoint > returns a degraded empty snapshot instead of 500 when the analytics source fails 
+Revenue Intelligence source unavailable; returning degraded empty snapshot: Error: Google Sheets unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/analytics/revenue.test.ts:139:33
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/analytics/revenue.test.ts (4 tests) 86ms                                                                                                             
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardReleaseCandidatePack.test.tsx (8 tests) 62ms
+ ✓ src/server/reporting/operational-analytics.test.ts (4 tests) 48ms
+ ✓ src/components/assistant/TodayScheduleWidget.test.tsx (3 tests) 65ms
+ ✓ src/routes/api/admin/login.test.ts (6 tests) 73ms
+ ✓ src/routes/api/admin/logout.test.ts (1 test) 36ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardProductionReadinessPack.test.tsx (7 tests) 41ms
+stderr | src/routes/api/crm/metrics.test.ts > /api/crm/metrics endpoint > returns degraded empty CRM metrics when Google Sheets is unavailable
+Failed to load CRM metrics; returning degraded empty CRM metrics: Error: Sheets unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/crm/metrics.test.ts:130:33
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/crm/metrics.test.ts (4 tests) 64ms                                                                                                                   
+stderr | src/routes/api/analytics/clinical.test.ts > /api/analytics/clinical endpoint > returns a controlled 500 when clinical read source fails
+Failed to load Clinical Intelligence snapshot: Error: Read model unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/analytics/clinical.test.ts:89:42
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/analytics/clinical.test.ts (2 tests) 69ms                                                                                                            
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardAdminRouteIntegrationPack.test.tsx (7 tests) 56ms
+ ✓ src/routes/api/leads/create.test.ts (2 tests) 60ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardRuntimeConsumptionPack.test.tsx (7 tests) 58ms
+ ✓ src/server/read-models/patient-aggregate-read-service.test.ts (9 tests) 30ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardRuntimeWiringPack.test.tsx (6 tests) 46ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardActivationPack.test.tsx (6 tests) 37ms
+ ✓ src/server/read-models/executive-dashboard-data-client-design.test.ts (6 tests) 17ms
+ ✓ src/lib/patients/admin-profile.test.ts (6 tests) 40ms
+ ✓ src/routes/api/analytics/revenue-forecast.test.ts (2 tests) 60ms
+ ✓ src/components/admin/executive-dashboard/ExecutiveDashboardUiImplementationPack.test.tsx (6 tests) 41ms
+ ✓ src/governance/__tests__/governance-validation-engine.test.ts (4 tests) 26ms
+stderr | src/lib/google/google.server.test.ts > sendConfirmationEmail > does not fail clinic delivery when Gmail cannot mark a self-notification as inbox/unread       
+Clinic self-notification was sent but could not be marked as inbox/unread: Error: Insufficient Permission
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/google/google.server.test.ts:114:34
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+stdout | src/lib/google/google.server.test.ts > createGoogleCalendarEvent > creates the clinic calendar event without sending duplicate Calendar API emails            
+CALENDAR EVENT: {                                                                                                                                                      
+  id: 'event-123',                                                                                                                                                     
+  htmlLink: 'https://calendar.example/event/123',                                                                                                                      
+  calendarId: 'primary',                                                                                                                                               
+  start: {},                                                                                                                                                           
+  end: {}                                                                                                                                                              
+}                                                                                                                                                                      
+                                                                                                                                                                       
+ ✓ src/lib/google/google.server.test.ts (3 tests) 35ms                                                                                                                 
+ ✓ src/server/read-models/crm-read-aggregate-service.test.ts (3 tests) 25ms
+stderr | src/lib/goal-config.test.ts > goal config > loads default settings when localStorage is empty
+Falling back to localStorage for goal settings: TypeError: Cannot read properties of undefined (reading 'ok')
+    at loadGoalSettingsFromSheet (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:63:17)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at loadGoalSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:100:22)
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:73:12
+
+stderr | src/lib/goal-config.test.ts > goal config > saves and loads custom goal settings from localStorage
+Failed to save goals to sheet, persisting locally instead: TypeError: Cannot read properties of undefined (reading 'ok')
+    at saveGoalSettingsToSheet (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:84:17)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at saveGoalSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:113:5)
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:84:5
+
+stderr | src/lib/goal-config.test.ts > goal config > saves and loads custom goal settings from localStorage
+Falling back to localStorage for goal settings: TypeError: Cannot read properties of undefined (reading 'ok')
+    at loadGoalSettingsFromSheet (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:63:17)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at loadGoalSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:100:22)
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:85:12
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+
+stderr | src/lib/goal-config.test.ts > goal config > falls back to defaults when stored data is invalid JSON
+Falling back to localStorage for goal settings: TypeError: Cannot read properties of undefined (reading 'ok')
+    at loadGoalSettingsFromSheet (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:63:17)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at loadGoalSettings (C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.ts:100:22)
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:90:12
+
+stderr | src/lib/goal-config.test.ts > goal config > falls back to localStorage when sheet load fails
+Falling back to localStorage for goal settings: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:135:7
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+stderr | src/lib/goal-config.test.ts > goal config > falls back to default settings when sheet and localStorage both fail
+Falling back to localStorage for goal settings: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:144:7
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+stderr | src/lib/goal-config.test.ts > goal config > persists to localStorage when sheet save fails
+Failed to save goals to sheet, persisting locally instead: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/goal-config.test.ts:180:7
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/lib/goal-config.test.ts (11 tests) 20ms                                                                                                                         
+ ✓ src/server/patients/persistence/relational-patient-persistence-adapter.test.ts (6 tests) 19ms
+ ✓ src/server/notifications/operational-notifications.test.ts (3 tests) 28ms
+stderr | src/routes/api/goals.test.ts > /api/goals > returns safe default goals when sheet load fails
+Goal settings sheet unavailable; returning default goal configuration: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/goals.test.ts:41:49
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+stderr | src/routes/api/goals.test.ts > /api/goals > returns 500 when sheet save fails
+Failed to save goal settings to sheet: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/routes/api/goals.test.ts:90:48
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/routes/api/goals.test.ts (5 tests) 38ms                                                                                                                         
+ ✓ src/components/site/FloatingDentalAIChat.test.ts (32 tests) 31ms
+ ✓ src/governance/__tests__/governance-validation-engine-boundary.test.ts (1 test) 26ms
+ ✓ src/server/read-models/executive-dashboard-render-contract-design.test.ts (7 tests) 16ms
+ ✓ src/server/patients/application/patient-application-layer.test.ts (8 tests) 24ms
+ ✓ src/server/read-models/executive-dashboard-ui-foundation-pack.test.ts (7 tests) 26ms
+ ✓ src/routes/admin/-dashboard.test.tsx (5 tests) 26ms
+stdout | src/lib/api/dental.server.test.ts > processDentalLead > uses service as treatment when treatment is missing and processes calendar/email flow
+LEAD PAYLOAD: {
+  appointmentId: 'dental_1782359216643',
+  name: 'Lucía',
+  email: 'lucia@example.com',
+  phone: '+507 60000000',
+  service: 'limpieza',
+  treatment: undefined,
+  date: '2026-06-25',
+  time: '14:30',
+  preferredDate: undefined,
+  notes: undefined,
+  source: 'chat-widget'
+}
+LEAD RECORD: {
+  id: 'dental_1782359216643',
+  name: 'Lucía',
+  email: 'lucia@example.com',
+  phone: '+507 60000000',
+  treatment: 'limpieza',
+  message: undefined,
+  urgency: 'media',
+  preferredDate: '2026-06-25 14:30',
+  status: 'nuevo',
+  source: 'chat-widget',
+  aiSummary: '',
+  calendarEventId: '',
+  emailSent: false
+}
+
+stdout | src/lib/api/dental.server.test.ts > processDentalLead > prefers payload.treatment over payload.service when treatment exists
+LEAD PAYLOAD: {
+  appointmentId: 'dental_1782359216657',
+  name: 'Javier',
+  email: 'javier@example.com',
+  phone: '+507 61111111',
+  service: 'implante',
+  treatment: 'implante dental',
+  date: '2026-06-26',
+  time: '11:00',
+  preferredDate: undefined,
+  notes: undefined,
+  source: 'chat-widget'
+}
+LEAD RECORD: {
+  id: 'dental_1782359216657',
+  name: 'Javier',
+  email: 'javier@example.com',
+  phone: '+507 61111111',
+  treatment: 'implante dental',
+  message: undefined,
+  urgency: 'media',
+  preferredDate: '2026-06-26 11:00',
+  status: 'nuevo',
+  source: 'chat-widget',
+  aiSummary: '',
+  calendarEventId: '',
+  emailSent: false
+}
+
+stdout | src/lib/api/dental.server.test.ts > processDentalLead > keeps lead/calendar success but marks email delivery incomplete when patient notification fails       
+LEAD PAYLOAD: {
+  appointmentId: 'dental_1782359216660',
+  name: 'Paciente Externo',
+  email: 'paciente@external.example',
+  phone: '+507 65555555',
+  service: 'limpieza',
+  treatment: undefined,
+  date: '2026-06-29',
+  time: '09:00',
+  preferredDate: undefined,
+  notes: undefined,
+  source: 'web-form'
+}
+LEAD RECORD: {
+  id: 'dental_1782359216660',
+  name: 'Paciente Externo',
+  email: 'paciente@external.example',
+  phone: '+507 65555555',
+  treatment: 'limpieza',
+  message: undefined,
+  urgency: 'media',
+  preferredDate: '2026-06-29 09:00',
+  status: 'nuevo',
+  source: 'web-form',
+  aiSummary: '',
+  calendarEventId: '',
+  emailSent: false
+}
+
+stderr | src/lib/api/dental.server.test.ts > processDentalLead > keeps lead/calendar success but marks email delivery incomplete when patient notification fails       
+Error enviando correo Gmail: Error: One or more booking notification emails failed.                                                                                    
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/lib/api/dental.server.test.ts:146:21                                                                                 
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11                                                        
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26                                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64 {
+  delivery: { patientEmailSent: false, clinicEmailSent: true }
+}
+
+ ✓ src/lib/api/dental.server.test.ts (4 tests) 30ms
+ ✓ src/lib/executive-analytics.test.ts (2 tests) 32ms
+ ✓ src/server/users/user-repository.test.ts (5 tests) 18ms
+ ✓ src/architecture-guards.test.ts (8 tests) 19ms
+stderr | src/server/read-models/read-model-source-provider.test.ts > read model source provider > falls back to legacy Leads patients when read model access fails     
+Test Consumer read model pilot fell back to legacy Leads source: Error: sheet unavailable                                                                              
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/server/read-models/read-model-source-provider.test.ts:268:58                                                         
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11                                                        
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26                                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/server/read-models/read-model-source-provider.test.ts (7 tests) 21ms
+ ✓ src/server/appointments/appointment-service.test.ts (2 tests) 22ms
+ ✓ src/server/read-models/executive-dashboard-component-design.test.ts (7 tests) 15ms
+ ✓ src/lib/admin-auth.server.test.ts (12 tests) 15ms
+ ✓ src/server/read-models/executive-dashboard-api-contracts.test.ts (4 tests) 16ms
+ ✓ src/server/read-models/executive-dashboard-api-readiness.test.ts (5 tests) 14ms
+stderr | src/server/kpis/read-source.test.ts > operational KPIs read source > falls back to legacy Leads patients when read model access fails                         
+Operational Analytics read model pilot fell back to legacy Leads source: Error: sheet unavailable                                                                      
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/server/kpis/read-source.test.ts:72:58                                                                                
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11                                                        
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26                                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)                                       
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20                                                       
+    at new Promise (<anonymous>)                                                                                                                                       
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/server/kpis/read-source.test.ts (3 tests) 16ms                                                                                                                  
+ ✓ src/server/read-models/read-observability-hardening.test.ts (3 tests) 14ms
+ ✓ src/components/admin/GoalRiskPanel.integration.test.tsx (2 tests) 31ms
+ ✓ src/server/read-models/executive-dashboard-integration-boundary-design.test.ts (6 tests) 13ms
+stderr | src/server/reporting/read-source.test.ts > reporting read source > falls back to legacy Leads patients when read model access fails
+Reporting read model pilot fell back to legacy Leads source: Error: sheet unavailable
+    at C:/AIVANTIA/ClinicaDental/DentalOperix/src/server/reporting/read-source.test.ts:72:58
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///C:/AIVANTIA/ClinicaDental/DentalOperix/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+ ✓ src/server/reporting/read-source.test.ts (3 tests) 11ms                                                                                                             
+ ✓ src/server/read-models/executive-dashboard-access-model.test.ts (6 tests) 15ms
+ ✓ src/server/google/calendar.test.ts (1 test) 13ms
+stdout | src/lib/analytics.test.ts > analytics track > does not throw for valid events
+[analytics] chat_started {}
+
+stdout | src/lib/analytics.test.ts > analytics track > dispatches a CustomEvent with the correct payload
+[analytics] whatsapp_clicked { source: 'whatsapp' }
+
+stdout | src/lib/analytics.test.ts > analytics track > supports booking_completed and booking_failed events
+[analytics] booking_completed { source: 'chat-widget', serviceId: 'ortodoncia', urgency: 'alta' }
+[analytics] booking_failed {
+  source: 'chat-widget',
+  serviceId: 'ortodoncia',
+  urgency: 'alta',
+  error: 'network failure'
+}
+
+ ✓ src/lib/analytics.test.ts (4 tests) 21ms
+ ✓ src/server/read-models/executive-dashboard-ui-architecture.test.ts (6 tests) 13ms
+ ✓ src/components/admin/RoleWorkspaceLayout.test.tsx (1 test) 18ms
+ ✓ src/components/admin/GoalRiskPanel.test.tsx (2 tests) 22ms
+ ✓ src/server/read-models/executive-dashboard-api-service.test.ts (4 tests) 13ms
+ ✓ src/server/read-models/executive-dashboard-ui-readiness.test.ts (5 tests) 9ms
+ ✓ src/server/appointments/relational-appointment-repository.test.ts (2 tests) 11ms
+ ✓ src/server/patients/read/patient-read-service.test.ts (5 tests) 18ms
+ ✓ src/server/patients/patient-identity-resolution.test.ts (3 tests) 17ms
+ ✓ src/server/patients/patient-service.test.ts (3 tests) 11ms
+ ✓ src/server/patients/domain/patient-domain-foundation.test.ts (6 tests) 25ms
+ ✓ src/server/users/user-domain.test.ts (4 tests) 9ms
+ ✓ src/server/read-models/executive-dashboard-contracts.test.ts (4 tests) 13ms
+ ✓ src/server/read-models/read-observability-provider.test.ts (2 tests) 16ms
+ ✓ src/lib/crm-metrics.test.ts (9 tests) 13ms
+ ✓ src/lib/revenue-intelligence.test.ts (4 tests) 14ms
+ ✓ src/lib/api/revenue-dashboard-metrics.test.ts (3 tests) 9ms
+ ✓ src/governance/sdk/__tests__/governance-sdk-core.test.ts (6 tests) 17ms
+ ✓ src/server/read-models/executive-observability-provider.test.ts (4 tests) 8ms
+ ✓ src/server/read-models/executive-observability-hardening.test.ts (4 tests) 10ms
+ ✓ src/governance/sdk/__tests__/governance-sdk-boundary.test.ts (1 test) 10ms
+ ✓ src/server/google/gmail.test.ts (1 test) 8ms
+ ✓ src/server/leads/persistence/lead-persistence-provider.test.ts (5 tests) 15ms
+ ✓ src/server/patients/patient-domain.test.ts (5 tests) 9ms
+ ✓ src/server/appointments/availability-service.test.ts (4 tests) 10ms
+ ✓ src/lib/revenue-forecast.test.ts (2 tests) 12ms
+ ✓ src/lib/recommendation-engine.test.ts (8 tests) 10ms
+ ✓ src/server/read-models/finance-read-aggregate-service.test.ts (3 tests) 7ms
+ ✓ src/server/read-models/executive-dashboard-internal-api-closure.test.ts (3 tests) 8ms
+ ✓ src/server/users/relational-user-repository.test.ts (3 tests) 14ms
+ ✓ src/server/read-models/billing-read-aggregate-service.test.ts (4 tests) 13ms
+ ✓ src/server/appointments/appointment-domain.test.ts (3 tests) 14ms
+ ✓ src/server/read-models/operations-read-aggregate-service.test.ts (3 tests) 9ms
+ ✓ src/lib/utils/date-format.test.ts (4 tests) 8ms
+ ✓ src/server/data-quality/operational-data-quality.test.ts (3 tests) 8ms
+ ✓ src/lib/date-filters.test.ts (7 tests) 7ms
+ ✓ src/server/read-models/support-read-aggregate-service.test.ts (3 tests) 6ms
+ ✓ src/lib/business-health.test.ts (6 tests) 12ms
+ ✓ src/server/read-models/inventory-read-aggregate-service.test.ts (3 tests) 8ms
+ ✓ src/server/google/goals.test.ts (2 tests) 6ms
+ ✓ src/server/read-models/patient-read-adapter.test.ts (2 tests) 7ms
+ ✓ src/server/read-models/clinical-read-aggregate-service.test.ts (4 tests) 8ms
+ ✓ src/lib/goal-engine.test.ts (4 tests) 7ms
+ ✓ src/server/read-models/patient-contact-read-adapter.test.ts (2 tests) 10ms
+ ✓ src/server/read-models/patient-identifier-read-adapter.test.ts (2 tests) 6ms
+ ✓ src/server/leads/persistence/relational-leads-schema.test.ts (2 tests) 6ms
+ ✓ src/server/users/relational-users-schema.test.ts (2 tests) 6ms
+ ✓ src/server/read-models/inventory-read-domain-closure.test.ts (2 tests) 8ms
+ ✓ src/server/patients/relational-patients-schema.test.ts (3 tests) 7ms
+ ✓ src/lib/rbac/rbac-pr3.test.ts (5 tests) 8ms
+ ✓ src/server/read-models/support-read-domain-closure.test.ts (2 tests) 8ms
+ ✓ src/lib/dashboard-routing.test.ts (8 tests) 12ms
+ ✓ src/lib/text-normalization.test.ts (3 tests) 6ms
+ ✓ src/server/read-models/patient-administrative-profile-read-adapter.test.ts (2 tests) 6ms
+ ✓ src/server/read-models/finance-read-domain-closure.test.ts (2 tests) 6ms
+ ✓ src/lib/lead-scoring.test.ts (3 tests) 7ms
+ ✓ src/lib/clinical-intelligence.test.ts (2 tests) 5ms
+ ✓ src/lib/logger.server.test.ts (1 test) 8ms
+ ✓ src/server/patients/persistence/patient-persistence-provider.test.ts (3 tests) 4ms
+ ✓ src/components/admin/GoalSettingsPanel.test.tsx (1 test) 4ms
+ ✓ src/server/kpis/operational-kpis.test.ts (1 test) 4ms
+stdout | src/routes/api/followups/run.test.ts > /api/followups/run > returns summary and actions in dryRun mode by default
+{"timestamp":"2026-06-25T03:47:07.468Z","level":"info","scope":"followups.run","message":"Followup run completed","metadata":{"dryRun":true,"generated":1,"sent":0,"skipped":1,"failed":0,"status":"success"}}
+
+stdout | src/routes/api/followups/run.test.ts > /api/followups/run > allows real runs with explicit confirmation
+{"timestamp":"2026-06-25T03:47:07.474Z","level":"info","scope":"followups.run","message":"Followup run completed","metadata":{"dryRun":false,"generated":1,"sent":1,"skipped":0,"failed":0,"status":"success"}}
+
+stderr | src/routes/api/followups/run.test.ts > /api/followups/run > returns error when followup execution throws                                                      
+{"timestamp":"2026-06-25T03:47:07.479Z","level":"error","scope":"followups.run","message":"Error running followups","metadata":{"error":"fail"}}                       
+                                                                                                                                                                       
+ ✓ src/routes/api/followups/run.test.ts (6 tests) 1331ms
+     ✓ returns summary and actions in dryRun mode by default  1320ms
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/routes/api/patients/create.test.ts > POST /api/patients/create > creates a patient through the certified Patient Application Layer
+AssertionError: expected "vi.fn()" to be called with arguments: [ Any<Request>, 'patients:write' ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   Any<Request>,
+-   "patients:write",
++   Request {},
++   "patients:update",
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/routes/api/patients/create.test.ts:74:31
+     72|
+     73|     expect(response.status).toBe(201);
+     74|     expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:write");
+       |                               ^
+     75|     expect(createPatientPersistencePort).toHaveBeenCalledTimes(1);
+     76|     expect(createPatientUseCase).toHaveBeenCalledWith({ port: "patient" }, { displayName: "Ana Perez", source: "admin" });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/routes/api/patients/update.test.ts > PATCH /api/patients/update > updates a patient through the certified Patient Application Layer
+AssertionError: expected "vi.fn()" to be called with arguments: [ Any<Request>, 'patients:write' ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+-   Any<Request>,
+-   "patients:write",
++   Request {},
++   "patients:update",
+  ]
+
+
+Number of calls: 1
+
+ ❯ src/routes/api/patients/update.test.ts:56:31
+     54|
+     55|     expect(response.status).toBe(200);
+     56|     expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:write");
+       |                               ^
+     57|     expect(updatePatientUseCase).toHaveBeenCalledWith({ port: "patient" }, "PAT-001", { displayName: "Ana P." });
+     58|     expect(await response.json()).toEqual({ success: true, patient: { id: "PAT-001", displayName: "Ana P." } });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 133 passed (135)
+      Tests  2 failed | 581 passed (583)
+   Start at  22:46:36
+   Duration  30.91s (transform 7.72s, setup 0ms, import 49.45s, tests 10.64s, environment 19.49s)
+
+ FAIL  Tests failed. Watching for file changes...
+       press h to show help, press q to quit
