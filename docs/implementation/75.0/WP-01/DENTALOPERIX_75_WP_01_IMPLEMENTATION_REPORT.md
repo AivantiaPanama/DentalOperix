@@ -3,7 +3,7 @@
 **Program:** 75.x Controlled Implementation  
 **Work Package:** WP-01 Clinical Record Foundation  
 **Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE  
-**Status:** Implementation generated; validation evidence pending user execution.
+**Status:** CLOSED AND CERTIFIED. User validation evidence received: build PASS and TypeScript PASS.
 
 ## Document Baseline
 
@@ -51,13 +51,13 @@ The implementation follows `docs/implementation/75.0/WP-01/DENTALOPERIX_75_WP_01
 
 ## Validation Policy
 
-No tests were executed by the assistant. User-owned validation remains pending:
+No tests were executed by the assistant. User-owned validation was provided in chat and recorded as:
 
 ```bash
 npm run build
-npx tsc --noEmit
+npx tsc
 ```
 
 ## Evidence Status
 
-Pending user execution and upload of build/typecheck evidence.
+Evidence received from user: `npm run build` completed successfully and `npx tsc` completed without reported errors.

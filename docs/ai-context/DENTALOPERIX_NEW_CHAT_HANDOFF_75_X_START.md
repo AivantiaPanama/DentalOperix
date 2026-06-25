@@ -11,7 +11,7 @@
 
 - Program 72.1: Closed and certified.
 - Program 73.x: Closed and certified.
-- Program 74.x: Closed and recommended for certification.
+- Program 74.x: Closed and certified.
 - Program 75.x: Initiated for Controlled Implementation.
 
 ### Active Baseline
@@ -50,7 +50,7 @@ WP-01 Clinical Record Foundation.
 
 ### WP-01 Status
 
-Pre-implementation review complete. Implementation requires explicit user authorization.
+Closed and certified. User validation evidence received: build PASS and TypeScript PASS.
 
 ### Mandatory Before Code
 
@@ -72,3 +72,13 @@ npx tsc --noEmit
 ```
 
 and provides evidence for certification.
+
+
+## Chat Update - WP-01 Closure
+
+The assistant performed the WP-01 pre-implementation review, generated the controlled implementation package after explicit user authorization, and did not execute tests automatically. The user executed local validation and provided successful evidence for `npm run build` and `npx tsc`.
+
+Current status:
+
+- WP-01 Clinical Record Foundation: CLOSED AND CERTIFIED.
+- WP-02 Clinical Encounter: pending review; implementation not started.

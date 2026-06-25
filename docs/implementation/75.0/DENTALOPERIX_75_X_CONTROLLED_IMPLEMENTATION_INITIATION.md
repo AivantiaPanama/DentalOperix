@@ -30,8 +30,8 @@ Implement the Clinical Records domain through controlled, traceable Work Package
 
 | WP | Name | Status |
 |---|---|---|
-| WP-01 | Clinical Record Foundation | Pre-implementation reviewed; implementation not yet authorized in this package |
-| WP-02 | Clinical Encounter | Pending |
+| WP-01 | Clinical Record Foundation | Closed and Certified |
+| WP-02 | Clinical Encounter | Pending architectural review; not started |
 | WP-03 | Clinical Notes | Pending |
 | WP-04 | Clinical Findings | Pending |
 | WP-05 | Diagnosis | Pending |
@@ -52,3 +52,15 @@ The following remain out of scope unless formally authorized by future governanc
 - FloatingDentalAIChat
 - Home
 - siteServices.ts
+
+
+## Current Closure Update - 2026-06-25
+
+WP-01 Clinical Record Foundation was authorized, implemented, user-validated, and certified.
+
+User-provided validation evidence:
+
+- `npm run build`: PASS.
+- `npx tsc`: PASS.
+
+WP-02 must not start implementation until its own document rector is reviewed and explicit user authorization is provided.
