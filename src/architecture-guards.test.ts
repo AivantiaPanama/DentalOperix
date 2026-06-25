@@ -114,4 +114,29 @@ describe("DentalOperix architecture guards", () => {
     }
   });
 
+
+  it("keeps 71.5.4 Patient API Integration routed through application and persistence provider boundaries", () => {
+    const patientApiFiles = [
+      "src/routes/api/patients/create.ts",
+      "src/routes/api/patients/update.ts",
+      "src/routes/api/patients/search.ts",
+    ];
+
+    for (const file of patientApiFiles) {
+      const content = read(file);
+      expect(content).toContain("@/server/patients/application");
+      expect(content).toContain("@/server/patients/persistence");
+      expect(content).not.toContain("@/server/patients/persistence/relational-patient-persistence-adapter");
+      expect(content).not.toContain("supabase");
+      expect(content).not.toContain("server/leads");
+      expect(content).not.toContain("routes/api/leads");
+      expect(content).not.toContain("LeadPersistencePort");
+      expect(content).not.toContain("BookingDialog");
+      expect(content).not.toContain("FloatingDentalAIChat");
+      expect(content).not.toContain("processDentalLead");
+      expect(content).not.toContain("mergePatients");
+      expect(content).not.toContain("AutomatedPatientMerge");
+    }
+  });
+
 });

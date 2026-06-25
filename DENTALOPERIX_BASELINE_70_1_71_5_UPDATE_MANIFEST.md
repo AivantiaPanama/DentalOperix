@@ -176,3 +176,45 @@ docs/implementation/71.0-patients-functional-development/71.5-controlled-develop
 ### Governance Determination
 
 The update is documentation-only. Runtime code, database migrations, API behavior, UI components, Leads, Appointments, Google integrations, and protected components remain unchanged by this documentation refresh.
+
+## 71.5.4 Patient API Integration
+
+Date: 2026-06-25
+
+Status: IMPLEMENTED / PENDING VALIDATION
+
+### Implemented Scope
+
+Created controlled Patient API endpoints:
+
+```text
+src/routes/api/patients/create.ts
+src/routes/api/patients/update.ts
+src/routes/api/patients/search.ts
+src/routes/api/patients/create.test.ts
+src/routes/api/patients/update.test.ts
+src/routes/api/patients/search.test.ts
+```
+
+Modified controlled Patient API validation and architecture evidence:
+
+```text
+src/server/patients/api-validation.ts
+src/architecture-guards.test.ts
+```
+
+### Governance Notes
+
+- API routes consume the certified Patient Application Layer.
+- API routes obtain persistence only through PatientPersistenceProvider helpers.
+- No direct API access to Supabase or relational adapters was introduced.
+- No Lead source-of-truth replacement, dual write, automated merge, UI changes, Google integration changes, protected component changes, or database migrations were introduced.
+- Duplicate patient search results return manual-review semantics via HTTP 409; no automated merge path is implemented.
+
+### Validation Evidence To Execute
+
+```bash
+npm run test -- src/routes/api/patients/create.test.ts src/routes/api/patients/update.test.ts src/routes/api/patients/search.test.ts src/routes/api/patients/list.test.ts src/routes/api/patients/$id.test.ts src/architecture-guards.test.ts
+npm run test
+npm run build
+```
