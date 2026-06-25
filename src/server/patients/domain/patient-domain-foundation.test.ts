@@ -60,17 +60,22 @@ describe("71.5.1 Patient Domain Foundation", () => {
     expect(normalizeIdentifier(" ab c 123 ")).toBe("ABC123");
   });
 
-  it("exposes a domain-only persistence port contract", () => {
+  it("exposes a domain-only persistence port contract", async () => {
     const port: PatientPersistencePort = {
       createPatient: async (input) => createPatientEntity(input, { id: "patient_port" }),
       findPatientById: async () => null,
-      updatePatient: async (_id, input) => createPatientEntity({ displayName: input.displayName, source: "admin", phones: [{ phone: "555" }] }),
+      updatePatient: async (_id, input) =>
+        createPatientEntity({
+          displayName: input.displayName,
+          source: "admin",
+          phones: [{ phone: "555" }],
+        }),
       searchPatientsByIdentity: async () => [],
     };
-
-    expect(port.findPatientById("missing")).resolves.toBeNull();
+  
+    await expect(port.findPatientById("missing")).resolves.toBeNull();
   });
-
+  
   it("keeps automated patient merge explicitly blocked", () => {
     expect(() => {
       throw new AutomatedPatientMergeNotAllowedError();
