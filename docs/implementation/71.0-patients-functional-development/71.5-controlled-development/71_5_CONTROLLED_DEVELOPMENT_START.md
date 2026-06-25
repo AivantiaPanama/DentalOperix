@@ -4,25 +4,30 @@
 AUTHORIZED TO START
 
 ## Active Increment
-71.5.1 — Patient Domain Foundation
+71.5.2 — Patient Application Layer
 
 ## Objective
 Begin controlled, incremental development of the Patients domain, preserving Baseline 69.2 and DGF v1.0 governance.
 
-## Immediate Scope: 71.5.1
+## Completed Increment: 71.5.1
+
+71.5.1 — Patient Domain Foundation is CLOSED / CERTIFIED.
+
+## Immediate Scope: 71.5.2 — Patient Application Layer
 
 Allowed:
-- Patient domain entities
-- Value objects
-- Enumerations and states
-- Domain exceptions
-- Domain validation rules
-- PatientPersistencePort contract
-- Domain-level interfaces
+- Patient application services
+- Patient use cases
+- Internal application DTOs
+- Application-level mappers
+- Orchestration over PatientPersistencePort only
+- Unit tests using fake or in-memory PatientPersistencePort implementations
 
 Excluded:
 - Concrete persistence adapters
+- PatientPersistenceProvider
 - Supabase integration
+- Database migrations
 - API endpoints
 - UI components
 - Protected components
@@ -40,13 +45,18 @@ Excluded:
 
 ## Definition of Done
 
-- Domain compiles independently.
-- No infrastructure dependencies in domain layer.
-- Rules reside in domain.
-- PatientPersistencePort is implementation-agnostic.
+- Application layer compiles independently.
+- Application services depend only on PatientPersistencePort and domain contracts.
+- No infrastructure dependencies in application layer.
+- No concrete persistence adapters are introduced.
 - Protected components remain untouched.
 - Governance retrospective completed.
 - Certification evidence produced.
 
 ## Governance Freeze
 Certified architectures, Sources of Truth, permanent restrictions, and protected components remain frozen unless changed by formal governance decision.
+
+
+## Roadmap Reordering Amendment
+
+71.5.2 has been updated from Patient Persistence to Patient Application Layer by minor roadmap reordering decision. Patient Persistence is deferred to 71.5.3. See `71.5.2_ROADMAP_REORDERING_DECISION.md`.

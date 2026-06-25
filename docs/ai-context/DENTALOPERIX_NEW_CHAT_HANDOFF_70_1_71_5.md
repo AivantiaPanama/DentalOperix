@@ -103,20 +103,25 @@ Always provide:
 8. Wait for explicit approval before generating code
 
 ## Active Development Increment
-71.5.1 — Patient Domain Foundation
+71.5.2 — Patient Application Layer
+
+71.5.1 — Patient Domain Foundation is CLOSED / CERTIFIED.
+
+Roadmap amendment: 71.5.2 has been reordered from Patient Persistence to Patient Application Layer. Patient Persistence is deferred to 71.5.3.
 
 Allowed:
-- Patient entities
-- Value objects
-- Enumerations/states
-- Domain exceptions
-- Domain validation rules
-- PatientPersistencePort
-- Domain-level interfaces
+- Patient application services
+- Patient use cases
+- Internal application DTOs
+- Application-level mappers
+- Orchestration over PatientPersistencePort only
+- Unit tests with fake or in-memory PatientPersistencePort implementations
 
 Excluded:
 - Concrete persistence
+- PatientPersistenceProvider
 - Supabase adapter
+- Database migrations
 - API
 - UI
 - Leads changes

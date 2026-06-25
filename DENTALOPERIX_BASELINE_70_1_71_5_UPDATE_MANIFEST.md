@@ -65,3 +65,20 @@ PROTECTED COMPONENTS NOT MODIFIED
 - No Lead Source of Truth was changed.
 - No Patient Source of Truth was changed.
 - No Appointments Source of Truth was changed.
+
+## 71.5.2 Roadmap Reordering Amendment
+
+Added documentation file:
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.2_ROADMAP_REORDERING_DECISION.md
+```
+
+Updated handoff/start documentation to record:
+
+```text
+71.5.2 — Patient Application Layer
+71.5.3 — Patient Persistence
+```
+
+This amendment is a minor roadmap sequencing update only. It does not modify the certified architecture, Baseline 69.2, protected components, sources of truth, or permanent restrictions.
