@@ -16,3 +16,5 @@ export type {
   ValidationExecutionResult,
 } from "./execution/validation-execution-types";
 export * from "./sdk";
+
+export * from "./manifest-validation";
