@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const requirePermission = vi.fn();
-const getReadModelSource = vi.fn();
+const listPatients = vi.fn();
+const createPatientReadService = vi.fn(() => ({ listPatients }));
 
 class UnauthorizedError extends Error {}
 class ForbiddenError extends Error {}
@@ -22,55 +23,43 @@ vi.mock("@/lib/rbac/guards.server", () => ({
     }),
 }));
 
-vi.mock("@/server/read-models/read-model-source-provider", () => ({
-  getReadModelSource,
+vi.mock("@/server/patients/read", () => ({
+  createPatientReadService,
 }));
 
 let GET: (request: Request) => Promise<Response>;
 
-const readModelPatient = {
+const patientSummary = {
   id: "PAT-001",
   displayName: "Ana Perez",
   email: "ana@example.com",
+  phone: "+507 6000 0000",
+  latestStatus: "active",
+  source: "read-model",
+  completionPercentage: 100,
+  administrativeStatus: "pending-verification",
 };
 
 describe("/api/patients/list", () => {
   beforeEach(async () => {
     vi.resetAllMocks();
     vi.resetModules();
+    listPatients.mockResolvedValue([patientSummary]);
     const routeModule = await import("./list");
     GET = routeModule.GET;
   });
 
-  it("returns the stable public list contract without internal diagnostics", async () => {
-    getReadModelSource.mockResolvedValue({
-      mode: "read-model",
-      patients: [readModelPatient],
-      leadOperations: [],
-      diagnostics: {
-        usedReadModel: true,
-        patientAggregateDiagnostics: {
-          duplicateResolvedIdentities: ["CID:8-888-888"],
-        },
-      },
-    });
-
+  it("returns patient summaries through Patient Read Service", async () => {
     const response = await GET(new Request("http://localhost/api/patients/list"));
 
     expect(response.status).toBe(200);
     expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:read");
-    expect(getReadModelSource).toHaveBeenCalledWith({ consumerName: "Patient Management" });
-    expect(await response.json()).toEqual({ success: true, patients: [readModelPatient] });
+    expect(createPatientReadService).toHaveBeenCalled();
+    expect(listPatients).toHaveBeenCalledWith("Patient Management");
+    expect(await response.json()).toEqual({ success: true, patients: [patientSummary] });
   });
 
-  it("does not leak resolvedIdentity when the read source keeps the public DTO clean", async () => {
-    getReadModelSource.mockResolvedValue({
-      mode: "read-model",
-      patients: [readModelPatient],
-      leadOperations: [],
-      diagnostics: { usedReadModel: true },
-    });
-
+  it("does not leak diagnostics in the list response", async () => {
     const response = await GET(new Request("http://localhost/api/patients/list"));
     const body = await response.json();
 

@@ -219,57 +219,61 @@ npm run test
 npm run build
 ```
 
-## 71.5 Documentation Audit, Closure, and 71.5.5 Start Refresh
+## 71.5.5 Patient Read Services & Query Integration
 
 Date: 2026-06-25
 
-### Package Purpose
+Status: IMPLEMENTED / PENDING EXTERNAL VALIDATION
 
-This refresh audits the 71.5 documentation package, integrates documentation generated during the governance chat, updates increment closure states, and prepares the repository documentation for continued controlled development.
+### Implemented Scope
 
-### Updated Increment States
-
-```text
-71.5.1 — Patient Domain Foundation                 CLOSED / CERTIFIED
-71.5.2 — Patient Application Layer                 CLOSED / CERTIFIED
-71.5.3 — Patient Persistence                       CLOSED / CERTIFIED
-71.5.4 — Patient API Integration                   CLOSED / CERTIFIED
-71.5.5 — Patient Read Services & Query Integration IMPLEMENTATION IN PROGRESS
-```
-
-### Added / Updated Documentation
+Created controlled Patient read boundary:
 
 ```text
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.4_GOVERNANCE_CLOSURE_AND_CERTIFICATION.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_FUNCTIONAL_SPECIFICATION.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_PLAN.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_AUTHORIZATION_REVIEW.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_IMPLEMENTATION_START.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_DOCUMENTATION_AUDIT_UPDATED_PACKAGE_REPORT.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md
-docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
+src/server/patients/read/patient-read-dtos.ts
+src/server/patients/read/patient-read-adapter.ts
+src/server/patients/read/patient-read-service.ts
+src/server/patients/read/index.ts
+src/server/patients/read/patient-read-service.test.ts
 ```
 
-### Validation Evidence Integrated
-
-User-provided local validation evidence for 71.5.4:
+Refactored controlled read consumers:
 
 ```text
-Test Files: 130 passed / 130
-Tests: 567 passed / 567
-Failed: 0
-Duration: 26.54s
+src/routes/api/patients/list.ts
+src/routes/api/patients/$id.ts
+src/routes/api/patients/search.ts
+src/routes/api/patients/list.test.ts
+src/routes/api/patients/$id.test.ts
+src/routes/api/patients/search.test.ts
+src/server/notifications/operational-notifications.ts
 ```
 
-### Governance Determination
+Updated governance guard:
 
 ```text
-DOCUMENTATION AUDIT COMPLETED
-71.5.4 CLOSED / CERTIFIED
-71.5.5 IMPLEMENTATION IN PROGRESS
-BASELINE 69.2 REMAINS ACTIVE
-DGF v1.0 REMAINS ACTIVE
-GML-1 REMAINS ACTIVE
-CODE NOT MODIFIED BY THIS DOCUMENTATION AUDIT
-PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION AUDIT
+src/architecture-guards.test.ts
 ```
+
+Added evidence and closure-preparation documentation:
+
+```text
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_QUERY_INVENTORY_AND_DISCOVERY.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_PATIENT_READ_SERVICES_IMPLEMENTATION_SUMMARY.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_VALIDATION_EVIDENCE.md
+docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5.5_CLOSURE_PREPARATION.md
+```
+
+### Governance Notes
+
+- Patient read API routes now consume PatientReadService.
+- Patient read API routes no longer directly import ReadModelSourceProvider.
+- Patient read API routes no longer import Patient persistence providers.
+- Patient command API routes remain on the certified Application Layer path.
+- No database migration was introduced.
+- No protected component was modified.
+- No Lead source-of-truth replacement, dual write, RBAC bypass, persistence re-architecture, or automated patient merge was introduced.
+
+### Validation Status
+
+Automated validation was attempted in the package-generation container, but dependency installation did not complete. External validation remains required before CLOSED / CERTIFIED declaration.

@@ -119,7 +119,6 @@ describe("DentalOperix architecture guards", () => {
     const patientApiFiles = [
       "src/routes/api/patients/create.ts",
       "src/routes/api/patients/update.ts",
-      "src/routes/api/patients/search.ts",
     ];
 
     for (const file of patientApiFiles) {
@@ -138,5 +137,51 @@ describe("DentalOperix architecture guards", () => {
       expect(content).not.toContain("AutomatedPatientMerge");
     }
   });
+
+  it("keeps 71.5.5 Patient Read Services as the single query boundary for Patient API reads", () => {
+    const readServiceFiles = [
+      "src/server/patients/read/patient-read-dtos.ts",
+      "src/server/patients/read/patient-read-adapter.ts",
+      "src/server/patients/read/patient-read-service.ts",
+      "src/server/patients/read/index.ts",
+    ];
+
+    for (const file of readServiceFiles) {
+      const content = read(file);
+      expect(content).not.toContain("routes/api");
+      expect(content).not.toContain("components/");
+      expect(content).not.toContain("BookingDialog");
+      expect(content).not.toContain("FloatingDentalAIChat");
+      expect(content).not.toContain("processDentalLead");
+      expect(content).not.toContain("routes/api/leads");
+      expect(content).not.toContain("LeadPersistencePort");
+      expect(content).not.toContain("mergePatients");
+      expect(content).not.toContain("AutomatedPatientMerge");
+      expect(content).not.toContain("@/server/patients/persistence/relational-patient-persistence-adapter");
+      expect(content).not.toContain("supabase");
+    }
+
+    const patientReadApiFiles = [
+      "src/routes/api/patients/list.ts",
+      "src/routes/api/patients/$id.ts",
+      "src/routes/api/patients/search.ts",
+    ];
+
+    for (const file of patientReadApiFiles) {
+      const content = read(file);
+      expect(content).toContain("@/server/patients/read");
+      expect(content).not.toContain("@/server/patients/admin-repository");
+      expect(content).not.toContain("@/server/read-models/read-model-source-provider");
+      expect(content).not.toContain("@/server/patients/persistence");
+      expect(content).not.toContain("@/server/patients/persistence/relational-patient-persistence-adapter");
+      expect(content).not.toContain("supabase");
+      expect(content).not.toContain("server/leads");
+      expect(content).not.toContain("routes/api/leads");
+      expect(content).not.toContain("LeadPersistencePort");
+      expect(content).not.toContain("mergePatients");
+      expect(content).not.toContain("AutomatedPatientMerge");
+    }
+  });
+
 
 });

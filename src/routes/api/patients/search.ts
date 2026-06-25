@@ -5,13 +5,12 @@ import {
   requirePermission,
   UnauthorizedError,
 } from "@/lib/rbac/guards.server";
-import { searchPatientsByIdentityUseCase } from "@/server/patients/application";
-import { createPatientPersistencePort } from "@/server/patients/persistence";
 import {
   InvalidPatientPayloadError,
   jsonResponse,
   parsePatientSearchPayload,
 } from "@/server/patients/api-validation";
+import { createPatientReadService } from "@/server/patients/read";
 
 export async function GET(request: Request) {
   try {
@@ -29,22 +28,10 @@ export async function GET(request: Request) {
     if (params.get("excludePatientId")) searchPayload.excludePatientId = params.get("excludePatientId");
     if (correlationId) searchPayload.metadata = { correlationId };
 
-    const command = parsePatientSearchPayload(searchPayload);
-    const result = await searchPatientsByIdentityUseCase(createPatientPersistencePort(), command);
+    const query = parsePatientSearchPayload(searchPayload);
+    const patients = await createPatientReadService().searchPatients(query, "Patient Management Search");
 
-    if (result.duplicateReviewRequired) {
-      return jsonResponse(
-        {
-          success: false,
-          duplicateReviewRequired: true,
-          candidates: result.patients,
-          error: "Possible duplicate patients require manual review. Automated patient merge is not allowed.",
-        },
-        409,
-      );
-    }
-
-    return jsonResponse({ success: true, patients: result.patients });
+    return jsonResponse({ success: true, patients });
   } catch (error) {
     if (error instanceof UnauthorizedError) return createUnauthorizedResponse();
     if (error instanceof ForbiddenError) return createForbiddenResponse();
@@ -52,7 +39,7 @@ export async function GET(request: Request) {
       return jsonResponse({ success: false, error: error.message }, 400);
     }
 
-    console.error("Failed to search patients through Patient Application Layer:", error);
+    console.error("Failed to search patients through Patient Read Service:", error);
     return jsonResponse({ success: false, error: "Controlled patient search failure." }, 500);
   }
 }

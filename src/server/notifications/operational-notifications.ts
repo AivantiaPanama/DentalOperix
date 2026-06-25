@@ -1,7 +1,6 @@
 import type { Role } from "@/lib/rbac/roles";
 import { listLeadOperationsProfiles, type LeadOperationsProfile } from "@/server/leads/operations-repository";
-import { listPatientAdministrativeProfiles } from "@/server/patients/admin-repository";
-import type { PatientAdministrativeProfile } from "@/lib/patients/admin-profile";
+import { createPatientReadService, type PatientAdministrativeProfileDTO } from "@/server/patients/read";
 import { listOperationalAuditEvents } from "@/server/audit/operational-audit";
 
 export const OPERATIONAL_NOTIFICATION_TYPES = [
@@ -137,7 +136,7 @@ function buildLeadNotifications(leadOperations: LeadOperationsProfile[], created
   return [...pendingFollowUps, ...highPriority];
 }
 
-function buildPatientNotifications(patients: PatientAdministrativeProfile[], createdAt: string) {
+function buildPatientNotifications(patients: PatientAdministrativeProfileDTO[], createdAt: string) {
   const incompleteProfiles = patients
     .filter((patient) => patient.missingFields.length > 0)
     .slice(0, 8)
@@ -211,7 +210,7 @@ export async function getOperationalNotifications(
   const generatedAt = nowIso();
   const [leadOperations, patients, auditNotifications] = await Promise.all([
     listLeadOperationsProfiles(),
-    listPatientAdministrativeProfiles(),
+    createPatientReadService().listAdministrativeProfiles("Operational Notifications"),
     buildAuditNotifications(generatedAt),
   ]);
 
