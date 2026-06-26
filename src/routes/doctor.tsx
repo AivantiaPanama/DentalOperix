@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RoleDashboardShell } from "@/components/admin/RoleDashboardShell";
+import { RoleWorkspaceLayout } from "@/components/admin/RoleWorkspaceLayout";
+import { ClinicalNotesWorkspace } from "@/components/doctor/ClinicalNotesWorkspace";
 import { RoleRouteGuard } from "@/components/admin/RoleRouteGuard";
 
 export const Route = createFileRoute("/doctor")({
@@ -16,7 +17,9 @@ export const Route = createFileRoute("/doctor")({
 function DoctorPage() {
   return (
     <RoleRouteGuard allowedRoles={["doctor"]} checkingLabel="Validando acceso clínico...">
-      <RoleDashboardShell role="doctor" />
+      <RoleWorkspaceLayout role="doctor" title="Doctor">
+        <ClinicalNotesWorkspace />
+      </RoleWorkspaceLayout>
     </RoleRouteGuard>
   );
 }

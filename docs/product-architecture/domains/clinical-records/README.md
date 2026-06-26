@@ -1,44 +1,132 @@
-# Clinical Records Product Architecture
+# Clinical Records
 
-**Generated:** 2026-06-25  
-**Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE
+**Domain Type:** Clinical Information Domain  
+**Product:** DentalOperix  
+**Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE  
+**Current Program:** 75.x  
+**Current Work Package:** WP-02 Clinical Notes Foundation
 
-## Domain Classification
+## Why Clinical Records exists
 
-Clinical Records is the certified Clinical Information Domain.
+Clinical Records exists to preserve the clinical history generated during patient care.
 
-## Current Certified State
+DentalOperix already manages acquisition, identity and operational scheduling through separate domains. Clinical Records begins where clinical information must be documented, protected, consulted and evolved over time.
+
+This domain protects the longitudinal clinical memory of the patient.
+
+## Who this domain serves
+
+### Direct beneficiaries
+
+- Dentists.
+- Clinical specialists.
+- Authorized healthcare professionals.
+
+### Indirect beneficiaries
+
+- Patients.
+- Clinical assistants.
+- Clinic administration.
+- Clinical quality and audit processes.
+
+### Future beneficiaries
+
+- Clinical analytics.
+- Clinical decision support.
+- Future clinical AI capabilities, if formally authorized.
+
+## What Clinical Records owns
+
+Clinical Records owns clinical information only.
+
+Current and future capabilities include:
+
+- Clinical Notes.
+- Clinical Assessments.
+- Diagnoses.
+- Treatment Plans.
+- Dental Charts.
+- Clinical Evolution.
+- Clinical Attachments.
+- Prescriptions.
+
+Not all capabilities exist yet. They will be introduced incrementally through certified Work Packages.
+
+## What Clinical Records does not own
+
+Clinical Records does not own:
+
+- Patient identity.
+- Leads or acquisition data.
+- Appointment scheduling.
+- Authentication.
+- Users and RBAC.
+- Marketing or CRM workflows.
+
+## Domain relationships
+
+Clinical Records collaborates with other domains without taking ownership of their responsibilities.
+
+- **Patients** provides patient identity references.
+- **Appointments** may provide operational context.
+- **Leads** remains isolated as the Source of Truth for acquisition and lead lifecycle.
+
+Clinical Records must never replace, redefine or mutate patient identity, lead lifecycle or appointment ownership.
+
+## Current state
 
 - Program 74.x: closed and certified.
-- 74.1 Domain Analysis: certified.
-- 74.2 Functional Specification: certified.
-- 74.3 Architecture Validation: certified.
-- 74.4 Implementation Planning: certified.
-- Program 75.x: initiated.
 - WP-01 Clinical Record Foundation: closed and certified.
-- WP-02: pending conformance review; not started.
+- WP-02 Clinical Notes Foundation: in controlled development.
 
-## Product-Specific Scope
+## Capability roadmap
 
-Clinical Records owns clinical information only. It references patient identity through PatientId and must not create, replace, merge or redefine patient identity.
+1. WP-01 Clinical Record Foundation — Certified.
+2. WP-02 Clinical Notes Foundation — Active.
+3. WP-03 Clinical Assessment — Candidate.
+4. WP-04 Treatment Planning — Candidate.
+5. WP-05 Dental Chart — Candidate.
+6. WP-06 Clinical Attachments — Candidate.
+7. WP-07 Prescriptions — Candidate.
 
-## Certified Boundary
+## How to start reading
 
-Clinical Records may depend on Patients through lookup/reference contracts only. It must not alter Leads, Appointments, protected UI components or existing source-of-truth rules.
+### If you are a developer
 
-## Implementation Pattern
+1. Read `CLINICAL_LANGUAGE.md`.
+2. Read `CLINICAL_RECORDS_CONSTITUTION.md`.
+3. Review the active Work Package dossier.
+4. Review the domain implementation under `src/server/clinical-records`.
 
-Clinical Records follows the certified Ports & Adapters pattern used by existing domains:
+### If you are an architect
 
-Domain -> Application/Input Ports -> Output Ports -> Provider -> Relational Adapter -> Supabase PostgreSQL
+1. Read `CLINICAL_RECORDS_CONSTITUTION.md`.
+2. Review certified architecture documents.
+3. Review ADR/FDR decisions related to Clinical Records.
+4. Review the active Implementation Blueprint.
 
-## Reusable Framework Reference
+### If you are a clinical stakeholder
 
-Future Clinical Records work packages must reuse:
+1. Read this README.
+2. Review capability descriptions.
+3. Review the roadmap and current scope.
 
-- Engineering & Governance Framework / Architecture Validation Framework.
-- Engineering & Governance Framework / Implementation Planning Framework.
-- Engineering & Governance Framework / Work Package Certification Framework.
-- Engineering & Governance Framework / Traceability Framework.
+## What this domain cannot do yet
 
-Work package reviews are conformance reviews, not architecture redesigns.
+Clinical Records does not yet support:
+
+- Structured diagnoses.
+- Treatment planning.
+- Dental charting.
+- Clinical attachments.
+- Prescriptions.
+- Clinical analytics.
+- Clinical AI.
+
+These are future capabilities and must be introduced through separate certified Work Packages.
+
+## Philosophy
+
+Clinical Records is not a generic data storage area.
+
+It exists to preserve the clinical history of a patient with integrity, dignity, confidentiality and traceability. Every future capability must strengthen this purpose without compromising the boundaries of DentalOperix.

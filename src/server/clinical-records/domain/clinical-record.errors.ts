@@ -30,3 +30,10 @@ export class ClinicalRecordPatientNotFoundError extends ClinicalRecordDomainErro
     this.name = "ClinicalRecordPatientNotFoundError";
   }
 }
+
+export class ClinicalNoteNotFoundError extends ClinicalRecordDomainError {
+  constructor(id: string) {
+    super(`Clinical note ${id} was not found.`);
+    this.name = "ClinicalNoteNotFoundError";
+  }
+}

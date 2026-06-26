@@ -4,3 +4,8 @@ export * from "./contracts/get-clinical-record-query";
 export * from "./contracts/get-clinical-record-result";
 export * from "./ports/patient-lookup-port";
 export * from "./services/clinical-record-application-service";
+export * from "./commands";
+export * from "./dto";
+export * from "./ports";
+export * from "./use-cases";
+export * from "./services/clinical-note-application-service";
