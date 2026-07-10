@@ -14,6 +14,7 @@ import { Route as PatientRouteImport } from './routes/patient'
 import { Route as NuestraFilosofiaRouteImport } from './routes/nuestra-filosofia'
 import { Route as DoctorRouteImport } from './routes/doctor'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CommercialDemoRouteImport } from './routes/commercial-demo'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -46,6 +47,11 @@ const DoctorRoute = DoctorRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommercialDemoRoute = CommercialDemoRouteImport.update({
+  id: '/commercial-demo',
+  path: '/commercial-demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssistantRoute = AssistantRouteImport.update({
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
   '/nuestra-filosofia': typeof NuestraFilosofiaRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
   '/nuestra-filosofia': typeof NuestraFilosofiaRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
   '/nuestra-filosofia': typeof NuestraFilosofiaRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
     | '/nuestra-filosofia'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
     | '/nuestra-filosofia'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
     | '/nuestra-filosofia'
@@ -187,6 +199,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AssistantRoute: typeof AssistantRoute
+  CommercialDemoRoute: typeof CommercialDemoRoute
   DashboardRoute: typeof DashboardRoute
   DoctorRoute: typeof DoctorRoute
   NuestraFilosofiaRoute: typeof NuestraFilosofiaRoute
@@ -230,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commercial-demo': {
+      id: '/commercial-demo'
+      path: '/commercial-demo'
+      fullPath: '/commercial-demo'
+      preLoaderRoute: typeof CommercialDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assistant': {
@@ -321,6 +341,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AssistantRoute: AssistantRoute,
+  CommercialDemoRoute: CommercialDemoRoute,
   DashboardRoute: DashboardRoute,
   DoctorRoute: DoctorRoute,
   NuestraFilosofiaRoute: NuestraFilosofiaRoute,

@@ -1,3 +1,32 @@
+# DentalOperix — Baseline 75 WP-02 Certified
+
+## Canonical Foundation Release Structure
+
+This package implements the Baseline 75 canonical structure:
+
+```text
+/docs
+    /foundation
+    /governance
+    /architecture
+    /knowledge
+    /reference-implementations
+    /work-packages
+
+/src
+    /domains
+    /shared
+    /platform
+
+/tools
+    /foundation-release-builder
+    /governance
+```
+
+Runtime code import paths are preserved. The `src/domains`, `src/shared`, and `src/platform` folders establish the canonical target boundaries without moving certified runtime code in this release.
+
+---
+
 # DentalOperix
 
 ## Current Governance Baseline
@@ -100,3 +129,19 @@ No runtime product code was intentionally modified by this documentation update.
 - 72.1.2 Governance Validation Engine: CLOSED & CERTIFIED
 - Local evidence submitted by the project owner confirmed 135/135 test files and 583/583 tests passing.
 - Test execution evidence is user-owned for future DentalOperix increments; certification is performed after evidence review.
+
+---
+
+## Foundation Release Structure Note
+
+As of **DENTALOPERIX_BASELINE_75_WP02_CERTIFIED**, the repository uses a cleaner Foundation Release structure:
+
+- Active project/runtime files remain at repository root.
+- Foundation Release materials are under `docs/foundation-release/75.0/`.
+- Historical governance and previous package artifacts are under `docs/historical-governance/`.
+- RI-001 materials are under `docs/reference-implementations/RI-001_Clinical_Notes_Foundation/`.
+
+See:
+
+- `docs/foundation-release/75.0/structure/75_STRUCTURE_UPDATE_REPORT.md`
+- `docs/foundation-release/75.0/structure/CANONICAL_REPOSITORY_STRUCTURE_75.md`

@@ -2,6 +2,7 @@ import { CalendarClock, ClipboardList, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TodayScheduleWidget } from "@/components/assistant/TodayScheduleWidget";
 import { LeadQueueWidget } from "@/components/assistant/LeadQueueWidget";
+import { CommercialDemoJourneyCard } from "@/components/assistant/CommercialDemoJourneyCard";
 
 const shellCards = [
   {
@@ -34,6 +35,8 @@ export function AssistantDashboard() {
       </section>
 
       <TodayScheduleWidget />
+
+      <CommercialDemoJourneyCard />
 
       <LeadQueueWidget />
 

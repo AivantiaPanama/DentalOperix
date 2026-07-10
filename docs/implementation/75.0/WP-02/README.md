@@ -1,56 +1,40 @@
 # WP-02 — Clinical Notes Foundation
 
 **Program:** 75.x  
-**Status:** Controlled Development  
-**Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE
+**Status:** CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED  
+**Baseline:** DENTALOPERIX_BASELINE_75_WP02_CERTIFIED  
+**Reference Implementation:** RI-001 — Clinical Notes Foundation
 
 ## Capability
 
 DentalOperix gains the ability to register, consult, update and visualize clinical narrative information through Clinical Notes, using the certified Clinical Records foundation from WP-01.
 
-## Current development increment
+## Delivered increments
 
-**I1-M1 — ClinicalNote Domain Entity**
+| Increment | Scope | Status |
+|---|---|---|
+| I1-M1 | ClinicalNote Domain Entity | IMPLEMENTED / CONSOLIDATED |
+| I1-M2 | ClinicalNote Domain Service | IMPLEMENTED / CONSOLIDATED |
+| I1-M3 | ClinicalNote Application Layer | IMPLEMENTED / CONSOLIDATED |
+| I1-M4 | ClinicalNote Persistence Adapter | IMPLEMENTED / CONSOLIDATED |
+| I1-M5 | Clinical Note API Contracts | IMPLEMENTED / CONSOLIDATED |
+| I1-M6 | Clinical Note UI Integration | IMPLEMENTED / CONSOLIDATED / USER VALIDATION OWNED EXTERNALLY |
 
-Status: implemented in package; pending user validation.
+## Certified Pattern
 
-## Scope
+```text
+UI -> API -> Application Layer -> Domain -> Persistence
+```
 
-WP-02 introduces the first functional capability of the Clinical Records domain.
+## Restrictions preserved
 
-Included:
+- No Leads mutation.
+- No Patients mutation.
+- No Appointments mutation.
+- No dual write.
+- No protected component mutation.
+- No clinical business rules inside React UI.
 
-- ClinicalNote domain entity.
-- ClinicalNarrative value object.
-- HealthcareProfessionalId value object.
-- Clinical note lifecycle status.
-- Audit metadata.
+## Closure
 
-Excluded:
-
-- Persistence.
-- API endpoints.
-- UI.
-- Appointment mutation.
-- Patient identity mutation.
-- Leads integration.
-
-## Validation ownership
-
-The user will execute build and TypeScript validation locally.
-
-
-## I1-M2 — ClinicalNote Domain Service
-
-Status: Implemented — pending user validation evidence.
-
-Delivered domain behavior for Clinical Note lifecycle transitions without persistence, API, or UI changes.
-
-
-## Current Controlled Development Status
-
-- I1-M1 Clinical Note Domain Entity: IMPLEMENTED / USER VALIDATED
-- I1-M2 Clinical Note Domain Service: IMPLEMENTED / USER VALIDATED
-- I1-M3 Clinical Note Application Layer: IMPLEMENTED / PENDING USER VALIDATION
-
-Next recommended micro-increment: I1-M4 Clinical Note Persistence Port Alignment / Adapter Preparation.
+WP-02 is closed as the origin Work Package for RI-001 and is included in `DENTALOPERIX_BASELINE_75_WP02_CERTIFIED`.

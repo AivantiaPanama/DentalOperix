@@ -1,45 +1,26 @@
-# DentalOperix 75.x Controlled Implementation Index
+# Program 75.x — Clinical Records Controlled Development
 
-**Generated:** 2026-06-25  
-**Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE  
-**Program:** 75.x Controlled Implementation  
-**Current State:** WP-01 Closed and Certified; WP-02 pending architectural conformance review.
+**Updated:** 2026-06-26  
+**Baseline:** DENTALOPERIX_BASELINE_75_WP02_CERTIFIED  
+**Current State:** Foundation Release package generated; WP-01 and WP-02 closed/certified for knowledge and architecture.
 
-## Program Status
+## Work Package Status
 
-| Work Package | Name | Status |
+| WP | Scope | Status |
 |---|---|---|
-| WP-01 | Clinical Record Foundation | Closed and Certified |
-| WP-02 | Clinical Encounter | Pending architectural conformance review; not started |
-| WP-03 | Clinical Notes | Pending |
-| WP-04 | Clinical Findings | Pending |
-| WP-05 | Diagnosis | Pending |
-| WP-06 | Timeline | Pending |
-| WP-07 | Summary | Pending |
-| WP-08 | Close Record | Pending |
-| WP-09 | Archive Record | Pending |
+| WP-01 | Clinical Record Foundation | CLOSED / CERTIFIED |
+| WP-02 | Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
+| WP-03 | Clinical Records Domain Evolution | READY FOR PLANNING |
 
-## Documentation Architecture
+## Foundation Release Assets
 
-Program 75.x now uses two separated documentation layers:
+- `docs/foundation-release/75.0/FOUNDATION_MANIFEST.md`
+- `docs/foundation-release/75.0/BASELINE_MANIFEST_75.md`
+- `docs/foundation-release/75.0/75.3_WP_02_CLOSURE_AND_KNOWLEDGE_CERTIFICATION_PACKAGE.md`
+- `docs/reference-implementations/RI-001_Clinical_Notes_Foundation/RI-001_CERTIFICATION.md`
+- `docs/registries/REFERENCE_IMPLEMENTATION_REGISTRY.md`
+- `docs/registries/DOMAIN_ASSET_CATALOG.md`
 
-1. `docs/product-architecture/` for DentalOperix-specific domain architecture.
-2. `docs/engineering-governance-framework/` for reusable architecture, development and governance framework assets.
+## Validation Ownership
 
-## Governance Rule
-
-No future WP implementation may begin without:
-
-1. documentary review;
-2. document rector identification;
-3. code impact review;
-4. baseline compatibility validation;
-5. architectural conformance analysis;
-6. affected dependencies review;
-7. risk and technical impact analysis;
-8. implementation plan;
-9. explicit user authorization.
-
-## Framework Reuse Rule
-
-The architecture of development is not recreated from scratch for each implementation. New work packages reuse the approved Engineering & Governance Framework and complete only work-package-specific information.
+Local build, TypeScript and test execution remain user-owned and must be attached to the release evidence template.

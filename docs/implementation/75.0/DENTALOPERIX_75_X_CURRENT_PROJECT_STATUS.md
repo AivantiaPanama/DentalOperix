@@ -1,16 +1,18 @@
 # DentalOperix 75.x Current Project Status
 
-**Generated:** 2026-06-25  
-**Baseline:** DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE
+**Updated:** 2026-06-26  
+**Official Baseline:** DENTALOPERIX_BASELINE_75_WP02_CERTIFIED  
+**Release Type:** Foundation Release  
+**Status:** FOUNDATION RELEASE PACKAGE GENERATED / LOCAL VALIDATION EVIDENCE USER-OWNED
 
 ## Official State
 
 | Program / WP | Status |
 |---|---|
-| Program 74.x | Closed and Certified |
-| Program 75.x | Initiated |
-| WP-01 Clinical Record Foundation | Closed and Certified |
-| WP-02 Clinical Encounter | Pending architectural review; not started |
+| Program 74.x | CLOSED / CERTIFIED |
+| Program 75.x | FOUNDATION RELEASE CONSOLIDATION COMPLETED |
+| WP-01 Clinical Record Foundation | CLOSED / CERTIFIED |
+| WP-02 Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
 
 ## Certified Sources of Truth
 
@@ -31,13 +33,18 @@
 - No automated Patient merge.
 - Refactorization must remain incremental and traceable.
 
+## Reference Implementations
+
+| RI | Name | Status |
+|---|---|---|
+| RI-001 | Clinical Notes Foundation | CERTIFIED WITH CONTROLLED VALIDATION OBSERVATION |
+
 ## Validation State
 
-WP-01 user validation evidence received:
-
-- `npm run build`: PASS.
-- `npx tsc`: PASS.
+- Static repository and documentation audit: COMPLETED.
+- Foundation Release consolidation: COMPLETED.
+- Local build, TypeScript and test evidence: USER-OWNED / PENDING ATTACHMENT.
 
 ## Next Governance Gate
 
-WP-02 requires a fresh pre-implementation review before any code is generated.
+WP-03 — Clinical Records Domain Evolution planning may begin from this Foundation Release after local validation evidence is attached or accepted as a controlled observation by the project owner.
