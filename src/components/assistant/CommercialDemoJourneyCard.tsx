@@ -2,9 +2,19 @@ import { ArrowRight, ClipboardCheck, Sparkles, UserRound } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { commercialDemoFoundation } from "@/data/commercialDemoFoundation";
+import type { CommercialPresentationModel } from "@/features/commercial-demo/presentation/commercialPresentation.types";
 
-export function CommercialDemoJourneyCard() {
+type CommercialDemoJourneyCardProps = {
+  journey?: CommercialPresentationModel["journey"];
+};
+
+export function CommercialDemoJourneyCard({ journey }: CommercialDemoJourneyCardProps) {
   const { scenario, patientJourney, clinicJourney, commercialEvidence } = commercialDemoFoundation;
+  const resolvedJourney = journey ?? {
+    title: "Commercial Demo Journey",
+    description: "Vista read-only para componer el recorrido comercial sobre capacidades existentes.",
+    rationale: "El recorrido se organiza para acompañar a la clínica con un propósito claro.",
+  };
 
   return (
     <Card className="shadow-soft" aria-label="Commercial Demo Journey">
@@ -13,11 +23,9 @@ export function CommercialDemoJourneyCard() {
           <div>
             <CardTitle className="flex items-center gap-2 text-lg text-deep">
               <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
-              Commercial Demo Journey
+              {resolvedJourney.title}
             </CardTitle>
-            <CardDescription className="mt-2 leading-6">
-              Vista read-only para componer el recorrido comercial sobre capacidades existentes.
-            </CardDescription>
+            <CardDescription className="mt-2 leading-6">{resolvedJourney.description}</CardDescription>
           </div>
           <Badge variant="secondary">Vista read-only</Badge>
         </div>
@@ -34,6 +42,11 @@ export function CommercialDemoJourneyCard() {
             <Badge variant="outline">{scenario.commercialGoal}</Badge>
           </div>
         </section>
+
+        <div className="rounded-2xl border border-border bg-background/70 p-4">
+          <p className="text-sm font-semibold text-deep">Propósito del recorrido</p>
+          <p className="mt-2 text-sm text-muted-foreground">{resolvedJourney.rationale}</p>
+        </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="rounded-2xl border border-border bg-background/70 p-4">
