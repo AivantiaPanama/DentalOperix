@@ -1,147 +1,82 @@
-# DentalOperix — Baseline 75 WP-02 Certified
+# DentalOperix — Commercial Acceleration Baseline 1.0
 
-## Canonical Foundation Release Structure
+## Official Institutional Publication
 
-This package implements the Baseline 75 canonical structure:
+**Project:** DentalOperix  
+**Edition:** Commercial Acceleration Baseline  
+**Version:** 1.0  
+**Publication phase:** RB-01 — Release Baseline Finalization  
+**Publication date:** 2026-07-11
 
-```text
-/docs
-    /foundation
-    /governance
-    /architecture
-    /knowledge
-    /reference-implementations
-    /work-packages
+DentalOperix is a governed dental-clinic product baseline. This edition publishes the certified Commercial Acceleration capability as a presentation and composition layer over existing product capabilities.
 
-/src
-    /domains
-    /shared
-    /platform
+## Official status
 
-/tools
-    /foundation-release-builder
-    /governance
-```
+- Editorial Infrastructure: **CERTIFIED** — EP-00, EP-01, EP-02.
+- Baseline Foundation: **CERTIFIED** — BC-00, BC-00B, BC-01, BC-02, BC-03, BC-04, BC-05, PEC-01, BC-06.
+- Editorial Integration Review: **PASS**.
+- Institutional Certification: **COMPLETED**.
+- Commercial increments: **PR-01, PR-02 and PR-03 implemented and evidenced**.
+- Publication Engineering: **RB-01 completed for this release package**.
 
-Runtime code import paths are preserved. The `src/domains`, `src/shared`, and `src/platform` folders establish the canonical target boundaries without moving certified runtime code in this release.
+## Commercial Acceleration capability
 
----
-
-# DentalOperix
-
-## Current Governance Baseline
+The commercial demo is not a new domain, application, operational module, persistence mechanism, or Source of Truth. It is a read-only composition and presentation capability.
 
 ```text
-DENTALOPERIX_BASELINE_69_2
-IMPLEMENTATION PLANNING: CERTIFIED
-IMPLEMENTATION EXECUTION: AUTHORIZED FOR PATIENTS DOMAIN ONLY
-GOVERNANCE: ACTIVE
-ARCHITECTURE: CERTIFIED
+/commercial-demo
+        ↓
+Commercial Presentation Components
+        ↓
+Commercial Demo Journey
+        ↓
+Existing DentalOperix Capabilities
 ```
 
-## Certified architectures
+Certified implementation:
 
-### Leads
+- **PR-01 — Commercial Demo Foundation**
+  - `src/data/commercialDemoFoundation.ts`
+  - scenario: `new-patient-acquisition`
+  - Patient Journey, Clinic Journey and Commercial Evidence.
+- **PR-02 — Demo Journey Integration**
+  - `src/components/assistant/CommercialDemoJourneyCard.tsx`
+  - read-only presentation within Assistant Workspace.
+- **PR-03 — Commercial Presentation Layer**
+  - public route: `/commercial-demo`
+  - presentational components under `src/components/commercial/`.
 
-```text
-LeadPersistencePort
-→ LeadPersistenceProvider
-→ RelationalLeadPersistenceAdapter
-→ Supabase PostgreSQL
-```
+## Preserved architectural boundaries
 
-### Patients
+The edition introduces no new domain, API, table, migration, persistence layer or Source of Truth. The following boundaries remain protected:
 
-```text
-PatientPersistencePort
-→ PatientPersistenceProvider
-→ RelationalPatientPersistenceAdapter
-→ Supabase PostgreSQL
-```
+- BookingDialog.
+- processDentalLead.
+- Lead lifecycle.
+- Patient Identity boundaries.
+- Appointment lifecycle.
+- Authentication/RBAC.
 
 ## Sources of Truth
 
-- Leads = Acquisition / Marketing / Lead Lifecycle
-- Patients = Person Identity
-- Appointments = Scheduled Operational Events
+- Leads = Acquisition, marketing and lead lifecycle.
+- Patients = Person identity.
+- Appointments = Scheduled operational events.
 
-## Protected components
+## Repository navigation
 
-Do not modify without a new governance review:
+- [MANIFEST.md](MANIFEST.md) — official contents and publication authority.
+- [INDEX.md](INDEX.md) — institutional navigation index.
+- [CURRENT_PRODUCT_STATUS.md](CURRENT_PRODUCT_STATUS.md) — current certified state.
+- [PRODUCT_MEMORY.md](PRODUCT_MEMORY.md) — institutional product memory.
+- [PRODUCT_DECISION_LOG.md](PRODUCT_DECISION_LOG.md) — certified decisions.
+- [DISCOVERY_LOG.md](DISCOVERY_LOG.md) — discovery candidates and status.
+- [KNOWLEDGE_REGISTRY.md](KNOWLEDGE_REGISTRY.md) — knowledge and evidence registry.
+- [RELEASE_NOTES.md](RELEASE_NOTES.md) — release summary.
+- [CHANGELOG.md](CHANGELOG.md) — publication changes.
+- [CONTINUITY_STATUS.md](CONTINUITY_STATUS.md) — closure and next mission.
+- [`docs/publication-engineering/RB-01/`](docs/publication-engineering/RB-01/) — synchronization, verification and traceability evidence.
 
-- BookingDialog
-- processDentalLead
-- /api/leads/create
-- Calendar
-- Gmail
-- FloatingDentalAIChat
-- Home
-- siteServices.ts
+## Historical continuity
 
-## Permanent restrictions
-
-- No Dual Write.
-- No Lead Replacement.
-- No New Lead Source of Truth.
-- No Persistence Re-Architecture.
-- No RBAC Bypass.
-- No Automated Patient Merge.
-
-## Latest documentation package
-
-See:
-
-- DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md
-- docs/implementation/68.0/
-- docs/governance/69.0/
-- docs/audits/69.0/69.2_DOCUMENTATION_STRUCTURE_AUDIT.md
-- docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_69_2.md
-
----
-
-## Documentation Update Notice — 70.1 / 71.5
-
-This package includes a documentation and governance consolidation update generated on 2026-06-24.
-
-Active technical baseline remains: `DENTALOPERIX_BASELINE_69_2`.
-
-Added governance structure:
-
-- Governance Master Index
-- DentalOperix Governance Framework v1.0
-- Governance Maturity Model GML-1
-- Document Registry
-- Certification Register
-- Baseline Transition Register
-- Governance Change Log
-- 70.1 Cross-Reference Validation Report
-- 71.2 Patients Functional Specification
-- 71.3 Architecture Validation evidence
-- 71.4 Implementation Planning
-- 71.5 Controlled Development start record
-
-No runtime product code was intentionally modified by this documentation update.
-
-
-## Governance Platform Status - 72.1.2 Certification
-
-- 72.1.1 Governance SDK Core: CLOSED & CERTIFIED
-- 72.1.2 Governance Validation Engine: CLOSED & CERTIFIED
-- Local evidence submitted by the project owner confirmed 135/135 test files and 583/583 tests passing.
-- Test execution evidence is user-owned for future DentalOperix increments; certification is performed after evidence review.
-
----
-
-## Foundation Release Structure Note
-
-As of **DENTALOPERIX_BASELINE_75_WP02_CERTIFIED**, the repository uses a cleaner Foundation Release structure:
-
-- Active project/runtime files remain at repository root.
-- Foundation Release materials are under `docs/foundation-release/75.0/`.
-- Historical governance and previous package artifacts are under `docs/historical-governance/`.
-- RI-001 materials are under `docs/reference-implementations/RI-001_Clinical_Notes_Foundation/`.
-
-See:
-
-- `docs/foundation-release/75.0/structure/75_STRUCTURE_UPDATE_REPORT.md`
-- `docs/foundation-release/75.0/structure/CANONICAL_REPOSITORY_STRUCTURE_75.md`
+The repository preserves earlier governed baselines, including Baseline 69.2, 71.5, Governance Platform 72.1 and Foundation Release 75 WP-02. They remain historical and technical antecedents; they are not replaced or reinterpreted by this commercial publication.

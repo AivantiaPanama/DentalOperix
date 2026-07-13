@@ -15,11 +15,14 @@ import { Route as NuestraFilosofiaRouteImport } from './routes/nuestra-filosofia
 import { Route as DoctorRouteImport } from './routes/doctor'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CommercialDemoRouteImport } from './routes/commercial-demo'
+import { Route as ClinicasRouteImport } from './routes/clinicas'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServiciosServiceIdRouteImport } from './routes/servicios.$serviceId'
 import { Route as PortalProfileRouteImport } from './routes/portal/$profile'
+import { Route as ClinicasGraciasRouteImport } from './routes/clinicas/gracias'
+import { Route as ClinicasDiagnosticoRouteImport } from './routes/clinicas/diagnostico'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminAutomationRouteImport } from './routes/admin/automation'
@@ -54,6 +57,11 @@ const CommercialDemoRoute = CommercialDemoRouteImport.update({
   path: '/commercial-demo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClinicasRoute = ClinicasRouteImport.update({
+  id: '/clinicas',
+  path: '/clinicas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssistantRoute = AssistantRouteImport.update({
   id: '/assistant',
   path: '/assistant',
@@ -79,6 +87,16 @@ const PortalProfileRoute = PortalProfileRouteImport.update({
   path: '/portal/$profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClinicasGraciasRoute = ClinicasGraciasRouteImport.update({
+  id: '/gracias',
+  path: '/gracias',
+  getParentRoute: () => ClinicasRoute,
+} as any)
+const ClinicasDiagnosticoRoute = ClinicasDiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => ClinicasRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -99,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/clinicas': typeof ClinicasRouteWithChildren
   '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
@@ -108,6 +127,8 @@ export interface FileRoutesByFullPath {
   '/admin/automation': typeof AdminAutomationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/clinicas/diagnostico': typeof ClinicasDiagnosticoRoute
+  '/clinicas/gracias': typeof ClinicasGraciasRoute
   '/portal/$profile': typeof PortalProfileRoute
   '/servicios/$serviceId': typeof ServiciosServiceIdRoute
 }
@@ -115,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/clinicas': typeof ClinicasRouteWithChildren
   '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
@@ -124,6 +146,8 @@ export interface FileRoutesByTo {
   '/admin/automation': typeof AdminAutomationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/clinicas/diagnostico': typeof ClinicasDiagnosticoRoute
+  '/clinicas/gracias': typeof ClinicasGraciasRoute
   '/portal/$profile': typeof PortalProfileRoute
   '/servicios/$serviceId': typeof ServiciosServiceIdRoute
 }
@@ -132,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/assistant': typeof AssistantRoute
+  '/clinicas': typeof ClinicasRouteWithChildren
   '/commercial-demo': typeof CommercialDemoRoute
   '/dashboard': typeof DashboardRoute
   '/doctor': typeof DoctorRoute
@@ -141,6 +166,8 @@ export interface FileRoutesById {
   '/admin/automation': typeof AdminAutomationRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/login': typeof AdminLoginRoute
+  '/clinicas/diagnostico': typeof ClinicasDiagnosticoRoute
+  '/clinicas/gracias': typeof ClinicasGraciasRoute
   '/portal/$profile': typeof PortalProfileRoute
   '/servicios/$serviceId': typeof ServiciosServiceIdRoute
 }
@@ -150,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/clinicas'
     | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
@@ -159,6 +187,8 @@ export interface FileRouteTypes {
     | '/admin/automation'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/clinicas/diagnostico'
+    | '/clinicas/gracias'
     | '/portal/$profile'
     | '/servicios/$serviceId'
   fileRoutesByTo: FileRoutesByTo
@@ -166,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/clinicas'
     | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
@@ -175,6 +206,8 @@ export interface FileRouteTypes {
     | '/admin/automation'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/clinicas/diagnostico'
+    | '/clinicas/gracias'
     | '/portal/$profile'
     | '/servicios/$serviceId'
   id:
@@ -182,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/assistant'
+    | '/clinicas'
     | '/commercial-demo'
     | '/dashboard'
     | '/doctor'
@@ -191,6 +225,8 @@ export interface FileRouteTypes {
     | '/admin/automation'
     | '/admin/dashboard'
     | '/admin/login'
+    | '/clinicas/diagnostico'
+    | '/clinicas/gracias'
     | '/portal/$profile'
     | '/servicios/$serviceId'
   fileRoutesById: FileRoutesById
@@ -199,6 +235,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AssistantRoute: typeof AssistantRoute
+  ClinicasRoute: typeof ClinicasRouteWithChildren
   CommercialDemoRoute: typeof CommercialDemoRoute
   DashboardRoute: typeof DashboardRoute
   DoctorRoute: typeof DoctorRoute
@@ -252,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommercialDemoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clinicas': {
+      id: '/clinicas'
+      path: '/clinicas'
+      fullPath: '/clinicas'
+      preLoaderRoute: typeof ClinicasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assistant': {
       id: '/assistant'
       path: '/assistant'
@@ -286,6 +330,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/portal/$profile'
       preLoaderRoute: typeof PortalProfileRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/clinicas/gracias': {
+      id: '/clinicas/gracias'
+      path: '/gracias'
+      fullPath: '/clinicas/gracias'
+      preLoaderRoute: typeof ClinicasGraciasRouteImport
+      parentRoute: typeof ClinicasRoute
+    }
+    '/clinicas/diagnostico': {
+      id: '/clinicas/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/clinicas/diagnostico'
+      preLoaderRoute: typeof ClinicasDiagnosticoRouteImport
+      parentRoute: typeof ClinicasRoute
     }
     '/admin/login': {
       id: '/admin/login'
@@ -325,6 +383,20 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface ClinicasRouteChildren {
+  ClinicasDiagnosticoRoute: typeof ClinicasDiagnosticoRoute
+  ClinicasGraciasRoute: typeof ClinicasGraciasRoute
+}
+
+const ClinicasRouteChildren: ClinicasRouteChildren = {
+  ClinicasDiagnosticoRoute: ClinicasDiagnosticoRoute,
+  ClinicasGraciasRoute: ClinicasGraciasRoute,
+}
+
+const ClinicasRouteWithChildren = ClinicasRoute._addFileChildren(
+  ClinicasRouteChildren,
+)
+
 interface ServiciosRouteChildren {
   ServiciosServiceIdRoute: typeof ServiciosServiceIdRoute
 }
@@ -341,6 +413,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AssistantRoute: AssistantRoute,
+  ClinicasRoute: ClinicasRouteWithChildren,
   CommercialDemoRoute: CommercialDemoRoute,
   DashboardRoute: DashboardRoute,
   DoctorRoute: DoctorRoute,
