@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useLocation } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { CommercialDemoPage } from "@/components/commercial/CommercialDemoPage";
+import { parseCommercialDemoContext } from "@/features/commercial-demo/context/parseCommercialDemoContext";
 
 export const Route = createFileRoute("/commercial-demo")({
   head: () => ({
@@ -8,7 +9,8 @@ export const Route = createFileRoute("/commercial-demo")({
       { title: "Commercial Demo — DentalOperix" },
       {
         name: "description",
-        content: "Una presentación comercial de la experiencia de DentalOperix sobre un recorrido de paciente, oportunidad y clínica.",
+        content:
+          "Una presentación comercial de la experiencia de DentalOperix sobre un recorrido de paciente, oportunidad y clínica.",
       },
     ],
   }),
@@ -16,9 +18,13 @@ export const Route = createFileRoute("/commercial-demo")({
 });
 
 function CommercialDemoRoute() {
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const commercialDemoContext = parseCommercialDemoContext(searchParams);
+
   return (
     <SiteLayout>
-      <CommercialDemoPage />
+      <CommercialDemoPage context={commercialDemoContext} />
     </SiteLayout>
   );
 }
