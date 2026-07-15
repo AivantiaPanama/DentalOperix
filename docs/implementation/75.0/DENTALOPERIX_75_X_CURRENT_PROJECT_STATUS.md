@@ -7,21 +7,21 @@
 
 ## Official State
 
-| Program / WP | Status |
-|---|---|
-| Program 74.x | CLOSED / CERTIFIED |
-| Program 75.x | FOUNDATION RELEASE CONSOLIDATION COMPLETED |
-| WP-01 Clinical Record Foundation | CLOSED / CERTIFIED |
-| WP-02 Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
+| Program / WP                     | Status                                          |
+| -------------------------------- | ----------------------------------------------- |
+| Program 74.x                     | CLOSED / CERTIFIED                              |
+| Program 75.x                     | FOUNDATION RELEASE CONSOLIDATION COMPLETED      |
+| WP-01 Clinical Record Foundation | CLOSED / CERTIFIED                              |
+| WP-02 Clinical Notes Foundation  | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
 
 ## Certified Sources of Truth
 
-| Domain | Role |
-|---|---|
-| Leads | Acquisition / Marketing / Lead Lifecycle Source of Truth |
-| Patients | Identity Domain |
-| Appointments | Operational Domain |
-| Clinical Records | Clinical Information Domain |
+| Domain           | Role                                                     |
+| ---------------- | -------------------------------------------------------- |
+| Leads            | Acquisition / Marketing / Lead Lifecycle Source of Truth |
+| Patients         | Identity Domain                                          |
+| Appointments     | Operational Domain                                       |
+| Clinical Records | Clinical Information Domain                              |
 
 ## Permanent Restrictions
 
@@ -35,8 +35,8 @@
 
 ## Reference Implementations
 
-| RI | Name | Status |
-|---|---|---|
+| RI     | Name                      | Status                                           |
+| ------ | ------------------------- | ------------------------------------------------ |
 | RI-001 | Clinical Notes Foundation | CERTIFIED WITH CONTROLLED VALIDATION OBSERVATION |
 
 ## Validation State

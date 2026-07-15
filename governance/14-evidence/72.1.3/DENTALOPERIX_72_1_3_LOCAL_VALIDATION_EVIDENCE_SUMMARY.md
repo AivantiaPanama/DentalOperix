@@ -16,11 +16,11 @@ Project owner executed all local validation commands.
 
 ## Final Validation Results
 
-| Command | Result |
-|---|---|
-| `npx tsc --noEmit` | PASS |
-| `npm run build` | PASS |
-| `npm run test` | PASS |
+| Command            | Result |
+| ------------------ | ------ |
+| `npx tsc --noEmit` | PASS   |
+| `npm run build`    | PASS   |
+| `npm run test`     | PASS   |
 
 ## Final Suite Result
 

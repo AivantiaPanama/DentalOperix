@@ -185,15 +185,15 @@ Disadvantages:
 
 # 6. Architectural Evaluation
 
-| Criterion | Option A | Option B | Option C |
-|---|---|---|---|
-| Complexity | Low | Medium | High |
-| Governance Risk | Low | Medium | Medium |
-| Starter Readiness | High | Medium | Low |
-| Implementation Speed | High | Medium | Low |
-| Architecture Impact | Low | Medium | Medium |
-| Dependency on Gmail/Notifications | None | Possible | Likely |
-| Risk of Reopening 57.x | None | None | None |
+| Criterion                         | Option A | Option B | Option C |
+| --------------------------------- | -------- | -------- | -------- |
+| Complexity                        | Low      | Medium   | High     |
+| Governance Risk                   | Low      | Medium   | Medium   |
+| Starter Readiness                 | High     | Medium   | Low      |
+| Implementation Speed              | High     | Medium   | Low      |
+| Architecture Impact               | Low      | Medium   | Medium   |
+| Dependency on Gmail/Notifications | None     | Possible | Likely   |
+| Risk of Reopening 57.x            | None     | None     | None     |
 
 ---
 

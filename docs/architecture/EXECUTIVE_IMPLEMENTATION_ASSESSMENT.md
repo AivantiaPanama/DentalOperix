@@ -108,16 +108,16 @@ src/
 
 Key architecture areas:
 
-| Area | Evidence | Assessment |
-| --- | --- | --- |
-| Public site | `src/components/site`, public routes | COMPLIANT |
-| Admin dashboard | `src/components/admin`, `src/routes/admin.tsx` and dashboard artifacts | COMPLIANT |
-| Assistant workspace | `src/components/assistant`, `src/routes/assistant.tsx` | COMPLIANT |
-| Operational panels | `src/components/operations` | COMPLIANT |
-| Server APIs | `src/routes/api/*` | COMPLIANT |
-| Read models | `src/server/read-models/*` | COMPLIANT |
-| Google integrations | `src/server/google/*` | COMPLIANT |
-| Architecture tests | `src/architecture-guards.test.ts` | COMPLIANT |
+| Area                | Evidence                                                               | Assessment |
+| ------------------- | ---------------------------------------------------------------------- | ---------- |
+| Public site         | `src/components/site`, public routes                                   | COMPLIANT  |
+| Admin dashboard     | `src/components/admin`, `src/routes/admin.tsx` and dashboard artifacts | COMPLIANT  |
+| Assistant workspace | `src/components/assistant`, `src/routes/assistant.tsx`                 | COMPLIANT  |
+| Operational panels  | `src/components/operations`                                            | COMPLIANT  |
+| Server APIs         | `src/routes/api/*`                                                     | COMPLIANT  |
+| Read models         | `src/server/read-models/*`                                             | COMPLIANT  |
+| Google integrations | `src/server/google/*`                                                  | COMPLIANT  |
+| Architecture tests  | `src/architecture-guards.test.ts`                                      | COMPLIANT  |
 
 ## Read Model Platform v2
 

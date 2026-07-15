@@ -14,15 +14,15 @@ Author role: Product Analyst / Functional Designer
 
 **Derived exclusively from:**
 
-*RBAC-MATRIX-V1.1*
+_RBAC-MATRIX-V1.1_
 
-*UX-SPEC-61.2-V1.0*
+_UX-SPEC-61.2-V1.0_
 
-*USER-STORIES-61.2-V1.0*
+_USER-STORIES-61.2-V1.0_
 
-*BUSINESS-RULES-61.2-V1.0*
+_BUSINESS-RULES-61.2-V1.0_
 
-*ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0*
+_ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0_
 
 **Permanent constraint honored throughout this document:**
 
@@ -67,10 +67,10 @@ This document does not include or imply:
 - Test automation code, scripts, or framework-specific syntax — this is
   a functional test specification, not an automation artifact.
 
-*Where a test case exercises a permission boundary (e.g., verifying an
+_Where a test case exercises a permission boundary (e.g., verifying an
 Administrator-only control is absent for Assistant), the test case
 verifies behavior already specified in RBAC-MATRIX-V1.1 and
-BUSINESS-RULES-61.2-V1.0; it does not define a new boundary.*
+BUSINESS-RULES-61.2-V1.0; it does not define a new boundary._
 
 1\. Test Approach and Conventions
 
@@ -103,10 +103,10 @@ Each test case includes:
 - Test Type — Functional, Authorization, Negative, or Navigation, used
   only to aid organization in Section 3; not a new requirement category.
 
-1.3 Test Types Used
+  1.3 Test Types Used
 
 |                   |                                                                                                                                              |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Type**          | **Meaning**                                                                                                                                  |
 | **Functional**    | Verifies the system performs the primary, intended behavior described by the AC under normal conditions.                                     |
 | **Authorization** | Verifies a permission boundary already defined in RBAC-MATRIX-V1.1 is correctly enforced or correctly absent in the UI.                      |
@@ -143,7 +143,7 @@ traceability to User Stories, Business Rules, and RBAC permissions,
 follows in Section 3.
 
 |                 |                                                                           |               |               |
-|-----------------|---------------------------------------------------------------------------|---------------|---------------|
+| --------------- | ------------------------------------------------------------------------- | ------------- | ------------- |
 | **Test Case**   | **Title**                                                                 | **Source AC** | **Type**      |
 | **TC-61.2-001** | Assistant lands on Front Desk Workspace after login                       | AC-61.2-001   | Functional    |
 | **TC-61.2-002** | Today's Schedule lists appointments ordered by start time                 | AC-61.2-002   | Functional    |
@@ -168,7 +168,7 @@ case order follows the Traceability Overview (Section 2).
 TC-61.2-001 — Assistant lands on Front Desk Workspace after login
 
 |                                 |                                                                                       |
-|---------------------------------|---------------------------------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-001                                                                           |
 | **Title**                       | Assistant lands on Front Desk Workspace after login                                   |
 | **Test Type**                   | Functional                                                                            |
@@ -204,7 +204,7 @@ Expected Result
 TC-61.2-002 — Today's Schedule lists appointments ordered by start time
 
 |                                 |                                                                                                                          |
-|---------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **Test Case ID**                | TC-61.2-002                                                                                                              |
 | **Title**                       | Today's Schedule lists appointments ordered by start time                                                                |
 | **Test Type**                   | Functional                                                                                                               |
@@ -243,7 +243,7 @@ TC-61.2-003 — Today's Schedule shows explicit empty state with zero
 appointments
 
 |                                 |                                                                    |
-|---------------------------------|--------------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------------ |
 | **Test Case ID**                | TC-61.2-003                                                        |
 | **Title**                       | Today's Schedule shows explicit empty state with zero appointments |
 | **Test Type**                   | Negative                                                           |
@@ -275,7 +275,7 @@ TC-61.2-004 — Lead Queue displays active leads without unauthorized
 controls
 
 |                                 |                                                                                                                                                                       |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-004                                                                                                                                                           |
 | **Title**                       | Lead Queue displays active leads without unauthorized controls                                                                                                        |
 | **Test Type**                   | Authorization                                                                                                                                                         |
@@ -318,7 +318,7 @@ Expected Result
 TC-61.2-005 — Lead status/notes update persists with attribution
 
 |                                 |                                                                                                                |
-|---------------------------------|----------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-005                                                                                                    |
 | **Title**                       | Lead status/notes update persists with attribution                                                             |
 | **Test Type**                   | Functional                                                                                                     |
@@ -364,7 +364,7 @@ Expected Result
 TC-61.2-006 — Lead status/notes save failure preserves prior state
 
 |                                 |                                                                                                                |
-|---------------------------------|----------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-006                                                                                                    |
 | **Title**                       | Lead status/notes save failure preserves prior state                                                           |
 | **Test Type**                   | Negative                                                                                                       |
@@ -406,7 +406,7 @@ Expected Result
 TC-61.2-007 — Appointment save blocked on time conflict
 
 |                                 |                                                                                                                                         |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-007                                                                                                                             |
 | **Title**                       | Appointment save blocked on time conflict                                                                                               |
 | **Test Type**                   | Negative                                                                                                                                |
@@ -448,7 +448,7 @@ Expected Result
 TC-61.2-008 — Appointment Detail offers no physical delete control
 
 |                                 |                                                                                                                                                                                              |
-|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-008                                                                                                                                                                                  |
 | **Title**                       | Appointment Detail offers no physical delete control                                                                                                                                         |
 | **Test Type**                   | Authorization                                                                                                                                                                                |
@@ -486,7 +486,7 @@ TC-61.2-009 — Cancellation requires explicit confirmation before
 finalizing
 
 |                                 |                                                               |
-|---------------------------------|---------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-009                                                   |
 | **Title**                       | Cancellation requires explicit confirmation before finalizing |
 | **Test Type**                   | Functional                                                    |
@@ -530,7 +530,7 @@ TC-61.2-010 — Cancelled appointment remains visible in history, never
 removed
 
 |                                 |                                                                                                                                |
-|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **Test Case ID**                | TC-61.2-010                                                                                                                    |
 | **Title**                       | Cancelled appointment remains visible in history, never removed                                                                |
 | **Test Type**                   | Functional                                                                                                                     |
@@ -571,7 +571,7 @@ Expected Result
 TC-61.2-011 — Notification resend blocked on invalid contact information
 
 |                                 |                                                                                              |
-|---------------------------------|----------------------------------------------------------------------------------------------|
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-011                                                                                  |
 | **Title**                       | Notification resend blocked on invalid contact information                                   |
 | **Test Type**                   | Negative                                                                                     |
@@ -609,7 +609,7 @@ TC-61.2-012 — Shift Summary counts match underlying Lead/Appointment
 data
 
 |                                 |                                                                                                                               |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-012                                                                                                                   |
 | **Title**                       | Shift Summary counts match underlying Lead/Appointment data                                                                   |
 | **Test Type**                   | Functional                                                                                                                    |
@@ -653,7 +653,7 @@ TC-61.2-013 — No out-of-scope control is rendered, disabled or
 otherwise, for Assistant
 
 |                                 |                                                                                                                                                                                                                                                              |
-|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Test Case ID**                | TC-61.2-013                                                                                                                                                                                                                                                  |
 | **Title**                       | No out-of-scope control is rendered, disabled or otherwise, for Assistant                                                                                                                                                                                    |
 | **Test Type**                   | Authorization                                                                                                                                                                                                                                                |
@@ -699,7 +699,7 @@ Expected Result
 TC-61.2-014 — Detail view back navigation returns to originating section
 
 |                                 |                                                                                                                               |
-|---------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Test Case ID**                | TC-61.2-014                                                                                                                   |
 | **Title**                       | Detail view back navigation returns to originating section                                                                    |
 | **Test Type**                   | Navigation                                                                                                                    |
@@ -745,7 +745,7 @@ coverage of the source artifacts, with no test case exceeding the scope
 of what those artifacts already define.
 
 |                                                                          |                                                                                                                                                                                                                                                                            |                                                                                 |                                       |
-|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|---------------------------------------|
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------- |
 | **Source artifact**                                                      | **Items in source**                                                                                                                                                                                                                                                        | **Items covered by at least one test case**                                     | **Coverage**                          |
 | **UX-SPEC-61.2-V1.0 — Acceptance Criteria**                              | 14 (AC-61.2-001–014)                                                                                                                                                                                                                                                       | 14                                                                              | 100%                                  |
 | **USER-STORIES-61.2-V1.0 — User Stories**                                | 12 (US-61.2-01–12)                                                                                                                                                                                                                                                         | 12                                                                              | 100%                                  |
@@ -774,6 +774,6 @@ they are:
 
 - Global search (explicitly deferred).
 
-*This Test Case Package intentionally does not propose test cases for
+_This Test Case Package intentionally does not propose test cases for
 the items above. Resolution and subsequent test coverage remain deferred
-to Architecture Review and future iterations.*
+to Architecture Review and future iterations._

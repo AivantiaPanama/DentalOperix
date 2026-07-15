@@ -113,16 +113,16 @@ Existing names remain available:
 
 ## 7. Governance Compliance
 
-| Rule | Result |
-|---|---|
-| No second Patients domain | PASS |
-| No protected component modification | PASS |
-| No persistence re-architecture | PASS |
-| No API/UI change | PASS |
-| No Lead source-of-truth change | PASS |
-| No automated patient merge | PASS |
-| Incremental and traceable refactor | PASS |
-| Based on 73.1-A matrix | PASS |
+| Rule                                | Result |
+| ----------------------------------- | ------ |
+| No second Patients domain           | PASS   |
+| No protected component modification | PASS   |
+| No persistence re-architecture      | PASS   |
+| No API/UI change                    | PASS   |
+| No Lead source-of-truth change      | PASS   |
+| No automated patient merge          | PASS   |
+| Incremental and traceable refactor  | PASS   |
+| Based on 73.1-A matrix              | PASS   |
 
 ## 8. Validation Status
 

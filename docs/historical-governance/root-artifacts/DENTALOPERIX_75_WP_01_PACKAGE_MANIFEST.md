@@ -31,7 +31,6 @@
 - docs/implementation/75.0/WP-01/DENTALOPERIX_75_WP_01_IMPLEMENTATION_REPORT.md
 - docs/implementation/75.0/WP-01/DENTALOPERIX_75_WP_01_USER_VALIDATION_EVIDENCE_TEMPLATE.md
 
-
 ## Documentation Closure Files Added
 
 - docs/implementation/75.0/README.md

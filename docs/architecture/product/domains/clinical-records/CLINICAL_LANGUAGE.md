@@ -74,14 +74,14 @@ Reference to the patient identity owned by the Patients domain.
 
 ## Canonical terms
 
-| Use | Avoid |
-|---|---|
-| Clinical Record | Patient Record |
-| Clinical Note | Doctor Note |
-| Clinical Narrative | Free Text |
-| Healthcare Professional | User |
-| Patient Reference | Patient Copy |
-| Appointment Reference | Appointment Owner |
+| Use                     | Avoid             |
+| ----------------------- | ----------------- |
+| Clinical Record         | Patient Record    |
+| Clinical Note           | Doctor Note       |
+| Clinical Narrative      | Free Text         |
+| Healthcare Professional | User              |
+| Patient Reference       | Patient Copy      |
+| Appointment Reference   | Appointment Owner |
 
 ## Forbidden interpretations
 

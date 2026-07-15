@@ -12,19 +12,19 @@ WP-01 Clinical Record Foundation is formally closed and certified within the doc
 
 ## Certification Matrix
 
-| Area | Result |
-|---|---|
-| Document rector reviewed | PASS |
-| Baseline compatibility | PASS |
-| Architecture review | PASS |
-| Implementation authorization received | PASS |
-| Controlled implementation generated | PASS |
-| User build validation | PASS |
-| User TypeScript validation | PASS |
-| Governance compliance | PASS |
-| Protected component impact | PASS - none |
-| Dual Write introduced | PASS - no |
-| Persistence re-architecture introduced | PASS - no |
+| Area                                   | Result      |
+| -------------------------------------- | ----------- |
+| Document rector reviewed               | PASS        |
+| Baseline compatibility                 | PASS        |
+| Architecture review                    | PASS        |
+| Implementation authorization received  | PASS        |
+| Controlled implementation generated    | PASS        |
+| User build validation                  | PASS        |
+| User TypeScript validation             | PASS        |
+| Governance compliance                  | PASS        |
+| Protected component impact             | PASS - none |
+| Dual Write introduced                  | PASS - no   |
+| Persistence re-architecture introduced | PASS - no   |
 
 ## Certified Architecture State
 
@@ -40,11 +40,11 @@ Clinical Records
 
 ## Source of Truth Preservation
 
-| Domain | Certified Status |
-|---|---|
-| Leads | Source of Truth preserved |
-| Patients | Identity Domain preserved |
-| Appointments | Operational Domain preserved |
+| Domain           | Certified Status                        |
+| ---------------- | --------------------------------------- |
+| Leads            | Source of Truth preserved               |
+| Patients         | Identity Domain preserved               |
+| Appointments     | Operational Domain preserved            |
 | Clinical Records | Clinical Information Domain initialized |
 
 ## Closure Determination

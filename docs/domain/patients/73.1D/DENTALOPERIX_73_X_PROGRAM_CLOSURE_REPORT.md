@@ -6,14 +6,14 @@ Closure scope: 73.0, 73.1, 73.1-A, 73.1-B, 73.1-C, 73.1-D.
 
 ## Certified Program State
 
-| Increment | State |
-|---|---|
+| Increment                                           | State              |
+| --------------------------------------------------- | ------------------ |
 | 73.0 Patient Domain Discovery & Ubiquitous Language | CLOSED & CERTIFIED |
-| 73.1 Architecture Readiness | CLOSED & CERTIFIED |
-| 73.1-A Domain Conformance Audit | CLOSED & CERTIFIED |
-| 73.1-B Aggregate Alignment | CLOSED & CERTIFIED |
-| 73.1-C Value Objects Alignment | CLOSED & CERTIFIED |
-| 73.1-D Domain Consolidation & Readiness Assessment | CLOSED & CERTIFIED |
+| 73.1 Architecture Readiness                         | CLOSED & CERTIFIED |
+| 73.1-A Domain Conformance Audit                     | CLOSED & CERTIFIED |
+| 73.1-B Aggregate Alignment                          | CLOSED & CERTIFIED |
+| 73.1-C Value Objects Alignment                      | CLOSED & CERTIFIED |
+| 73.1-D Domain Consolidation & Readiness Assessment  | CLOSED & CERTIFIED |
 
 ## Consolidated Architecture State
 

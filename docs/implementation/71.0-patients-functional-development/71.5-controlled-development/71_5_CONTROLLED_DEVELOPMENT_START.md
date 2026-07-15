@@ -1,28 +1,33 @@
 # Program 71.5 — Controlled Development
 
 ## Status
+
 ACTIVE
 
 ## Active Increment
+
 71.5.4 — Patient API Integration
 
 ## Baseline
+
 DENTALOPERIX_BASELINE_69_2
 
 ## Objective
+
 Execute controlled, incremental development of the Patients domain while preserving Baseline 69.2 and DGF v1.0 governance.
 
 ## Completed Increments
 
-| Increment | Status |
-|---|---|
+| Increment                          | Status             |
+| ---------------------------------- | ------------------ |
 | 71.5.1 — Patient Domain Foundation | CLOSED / CERTIFIED |
 | 71.5.2 — Patient Application Layer | CLOSED / CERTIFIED |
-| 71.5.3 — Patient Persistence | CLOSED / CERTIFIED |
+| 71.5.3 — Patient Persistence       | CLOSED / CERTIFIED |
 
 ## Active Increment: 71.5.4 — Patient API Integration
 
 Allowed:
+
 - Patient API routes
 - HTTP validation
 - Request / response DTO handling
@@ -32,6 +37,7 @@ Allowed:
 - Evidence documentation
 
 Excluded:
+
 - UI components
 - BookingDialog
 - processDentalLead
@@ -70,7 +76,9 @@ Excluded:
 - Certification evidence produced.
 
 ## Governance Freeze
+
 Certified architectures, Sources of Truth, permanent restrictions, and protected components remain frozen unless changed by formal governance decision.
 
 ## Roadmap Reordering Record
+
 71.5.2 was updated from Patient Persistence to Patient Application Layer by minor roadmap reordering decision. Patient Persistence was deferred to and completed in 71.5.3. See `71.5.2_ROADMAP_REORDERING_DECISION.md`.

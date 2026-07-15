@@ -30,14 +30,14 @@ Provide a single navigation point for the Baseline Audit Package.
 
 ## Audit Coverage Targets
 
-| Indicator | Target |
-|---|---:|
-| Requirements with traceability | 100% |
-| ADR documented | 100% |
-| Architecture elements identified | 100% |
-| Configuration Items registered | 100% |
-| Tests with evidence | 100% |
-| Releases with certificates | 100% |
+| Indicator                        | Target |
+| -------------------------------- | -----: |
+| Requirements with traceability   |   100% |
+| ADR documented                   |   100% |
+| Architecture elements identified |   100% |
+| Configuration Items registered   |   100% |
+| Tests with evidence              |   100% |
+| Releases with certificates       |   100% |
 
 ## Closure State
 

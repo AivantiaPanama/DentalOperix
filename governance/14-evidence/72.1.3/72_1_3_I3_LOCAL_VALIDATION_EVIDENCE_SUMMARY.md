@@ -10,13 +10,13 @@ Project owner, local environment.
 
 ## Commands Evidenced
 
-| Command | Result |
-|---|---|
-| `npm install` | PASS |
-| postinstall `npm run build` | PASS |
-| `npm run build` | PASS |
-| `npx tsc --noEmit` | PASS |
-| `npm audit` | 0 vulnerabilities |
+| Command                     | Result            |
+| --------------------------- | ----------------- |
+| `npm install`               | PASS              |
+| postinstall `npm run build` | PASS              |
+| `npm run build`             | PASS              |
+| `npx tsc --noEmit`          | PASS              |
+| `npm audit`                 | 0 vulnerabilities |
 
 ## Notes
 

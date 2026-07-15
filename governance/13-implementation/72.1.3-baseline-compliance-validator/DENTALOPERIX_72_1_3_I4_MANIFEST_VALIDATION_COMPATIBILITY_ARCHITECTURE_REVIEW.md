@@ -90,11 +90,11 @@ The package must not modify:
 
 ## Risks
 
-| Risk | Mitigation |
-|---|---|
-| Duplicating Governance Validation Engine behavior | Limit I4 to manifest structure and compatibility checks only. |
-| Coupling validation to registry implementation | Validate `GovernanceManifest` before registry adaptation. |
-| Treating compatibility as functional authorization | Restrict output to governance compatibility status. |
+| Risk                                               | Mitigation                                                    |
+| -------------------------------------------------- | ------------------------------------------------------------- |
+| Duplicating Governance Validation Engine behavior  | Limit I4 to manifest structure and compatibility checks only. |
+| Coupling validation to registry implementation     | Validate `GovernanceManifest` before registry adaptation.     |
+| Treating compatibility as functional authorization | Restrict output to governance compatibility status.           |
 
 ## Governance Determination
 

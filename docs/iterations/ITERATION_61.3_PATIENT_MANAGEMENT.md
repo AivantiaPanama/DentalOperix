@@ -98,13 +98,13 @@ The following Architecture Watch Items remain blocked unless explicitly reviewed
 
 ## AI Assignments
 
-| Work | AI | Status |
-|---|---|---|
-| Patient domain discovery and governance framing | ChatGPT / Architecture Governance | COMPLETE |
-| Data model and domain proposal | ChatGPT | COMPLETE |
-| Patient identity foundation implementation candidate | ChatGPT / Cursor after approval | COMPLETE |
-| Patient persistence and infrastructure validation | ChatGPT / Cursor after approval | NEXT |
-| Patient UI mockup | v0/Lovable | BLOCKED UNTIL LATER PHASE |
+| Work                                                 | AI                                | Status                    |
+| ---------------------------------------------------- | --------------------------------- | ------------------------- |
+| Patient domain discovery and governance framing      | ChatGPT / Architecture Governance | COMPLETE                  |
+| Data model and domain proposal                       | ChatGPT                           | COMPLETE                  |
+| Patient identity foundation implementation candidate | ChatGPT / Cursor after approval   | COMPLETE                  |
+| Patient persistence and infrastructure validation    | ChatGPT / Cursor after approval   | NEXT                      |
+| Patient UI mockup                                    | v0/Lovable                        | BLOCKED UNTIL LATER PHASE |
 
 ## Acceptance Criteria
 
@@ -142,7 +142,6 @@ No Analytics Write Back.
 No Patient UI introduced in 61.3-01.
 ```
 
-
 ---
 
 ## 61.3 Status Update
@@ -154,7 +153,6 @@ No Patient UI introduced in 61.3-01.
 61.3-02 Patient Persistence & Infrastructure Validation: CLOSED / CERTIFIED
 61.3-03 Patient Application Services: OPEN / IMPLEMENTATION AUTHORIZED
 ```
-
 
 ---
 

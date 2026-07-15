@@ -14,12 +14,12 @@ The package contained WP-01 implementation artifacts and Clinical Records docume
 
 ## Updated State
 
-| Item | Previous State | Updated State |
-|---|---|---|
-| Program 74.x | Closed / recommended for certification in some docs | Closed and Certified |
-| Program 75.x | Initiated | Initiated; WP-01 closed |
-| WP-01 | Pre-implementation / evidence pending in some docs | Closed and Certified |
-| WP-02 | Pending | Pending architectural review; not started |
+| Item         | Previous State                                      | Updated State                             |
+| ------------ | --------------------------------------------------- | ----------------------------------------- |
+| Program 74.x | Closed / recommended for certification in some docs | Closed and Certified                      |
+| Program 75.x | Initiated                                           | Initiated; WP-01 closed                   |
+| WP-01        | Pre-implementation / evidence pending in some docs  | Closed and Certified                      |
+| WP-02        | Pending                                             | Pending architectural review; not started |
 
 ## Files Added
 

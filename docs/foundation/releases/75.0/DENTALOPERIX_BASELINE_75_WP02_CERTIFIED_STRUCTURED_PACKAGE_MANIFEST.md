@@ -1,16 +1,16 @@
 # DENTALOPERIX_BASELINE_75_WP02_CERTIFIED — Structured Package Manifest
 
 **Status:** FOUNDATION RELEASE STRUCTURE UPDATED  
-**Date:** 2026-06-26  
+**Date:** 2026-06-26
 
 ## Package Summary
 
-| Metric | Value |
-|---|---:|
-| Total files | 1535 |
-| Total directories | 340 |
-| Root-level files after cleanup | 18 |
-| Historical governance files archived under docs | 104 |
+| Metric                                          | Value |
+| ----------------------------------------------- | ----: |
+| Total files                                     |  1535 |
+| Total directories                               |   340 |
+| Root-level files after cleanup                  |    18 |
+| Historical governance files archived under docs |   104 |
 
 ## Structure Update
 

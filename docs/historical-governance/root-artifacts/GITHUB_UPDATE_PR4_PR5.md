@@ -63,4 +63,3 @@ No Lead persistence changes introduced.
 No Patient Management introduced.
 No 61.2 Assistant Dashboard implementation introduced.
 ```
-

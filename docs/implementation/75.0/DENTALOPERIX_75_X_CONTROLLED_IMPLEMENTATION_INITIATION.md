@@ -9,11 +9,11 @@ This document supersedes the earlier 75.x initiation state for WP-02. WP-02 has 
 
 ## Work Package State
 
-| WP | Scope | Status |
-|---|---|---|
-| WP-01 | Clinical Record Foundation | CLOSED / CERTIFIED |
-| WP-02 | Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
-| WP-03 | Clinical Records Domain Evolution | READY FOR PLANNING |
+| WP    | Scope                             | Status                                          |
+| ----- | --------------------------------- | ----------------------------------------------- |
+| WP-01 | Clinical Record Foundation        | CLOSED / CERTIFIED                              |
+| WP-02 | Clinical Notes Foundation         | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
+| WP-03 | Clinical Records Domain Evolution | READY FOR PLANNING                              |
 
 ## Controlled Development Rule
 

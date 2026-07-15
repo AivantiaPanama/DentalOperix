@@ -1,12 +1,15 @@
 # Governance Maturity Model — GML-1
 
 ## Status
+
 APPROVED
 
 ## Level
+
 GML-1 — Foundation Governance
 
 ## Objective
+
 GML-1 certifies that DentalOperix has consolidated documentary governance, a single active technical baseline, master registers, traceability, protected component control, and a mandatory architecture/governance review process before implementation.
 
 ## Certification Criteria
@@ -25,10 +28,10 @@ GML-1 certifies that DentalOperix has consolidated documentary governance, a sin
 
 ## GML Roadmap
 
-| Level | Name | Objective |
-|---|---|---|
-| GML-1 | Foundation Governance | Consolidated documentary governance |
-| GML-2 | Managed Governance | Metrics and compliance tracking |
-| GML-3 | Integrated Governance | Integration with development lifecycle |
-| GML-4 | Predictive Governance | Preventive indicators and trend analysis |
+| Level | Name                  | Objective                                 |
+| ----- | --------------------- | ----------------------------------------- |
+| GML-1 | Foundation Governance | Consolidated documentary governance       |
+| GML-2 | Managed Governance    | Metrics and compliance tracking           |
+| GML-3 | Integrated Governance | Integration with development lifecycle    |
+| GML-4 | Predictive Governance | Preventive indicators and trend analysis  |
 | GML-5 | Continuous Governance | Advanced continuous governance automation |

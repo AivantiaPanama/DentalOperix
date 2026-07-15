@@ -44,19 +44,19 @@ Patient Foundation 61.3 is the authoritative Patient domain boundary.
 
 ## 3. Ownership Matrix
 
-| Artifact Area | Classification | Authority Level | Notes |
-|---|---|---|---|
-| `src/server/patients/patient-domain.ts` | Official Domain | Authoritative | Patient aggregate and value model |
-| `src/server/patients/patient-service.ts` | Official Application Layer | Authoritative | Patient application service boundary |
-| `src/server/patients/patient-repository.ts` | Official Contract Layer | Authoritative | Repository contract |
-| `src/server/patients/relational-patient-repository.ts` | Official Infrastructure Adapter | Authoritative | Relational persistence adapter |
-| `src/server/patients/relational-patients-schema.ts` | Official Schema Mapping | Authoritative | Relational mapping metadata |
-| `src/server/patients/patient-identity-resolution.ts` | Official Identity Resolution | Authoritative | Candidate resolution logic |
-| `src/server/patients/patient-merge-contract.ts` | Official Merge Contract | Authoritative contract only | Manual merge framework contract |
-| `src/server/patients/patient-audit-contract.ts` | Official Audit Contract | Authoritative contract only | Patient audit contract |
-| `src/routes/api/patients/*` | Legacy API Layer | Non-authoritative | Existing API surface; must not redefine Patient domain rules |
-| `src/lib/patients/*` | Legacy Support Layer | Non-authoritative | Existing support utilities |
-| `src/server/read-models/patient-*` | Read Model Layer | Non-authoritative | Query/read projections only |
+| Artifact Area                                          | Classification                  | Authority Level             | Notes                                                        |
+| ------------------------------------------------------ | ------------------------------- | --------------------------- | ------------------------------------------------------------ |
+| `src/server/patients/patient-domain.ts`                | Official Domain                 | Authoritative               | Patient aggregate and value model                            |
+| `src/server/patients/patient-service.ts`               | Official Application Layer      | Authoritative               | Patient application service boundary                         |
+| `src/server/patients/patient-repository.ts`            | Official Contract Layer         | Authoritative               | Repository contract                                          |
+| `src/server/patients/relational-patient-repository.ts` | Official Infrastructure Adapter | Authoritative               | Relational persistence adapter                               |
+| `src/server/patients/relational-patients-schema.ts`    | Official Schema Mapping         | Authoritative               | Relational mapping metadata                                  |
+| `src/server/patients/patient-identity-resolution.ts`   | Official Identity Resolution    | Authoritative               | Candidate resolution logic                                   |
+| `src/server/patients/patient-merge-contract.ts`        | Official Merge Contract         | Authoritative contract only | Manual merge framework contract                              |
+| `src/server/patients/patient-audit-contract.ts`        | Official Audit Contract         | Authoritative contract only | Patient audit contract                                       |
+| `src/routes/api/patients/*`                            | Legacy API Layer                | Non-authoritative           | Existing API surface; must not redefine Patient domain rules |
+| `src/lib/patients/*`                                   | Legacy Support Layer            | Non-authoritative           | Existing support utilities                                   |
+| `src/server/read-models/patient-*`                     | Read Model Layer                | Non-authoritative           | Query/read projections only                                  |
 
 ## 4. Non-Authoritative Components Rule
 

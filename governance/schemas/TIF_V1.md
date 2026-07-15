@@ -14,21 +14,21 @@ source: ChatGPT governance consolidation session
 
 ## Prefixes
 
-| Prefix | Artifact |
-|---|---|
-| ARCH | Architecture element |
-| ADR | Architectural Decision Record |
-| GOV | Governance policy/process |
-| REQ | Requirement |
-| TEST | Test case |
-| CI | Configuration Item |
-| CFG | Configuration value or setting |
-| REL | Release/baseline |
-| EVID | Evidence |
-| RISK | Risk |
-| COMP | Protected or governed component |
-| API | API contract/endpoint |
-| DB | Persistence object |
+| Prefix | Artifact                        |
+| ------ | ------------------------------- |
+| ARCH   | Architecture element            |
+| ADR    | Architectural Decision Record   |
+| GOV    | Governance policy/process       |
+| REQ    | Requirement                     |
+| TEST   | Test case                       |
+| CI     | Configuration Item              |
+| CFG    | Configuration value or setting  |
+| REL    | Release/baseline                |
+| EVID   | Evidence                        |
+| RISK   | Risk                            |
+| COMP   | Protected or governed component |
+| API    | API contract/endpoint           |
+| DB     | Persistence object              |
 
 ## Traceability Chain
 

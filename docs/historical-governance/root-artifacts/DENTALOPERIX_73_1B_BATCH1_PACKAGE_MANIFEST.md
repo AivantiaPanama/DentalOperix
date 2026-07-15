@@ -27,7 +27,6 @@ Status: CLOSED & CERTIFIED
 - No persistence, API, UI, Leads, or Appointments changes introduced.
 - No unit tests executed by assistant; validation evidence is user-owned.
 
-
 ## Closure Evidence
 
 User-provided local validation evidence accepted during governance review:

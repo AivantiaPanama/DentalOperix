@@ -245,4 +245,3 @@ Closure Documentation:
 
 - docs/governance/61.3/61.3_GOVERNANCE_RETROSPECTIVE_REVIEW.md
 - docs/governance/61.3/61.3_PHASE_CLOSURE_REVIEW.md
-

@@ -22,26 +22,25 @@ Program 72.1 is implementation-first. Each increment must deliver executable or 
 
 ## Roadmap
 
-| Increment | Deliverable | Status |
-|---|---|---|
-| 72.1.1 | Governance SDK Core | CLOSED & CERTIFIED |
-| 72.1.2 | Governance Validation Engine | CLOSED & CERTIFIED |
-| 72.1.3 | Baseline Compliance Validator | IN PROGRESS - I1 CLOSED & CERTIFIED; I2 IMPLEMENTATION AUTHORIZED |
-| 72.1.4 | Pilot Validation against Baseline 71.5 RC | PLANNED |
-| 72.1.5 | Governance Retrospective Review | PLANNED |
+| Increment | Deliverable                               | Status                                                            |
+| --------- | ----------------------------------------- | ----------------------------------------------------------------- |
+| 72.1.1    | Governance SDK Core                       | CLOSED & CERTIFIED                                                |
+| 72.1.2    | Governance Validation Engine              | CLOSED & CERTIFIED                                                |
+| 72.1.3    | Baseline Compliance Validator             | IN PROGRESS - I1 CLOSED & CERTIFIED; I2 IMPLEMENTATION AUTHORIZED |
+| 72.1.4    | Pilot Validation against Baseline 71.5 RC | PLANNED                                                           |
+| 72.1.5    | Governance Retrospective Review           | PLANNED                                                           |
 
 ## Current Increment
 
 72.1.1 Governance SDK Core and 72.1.2 Governance Validation Engine are CLOSED & CERTIFIED. 72.1.3 Baseline Compliance Validator is active: I1 Domain Foundation and R1 RBAC Permission Catalog Alignment are CLOSED & CERTIFIED; I2 Rule Registry Infrastructure is implementation authorized but not yet certified.
-
 
 ## Certification Update - 2026-06-25
 
 72.1.1 and 72.1.2 have been closed and certified based on architecture review, boundary validation, and project-owner local test evidence.
 
 ### Updated Implementation Policy
-Test execution is owned by the project owner. Implementation packages include code, architecture safeguards, documentation, and evidence templates. The project owner executes local tests and submits evidence for governance review and certification.
 
+Test execution is owned by the project owner. Implementation packages include code, architecture safeguards, documentation, and evidence templates. The project owner executes local tests and submits evidence for governance review and certification.
 
 ## Certification Update - 2026-06-25 - 72.1.3 I1/R1
 
@@ -51,6 +50,6 @@ Test execution is owned by the project owner. Implementation packages include co
 - `npm run build`: PASS
 - `npm run test`: 135 Test Files PASS / 583 Tests PASS
 
-72.1.3-R1 RBAC Permission Catalog Alignment is CLOSED & CERTIFIED. The remediation aligned Patients API routes and tests with the certified RBAC permission `patients:update` instead of the non-catalog permission `patients:write`.
+  72.1.3-R1 RBAC Permission Catalog Alignment is CLOSED & CERTIFIED. The remediation aligned Patients API routes and tests with the certified RBAC permission `patients:update` instead of the non-catalog permission `patients:write`.
 
-72.1.3-I2 Rule Registry Infrastructure is authorized for implementation. It is not implemented or certified in this package.
+  72.1.3-I2 Rule Registry Infrastructure is authorized for implementation. It is not implemented or certified in this package.

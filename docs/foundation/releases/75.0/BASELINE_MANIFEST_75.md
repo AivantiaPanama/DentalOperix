@@ -8,21 +8,21 @@
 
 ## Included Work Packages
 
-| Work Package | Status |
-|---|---|
-| WP-01 — Clinical Record Foundation | CLOSED / CERTIFIED |
-| WP-02 — Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI CERTIFIED |
+| Work Package                       | Status                                      |
+| ---------------------------------- | ------------------------------------------- |
+| WP-01 — Clinical Record Foundation | CLOSED / CERTIFIED                          |
+| WP-02 — Clinical Notes Foundation  | CLOSED / KNOWLEDGE CERTIFIED / RI CERTIFIED |
 
 ## Certified Reference Implementations
 
-| RI | Name | Status |
-|---|---|---|
+| RI     | Name                      | Status                                           |
+| ------ | ------------------------- | ------------------------------------------------ |
 | RI-001 | Clinical Notes Foundation | CERTIFIED WITH CONTROLLED VALIDATION OBSERVATION |
 
 ## Controlled Observations
 
-| ID | Observation | Required Follow-up |
-|---|---|---|
+| ID        | Observation                                                       | Required Follow-up                                                            |
+| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | CO-75-001 | Runtime/build/test evidence was not executed in this environment. | User attaches local validation evidence using the included evidence template. |
 
 ## Release Determination

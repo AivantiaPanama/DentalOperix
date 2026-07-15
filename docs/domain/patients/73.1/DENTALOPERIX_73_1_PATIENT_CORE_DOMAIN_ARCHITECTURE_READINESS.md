@@ -104,12 +104,12 @@ No changes are authorized to:
 
 ## Risks and Mitigations
 
-| Risk | Mitigation |
-|---|---|
-| Aggregate growth beyond identity responsibility | Keep clinical, billing, appointment, and acquisition concerns outside Patient. |
-| Infrastructure dependency leakage | Keep the domain module free of Supabase, HTTP, React, and adapters. |
-| Duplicate detection becoming auto-merge | DuplicateDetectionService may only detect and recommend, never merge. |
-| Lead Replacement | Lead conversion remains a future application workflow; Leads remains Source of Truth for acquisition. |
+| Risk                                            | Mitigation                                                                                            |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Aggregate growth beyond identity responsibility | Keep clinical, billing, appointment, and acquisition concerns outside Patient.                        |
+| Infrastructure dependency leakage               | Keep the domain module free of Supabase, HTTP, React, and adapters.                                   |
+| Duplicate detection becoming auto-merge         | DuplicateDetectionService may only detect and recommend, never merge.                                 |
+| Lead Replacement                                | Lead conversion remains a future application workflow; Leads remains Source of Truth for acquisition. |
 
 ## Baseline Compatibility
 
@@ -139,7 +139,6 @@ Test execution is user-owned.
 ## Governance Determination
 
 **73.1 - Patient Core Domain is APPROVED FOR IMPLEMENTATION.**
-
 
 ## Supersession Notice
 

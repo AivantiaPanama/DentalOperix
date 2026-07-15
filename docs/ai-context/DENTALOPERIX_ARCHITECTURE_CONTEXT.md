@@ -25,14 +25,14 @@ Leads
 
 ## Source-of-Truth Boundaries
 
-| Entity | Source of Truth |
-|---|---|
-| Lead acquisition and booking origin | Leads |
-| Login identity | Users |
-| User authorization | Roles / RBAC |
-| Patient clinical relationship | Patients - future scope, not 61.1 |
-| Appointment operation | Appointments |
-| Dashboards / analytics | Read-only derived data |
+| Entity                              | Source of Truth                   |
+| ----------------------------------- | --------------------------------- |
+| Lead acquisition and booking origin | Leads                             |
+| Login identity                      | Users                             |
+| User authorization                  | Roles / RBAC                      |
+| Patient clinical relationship       | Patients - future scope, not 61.1 |
+| Appointment operation               | Appointments                      |
+| Dashboards / analytics              | Read-only derived data            |
 
 ## RBAC Architecture Constraints
 

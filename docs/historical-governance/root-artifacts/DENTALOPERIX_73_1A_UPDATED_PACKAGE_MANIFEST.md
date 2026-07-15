@@ -10,15 +10,15 @@ This package consolidates documentation and repository state after the discovery
 
 ## Program Status
 
-| Program / Increment | Status |
-|---|---|
-| 72.1 Governance Platform Implementation | CLOSED & CERTIFIED |
-| 72.1.3-I4 Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED |
-| 73 Patient Domain Implementation | ACTIVE |
-| 73.0 Patient Domain Discovery & Ubiquitous Language | CLOSED & CERTIFIED |
-| 73.1 Patient Core Domain | RE-SCOPED TO ALIGNMENT |
-| 73.1-A Domain Conformance Audit | CLOSED & CERTIFIED |
-| 73.1-B Aggregate Alignment | APPROVED FOR IMPLEMENTATION PLANNING |
+| Program / Increment                                  | Status                               |
+| ---------------------------------------------------- | ------------------------------------ |
+| 72.1 Governance Platform Implementation              | CLOSED & CERTIFIED                   |
+| 72.1.3-I4 Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED                   |
+| 73 Patient Domain Implementation                     | ACTIVE                               |
+| 73.0 Patient Domain Discovery & Ubiquitous Language  | CLOSED & CERTIFIED                   |
+| 73.1 Patient Core Domain                             | RE-SCOPED TO ALIGNMENT               |
+| 73.1-A Domain Conformance Audit                      | CLOSED & CERTIFIED                   |
+| 73.1-B Aggregate Alignment                           | APPROVED FOR IMPLEMENTATION PLANNING |
 
 ## Key Documentation Added
 

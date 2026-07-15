@@ -49,13 +49,13 @@ Open state found during audit:
 
 ## Closure State
 
-| Increment | Updated State |
-|---|---|
-| 73.1-A | CLOSED & CERTIFIED |
-| 73.1-B | CLOSED & CERTIFIED |
-| 73.1-C | CLOSED & CERTIFIED |
-| 73.1-D | CLOSED & CERTIFIED |
-| 73.x | CLOSED & GOVERNANCE CERTIFIED |
+| Increment | Updated State                 |
+| --------- | ----------------------------- |
+| 73.1-A    | CLOSED & CERTIFIED            |
+| 73.1-B    | CLOSED & CERTIFIED            |
+| 73.1-C    | CLOSED & CERTIFIED            |
+| 73.1-D    | CLOSED & CERTIFIED            |
+| 73.x      | CLOSED & GOVERNANCE CERTIFIED |
 
 ## Governance Confirmation
 

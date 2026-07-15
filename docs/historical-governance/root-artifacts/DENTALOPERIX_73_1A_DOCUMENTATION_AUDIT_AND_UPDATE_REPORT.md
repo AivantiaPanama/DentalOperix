@@ -35,13 +35,13 @@ The prior 73.1 readiness assumption of creating a new domain module is supersede
 
 ## Closure State Updates
 
-| Increment | Updated State |
-|---|---|
-| 72.1 | CLOSED & CERTIFIED |
-| 72.1.3-I4 | CLOSED & CERTIFIED |
-| 73.0 | CLOSED & CERTIFIED |
-| 73.1-A | CLOSED & CERTIFIED |
-| 73.1-B | APPROVED FOR IMPLEMENTATION PLANNING |
+| Increment | Updated State                        |
+| --------- | ------------------------------------ |
+| 72.1      | CLOSED & CERTIFIED                   |
+| 72.1.3-I4 | CLOSED & CERTIFIED                   |
+| 73.0      | CLOSED & CERTIFIED                   |
+| 73.1-A    | CLOSED & CERTIFIED                   |
+| 73.1-B    | APPROVED FOR IMPLEMENTATION PLANNING |
 
 ## Governance Determination
 

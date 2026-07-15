@@ -3,21 +3,27 @@
 ## DentalOperix
 
 ### Iteration
+
 61.1 Users & RBAC Foundation
 
 ### Version
+
 V1.1
 
 ### Review Type
+
 Architecture Certification Review
 
 ### Status
+
 READY_FOR_IMPLEMENTATION
 
 ### Review Authority
+
 Architect Principal / Product Governance Guardian
 
 ### Certification Date
+
 2026-06-22
 
 ---
@@ -316,19 +322,19 @@ APPROVED
 
 # 10. Traceability Matrix
 
-| Requirement / Decision | Source Document | Validation Result |
-|---|---|---|
-| Certified persistence architecture | `CURRENT_PROGRAM_STATUS.md`, `61.0_CURRENT_PROJECT_STATUS.md` | Validated |
-| Leads as Source of Truth | `CURRENT_PROGRAM_STATUS.md`, `DENTALOPERIX_ARCHITECTURE_CONTEXT.md` | Preserved |
-| 61.1 functional baseline | `ITERATION_61.1_USERS_RBAC.md`, `RBAC-MATRIX-V1.1.md` | Approved |
-| User lifecycle | `ITERATION_61.1_USERS_RBAC.md` | Approved |
-| Official roles | `RBAC-MATRIX-V1.1.md` | Approved |
-| Permission matrix | `RBAC-MATRIX-V1.1.md` | Approved |
-| Dashboard routing | `ITERATION_61.1_USERS_RBAC.md` | Approved |
-| User ↔ Lead boundary | `ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.md` | Approved |
-| Role assignment workflow | `ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md` | Resolved |
-| 61.2 dependency on 61.1 | `ITERATION_61.2_ASSISTANT_DASHBOARD.md`, `61.2_DOCUMENTATION_STATUS.md` | Confirmed |
-| Governance readiness | `61.0_PRODUCT_GOVERNANCE_DASHBOARD.md` | Confirmed |
+| Requirement / Decision             | Source Document                                                          | Validation Result |
+| ---------------------------------- | ------------------------------------------------------------------------ | ----------------- |
+| Certified persistence architecture | `CURRENT_PROGRAM_STATUS.md`, `61.0_CURRENT_PROJECT_STATUS.md`            | Validated         |
+| Leads as Source of Truth           | `CURRENT_PROGRAM_STATUS.md`, `DENTALOPERIX_ARCHITECTURE_CONTEXT.md`      | Preserved         |
+| 61.1 functional baseline           | `ITERATION_61.1_USERS_RBAC.md`, `RBAC-MATRIX-V1.1.md`                    | Approved          |
+| User lifecycle                     | `ITERATION_61.1_USERS_RBAC.md`                                           | Approved          |
+| Official roles                     | `RBAC-MATRIX-V1.1.md`                                                    | Approved          |
+| Permission matrix                  | `RBAC-MATRIX-V1.1.md`                                                    | Approved          |
+| Dashboard routing                  | `ITERATION_61.1_USERS_RBAC.md`                                           | Approved          |
+| User ↔ Lead boundary               | `ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.md`                         | Approved          |
+| Role assignment workflow           | `ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md` | Resolved          |
+| 61.2 dependency on 61.1            | `ITERATION_61.2_ASSISTANT_DASHBOARD.md`, `61.2_DOCUMENTATION_STATUS.md`  | Confirmed         |
+| Governance readiness               | `61.0_PRODUCT_GOVERNANCE_DASHBOARD.md`                                   | Confirmed         |
 
 ---
 

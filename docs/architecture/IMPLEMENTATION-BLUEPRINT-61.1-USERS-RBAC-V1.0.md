@@ -389,12 +389,12 @@ Rules:
 
 ## 8. Dashboard Routing Blueprint
 
-| Role | Target | Implementation Level in 61.1 |
-|---|---|---|
-| patient | Patient Portal | Shell / protected route only |
-| assistant | Front Desk Workspace | Shell / route target for 61.2 |
-| doctor | Clinical Workspace | Shell / protected route only |
-| administrator | Operations Console | User management enabled |
+| Role          | Target               | Implementation Level in 61.1  |
+| ------------- | -------------------- | ----------------------------- |
+| patient       | Patient Portal       | Shell / protected route only  |
+| assistant     | Front Desk Workspace | Shell / route target for 61.2 |
+| doctor        | Clinical Workspace   | Shell / protected route only  |
+| administrator | Operations Console   | User management enabled       |
 
 Routing rule:
 
@@ -868,4 +868,3 @@ STATUS: APPROVED AS IMPLEMENTATION BLUEPRINT
 CODE GENERATION: NOT AUTHORIZED
 NEXT STEP: Create Cursor Implementation Task 61.1 after explicit approval
 ```
-

@@ -28,16 +28,16 @@ This evidence records implementation of the Governance SDK Core as a transversal
 
 ## Governance Capabilities Covered
 
-| Capability | Artifact |
-|---|---|
-| Public contracts | `contracts/governance-contracts.ts` |
-| Canonical models | `models/governance-models.ts` |
-| Validator registry | `registry/validator-registry.ts` |
-| Report generation | `reporting/report-builder.ts` |
-| Evidence collection | `evidence/static-evidence-provider.ts` |
-| Version policy | `version/governance-version.ts` |
-| SDK export surface | `index.ts` |
-| Contract and boundary tests | `__tests__/*.test.ts` |
+| Capability                  | Artifact                               |
+| --------------------------- | -------------------------------------- |
+| Public contracts            | `contracts/governance-contracts.ts`    |
+| Canonical models            | `models/governance-models.ts`          |
+| Validator registry          | `registry/validator-registry.ts`       |
+| Report generation           | `reporting/report-builder.ts`          |
+| Evidence collection         | `evidence/static-evidence-provider.ts` |
+| Version policy              | `version/governance-version.ts`        |
+| SDK export surface          | `index.ts`                             |
+| Contract and boundary tests | `__tests__/*.test.ts`                  |
 
 ## Boundary Declaration
 

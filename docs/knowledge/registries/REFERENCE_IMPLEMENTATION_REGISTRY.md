@@ -3,9 +3,9 @@
 **Updated:** 2026-06-26  
 **Baseline:** DENTALOPERIX_BASELINE_75_WP02_CERTIFIED
 
-| RI ID | Name | Domain | Origin | Status | Baseline |
-|---|---|---|---|---|---|
-| RI-001 | Clinical Notes Foundation | Clinical Records | WP-02 | CERTIFIED WITH CONTROLLED VALIDATION OBSERVATION | DENTALOPERIX_BASELINE_75_WP02_CERTIFIED |
+| RI ID  | Name                      | Domain           | Origin | Status                                           | Baseline                                |
+| ------ | ------------------------- | ---------------- | ------ | ------------------------------------------------ | --------------------------------------- |
+| RI-001 | Clinical Notes Foundation | Clinical Records | WP-02  | CERTIFIED WITH CONTROLLED VALIDATION OBSERVATION | DENTALOPERIX_BASELINE_75_WP02_CERTIFIED |
 
 ## Registry Rule
 

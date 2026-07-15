@@ -7,18 +7,18 @@
 
 ## Foundation Components
 
-| Component | Status |
-|---|---|
-| Product Repository | CONSOLIDATED |
-| DGF | INCLUDED |
-| DPKS / Knowledge Assets | CONSOLIDATED |
-| Architecture Knowledge Base | CONSOLIDATED |
-| ADR Repository | CURRENT |
-| Domain Asset Catalog | UPDATED |
-| Reference Implementation Registry | UPDATED |
-| RI-001 — Clinical Notes Foundation | CERTIFIED |
-| WP-02 | CLOSED / KNOWLEDGE CERTIFIED |
-| Validation Evidence | USER-OWNED / TEMPLATE INCLUDED |
+| Component                          | Status                         |
+| ---------------------------------- | ------------------------------ |
+| Product Repository                 | CONSOLIDATED                   |
+| DGF                                | INCLUDED                       |
+| DPKS / Knowledge Assets            | CONSOLIDATED                   |
+| Architecture Knowledge Base        | CONSOLIDATED                   |
+| ADR Repository                     | CURRENT                        |
+| Domain Asset Catalog               | UPDATED                        |
+| Reference Implementation Registry  | UPDATED                        |
+| RI-001 — Clinical Notes Foundation | CERTIFIED                      |
+| WP-02                              | CLOSED / KNOWLEDGE CERTIFIED   |
+| Validation Evidence                | USER-OWNED / TEMPLATE INCLUDED |
 
 ## Foundation Rule
 

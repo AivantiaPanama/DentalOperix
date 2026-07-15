@@ -12,13 +12,13 @@ Author role: Product Analyst / Functional Designer
 
 **Consolidates exclusively:**
 
-*RBAC-MATRIX-V1.1*
+_RBAC-MATRIX-V1.1_
 
-*UX-SPEC-61.2-V1.0*
+_UX-SPEC-61.2-V1.0_
 
-*USER-STORIES-61.2-V1.0*
+_USER-STORIES-61.2-V1.0_
 
-*BUSINESS-RULES-61.2-V1.0*
+_BUSINESS-RULES-61.2-V1.0_
 
 **Permanent constraint honored throughout this document:**
 
@@ -63,11 +63,11 @@ This document does not:
 
 - Contain any code.
 
-*Every statement in this document is traceable to one or more of the
+_Every statement in this document is traceable to one or more of the
 four source artifacts. Where this document expresses a judgment (e.g.,
 in the Risk Assessment or Readiness Assessment), that judgment is
 clearly distinguished from the source material it is based on, and does
-not alter the source material itself.*
+not alter the source material itself._
 
 1\. Executive Summary
 
@@ -108,7 +108,7 @@ package for Iteration 61.2. No artifact outside this list was used as a
 source for this summary.
 
 |                              |                             |                                                     |                                                                                                                                                                                                                                                            |
-|------------------------------|-----------------------------|-----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------- | --------------------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Artifact**                 | **Type**                    | **Status**                                          | **Key contents**                                                                                                                                                                                                                                           |
 | **RBAC-MATRIX-V1.1**         | Authorization               | Revised — Architecture Review feedback incorporated | 4 roles; granular Leads permissions (lead.status.update, lead.notes.update, lead.owner.reassign); Appointment permissions with deletion prohibited; User lifecycle permissions; 8 BR-RBAC rules; 4 Open Architecture Questions.                            |
 | **UX-SPEC-61.2-V1.0**        | Functional / UX             | Draft — Ready for Architecture Review               | 2 personas; 8 user goals (G-01 to G-08); information architecture; navigation model; 7 user flows; 5 dashboard sections; 5 widget definitions; 14 acceptance criteria (AC-61.2-001 to 014); responsive behavior; accessibility requirements; 5 open items. |
@@ -124,7 +124,7 @@ below is new; each row is a join of mappings already stated in the
 source artifacts.
 
 |                  |                        |                         |                                       |                                                              |
-|------------------|------------------------|-------------------------|---------------------------------------|--------------------------------------------------------------|
+| ---------------- | ---------------------- | ----------------------- | ------------------------------------- | ------------------------------------------------------------ |
 | **Goal**         | **User Story**         | **Acceptance Criteria** | **Business Rule(s)**                  | **RBAC Permission(s)**                                       |
 | **G-01**         | US-61.2-01, US-61.2-02 | AC-61.2-001, 002, 003   | BR-61.2-011, BR-61.2-012              | appointment.read; dashboard routing (RBAC-MATRIX-V1.1 Sec.7) |
 | **G-02**         | US-61.2-03             | AC-61.2-004             | BR-61.2-001                           | lead.read                                                    |
@@ -136,11 +136,11 @@ source artifacts.
 | **G-08**         | US-61.2-11             | AC-61.2-004, 008, 013   | BR-61.2-009                           | Cross-cutting — all Administrator-only/denied permissions    |
 | **(navigation)** | US-61.2-12             | AC-61.2-014             | BR-61.2-010                           | lead.read; appointment.read                                  |
 
-*Coverage check: all 8 User Goals (G-01–G-08), all 12 User Stories
+_Coverage check: all 8 User Goals (G-01–G-08), all 12 User Stories
 (US-61.2-01–12), all 14 Acceptance Criteria (AC-61.2-001–014), and all
 12 Business Rules (BR-61.2-001–012) appear in this matrix or its source
 tables. No orphaned identifier was found in any of the four source
-artifacts during this consolidation.*
+artifacts during this consolidation._
 
 4\. Certified Architecture Compatibility Review
 
@@ -150,7 +150,7 @@ content — it does not add, remove, or reinterpret any architectural
 element.
 
 |                                                                                               |                                                                                                                                                                                                                                                                                                                                   |
-|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Certified architecture element**                                                            | **Compatibility finding**                                                                                                                                                                                                                                                                                                         |
 | **LeadPersistencePort**                                                                       | Not referenced, touched, or implied by any artifact. All Leads-related permissions and rules (RBAC-MATRIX-V1.1 Section 4; BR-61.2-001, BR-61.2-002) operate strictly at the application layer, through the existing certified flow.                                                                                               |
 | **LeadPersistenceProvider**                                                                   | Not referenced, touched, or implied by any artifact.                                                                                                                                                                                                                                                                              |
@@ -166,7 +166,7 @@ satisfied by the cited source, and separately surfaces the dependencies
 that remain unresolved (without attempting to resolve them here).
 
 |                                                                                                     |                                                                         |                                                                                                                                                                                               |
-|-----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Dependency**                                                                                      | **Depends on**                                                          | **Status**                                                                                                                                                                                    |
 | **UX-SPEC-61.2-V1.0**                                                                               | RBAC-MATRIX-V1.1 (permissions, dashboard routing name)                  | Satisfied — every permission referenced in UX-SPEC-61.2-V1.0 exists in RBAC-MATRIX-V1.1; no permission was assumed or invented.                                                               |
 | **USER-STORIES-61.2-V1.0**                                                                          | UX-SPEC-61.2-V1.0 (goals, AC, flows, widgets)                           | Satisfied — all 12 stories reuse Goal IDs and AC IDs verbatim from UX-SPEC-61.2-V1.0; no new ID series was introduced for goals or AC.                                                        |
@@ -185,7 +185,7 @@ warranted during implementation, without prescribing a technical
 solution.
 
 |                                                                                                                                                  |                                 |                                                                                                                            |                                                                                                                                                                                                                         |
-|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Risk**                                                                                                                                         | **Likelihood**                  | **Impact if unmitigated**                                                                                                  | **Mitigation already present in the package**                                                                                                                                                                           |
 | **A future implementation renders a disabled (rather than absent) control for an Administrator-only action.**                                    | Medium                          | Would violate BR-61.2-009 and AC-61.2-013, eroding the RBAC boundary at the UI layer even if backend enforcement holds.    | BR-61.2-009 and US-61.2-11 both state the absence requirement explicitly and call it out as a structural, not cosmetic, constraint.                                                                                     |
 | **The live-count mechanism for Shift Summary (BR-61.2-008) is implemented in a way that silently drifts from underlying Lead/Appointment data.** | Medium                          | Would make the Shift Summary actively misleading rather than merely incomplete, undermining the shift-handoff goal (G-07). | BR-61.2-008 requires counts to be derived from the same underlying data at view time and requires failed-load states to be shown as failed, not as zero. The technical mechanism itself remains an Open Item by design. |
@@ -200,7 +200,7 @@ four source artifacts into one place, with full provenance. No item
 below is resolved, narrowed, or answered by this document.
 
 |                                                                    |                                              |                                                                                           |                                                           |
-|--------------------------------------------------------------------|----------------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| ------------------------------------------------------------------ | -------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | **Open Item**                                                      | **First registered in**                      | **Carried forward in**                                                                    | **Status**                                                |
 | **Doctor \<-\> Patient Assignment Model**                          | RBAC-MATRIX-V1.1 Section 10                  | UX-SPEC-61.2-V1.0 Sec. 11; USER-STORIES-61.2-V1.0 Sec. 3; BUSINESS-RULES-61.2-V1.0 Sec. 4 | Unresolved — not in scope for this consolidation          |
 | **Lead \<-\> Patient Relationship Model**                          | RBAC-MATRIX-V1.1 Section 10                  | UX-SPEC-61.2-V1.0 Sec. 11; USER-STORIES-61.2-V1.0 Sec. 3; BUSINESS-RULES-61.2-V1.0 Sec. 4 | Unresolved — not in scope for this consolidation          |
@@ -209,9 +209,9 @@ below is resolved, narrowed, or answered by this document.
 | **Real-time update mechanism (polling, websockets, or otherwise)** | UX-SPEC-61.2-V1.0 Section 11                 | USER-STORIES-61.2-V1.0 Sec. 3; BUSINESS-RULES-61.2-V1.0 Sec. 4 (BR-61.2-008)              | Unresolved — not in scope for this consolidation          |
 | **Global search**                                                  | UX-SPEC-61.2-V1.0 Section 4.1 and Section 11 | USER-STORIES-61.2-V1.0 Sec. 3; BUSINESS-RULES-61.2-V1.0 Sec. 4                            | Explicitly deferred — not in scope for this consolidation |
 
-*All six items remain the responsibility of Architecture Review. This
+_All six items remain the responsibility of Architecture Review. This
 consolidation does not propose resolution timing, ownership, or
-technical direction for any of them.*
+technical direction for any of them._
 
 8\. Architecture Review Questions
 
@@ -243,9 +243,9 @@ and do not presuppose an answer.
   intended to receive the same granular-permission treatment that Leads
   received in V1.1, or is the current granularity sufficient for 61.2?
 
-*These questions are posed for Architecture Review's judgment. This
+_These questions are posed for Architecture Review's judgment. This
 document does not answer them and does not block readiness on them being
-answered (see Section 9).*
+answered (see Section 9)._
 
 9\. Readiness Assessment
 
@@ -254,7 +254,7 @@ A Pass means no defect was found during this consolidation; it does not
 certify correctness of implementation, which has not yet occurred.
 
 |                                                   |                                                                                                                                                                                                                                                                             |
-|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Readiness dimension**                           | **Finding**                                                                                                                                                                                                                                                                 |
 | **Internal consistency across artifacts**         | Pass — no contradiction found between RBAC-MATRIX-V1.1, UX-SPEC-61.2-V1.0, USER-STORIES-61.2-V1.0, and BUSINESS-RULES-61.2-V1.0 during this consolidation.                                                                                                                  |
 | **Traceability completeness**                     | Pass — every Goal, User Story, Acceptance Criterion, and Business Rule appears in the Traceability Matrix (Section 3) or its source tables; no orphaned identifier found.                                                                                                   |

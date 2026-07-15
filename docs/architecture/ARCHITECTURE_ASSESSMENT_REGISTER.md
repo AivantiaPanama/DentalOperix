@@ -12,14 +12,14 @@ This register does not approve a rewrite. It preserves evidence for future Gover
 
 ## Assessment Items
 
-| ID | Finding | Severity | Current Impact | Future Evaluation |
-|---|---|---:|---|---|
-| AAR-001 | Appointment availability currently behaves as date/time blocking in BookingDialog local read model. | High | Multi-provider clinics cannot be represented correctly. | Requires provider/resource availability model. |
-| AAR-002 | Appointment Request is not separated from Confirmed Appointment. | High | Patient request may be treated as booking confirmation too early. | Requires lifecycle states and assistant review flow. |
-| AAR-003 | Assistant Today's Schedule uses localStorage appointment store. | High | Not durable/certified as operational appointment source. | Requires appointment persistence strategy. |
-| AAR-004 | Provider in Today's Schedule is derived from service name. | Medium | Display can imply assignment that does not exist. | Requires explicit provider/resource assignment for appointments. |
-| AAR-005 | Appointment audit trail does not exist. | High | Cannot identify who created/updated/cancelled. | Requires audit metadata. |
-| AAR-006 | Possible future DentalOperix Next evaluation. | Medium | Incremental evolution remains preferred today, but evidence must be tracked. | Reassess after 61.3 closure and Governance Retrospective. |
+| ID      | Finding                                                                                             | Severity | Current Impact                                                               | Future Evaluation                                                |
+| ------- | --------------------------------------------------------------------------------------------------- | -------: | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| AAR-001 | Appointment availability currently behaves as date/time blocking in BookingDialog local read model. |     High | Multi-provider clinics cannot be represented correctly.                      | Requires provider/resource availability model.                   |
+| AAR-002 | Appointment Request is not separated from Confirmed Appointment.                                    |     High | Patient request may be treated as booking confirmation too early.            | Requires lifecycle states and assistant review flow.             |
+| AAR-003 | Assistant Today's Schedule uses localStorage appointment store.                                     |     High | Not durable/certified as operational appointment source.                     | Requires appointment persistence strategy.                       |
+| AAR-004 | Provider in Today's Schedule is derived from service name.                                          |   Medium | Display can imply assignment that does not exist.                            | Requires explicit provider/resource assignment for appointments. |
+| AAR-005 | Appointment audit trail does not exist.                                                             |     High | Cannot identify who created/updated/cancelled.                               | Requires audit metadata.                                         |
+| AAR-006 | Possible future DentalOperix Next evaluation.                                                       |   Medium | Incremental evolution remains preferred today, but evidence must be tracked. | Reassess after 61.3 closure and Governance Retrospective.        |
 
 ## Governance Note
 

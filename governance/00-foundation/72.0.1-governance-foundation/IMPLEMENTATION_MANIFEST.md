@@ -16,16 +16,16 @@ source: ChatGPT governed implementation session
 
 ## Implemented Assets
 
-| Asset | Purpose | Status |
-|---|---|---|
-| FOUNDATION_CHARTER.md | Establishes 72.0.1 objective, scope, and non-invasive boundary | IMPLEMENTED |
-| GOVERNANCE_PLATFORM_STATUS.md | Tracks operational state of Program 72.0 | IMPLEMENTED |
-| NON_INVASIVE_ARCHITECTURE_BOUNDARY.md | Defines allowed and prohibited change zones | IMPLEMENTED |
-| GOVERNANCE_FOUNDATION_CHECKLIST.md | Provides validation checklist for foundation readiness | IMPLEMENTED |
-| GOVERNANCE_FOUNDATION_VALIDATION.md | Records governance validation result | IMPLEMENTED |
-| governance/11-registries/README.md | Adds registry catalog layer for future governance operations | IMPLEMENTED |
-| governance/11-registries/GOVERNANCE_REGISTRY_INDEX.md | Central index for governance registries | IMPLEMENTED |
-| governance/scripts/README.md | Reserves automation location without executable behavior | IMPLEMENTED |
+| Asset                                                 | Purpose                                                        | Status      |
+| ----------------------------------------------------- | -------------------------------------------------------------- | ----------- |
+| FOUNDATION_CHARTER.md                                 | Establishes 72.0.1 objective, scope, and non-invasive boundary | IMPLEMENTED |
+| GOVERNANCE_PLATFORM_STATUS.md                         | Tracks operational state of Program 72.0                       | IMPLEMENTED |
+| NON_INVASIVE_ARCHITECTURE_BOUNDARY.md                 | Defines allowed and prohibited change zones                    | IMPLEMENTED |
+| GOVERNANCE_FOUNDATION_CHECKLIST.md                    | Provides validation checklist for foundation readiness         | IMPLEMENTED |
+| GOVERNANCE_FOUNDATION_VALIDATION.md                   | Records governance validation result                           | IMPLEMENTED |
+| governance/11-registries/README.md                    | Adds registry catalog layer for future governance operations   | IMPLEMENTED |
+| governance/11-registries/GOVERNANCE_REGISTRY_INDEX.md | Central index for governance registries                        | IMPLEMENTED |
+| governance/scripts/README.md                          | Reserves automation location without executable behavior       | IMPLEMENTED |
 
 ## Functional Modification Statement
 

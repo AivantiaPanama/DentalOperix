@@ -22,17 +22,17 @@ Certified architectural decisions remain closed unless formal documentary eviden
 
 ## Framework Modules
 
-| Module | Purpose |
-|---|---|
-| Domain Analysis Framework | reusable discovery and bounded-context analysis method |
-| Functional Specification Framework | reusable use-case and behavior specification method |
-| Architecture Validation Framework | reusable architecture conformity and boundary validation method |
-| Implementation Planning Framework | reusable implementation planning structure |
-| Work Package Certification Framework | reusable closure/certification gates |
-| ADR / FDR Framework | reusable decision record structure |
-| Traceability Framework | reusable requirement-to-artifact mapping |
-| Rollout / Rollback Framework | reusable operational safety planning |
-| Governance Retrospective Framework | reusable keep/improve/remove/add review method |
+| Module                               | Purpose                                                         |
+| ------------------------------------ | --------------------------------------------------------------- |
+| Domain Analysis Framework            | reusable discovery and bounded-context analysis method          |
+| Functional Specification Framework   | reusable use-case and behavior specification method             |
+| Architecture Validation Framework    | reusable architecture conformity and boundary validation method |
+| Implementation Planning Framework    | reusable implementation planning structure                      |
+| Work Package Certification Framework | reusable closure/certification gates                            |
+| ADR / FDR Framework                  | reusable decision record structure                              |
+| Traceability Framework               | reusable requirement-to-artifact mapping                        |
+| Rollout / Rollback Framework         | reusable operational safety planning                            |
+| Governance Retrospective Framework   | reusable keep/improve/remove/add review method                  |
 
 ## Mandatory Scope Controls
 

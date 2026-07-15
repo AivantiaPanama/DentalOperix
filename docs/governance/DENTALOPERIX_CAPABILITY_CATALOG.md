@@ -9,15 +9,15 @@ This catalog complements program/increment planning with a business-capability v
 
 ## Capability Map
 
-| Capability | Current State | Notes |
-|---|---|---|
-| Lead Acquisition | Consolidated | Leads remains Source of Truth. |
-| Patient Identity | Consolidated | Advanced maturity after 73.1-B and 73.1-C. |
-| Appointment Management | Stable | Must remain operational event domain. |
-| Clinical Records | Planned | Recommended future capability; requires dedicated rector. |
-| Communications | Planned | Must consume existing domains; not a Source of Truth. |
-| Billing & Payments | Planned | Should be modeled as independent domain. |
-| Analytics & Reporting | Planned | Should use read models and not mutate transactional domains. |
+| Capability             | Current State | Notes                                                        |
+| ---------------------- | ------------- | ------------------------------------------------------------ |
+| Lead Acquisition       | Consolidated  | Leads remains Source of Truth.                               |
+| Patient Identity       | Consolidated  | Advanced maturity after 73.1-B and 73.1-C.                   |
+| Appointment Management | Stable        | Must remain operational event domain.                        |
+| Clinical Records       | Planned       | Recommended future capability; requires dedicated rector.    |
+| Communications         | Planned       | Must consume existing domains; not a Source of Truth.        |
+| Billing & Payments     | Planned       | Should be modeled as independent domain.                     |
+| Analytics & Reporting  | Planned       | Should use read models and not mutate transactional domains. |
 
 ## Recommended Priority
 

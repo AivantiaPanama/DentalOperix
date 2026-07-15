@@ -1,6 +1,5 @@
 # Baseline 71.5 Release Candidate
 
-
 ---
 
 ## Governance Update - 2026-06-24

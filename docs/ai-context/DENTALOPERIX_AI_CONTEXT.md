@@ -44,30 +44,30 @@ Patient books appointment
 
 ## Roles
 
-* Patient
-* Assistant
-* Doctor/Dentist
-* Administrator
+- Patient
+- Assistant
+- Doctor/Dentist
+- Administrator
 
 ## Permanent Restrictions
 
-* No Dual Write.
-* No Lead Replacement.
-* No new source of truth.
-* No Analytics write-back.
-* No RBAC bypass.
-* No protected component changes without explicit approval.
+- No Dual Write.
+- No Lead Replacement.
+- No new source of truth.
+- No Analytics write-back.
+- No RBAC bypass.
+- No protected component changes without explicit approval.
 
 ## Protected Components
 
-* BookingDialog
-* processDentalLead
-* /api/leads/create
-* Calendar
-* Gmail
-* FloatingDentalAIChat
-* Home
-* siteServices.ts
+- BookingDialog
+- processDentalLead
+- /api/leads/create
+- Calendar
+- Gmail
+- FloatingDentalAIChat
+- Home
+- siteServices.ts
 
 ## Required Process
 
@@ -81,20 +81,11 @@ Before proposing implementation:
 6. Implementation plan.
 7. Wait for explicit approval before code.
 
-
-
-
-
 ## Product Terminology
-
-
 
 Reference:
 
-
-
-61.0\_PRODUCT\_GLOSSARY.md
-
+61.0_PRODUCT_GLOSSARY.md
 
 ---
 

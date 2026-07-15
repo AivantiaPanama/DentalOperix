@@ -10,7 +10,6 @@ Patient Technical Design Phase.
 
 Convert 62.0 Patient domain design into technical design specifications without implementation.
 
-
 ## Certified Baseline
 
 - 57.x CLOSED / CERTIFIED.
@@ -38,7 +37,6 @@ BookingDialog, processDentalLead, /api/leads/create, Calendar, Gmail, FloatingDe
 ## Prohibited Actions
 
 Dual Write, Lead Replacement, New Lead Source of Truth, Persistence Re-Architecture, RBAC Bypass, Automated Patient Merge.
-
 
 ## Scope Completed
 

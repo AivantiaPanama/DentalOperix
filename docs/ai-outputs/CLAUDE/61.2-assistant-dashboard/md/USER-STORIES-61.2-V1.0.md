@@ -14,9 +14,9 @@ Author role: Product Analyst / Functional Designer
 
 **Upstream references:**
 
-*RBAC-MATRIX-V1.1 (authorization source)*
+_RBAC-MATRIX-V1.1 (authorization source)_
 
-*UX-SPEC-61.2-V1.0 (functional/UX source)*
+_UX-SPEC-61.2-V1.0 (functional/UX source)_
 
 **Permanent constraint honored throughout this document:**
 
@@ -54,9 +54,9 @@ This document does not include or imply:
 - Any visual UI design — stories describe behavior and outcomes, not
   layout or styling.
 
-*Every story below reuses the exact Goal IDs, AC IDs, and permission
+_Every story below reuses the exact Goal IDs, AC IDs, and permission
 names already defined in RBAC-MATRIX-V1.1 and UX-SPEC-61.2-V1.0. No new
-identifiers, permissions, or scope are introduced at this stage.*
+identifiers, permissions, or scope are introduced at this stage._
 
 1\. Traceability Overview
 
@@ -65,7 +65,7 @@ acceptance criteria, and persona. Full detail for each story follows in
 Section 2.
 
 |                |                                                          |                  |                                       |                                        |
-|----------------|----------------------------------------------------------|------------------|---------------------------------------|----------------------------------------|
+| -------------- | -------------------------------------------------------- | ---------------- | ------------------------------------- | -------------------------------------- |
 | **Story ID**   | **Title**                                                | **Goal(s)**      | **AC(s)**                             | **Persona**                            |
 | **US-61.2-01** | Land on the Front Desk Workspace after login             | G-01             | AC-61.2-001                           | Front Desk Assistant                   |
 | **US-61.2-02** | View today's appointment schedule                        | G-01             | AC-61.2-002, AC-61.2-003              | Front Desk Assistant                   |
@@ -102,7 +102,7 @@ Front Desk Assistant (Primary Persona, UX-SPEC-61.2-V1.0 Section 1.1)
 4\. As a / I want / So that
 
 |             |                                                                                      |
-|-------------|--------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------ |
 | **As a**    | Assistant                                                                            |
 | **I want**  | to land directly on the Front Desk Workspace immediately after I log in              |
 | **So that** | I can start working without navigating away from a generic or incorrect landing page |
@@ -123,8 +123,7 @@ Front Desk Assistant (Primary Persona, UX-SPEC-61.2-V1.0 Section 1.1)
 3.  System resolves the user's role as Assistant.
 
 4.  System routes the Assistant to the Front Desk Workspace, the
-    product-oriented dashboard name defined in RBAC-MATRIX-V1.1 Section
-    7.
+    product-oriented dashboard name defined in RBAC-MATRIX-V1.1 Section 7.
 
 5.  Front Desk Workspace renders with its dashboard sections
     (UX-SPEC-61.2-V1.0 Section 6).
@@ -181,7 +180,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                |
-|-------------|------------------------------------------------------------------------------------------------|
+| ----------- | ---------------------------------------------------------------------------------------------- |
 | **As a**    | Assistant                                                                                      |
 | **I want**  | to see all of today's appointments across providers as soon as I open the Front Desk Workspace |
 | **So that** | I can immediately answer questions about today's bookings without searching or switching tools |
@@ -257,7 +256,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                 |
-|-------------|-----------------------------------------------------------------|
+| ----------- | --------------------------------------------------------------- |
 | **As a**    | Assistant                                                       |
 | **I want**  | to see all active leads ordered by urgency                      |
 | **So that** | I know which leads need a response first and none are forgotten |
@@ -335,7 +334,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                  |
-|-------------|------------------------------------------------------------------|
+| ----------- | ---------------------------------------------------------------- |
 | **As a**    | Assistant                                                        |
 | **I want**  | to change the status of a lead I am working                      |
 | **So that** | the lead queue reflects accurate, current progress for that lead |
@@ -416,7 +415,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                     |
-|-------------|-----------------------------------------------------------------------------------------------------|
+| ----------- | --------------------------------------------------------------------------------------------------- |
 | **As a**    | Assistant                                                                                           |
 | **I want**  | to add or edit notes on a lead I am working                                                         |
 | **So that** | important context (e.g., a callback request, a patient preference) is not lost between interactions |
@@ -492,7 +491,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                 |
-|-------------|-----------------------------------------------------------------|
+| ----------- | --------------------------------------------------------------- |
 | **As a**    | Assistant                                                       |
 | **I want**  | to create a new appointment for a patient                       |
 | **So that** | the patient is booked correctly without needing a separate tool |
@@ -536,8 +535,7 @@ Front Desk Assistant (Primary Persona)
 
 10\. RBAC Dependencies
 
-- appointment.create — Allow (for any patient), RBAC-MATRIX-V1.1 Section
-  5.
+- appointment.create — Allow (for any patient), RBAC-MATRIX-V1.1 Section 5.
 
 11\. Out of Scope
 
@@ -564,7 +562,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                              |
-|-------------|--------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------ |
 | **As a**    | Assistant                                                    |
 | **I want**  | to reschedule or edit the details of an existing appointment |
 | **So that** | the schedule stays accurate when a patient's plans change    |
@@ -640,7 +638,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                            |
-|-------------|------------------------------------------------------------------------------------------------------------|
+| ----------- | ---------------------------------------------------------------------------------------------------------- |
 | **As a**    | Assistant                                                                                                  |
 | **I want**  | to cancel an appointment that is no longer needed                                                          |
 | **So that** | the schedule reflects reality and the time slot can be reused, without ever deleting the historical record |
@@ -722,7 +720,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                        |
-|-------------|--------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------ |
 | **As a**    | Assistant                                                                                              |
 | **I want**  | to resend a confirmation or reminder notification to a patient                                         |
 | **So that** | the patient receives communication that may have been missed, without me needing a separate email tool |
@@ -796,7 +794,7 @@ Section 1.2)
 4\. As a / I want / So that
 
 |             |                                                                                                        |
-|-------------|--------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------ |
 | **As a**    | Assistant acting in the Shift Lead usage pattern                                                       |
 | **I want**  | to see a count-based summary of open leads, unconfirmed appointments, and pending notification resends |
 | **So that** | I can hand off my shift confidently, knowing nothing was missed                                        |
@@ -875,7 +873,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                              |
-|-------------|--------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------ |
 | **As a**    | Assistant                                                                                                    |
 | **I want**  | to never see a control for an action I am not authorized to perform                                          |
 | **So that** | I cannot accidentally attempt something outside my role, and the interface stays trustworthy and uncluttered |
@@ -956,7 +954,7 @@ Front Desk Assistant (Primary Persona)
 4\. As a / I want / So that
 
 |             |                                                                                                                  |
-|-------------|------------------------------------------------------------------------------------------------------------------|
+| ----------- | ---------------------------------------------------------------------------------------------------------------- |
 | **As a**    | Assistant                                                                                                        |
 | **I want**  | to always have a single, clear way back to the section I came from after viewing a Lead or Appointment in detail |
 | **So that** | I never lose my place or have to re-find where I was working                                                     |
@@ -1026,5 +1024,5 @@ narrowed, implied, or answered by any story above:
 
 - Global search (explicitly deferred).
 
-*This User Story Package intentionally does not propose answers to the
-items above. Resolution remains deferred to Architecture Review.*
+_This User Story Package intentionally does not propose answers to the
+items above. Resolution remains deferred to Architecture Review._

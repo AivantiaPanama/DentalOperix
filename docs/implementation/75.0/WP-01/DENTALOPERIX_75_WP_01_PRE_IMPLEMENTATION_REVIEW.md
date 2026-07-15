@@ -45,21 +45,21 @@ WP-01 is limited to the foundation of the Clinical Records domain.
 
 ### Dependency Impact
 
-| Domain | Impact |
-|---|---|
-| Leads | None |
-| Patients | Lookup by PatientId only |
-| Appointments | None in WP-01 |
-| Calendar | None |
+| Domain       | Impact                   |
+| ------------ | ------------------------ |
+| Leads        | None                     |
+| Patients     | Lookup by PatientId only |
+| Appointments | None in WP-01            |
+| Calendar     | None                     |
 
 ### Risk Assessment
 
-| Risk | Level | Mitigation |
-|---|---|---|
-| Premature aggregate growth | Low | Limit scope to WP-01. |
-| Duplicate patient identity | Low | Persist PatientId only. |
-| Advanced clinical logic introduced early | Low | Defer to later WPs. |
-| Protected component modification | None | Components excluded. |
+| Risk                                     | Level | Mitigation              |
+| ---------------------------------------- | ----- | ----------------------- |
+| Premature aggregate growth               | Low   | Limit scope to WP-01.   |
+| Duplicate patient identity               | Low   | Persist PatientId only. |
+| Advanced clinical logic introduced early | Low   | Defer to later WPs.     |
+| Protected component modification         | None  | Components excluded.    |
 
 ### Governance Determination
 

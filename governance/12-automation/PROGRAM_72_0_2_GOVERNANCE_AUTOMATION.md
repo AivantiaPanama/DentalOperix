@@ -18,18 +18,18 @@ Create a read-only automation layer for governance validation, baseline complian
 
 ## Roadmap
 
-| Increment | Component | Status |
-|---|---|---|
-| 72.0.2.1 | Governance Validation Engine | OPEN / DESIGN APPROVED |
-| 72.0.2.1.A | Governance SDK Core Certification | APPROVED FOR IMPLEMENTATION |
-| 72.0.2.1.B | Governance Platform Reference Architecture | APPROVED |
-| 72.0.2.2 | Baseline Compliance Validator | AUTHORIZED |
-| 72.0.2.3 | ADR Consistency Validator | PLANNED |
-| 72.0.2.4 | RTM and TTM Validator | PLANNED |
-| 72.0.2.5 | Audit Readiness Validator | PLANNED |
-| 72.0.2.6 | Evidence Generator | PLANNED |
-| 72.0.2.7 | Governance Metrics Collector | PLANNED |
-| 72.0.2.8 | CI/CD Integration Adapters | PLANNED / NOT ACTIVE |
+| Increment  | Component                                  | Status                      |
+| ---------- | ------------------------------------------ | --------------------------- |
+| 72.0.2.1   | Governance Validation Engine               | OPEN / DESIGN APPROVED      |
+| 72.0.2.1.A | Governance SDK Core Certification          | APPROVED FOR IMPLEMENTATION |
+| 72.0.2.1.B | Governance Platform Reference Architecture | APPROVED                    |
+| 72.0.2.2   | Baseline Compliance Validator              | AUTHORIZED                  |
+| 72.0.2.3   | ADR Consistency Validator                  | PLANNED                     |
+| 72.0.2.4   | RTM and TTM Validator                      | PLANNED                     |
+| 72.0.2.5   | Audit Readiness Validator                  | PLANNED                     |
+| 72.0.2.6   | Evidence Generator                         | PLANNED                     |
+| 72.0.2.7   | Governance Metrics Collector               | PLANNED                     |
+| 72.0.2.8   | CI/CD Integration Adapters                 | PLANNED / NOT ACTIVE        |
 
 ## Boundary
 

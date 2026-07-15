@@ -10,7 +10,6 @@ Patient Design Phase.
 
 Transform the certified 61.4 Patient Discovery baseline into certifiable domain design artifacts before any technical implementation design.
 
-
 ## Certified Baseline
 
 - 57.x CLOSED / CERTIFIED.
@@ -38,7 +37,6 @@ BookingDialog, processDentalLead, /api/leads/create, Calendar, Gmail, FloatingDe
 ## Prohibited Actions
 
 Dual Write, Lead Replacement, New Lead Source of Truth, Persistence Re-Architecture, RBAC Bypass, Automated Patient Merge.
-
 
 ## Scope Completed
 

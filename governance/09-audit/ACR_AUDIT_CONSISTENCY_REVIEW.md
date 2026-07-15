@@ -14,15 +14,15 @@ source: ChatGPT governance consolidation session
 
 ## ACR Result
 
-| Area | Result |
-|---|---|
-| Architecture | PASS |
-| Governance | PASS |
-| Traceability Model | PASS |
-| Configuration Management | PASS |
-| Release Management | PASS |
-| Baseline Evolution | PASS |
-| Audit Package Design | PASS |
+| Area                     | Result |
+| ------------------------ | ------ |
+| Architecture             | PASS   |
+| Governance               | PASS   |
+| Traceability Model       | PASS   |
+| Configuration Management | PASS   |
+| Release Management       | PASS   |
+| Baseline Evolution       | PASS   |
+| Audit Package Design     | PASS   |
 
 ## Important Limitation
 

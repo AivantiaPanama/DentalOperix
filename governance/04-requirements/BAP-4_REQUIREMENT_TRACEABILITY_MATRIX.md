@@ -14,19 +14,19 @@ source: ChatGPT governance consolidation session
 
 ## RTM Model
 
-| Field | Description |
-|---|---|
-| REQ ID | Permanent requirement identifier |
-| Type | Functional, Non-functional, Architecture, Governance, Security, Data |
-| Domain | Leads, Patients, Appointments, Platform |
-| Description | Requirement statement |
-| Priority | Critical, High, Medium, Low |
-| Status | Draft, Implemented, Validated, Certified |
-| ADR | Related decision |
-| ARCH | Related architecture element |
-| TEST | Related tests |
-| EVID | Evidence |
-| REL | Certified release/baseline |
+| Field       | Description                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| REQ ID      | Permanent requirement identifier                                     |
+| Type        | Functional, Non-functional, Architecture, Governance, Security, Data |
+| Domain      | Leads, Patients, Appointments, Platform                              |
+| Description | Requirement statement                                                |
+| Priority    | Critical, High, Medium, Low                                          |
+| Status      | Draft, Implemented, Validated, Certified                             |
+| ADR         | Related decision                                                     |
+| ARCH        | Related architecture element                                         |
+| TEST        | Related tests                                                        |
+| EVID        | Evidence                                                             |
+| REL         | Certified release/baseline                                           |
 
 ## Required Traceability Chain
 

@@ -18,15 +18,15 @@ Standardize cross-document references among BAP artifacts.
 
 ## Required Reference Families
 
-| Document | Required References |
-|---|---|
-| BAP-1 | ADR, ARCH, GOV |
-| BAP-2 | GOV, ADR |
-| BAP-3 | ADR, ARCH, GOV, REQ |
-| BAP-4 | REQ, ADR, ARCH, TEST |
-| BAP-5 | TEST, REQ, EVID, REL |
-| BAP-6 | CI, CFG, REL |
-| BAP-7 | REL, EVID |
-| BAP-8 | REL, ADR, GOV |
-| BAP-9 | All |
-| BAP-10 | All |
+| Document | Required References  |
+| -------- | -------------------- |
+| BAP-1    | ADR, ARCH, GOV       |
+| BAP-2    | GOV, ADR             |
+| BAP-3    | ADR, ARCH, GOV, REQ  |
+| BAP-4    | REQ, ADR, ARCH, TEST |
+| BAP-5    | TEST, REQ, EVID, REL |
+| BAP-6    | CI, CFG, REL         |
+| BAP-7    | REL, EVID            |
+| BAP-8    | REL, ADR, GOV        |
+| BAP-9    | All                  |
+| BAP-10   | All                  |

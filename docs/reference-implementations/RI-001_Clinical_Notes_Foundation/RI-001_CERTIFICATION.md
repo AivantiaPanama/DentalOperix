@@ -27,12 +27,12 @@ ClinicalNotesWorkspace
 
 ## Reusability Classification
 
-| Dimension | Classification |
-|---|---|
-| Domain Reuse | Clinical Records |
-| Pattern Reuse | UI -> API -> Application -> Domain -> Persistence |
-| Governance Reuse | High |
-| Future WP Reuse | Required before creating new Clinical Records implementation patterns |
+| Dimension        | Classification                                                        |
+| ---------------- | --------------------------------------------------------------------- |
+| Domain Reuse     | Clinical Records                                                      |
+| Pattern Reuse    | UI -> API -> Application -> Domain -> Persistence                     |
+| Governance Reuse | High                                                                  |
+| Future WP Reuse  | Required before creating new Clinical Records implementation patterns |
 
 ## Certified Assets
 

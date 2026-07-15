@@ -6,11 +6,11 @@
 
 ## Work Package Status
 
-| WP | Scope | Status |
-|---|---|---|
-| WP-01 | Clinical Record Foundation | CLOSED / CERTIFIED |
-| WP-02 | Clinical Notes Foundation | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
-| WP-03 | Clinical Records Domain Evolution | READY FOR PLANNING |
+| WP    | Scope                             | Status                                          |
+| ----- | --------------------------------- | ----------------------------------------------- |
+| WP-01 | Clinical Record Foundation        | CLOSED / CERTIFIED                              |
+| WP-02 | Clinical Notes Foundation         | CLOSED / KNOWLEDGE CERTIFIED / RI-001 CERTIFIED |
+| WP-03 | Clinical Records Domain Evolution | READY FOR PLANNING                              |
 
 ## Foundation Release Assets
 

@@ -18,17 +18,17 @@ Development -> Release Candidate -> Certification Review -> Certified Baseline -
 
 ## Release Governance Gates
 
-| Gate | Validation |
-|---|---|
-| RG-01 | RTM coverage |
-| RG-02 | TTM/test evidence |
-| RG-03 | Evidence consolidated |
-| RG-04 | Configuration Items consistent |
-| RG-05 | ADR updated |
-| RG-06 | Architecture compatibility |
+| Gate  | Validation                        |
+| ----- | --------------------------------- |
+| RG-01 | RTM coverage                      |
+| RG-02 | TTM/test evidence                 |
+| RG-03 | Evidence consolidated             |
+| RG-04 | Configuration Items consistent    |
+| RG-05 | ADR updated                       |
+| RG-06 | Architecture compatibility        |
 | RG-07 | Permanent restrictions compliance |
-| RG-08 | Governance review |
-| RG-09 | Release Certificate emitted |
+| RG-08 | Governance review                 |
+| RG-09 | Release Certificate emitted       |
 
 ## Closure State
 

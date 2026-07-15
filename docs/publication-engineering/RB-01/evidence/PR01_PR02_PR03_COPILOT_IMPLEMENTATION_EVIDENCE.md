@@ -86,11 +86,9 @@ The contract is behaving as intended; I’m adjusting the sample copy to match t
 
 Replacing 11 lines with 11 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/data/commercialDemoFoundation.ts)
 
-
 ```
 
 ```
-
 
 Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/data/commercialDemoFoundation.test.ts
 
@@ -125,9 +123,11 @@ Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/Dent
 ## ✅ PR-01 Commercial Demo Foundation listo
 
 ### Propuesta adoptada
+
 Se creó una base estructural de solo lectura, alineada con la arquitectura existente, para soportar un escenario demo comercial inicial sin tocar los límites restringidos ni introducir nuevos dominios, tablas o persistencia paralela.
 
 ### Implementación realizada
+
 - Se añadió un contrato de fundamento comercial demo en commercialDemoFoundation.ts
 - Se definió el escenario inicial `new-patient-acquisition` con:
   - identificador
@@ -142,22 +142,27 @@ Se creó una base estructural de solo lectura, alineada con la arquitectura exis
 - Se registraron capacidades de soporte reutilizando las existentes: Lead Management, Patient Identity Foundation, Appointment Operations, Assistant Workspace y Authentication/RBAC
 
 ### Archivos creados
+
 - commercialDemoFoundation.ts
 - commercialDemoFoundation.test.ts
 
 ### Archivos modificados
+
 - Ninguno. Se mantuvo el alcance estrictamente dentro de la capa de datos y pruebas, sin alterar los componentes ni flujos restringidos.
 
 ### Decisiones tomadas
+
 - Mantener la solución como un contrato composicional y estático, no como una entidad nueva ni una fuente de verdad paralela.
 - Reutilizar el lenguaje y la estructura de capacidades ya presentes en el sistema.
 - Aislar la base demo para que pueda extenderse en iteraciones futuras sin afectar los procesos operativos actuales.
 
 ### Riesgos detectados
+
 - No hay riesgos funcionales mayores en esta fase.
 - El build mostró advertencias preexistentes de tamaño de chunks y del plugin de rutas, pero no impidieron la compilación.
 
 ### Verificación ejecutada
+
 - `npm test -- --run src/data/commercialDemoFoundation.test.ts` → 1 archivo, 3 pruebas aprobadas
 - `npm run build` → compilación exitosa
 - `npx eslint commercialDemoFoundation.ts src/data/commercialDemoFoundation.test.ts` → sin errores
@@ -176,6 +181,7 @@ Contexto:
 PR-01 ya fue implementado y aceptado.
 
 Existe una base:
+
 - commercialDemoFoundation
 - escenario new-patient-acquisition
 
@@ -184,15 +190,14 @@ Objetivo de PR-02:
 Integrar ese escenario comercial con las capacidades existentes de DentalOperix para representar un recorrido demostrable:
 
 Paciente
-    ↓
+↓
 Interacción
-    ↓
+↓
 Lead
-    ↓
+↓
 Seguimiento Clínica
-    ↓
+↓
 Evidencia Comercial
-
 
 Antes de modificar código:
 
@@ -219,6 +224,7 @@ No implementes cambios todavía.
 Restricciones obligatorias:
 
 NO crear:
+
 - nuevos dominios;
 - DemoLead;
 - DemoPatient;
@@ -229,6 +235,7 @@ NO crear:
 - persistencia paralela.
 
 NO modificar:
+
 - BookingDialog;
 - processDentalLead;
 - Lead lifecycle;
@@ -239,6 +246,7 @@ NO modificar:
 La solución debe ser una capa de composición sobre capacidades existentes.
 
 Prioriza:
+
 - reutilización;
 - cambios mínimos;
 - alineación con arquitectura actual.
@@ -274,7 +282,9 @@ Read [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/lib/a
 ## Propuesta de integración para PR-02
 
 ### 1) Análisis del estado actual de PR-01
+
 La base de PR-01 ya está en su sitio en commercialDemoFoundation.ts. Hoy define un escenario estático de “new-patient-acquisition” con:
+
 - escenario comercial
 - recorrido del paciente
 - recorrido de clínica
@@ -283,6 +293,7 @@ La base de PR-01 ya está en su sitio en commercialDemoFoundation.ts. Hoy define
 Lo importante es que aún no hay wiring de UI ni integración con runtime. Eso significa que PR-02 debe actuar como una capa de composición sobre lo que ya existe, no como un nuevo subsistema.
 
 ### 2) Capacidades existentes que encajan con el recorrido
+
 Las capacidades más relevantes ya presentes en el repositorio son:
 
 - Patient Experience
@@ -309,6 +320,7 @@ Las capacidades más relevantes ya presentes en el repositorio son:
   - TodayScheduleWidget.tsx
 
 ### 3) Estrategia propuesta
+
 La integración más alineada con la arquitectura actual sería construir una vista de composición read-only en el Assistant Workspace que conecte:
 
 1. Inicio del recorrido
@@ -324,15 +336,18 @@ La integración más alineada con la arquitectura actual sería construir una vi
    - exponer una vista resumida de avance del escenario sin tocar fuentes de verdad ni procesos operativos
 
 ### 4) Archivos que propongo crear
+
 - Un módulo de composición para mapear el escenario PR-01 a una vista de recorrido demo
 - Un componente de presentación read-only para el recorrido comercial
 - Un test de integración mínimo para validar la composición
 
 ### 5) Archivos que propongo modificar
+
 - AssistantDashboard.tsx para alojar la nueva vista de composición
 - De forma opcional, un pequeño ajuste en LeadQueueWidget.tsx solo si se necesita un contexto visual adicional del escenario
 
 ### 6) Componentes existentes que reutilizaré
+
 - LeadQueueWidget.tsx
 - PatientManagementWorkspace.tsx
 - TodayScheduleWidget.tsx
@@ -340,7 +355,9 @@ La integración más alineada con la arquitectura actual sería construir una vi
 - appointments-store.ts
 
 ### 7) Justificación arquitectónica
+
 Esta propuesta:
+
 - respeta la arquitectura actual sin crear nuevos dominios
 - no toca los límites restringidos ni los flujos críticos
 - reutiliza capacidades ya existentes
@@ -349,13 +366,16 @@ Esta propuesta:
 - introduce cambios mínimos y de presentación, no de negocio ni de persistencia
 
 ### 8) Restricciones que se respetan
+
 No se crearán:
+
 - nuevos dominios
 - DemoLead / DemoPatient / DemoAppointment
 - nuevas tablas ni migraciones
 - persistencia paralela
 
 No se modificarán:
+
 - BookingDialog.tsx
 - dental.server.ts
 - Lead lifecycle
@@ -372,6 +392,7 @@ User: Apruebo la estrategia con las siguientes condiciones:
 2. Crear solamente una capa de composición/presentación para Commercial Demo Journey.
 
 3. No crear:
+
 - nuevos dominios;
 - nuevas entidades;
 - nuevas APIs;
@@ -380,18 +401,21 @@ User: Apruebo la estrategia con las siguientes condiciones:
 - nuevos Source of Truth.
 
 4. No modificar inicialmente:
+
 - LeadQueueWidget.tsx
 
 5. AssistantDashboard.tsx solo puede integrar una vista de presentación.
-No debe convertirse en propietario de lógica comercial.
+   No debe convertirse en propietario de lógica comercial.
 
 6. Reutilizar capacidades existentes:
+
 - Lead Management.
 - Patient Experience.
 - Assistant Workspace.
 - Appointment capabilities.
 
 7. Mantener los límites actuales:
+
 - BookingDialog.
 - processDentalLead.
 - Lead lifecycle.
@@ -402,6 +426,7 @@ No debe convertirse en propietario de lógica comercial.
 Procede con la implementación.
 
 Al finalizar entrega:
+
 - archivos creados;
 - archivos modificados;
 - decisiones tomadas;
@@ -420,18 +445,16 @@ Created [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/co
 
 Replacing 3 lines with 4 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/components/assistant/AssistantDashboard.tsx)
 
-
 ```
 
 ```
-
 
 Replacing 6 lines with 8 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/components/assistant/AssistantDashboard.tsx)
 
-
 ```
 
 ```
+
 The read-only composition card is now added to the assistant shell, and I’m validating it through tests and the build so I can report the exact outcome.
 
 Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
@@ -443,11 +466,9 @@ Searched for regex `@vitest-environment jsdom|renderToStaticMarkup` (`**/src/**/
 
 Replacing 3 lines with 5 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/components/assistant/CommercialDemoJourneyCard.test.tsx)
 
-
 ```
 
 ```
-
 
 Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
 Completed with input: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
@@ -456,22 +477,18 @@ The component render path is now fine; I’m switching the assertions to standar
 
 Replacing 9 lines with 9 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/components/assistant/CommercialDemoJourneyCard.test.tsx)
 
-
 ```
 
 ```
-
 
 Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
 Completed with input: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
 
 Replacing 2 lines with 2 lines in [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/components/assistant/CommercialDemoJourneyCard.test.tsx)
 
-
 ```
 
 ```
-
 
 Ran terminal command: Set-Location 'c:/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix'; npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx
 
@@ -485,17 +502,22 @@ The integration is verified; I’m summarizing the concrete files, decisions, an
 ## ✅ PR-02 implementado: capa de composición read-only para Commercial Demo Journey
 
 ### Qué se hizo
+
 Se añadió una vista de presentación read-only en el Assistant Workspace para componer el recorrido comercial del escenario `new-patient-acquisition` sobre las capacidades existentes de DentalOperix, sin crear nuevas entidades, APIs, persistencia ni modificar los flujos restringidos.
 
 ### Archivos creados
+
 - CommercialDemoJourneyCard.tsx
 - CommercialDemoJourneyCard.test.tsx
 
 ### Archivos modificados
+
 - AssistantDashboard.tsx
 
 ### Comportamiento implementado
+
 La nueva vista:
+
 - reutiliza el escenario ya definido en commercialDemoFoundation.ts
 - muestra una composición visual de:
   - paciente
@@ -504,6 +526,7 @@ La nueva vista:
 - está limitada a presentación y lectura, sin lógica de negocio ni cambios de estado
 
 ### Decisiones tomadas
+
 - Mantener la integración como una capa de composición/presentación, no como un nuevo dominio.
 - Reutilizar las capacidades existentes del Assistant Workspace, Lead Management, Patient Experience y Appointment capabilities.
 - No tocar los límites actuales de:
@@ -516,6 +539,7 @@ La nueva vista:
 - No modificar LeadQueueWidget.tsx, conforme a lo acordado.
 
 ### Validaciones ejecutadas
+
 - Prueba específica del componente:
   - `npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx`
   - Resultado: 1 archivo, 1 prueba aprobada
@@ -524,6 +548,7 @@ La nueva vista:
   - Resultado: compilación exitosa
 
 ### Riesgos detectados
+
 - El build muestra advertencias preexistentes de tamaño de chunks del bundle, pero no afectan la implementación ni la compilación.
 - La integración actual es de presentación; si en futuras iteraciones se desea mayor interactividad, deberá mantenerse dentro de una capa de composición y sin alterar los Source of Truth existentes.
 
@@ -532,12 +557,12 @@ Si quieres, el siguiente paso natural sería extender esta misma vista con un re
 Made changes.
 
 User: # COMMERCIAL DEMO FOUNDATION PR-03
+
 # Commercial Presentation Layer
 
 ## Proyecto
 
 DentalOperix Commercial Acceleration Track v1.1
-
 
 ## Rol
 
@@ -557,7 +582,6 @@ No eres responsable de:
 - redefinir arquitectura;
 - crear nuevos dominios;
 - ampliar alcance comercial sin autorización.
-
 
 ---
 
@@ -579,7 +603,6 @@ La estructura define:
 - Clinic Journey
 - Commercial Evidence
 
-
 ## PR-02 — Demo Journey Integration
 
 Creó:
@@ -594,7 +617,6 @@ Como componente:
 
 La integración actual utiliza Assistant Workspace como superficie interna de demostración.
 
-
 ---
 
 # Objetivo de PR-03
@@ -602,7 +624,6 @@ La integración actual utiliza Assistant Workspace como superficie interna de de
 Crear la primera capa de presentación comercial externa mediante:
 
 /commercial-demo
-
 
 Esta experiencia debe permitir demostrar DentalOperix a una clínica potencial.
 
@@ -630,7 +651,6 @@ Seguimiento
 
 Valor Comercial
 
-
 ---
 
 # Principio arquitectónico obligatorio
@@ -641,13 +661,11 @@ Valor Comercial
 - un nuevo producto;
 - un nuevo módulo operacional.
 
-
 Debe ser:
 
 Commercial Presentation Layer
 
 que compone capacidades existentes.
-
 
 Modelo:
 
@@ -665,7 +683,6 @@ Commercial Demo Journey
 
 Existing DentalOperix Capabilities
 
-
 ---
 
 # Paso obligatorio inicial
@@ -673,7 +690,6 @@ Existing DentalOperix Capabilities
 Antes de modificar código:
 
 Analiza el repositorio actual.
-
 
 Revisa:
 
@@ -686,9 +702,7 @@ Revisa:
 - commercialDemoFoundation
 - CommercialDemoJourneyCard
 
-
 Entrega primero una propuesta.
-
 
 La propuesta debe incluir:
 
@@ -700,7 +714,6 @@ Indicar:
 - ubicación;
 - patrón utilizado.
 
-
 ## 2. Componentes propuestos
 
 Indicar:
@@ -708,14 +721,12 @@ Indicar:
 - componentes nuevos;
 - componentes reutilizados.
 
-
 ## 3. Archivos afectados
 
 Lista completa:
 
 - archivos nuevos;
 - archivos modificados.
-
 
 ## 4. Justificación
 
@@ -725,11 +736,9 @@ Explicar:
 - por qué esa arquitectura;
 - cómo evita duplicación.
 
-
 NO IMPLEMENTES CAMBIOS TODAVÍA.
 
 Espera aprobación.
-
 
 ---
 
@@ -737,14 +746,12 @@ Espera aprobación.
 
 La futura implementación podrá incluir:
 
-
 ## CommercialDemoPage
 
 Responsabilidad:
 
 - punto de entrada;
 - composición de experiencia.
-
 
 ## CommercialDemoHeader
 
@@ -756,7 +763,6 @@ Mostrar:
 - audiencia;
 - objetivo comercial.
 
-
 ## DemoStepIndicator
 
 Responsabilidad:
@@ -767,7 +773,6 @@ Mostrar recorrido:
 2. Oportunidad
 3. Clínica
 4. Resultado
-
 
 ## CommercialEvidencePanel
 
@@ -783,7 +788,6 @@ Después:
 
 Oportunidades organizadas con seguimiento.
 
-
 ---
 
 # Reutilización obligatoria
@@ -795,7 +799,6 @@ Evaluar reutilización de:
 - componentes existentes de experiencia paciente
 - componentes existentes de leads
 - componentes existentes de Assistant Workspace
-
 
 ---
 
@@ -809,7 +812,6 @@ Evaluar reutilización de:
 - Patient Identity boundaries
 - Appointment lifecycle
 - Authentication/RBAC
-
 
 ---
 
@@ -827,7 +829,6 @@ Evaluar reutilización de:
 - nueva persistencia
 - nuevo Source of Truth
 
-
 ---
 
 # Principios de implementación
@@ -839,13 +840,11 @@ Prioridad:
 3. Bajo acoplamiento.
 4. Claridad visual.
 
-
 Evitar:
 
 - lógica comercial dentro de componentes visuales;
 - estados operacionales nuevos;
 - abstracciones prematuras.
-
 
 ---
 
@@ -859,20 +858,17 @@ La implementación será aceptada si:
 ✓ La narrativa es entendible.
 ✓ Una clínica puede comprender el valor.
 
-
 ## Técnico
 
 ✓ La ruta funciona correctamente.
 ✓ Los componentes son presentacionales.
 ✓ No existen cambios de dominio.
 
-
 ## Arquitectura
 
 ✓ Continúa siendo composición.
 ✓ Mantiene los Source of Truth actuales.
 ✓ No duplica capacidades existentes.
-
 
 ---
 
@@ -905,25 +901,31 @@ Read [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/compo
 ## Propuesta arquitectónica para PR-03
 
 ### 1) Ruta propuesta
+
 - Archivo de ruta: src/routes/commercial-demo.tsx
 - Ubicación: bajo la estructura pública de rutas de TanStack Router, junto a rutas como index.tsx y servicios.tsx
 - Patrón utilizado: ruta pública file-based de TanStack Router, como las existentes en routes
 
 ### 2) Componentes propuestos
+
 #### Nuevos
+
 - src/components/commercial/CommercialDemoPage.tsx
 - src/components/commercial/CommercialDemoHeader.tsx
 - src/components/commercial/DemoStepIndicator.tsx
 - src/components/commercial/CommercialEvidencePanel.tsx
 
 #### Reutilizados
+
 - CommercialDemoJourneyCard.tsx
 - commercialDemoFoundation.ts
 - componentes existentes de experiencia paciente, como BookingCTA.tsx y Hero.tsx
 - componentes de presentación existentes del sitio, especialmente SiteLayout.tsx
 
 ### 3) Archivos afectados
+
 #### Nuevos
+
 - src/routes/commercial-demo.tsx
 - src/components/commercial/CommercialDemoPage.tsx
 - src/components/commercial/CommercialDemoHeader.tsx
@@ -931,16 +933,19 @@ Read [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/compo
 - src/components/commercial/CommercialEvidencePanel.tsx
 
 #### Modificados
+
 - routeTree.gen.ts si se genera la ruta automáticamente por TanStack Router
 - posiblemente Navbar.tsx si se desea un enlace visible a la nueva ruta
 
 ### 4) Justificación
+
 - Ubicación: una ruta pública en routes encaja con el patrón ya usado para páginas de presentación como la home y servicios.
 - Arquitectura: la ruta actuaría como entry point de presentación y compondría componentes visuales puros, sin introducir lógica operativa ni nuevos dominios.
 - Evita duplicación: reutiliza el escenario y la narrativa ya definidos en commercialDemoFoundation.ts y el componente de composición ya creado en CommercialDemoJourneyCard.tsx, evitando duplicar contenido o crear un nuevo Source of Truth.
 - Mantiene límites: no toca BookingDialog.tsx, dental.server.ts ni otros flujos restringidos.
 
 ### Impacto esperado
+
 - Se creará una primera experiencia pública y comprensible para una clínica potencial.
 - La narrativa comercial quedará orientada a:
   1. Paciente
@@ -950,11 +955,13 @@ Read [](file:///c%3A/AIVANTIA_ClinicaDental/ClinicaDental/DentalOperix/src/compo
 - La implementación futura quedará alineada con la idea de “Commercial Presentation Layer” y no como un producto nuevo.
 
 ### Riesgos
+
 - La ruta pública podría crecer visualmente si se intenta convertirla en una experiencia completa demasiado pronto.
 - Existe el riesgo de mezclar presentación con lógica comercial si se empieza a derivar estado real desde leads o citas en esta capa.
 - Si se reutiliza demasiado el componente del assistant, podría perderse la claridad de una narrativa externa.
 
 ### Preguntas abiertas
+
 - ¿Debe la ruta mostrar solo narrativa visual o también un vínculo claro a reservar cita o contactar a la clínica?
 - ¿Se desea que el header muestre únicamente el escenario y objetivo, o también un CTA de acción?
 - ¿La evidencia comercial debe presentarse como texto narrativo o como una vista más “de negocio” con métricas resumidas?
@@ -985,6 +992,7 @@ User: Apruebo la propuesta de implementación PR-03 con las siguientes condicion
 5. Mantener CommercialEvidencePanel como narrativa de valor.
 
 No convertirlo en:
+
 - dashboard;
 - sistema de métricas;
 - analítica comercial.
@@ -1064,6 +1072,7 @@ Read [](file:///c%3A/Users/Carlos/AppData/Roaming/Code/User/workspaceStorage/2d3
 ## ✅ PR-03 implementado: Commercial Presentation Layer
 
 ### Archivos creados
+
 - commercial-demo.tsx
 - CommercialDemoPage.tsx
 - CommercialDemoHeader.tsx
@@ -1071,10 +1080,13 @@ Read [](file:///c%3A/Users/Carlos/AppData/Roaming/Code/User/workspaceStorage/2d3
 - CommercialEvidencePanel.tsx
 
 ### Archivos modificados
+
 - Ninguno. La ruta se añadió de forma nueva y la integración se realizó únicamente a través de componentes presentacionales.
 
 ### Implementación realizada
+
 Se creó la ruta pública commercial-demo.tsx y se integró una experiencia visual de presentación que:
+
 - funciona como una capa de composición pública;
 - reutiliza commercialDemoFoundation.ts y CommercialDemoJourneyCard.tsx;
 - usa componentes presentacionales puros para narrar el recorrido:
@@ -1085,12 +1097,14 @@ Se creó la ruta pública commercial-demo.tsx y se integró una experiencia visu
 - mantiene el panel de evidencia como narrativa de valor, sin convertirlo en dashboard ni analítica comercial.
 
 ### Decisiones tomadas
+
 - Mantener la nueva ruta como una capa de presentación y no como una nueva aplicación o módulo operacional.
 - Reutilizar la base ya creada en PR-01 y la composición ya creada en PR-02.
 - No introducir lógica operativa, nuevas APIs, nuevas tablas, nueva persistencia ni nuevos Source of Truth.
 - Mantener los límites actuales intactos y no tocar los flujos restringidos.
 
 ### Validaciones ejecutadas
+
 - Prueba del componente reutilizado:
   - `npm test -- --run src/components/assistant/CommercialDemoJourneyCard.test.tsx`
   - Resultado: 1 archivo, 1 prueba aprobada
@@ -1099,6 +1113,7 @@ Se creó la ruta pública commercial-demo.tsx y se integró una experiencia visu
   - Resultado: compilación exitosa
 
 ### Riesgos detectados
+
 - El build muestra advertencias de tamaño de chunks preexistentes del bundle, pero no afectan la compilación ni esta implementación.
 - La ruta actual es narrativa y presentacional; si en futuras iteraciones se desea mayor interactividad, deberá mantenerse dentro de la misma capa de composición y sin alterar los Source of Truth existentes.
 

@@ -7,15 +7,19 @@ Define the observability baseline for DentalOperix Read Models across Patient, C
 ## Event families
 
 ### ReadTelemetryEvent
+
 Tracks read source utilization by domain, aggregate, source, and record count.
 
 ### FallbackTelemetryEvent
+
 Tracks fallback usage and reason when read models are unavailable or fail.
 
 ### AggregateTelemetryEvent
+
 Tracks aggregate execution health and diagnostic summary.
 
 ### DomainTelemetryEvent
+
 Tracks domain-level health and source.
 
 ## Provider

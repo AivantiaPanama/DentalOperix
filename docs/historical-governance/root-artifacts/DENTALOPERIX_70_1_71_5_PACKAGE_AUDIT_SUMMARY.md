@@ -1,26 +1,32 @@
 # DENTALOPERIX 70.1 / 71.5 Package Audit Summary
 
 ## Status
+
 UPDATED / REFRESHED
 
 ## Date
+
 2026-06-25
 
 ## Active Baseline
+
 DENTALOPERIX_BASELINE_69_2
 
 ## Audit Scope
+
 This package refresh audited the documentation package, integrated the governance and technical documentation generated during the ChatGPT-guided Program 71.5 workflow, updated closure states, and regenerated the file inventory and checksum records.
 
 ## Current Program 71.5 State
-| Increment | Status |
-|---|---|
-| 71.5.1 — Patient Domain Foundation | CLOSED / CERTIFIED |
-| 71.5.2 — Patient Application Layer | CLOSED / CERTIFIED |
-| 71.5.3 — Patient Persistence | CLOSED / CERTIFIED |
-| 71.5.4 — Patient API Integration | IN PROGRESS / PLANNING AUTHORIZED |
+
+| Increment                          | Status                            |
+| ---------------------------------- | --------------------------------- |
+| 71.5.1 — Patient Domain Foundation | CLOSED / CERTIFIED                |
+| 71.5.2 — Patient Application Layer | CLOSED / CERTIFIED                |
+| 71.5.3 — Patient Persistence       | CLOSED / CERTIFIED                |
+| 71.5.4 — Patient API Integration   | IN PROGRESS / PLANNING AUTHORIZED |
 
 ## Package Determination
+
 ```text
 DOCUMENTATION PACKAGE UPDATED
 GOVERNANCE STRUCTURE UPDATED
@@ -32,6 +38,7 @@ PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION REFRESH
 ```
 
 ## Key Added Documents
+
 - 71.5_PROGRAM_STATUS.md
 - 71.5_DOCUMENT_AUDIT_AND_UPDATE_REPORT.md
 - 71.5_CHAT_GENERATED_DOCUMENTATION_INDEX.md
@@ -42,6 +49,7 @@ PROTECTED COMPONENTS NOT MODIFIED BY THIS DOCUMENTATION REFRESH
 - 71.5.4_PATIENT_API_INTEGRATION_TECHNICAL_PLAN.md
 
 ## Validation Evidence Integrated
+
 Latest consolidated chat validation:
 
 ```text
@@ -51,6 +59,7 @@ Failed: 0
 ```
 
 ## Governance Determination
+
 The documentation package is suitable as the current updated handoff package for Program 71.5 continuation.
 
 ## 71.5.5 Controlled Implementation Audit Update

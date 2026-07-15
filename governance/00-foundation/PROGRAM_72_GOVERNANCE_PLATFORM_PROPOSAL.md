@@ -18,18 +18,17 @@ Transform governance from static documentation into a repository-integrated capa
 
 ## Workstreams
 
-| Workstream | Name | Purpose | Status |
-|---|---|---|---|
-| 72.0.1 | Governance Foundation | Create `/governance` structure, conventions, templates, and indexes. | IMPLEMENTED / PENDING CLOSURE REVIEW |
-| 72.0.2 | Governance Automation | Automate TIF, BMS, BCRC, RTM, TTM, CI, and release validations. | ACTIVE / AUTHORIZED |
-| 72.0.2.7 | Governance Metrics | Define measurable governance indicators. | PLANNED |
-| 72.x | Governance Dashboard | Provide executive and audit visibility. | FUTURE |
-| 72.0.2.8 | Governance CI/CD | Integrate governance checks into PR and release flows. | PLANNED / NOT ACTIVE |
+| Workstream | Name                  | Purpose                                                              | Status                               |
+| ---------- | --------------------- | -------------------------------------------------------------------- | ------------------------------------ |
+| 72.0.1     | Governance Foundation | Create `/governance` structure, conventions, templates, and indexes. | IMPLEMENTED / PENDING CLOSURE REVIEW |
+| 72.0.2     | Governance Automation | Automate TIF, BMS, BCRC, RTM, TTM, CI, and release validations.      | ACTIVE / AUTHORIZED                  |
+| 72.0.2.7   | Governance Metrics    | Define measurable governance indicators.                             | PLANNED                              |
+| 72.x       | Governance Dashboard  | Provide executive and audit visibility.                              | FUTURE                               |
+| 72.0.2.8   | Governance CI/CD      | Integrate governance checks into PR and release flows.               | PLANNED / NOT ACTIVE                 |
 
 ## Governance Determination
 
 The program is compatible with the current baseline because its scope is governance documentation and automation. It must not alter certified product architecture or protected components without a separate approved governance review.
-
 
 ## Closure Update - 2026-06-24
 

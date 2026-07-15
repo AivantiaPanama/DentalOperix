@@ -192,7 +192,6 @@ FI-004  Clinical Data Completeness Dashboard            PLANNED   MEDIUM
 FI-005  Favicon Development Asset                       OPEN      LOW
 ```
 
-
 ## FI-007 Dashboard Period State Alignment
 
 Priority: MEDIUM
@@ -246,7 +245,6 @@ Governance note:
 
 This item is not part of 60.2-HF5. It must be handled as a separate approved change because it affects UI state behavior, not endpoint resilience.
 
-
 ## FI-008 Assistant Fallback State Cleanup
 
 Priority: MEDIUM
@@ -292,7 +290,6 @@ No persistence, source-of-truth, Google Sheets write path, lead creation path, o
 Status: RESOLVED
 
 Expanded conservative read-side normalization for observed incomplete mojibake values such as `OdontologÃa` and `MartÃnes`. No persistence writes were introduced.
-
 
 ## Resolved During 60.3-HF2
 
@@ -371,7 +368,6 @@ docs/architecture/IMPLEMENTATION_CHECKLIST.md
 
 This is now the reusable development baseline for avoiding repeated investigation of already certified patterns.
 
-
 ### FI-004 - Runtime Persistence Observability
 
 Status: OPEN  
@@ -388,7 +384,6 @@ Constraints:
 - no dual write
 - no new source of truth
 - no logging of secrets or patient-sensitive payloads
-
 
 ## Resolved During 60.4-HF1
 

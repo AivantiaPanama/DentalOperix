@@ -23,13 +23,13 @@ Program 74.x was a documentation, analysis, functional specification, architectu
 
 ### Scope Completed
 
-| Phase | Name | Status |
-|---|---|---|
-| 74.0 | Program Charter & Architecture Discovery | Closed |
-| 74.1 | Domain Analysis | Closed |
-| 74.2 | Functional Specification | Closed |
-| 74.3 | Architecture Validation | Closed |
-| 74.4 | Implementation Planning | Closed |
+| Phase | Name                                     | Status |
+| ----- | ---------------------------------------- | ------ |
+| 74.0  | Program Charter & Architecture Discovery | Closed |
+| 74.1  | Domain Analysis                          | Closed |
+| 74.2  | Functional Specification                 | Closed |
+| 74.3  | Architecture Validation                  | Closed |
+| 74.4  | Implementation Planning                  | Closed |
 
 ### Architectural Result
 
@@ -47,14 +47,14 @@ Clinical Records is not responsible for:
 
 ### Domain Result
 
-| Element | Result |
-|---|---|
-| Bounded Context | Clinical Records |
-| Source of Truth | Clinical Information |
-| Aggregate Root | ClinicalRecord |
-| Required reference | PatientId |
-| Optional reference | AppointmentId |
-| Dependency to Leads | None |
+| Element             | Result               |
+| ------------------- | -------------------- |
+| Bounded Context     | Clinical Records     |
+| Source of Truth     | Clinical Information |
+| Aggregate Root      | ClinicalRecord       |
+| Required reference  | PatientId            |
+| Optional reference  | AppointmentId        |
+| Dependency to Leads | None                 |
 
 ### Closure Determination
 

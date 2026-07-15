@@ -38,13 +38,13 @@ A future DentalOperix Next evaluation may be appropriate after 61.3 if accumulat
 
 ## Evaluation Criteria for Later Review
 
-| Criterion | Question |
-|---|---|
-| Domain fit | Can the current architecture represent providers, patients, appointments, and clinical operations correctly? |
-| Delivery speed | Is incremental delivery still faster than redesign? |
-| Risk | Are protected components causing excessive implementation risk? |
-| Data integrity | Can operational records be made durable without new source-of-truth conflicts? |
-| Governance cost | Are rules protecting quality or creating avoidable bottlenecks? |
+| Criterion       | Question                                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| Domain fit      | Can the current architecture represent providers, patients, appointments, and clinical operations correctly? |
+| Delivery speed  | Is incremental delivery still faster than redesign?                                                          |
+| Risk            | Are protected components causing excessive implementation risk?                                              |
+| Data integrity  | Can operational records be made durable without new source-of-truth conflicts?                               |
+| Governance cost | Are rules protecting quality or creating avoidable bottlenecks?                                              |
 
 ## Next Review Point
 

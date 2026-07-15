@@ -10,19 +10,19 @@ This package consolidates the project documentation after the certification of 7
 
 ## Program Status
 
-| Program / Increment | Status |
-|---|---|
-| 72.1 Governance Platform Implementation | CLOSED & CERTIFIED |
-| 72.1.1 Governance SDK Core | CLOSED & CERTIFIED |
-| 72.1.2 Governance Validation Engine | CLOSED & CERTIFIED |
-| 72.1.3-R1 RBAC Permission Catalog Alignment | CLOSED & CERTIFIED |
-| 72.1.3-I1 Domain Foundation | CLOSED & CERTIFIED |
-| 72.1.3-I2 Rule Registry Infrastructure | CLOSED & CERTIFIED |
-| 72.1.3-I3 Governance Manifest Integration | CLOSED & CERTIFIED |
-| 72.1.3-I4 Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED |
-| 73 Patient Domain Implementation | ACTIVE |
-| 73.0 Patient Domain Discovery & Ubiquitous Language | CLOSED & CERTIFIED |
-| 73.1 Patient Core Domain | APPROVED FOR IMPLEMENTATION |
+| Program / Increment                                  | Status                      |
+| ---------------------------------------------------- | --------------------------- |
+| 72.1 Governance Platform Implementation              | CLOSED & CERTIFIED          |
+| 72.1.1 Governance SDK Core                           | CLOSED & CERTIFIED          |
+| 72.1.2 Governance Validation Engine                  | CLOSED & CERTIFIED          |
+| 72.1.3-R1 RBAC Permission Catalog Alignment          | CLOSED & CERTIFIED          |
+| 72.1.3-I1 Domain Foundation                          | CLOSED & CERTIFIED          |
+| 72.1.3-I2 Rule Registry Infrastructure               | CLOSED & CERTIFIED          |
+| 72.1.3-I3 Governance Manifest Integration            | CLOSED & CERTIFIED          |
+| 72.1.3-I4 Manifest Validation & Compatibility Engine | CLOSED & CERTIFIED          |
+| 73 Patient Domain Implementation                     | ACTIVE                      |
+| 73.0 Patient Domain Discovery & Ubiquitous Language  | CLOSED & CERTIFIED          |
+| 73.1 Patient Core Domain                             | APPROVED FOR IMPLEMENTATION |
 
 ## Key Documentation Added
 

@@ -211,7 +211,6 @@ Cutover remains blocked.
 
 Google Sheet remains the active physical persistence mechanism until a future explicit cutover approval.
 
-
 ## 57.5 Executive Review and Authorization Hold
 
 ```text
@@ -261,7 +260,6 @@ Leads -> Relational Database
 ```
 
 The future state requires explicit executive approval before activation.
-
 
 ---
 

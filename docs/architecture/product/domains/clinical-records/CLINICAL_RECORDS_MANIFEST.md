@@ -18,12 +18,12 @@ Clinical Information Domain.
 
 ## Certified source boundaries
 
-| Related Domain | Relationship | Ownership |
-|---|---|---|
-| Leads | No direct dependency | Leads remains acquisition Source of Truth |
-| Patients | Patient identity reference only | Patients owns identity |
-| Appointments | Optional operational reference | Appointments owns scheduling operations |
-| Clinical Records | Clinical information | Clinical Records owns clinical information |
+| Related Domain   | Relationship                    | Ownership                                  |
+| ---------------- | ------------------------------- | ------------------------------------------ |
+| Leads            | No direct dependency            | Leads remains acquisition Source of Truth  |
+| Patients         | Patient identity reference only | Patients owns identity                     |
+| Appointments     | Optional operational reference  | Appointments owns scheduling operations    |
+| Clinical Records | Clinical information            | Clinical Records owns clinical information |
 
 ## Aggregate root
 
@@ -39,10 +39,10 @@ Domain -> Application Services -> Ports -> Provider -> Relational Adapter -> Sup
 
 ## Current capabilities
 
-| Capability | Status |
-|---|---|
+| Capability                 | Status    |
+| -------------------------- | --------- |
 | Clinical Record Foundation | Certified |
-| Clinical Notes Foundation | Active |
+| Clinical Notes Foundation  | Active    |
 
 ## Future capabilities
 

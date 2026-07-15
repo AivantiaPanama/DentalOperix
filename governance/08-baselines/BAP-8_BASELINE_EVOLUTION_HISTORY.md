@@ -23,7 +23,7 @@ Maintain a governed history of baseline evolution, including origin, objective, 
 ## Evolution Register Model
 
 | REL | Programs | ADR | REQ | Evidence | State |
-|---|---|---|---|---|---|
+| --- | -------- | --- | --- | -------- | ----- |
 
 ## Closure State
 

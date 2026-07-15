@@ -14,13 +14,13 @@ source: ChatGPT governance consolidation session
 
 ## Proposed Metrics
 
-| Metric | Purpose |
-|---|---|
-| RTM Coverage | Percentage of requirements linked to ADR/ARCH/TEST/EVID/REL |
-| TTM Coverage | Percentage of tests linked to requirements and evidence |
-| ADR Coverage | Percentage of architectural decisions documented |
-| CI Coverage | Percentage of configuration items cataloged |
-| Evidence Coverage | Percentage of claims supported by evidence |
-| Release Gate Coverage | Percentage of gates passed per release |
-| Open Findings | Number of unresolved audit findings |
-| Document Age | Time since last review for governance documents |
+| Metric                | Purpose                                                     |
+| --------------------- | ----------------------------------------------------------- |
+| RTM Coverage          | Percentage of requirements linked to ADR/ARCH/TEST/EVID/REL |
+| TTM Coverage          | Percentage of tests linked to requirements and evidence     |
+| ADR Coverage          | Percentage of architectural decisions documented            |
+| CI Coverage           | Percentage of configuration items cataloged                 |
+| Evidence Coverage     | Percentage of claims supported by evidence                  |
+| Release Gate Coverage | Percentage of gates passed per release                      |
+| Open Findings         | Number of unresolved audit findings                         |
+| Document Age          | Time since last review for governance documents             |

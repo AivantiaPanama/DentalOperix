@@ -18,13 +18,13 @@ Measure the maturity of the DentalOperix Governance Platform without changing th
 
 ## Levels
 
-| Level | Name | Description | Current State |
-|---|---|---|---|
-| GCMM-1 | Foundation | Structure, documentation, standards, baseline records | ACHIEVED |
-| GCMM-2 | Validation | Validation Engine, Baseline Validator, ADR and traceability validators | IN PROGRESS |
-| GCMM-3 | Automation | Evidence generation, automated execution, consolidated reports | PLANNED |
-| GCMM-4 | Continuous Governance | CI/CD checks, continuous metrics, quality indicators | PLANNED |
-| GCMM-5 | Adaptive Governance | Rule-based recommendations, trend analysis, risk prioritization | FUTURE |
+| Level  | Name                  | Description                                                            | Current State |
+| ------ | --------------------- | ---------------------------------------------------------------------- | ------------- |
+| GCMM-1 | Foundation            | Structure, documentation, standards, baseline records                  | ACHIEVED      |
+| GCMM-2 | Validation            | Validation Engine, Baseline Validator, ADR and traceability validators | IN PROGRESS   |
+| GCMM-3 | Automation            | Evidence generation, automated execution, consolidated reports         | PLANNED       |
+| GCMM-4 | Continuous Governance | CI/CD checks, continuous metrics, quality indicators                   | PLANNED       |
+| GCMM-5 | Adaptive Governance   | Rule-based recommendations, trend analysis, risk prioritization        | FUTURE        |
 
 ## Certification Flow
 

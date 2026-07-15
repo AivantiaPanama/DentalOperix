@@ -14,11 +14,11 @@ Author role: Product Analyst / Functional Designer
 
 **Upstream references:**
 
-*RBAC-MATRIX-V1.1 (authorization source)*
+_RBAC-MATRIX-V1.1 (authorization source)_
 
-*UX-SPEC-61.2-V1.0 (functional/UX source)*
+_UX-SPEC-61.2-V1.0 (functional/UX source)_
 
-*USER-STORIES-61.2-V1.0 (behavioral source)*
+_USER-STORIES-61.2-V1.0 (behavioral source)_
 
 **Permanent constraint honored throughout this document:**
 
@@ -56,11 +56,11 @@ This document does not include or imply:
   Section 11 or RBAC-MATRIX-V1.1 Section 10. Those remain open here as
   well.
 
-*Every rule below is traceable to a User Story in
+_Every rule below is traceable to a User Story in
 USER-STORIES-61.2-V1.0, an Acceptance Criterion in UX-SPEC-61.2-V1.0,
 and (where applicable) a permission already authorized in
 RBAC-MATRIX-V1.1. No rule introduces a new identifier outside the
-BR-61.2-XXX series.*
+BR-61.2-XXX series._
 
 1\. Relationship to the BR-RBAC Series
 
@@ -69,7 +69,7 @@ that is relevant to the Front Desk Workspace to where it is referenced
 in this document, without restating its content.
 
 |                  |                                                                                                                        |                                                                                                                                                                     |
-|------------------|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **BR-RBAC rule** | **What it governs**                                                                                                    | **How BR-61.2 rules relate to it**                                                                                                                                  |
 | **BR-RBAC-001**  | No role may bypass the persistence adapter or write directly to Supabase outside the certified Leads flow.             | BR-61.2 rules never define or imply a data-write path; all rules describe application-layer behavior reachable only through already-authorized actions.             |
 | **BR-RBAC-005**  | Lead status/notes/owner changes must be attributable (updated_by, updated_at).                                         | Referenced by BR-61.2-001 and BR-61.2-002 rather than restated; this document adds queue ordering and save-failure behavior on top of that attribution requirement. |
@@ -83,7 +83,7 @@ This table is the master index. Full detail for each rule, including the
 required 11 fields, follows in Section 3.
 
 |                 |                                                        |                                    |                                       |
-|-----------------|--------------------------------------------------------|------------------------------------|---------------------------------------|
+| --------------- | ------------------------------------------------------ | ---------------------------------- | ------------------------------------- |
 | **Rule ID**     | **Rule Name**                                          | **Related User Stories**           | **Related AC**                        |
 | **BR-61.2-001** | Lead Queue Ordering by Urgency                         | US-61.2-03                         | AC-61.2-004                           |
 | **BR-61.2-002** | Lead Update Attribution and Failure Integrity          | US-61.2-04, US-61.2-05             | AC-61.2-005, AC-61.2-006              |
@@ -1003,5 +1003,5 @@ by any rule above:
 
 - Global search (explicitly deferred).
 
-*This Business Rules Package intentionally does not propose answers to
-the items above. Resolution remains deferred to Architecture Review.*
+_This Business Rules Package intentionally does not propose answers to
+the items above. Resolution remains deferred to Architecture Review._

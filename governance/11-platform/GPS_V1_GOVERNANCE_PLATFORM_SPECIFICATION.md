@@ -31,21 +31,21 @@ The Governance Platform supports governance documentation, validation, evidence,
 
 ## Platform Chapters
 
-| Chapter | Area |
-|---|---|
-| GPS-01 | Vision and objectives |
-| GPS-02 | Architectural principles |
-| GPS-03 | Governance domains |
-| GPS-04 | Governance SDK specification |
-| GPS-05 | Canonical governance model |
-| GPS-06 | Validator catalog |
-| GPS-07 | Compliance and audit model |
-| GPS-08 | Evidence model |
-| GPS-09 | Baseline management |
-| GPS-10 | Versioning and compatibility |
-| GPS-11 | DGF integration |
-| GPS-12 | GARB governance |
-| GPS-13 | Evolution roadmap |
+| Chapter | Area                         |
+| ------- | ---------------------------- |
+| GPS-01  | Vision and objectives        |
+| GPS-02  | Architectural principles     |
+| GPS-03  | Governance domains           |
+| GPS-04  | Governance SDK specification |
+| GPS-05  | Canonical governance model   |
+| GPS-06  | Validator catalog            |
+| GPS-07  | Compliance and audit model   |
+| GPS-08  | Evidence model               |
+| GPS-09  | Baseline management          |
+| GPS-10  | Versioning and compatibility |
+| GPS-11  | DGF integration              |
+| GPS-12  | GARB governance              |
+| GPS-13  | Evolution roadmap            |
 
 ## Relationship with DGF
 

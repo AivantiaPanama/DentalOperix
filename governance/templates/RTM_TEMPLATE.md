@@ -13,4 +13,4 @@ source: ChatGPT governance consolidation session
 # RTM Template
 
 | REQ ID | Type | Domain | Description | Priority | Status | ADR | ARCH | TEST | EVID | REL | Notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| ------ | ---- | ------ | ----------- | -------- | ------ | --- | ---- | ---- | ---- | --- | ----- |

@@ -10,7 +10,7 @@ Iteration: 61.1 — Users & RBAC Foundation
 
 Author role: Product Analyst / Functional Designer
 
-*Supersedes: RBAC Matrix (Preliminary, unversioned draft)*
+_Supersedes: RBAC Matrix (Preliminary, unversioned draft)_
 
 **Permanent constraint honored throughout this document:**
 
@@ -25,16 +25,16 @@ incorporates all findings from the Architecture Review.
 
 Roles in scope: Patient, Assistant, Doctor, Administrator.
 
-*This document defines authorization rules only. It does not define,
+_This document defines authorization rules only. It does not define,
 alter, or propose any change to architecture, persistence, data
 modeling, or the certified Leads pipeline (LeadPersistencePort -\>
 LeadPersistenceProvider -\> RelationalLeadPersistenceAdapter -\>
-Supabase PostgreSQL). Leads remains the Source of Truth throughout.*
+Supabase PostgreSQL). Leads remains the Source of Truth throughout._
 
 # 2. Change Log — Architecture Review Feedback Incorporated
 
 | **Section**           | **Architecture Review Finding**                                                      | **Resolution in V1.1**                                                                            |
-|-----------------------|--------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| --------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
 | **Leads permissions** | Granularity insufficient — single Update action hid distinct authorization concerns. | Split into lead.status.update, lead.notes.update, lead.owner.reassign as independent permissions. |
 | **Appointments**      | Hard delete is inconsistent with audit and recoverability needs.                     | Physical deletion prohibited for all roles. Cancellation is now the sole terminal operation.      |
 | **Users**             | Lifecycle actions were ambiguous (Delete vs Deactivate).                             | user.delete = prohibited (all roles). user.deactivate / user.reactivate = Administrator only.     |
@@ -46,7 +46,7 @@ Supabase PostgreSQL). Leads remains the Source of Truth throughout.*
 # 3. Summary Matrix (Role x Module)
 
 | **Module**                              | **Patient**         | **Assistant**                                      | **Doctor**                            | **Administrator**                                        |
-|-----------------------------------------|---------------------|----------------------------------------------------|---------------------------------------|----------------------------------------------------------|
+| --------------------------------------- | ------------------- | -------------------------------------------------- | ------------------------------------- | -------------------------------------------------------- |
 | **Leads (application layer only)**      | No access           | lead.status.update lead.notes.update (operational) | Read only — assigned patients         | lead.status.update lead.notes.update lead.owner.reassign |
 | **Calendar / Appointments**             | Read + Cancel (own) | Create / Read / Update / Cancel (all)              | Read / Update / Cancel (own schedule) | Create / Read / Update / Cancel (all)                    |
 | **Dashboard**                           | Patient Portal      | Front Desk Workspace                               | Clinical Workspace                    | Operations Console                                       |
@@ -55,9 +55,9 @@ Supabase PostgreSQL). Leads remains the Source of Truth throughout.*
 | **Analytics / Reporting**               | No access           | No access                                          | Read (own patients)                   | Read (global)                                            |
 | **Notifications (Email / ICS)**         | Read (own)          | Send / Resend                                      | Read (own)                            | Send / Resend / Read (all)                               |
 
-*This is a high-level overview. Section 4 onward provides
+_This is a high-level overview. Section 4 onward provides
 permission-level detail, including the granular split of Leads
-permissions requested by Architecture Review.*
+permissions requested by Architecture Review._
 
 # 4. Leads — Detailed Permissions (Application Layer Only)
 
@@ -67,7 +67,7 @@ lead.status.update, lead.notes.update, and lead.owner.reassign. Each is
 authorized separately and may be granted independently per role.
 
 | **Permission**             | **Patient** | **Assistant**                                                                                                       | **Doctor**                                              | **Administrator**                              |
-|----------------------------|-------------|---------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|------------------------------------------------|
+| -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------- |
 | **lead.create**            | Deny        | Deny — creation remains exclusive to the certified flow (BookingDialog -\> processDentalLead -\> /api/leads/create) | Deny                                                    | Deny                                           |
 | **lead.read**              | Deny        | Allow — all active leads                                                                                            | Conditional — only leads linked to assigned patients    | Allow — all leads                              |
 | **lead.status.update**     | Deny        | Allow                                                                                                               | Deny                                                    | Allow                                          |
@@ -75,11 +75,11 @@ authorized separately and may be granted independently per role.
 | **lead.owner.reassign**    | Deny        | Deny                                                                                                                | Deny                                                    | Allow — Administrator only                     |
 | **lead.delete (physical)** | Deny        | Deny                                                                                                                | Deny                                                    | Deny — prohibited for all roles, no exceptions |
 
-*All permissions in this section operate strictly at the application
+_All permissions in this section operate strictly at the application
 layer, through the existing certified flow. No permission listed here
 implies or authorizes any direct interaction with LeadPersistencePort,
 LeadPersistenceProvider, RelationalLeadPersistenceAdapter, or Supabase
-PostgreSQL. See BR-RBAC-001 and BR-RBAC-008.*
+PostgreSQL. See BR-RBAC-001 and BR-RBAC-008._
 
 # 5. Appointments — Detailed Permissions
 
@@ -89,16 +89,16 @@ standard and only terminal operation for ending an appointment's
 lifecycle.
 
 | **Permission**                      | **Patient**                                          | **Assistant**           | **Doctor**                      | **Administrator**                              |
-|-------------------------------------|------------------------------------------------------|-------------------------|---------------------------------|------------------------------------------------|
+| ----------------------------------- | ---------------------------------------------------- | ----------------------- | ------------------------------- | ---------------------------------------------- |
 | **appointment.create**              | Allow — for self only                                | Allow — for any patient | Conditional — own schedule only | Allow — for any patient or doctor              |
 | **appointment.read**                | Allow — own appointments only                        | Allow — all             | Allow — own schedule only       | Allow — all                                    |
 | **appointment.update (reschedule)** | Allow — own, subject to minimum-notice business rule | Allow — all             | Allow — own schedule only       | Allow — all                                    |
 | **appointment.cancel**              | Allow — own appointments                             | Allow — all             | Allow — own schedule only       | Allow — all                                    |
 | **appointment.delete (physical)**   | Deny                                                 | Deny                    | Deny                            | Deny — prohibited for all roles, no exceptions |
 
-*See BR-RBAC-007. Cancelled appointments remain in the system as
+_See BR-RBAC-007. Cancelled appointments remain in the system as
 historical records with a cancelled status; they are never physically
-removed.*
+removed._
 
 # 6. Users — Lifecycle Permissions
 
@@ -107,7 +107,7 @@ distinguishes deactivation (reversible, Administrator-controlled) from
 deletion (prohibited for all roles).
 
 | **Permission**             | **Patient**                               | **Assistant**                             | **Doctor**                                | **Administrator**                               |
-|----------------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------|-------------------------------------------------|
+| -------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------------- |
 | **user.create**            | Deny                                      | Deny                                      | Deny                                      | Allow                                           |
 | **user.read**              | Allow — own profile only                  | Allow — own profile only                  | Allow — own profile only                  | Allow — all profiles                            |
 | **user.update**            | Allow — own profile, non-sensitive fields | Allow — own profile, non-sensitive fields | Allow — own profile, non-sensitive fields | Allow — all profiles, including role assignment |
@@ -116,9 +116,9 @@ deletion (prohibited for all roles).
 | **user.reactivate**        | Deny                                      | Deny                                      | Deny                                      | Allow                                           |
 | **user.delete (physical)** | Deny                                      | Deny                                      | Deny                                      | Deny — prohibited for all roles, no exceptions  |
 
-*See BR-RBAC-007. A deactivated user retains their historical record and
+_See BR-RBAC-007. A deactivated user retains their historical record and
 associations; reactivation restores access without recreating the
-account.*
+account._
 
 # 7. Dashboard Routing
 
@@ -127,7 +127,7 @@ to product-oriented naming with no references to internal iteration
 numbers.
 
 | **Role**          | **Dashboard (product-oriented name)** |
-|-------------------|---------------------------------------|
+| ----------------- | ------------------------------------- |
 | **Patient**       | Patient Portal                        |
 | **Assistant**     | Front Desk Workspace                  |
 | **Doctor**        | Clinical Workspace                    |
@@ -141,20 +141,20 @@ as a labeled placeholder for future iteration 61.3 and carries no
 authorization weight in the current iteration.
 
 | **Permission (future — 61.3)** | **Patient** | **Assistant** | **Doctor**  | **Administrator** |
-|--------------------------------|-------------|---------------|-------------|-------------------|
+| ------------------------------ | ----------- | ------------- | ----------- | ----------------- |
 | **patientrecord.create**       | Placeholder | Placeholder   | Placeholder | Placeholder       |
 | **patientrecord.read**         | Placeholder | Placeholder   | Placeholder | Placeholder       |
 | **patientrecord.update**       | Placeholder | Placeholder   | Placeholder | Placeholder       |
 | **patientrecord.delete**       | Placeholder | Placeholder   | Placeholder | Placeholder       |
 
-*OUT OF SCOPE — 61.1. No permission in this table is active, enforced,
+_OUT OF SCOPE — 61.1. No permission in this table is active, enforced,
 or implied for the current iteration. Placeholder values exist solely to
-preserve naming continuity for future design work.*
+preserve naming continuity for future design work._
 
 # 9. Business Rules
 
 | **ID**          | **Rule**                                                                                                                                                                                                                      |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **BR-RBAC-001** | No role may create, modify, or bypass the persistence adapter, or write directly to Supabase PostgreSQL outside the certified Leads flow.                                                                                     |
 | **BR-RBAC-002** | Only Administrator may assign or change a user's role.                                                                                                                                                                        |
 | **BR-RBAC-003** | Doctor access to Leads and future Patient Records is limited to assigned patients. The assignment mechanism itself is an open architecture question (see Section 10).                                                         |
@@ -187,5 +187,5 @@ document. They remain the responsibility of Architecture Review.
   Administrator assigns or changes a user's role (e.g., self-service
   request, manual provisioning, invitation flow).
 
-*This functional design package intentionally does not propose answers
-to the items above. Resolution is deferred to Architecture Review.*
+_This functional design package intentionally does not propose answers
+to the items above. Resolution is deferred to Architecture Review._

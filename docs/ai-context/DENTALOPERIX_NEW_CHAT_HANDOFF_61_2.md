@@ -1,18 +1,10 @@
 \# DentalOperix New Chat Handoff - 61.2 Assistant / Front Desk Workspace
 
-
-
 \## START HERE
-
-
 
 Use this file as the single entry point for a new ChatGPT or Cursor session starting Iteration 61.2.
 
-
-
 Read in this order:
-
-
 
 1\. `docs/ai-context/DENTALOPERIX\\\\\\\\\\\\\\\_NEW\\\\\\\\\\\\\\\_CHAT\\\\\\\\\\\\\\\_HANDOFF\\\\\\\\\\\\\\\_61\\\\\\\\\\\\\\\_1.md`
 
@@ -24,19 +16,11 @@ Read in this order:
 
 5\. Relevant 61.2 implementation package documents before proposing code.
 
-
-
 Do not read historical documents unless explicitly required by an architecture or governance question.
-
-
 
 \---
 
-
-
 \## Certified Foundation
-
-
 
 ```text
 
@@ -70,15 +54,9 @@ NOT\\\\\\\\\\\\\\\_STARTED
 
 ```
 
-
-
 \---
 
-
-
 \## Certified Baseline
-
-
 
 ```text
 
@@ -116,15 +94,9 @@ formal Architecture Review.
 
 ```
 
-
-
 \---
 
-
-
 \## 61.1 Certification Evidence
-
-
 
 ```text
 
@@ -158,11 +130,7 @@ PASS / CERTIFIED
 
 ```
 
-
-
 Final validation:
-
-
 
 ```text
 
@@ -182,15 +150,9 @@ SSR PASS
 
 ```
 
-
-
 \---
 
-
-
 \## Certified Architecture
-
-
 
 ```text
 
@@ -206,11 +168,7 @@ Leads
 
 ```
 
-
-
 Absolute rule:
-
-
 
 ```text
 
@@ -218,11 +176,7 @@ Leads = Source of Truth
 
 ```
 
-
-
 Supporting rules:
-
-
 
 ```text
 
@@ -234,19 +188,11 @@ Dashboard Routing = Role-based navigation only
 
 ```
 
-
-
 \---
-
-
 
 \## Permanent Architecture Restrictions
 
-
-
 The following remain prohibited during 61.2:
-
-
 
 ```text
 
@@ -264,11 +210,7 @@ RBAC Bypass
 
 ```
 
-
-
 61.2 must consume the certified architecture and may not alter:
-
-
 
 ```text
 
@@ -284,19 +226,11 @@ Leads
 
 ```
 
-
-
 \---
-
-
 
 \## Protected Components
 
-
-
 Do not modify without explicit authorization:
-
-
 
 ```text
 
@@ -318,19 +252,11 @@ siteServices.ts
 
 ```
 
-
-
 \---
-
-
 
 \## Deferred Decisions Not Authorized
 
-
-
 Do not solve, model, implement, or assume:
-
-
 
 ```text
 
@@ -348,11 +274,7 @@ Global Search Scope
 
 ```
 
-
-
 If any are required during 61.2:
-
-
 
 ```text
 
@@ -362,19 +284,11 @@ REQUEST ARCHITECTURE REVIEW
 
 ```
 
-
-
 \---
-
-
 
 \## Out of Scope for 61.2
 
-
-
 The following remain out of scope:
-
-
 
 ```text
 
@@ -398,11 +312,7 @@ Real-Time Updates
 
 ```
 
-
-
 If implementation requires any of these items:
-
-
 
 ```text
 
@@ -412,15 +322,9 @@ REQUEST ARCHITECTURE REVIEW
 
 ```
 
-
-
 \---
 
-
-
 \## 61.2 Status
-
-
 
 ```text
 
@@ -434,19 +338,11 @@ IMPLEMENTATION\\\\\\\\\\\\\\\_AUTHORIZED
 
 ```
 
-
-
 \---
-
-
 
 \## Mandatory Pre-Code Protocol
 
-
-
 Before generating code:
-
-
 
 1\. Architecture compliance review.
 
@@ -464,19 +360,11 @@ Before generating code:
 
 8\. Explicit approval from the user.
 
-
-
 No code may be generated before approval.
-
-
 
 \---
 
-
-
 \## First Prompt for 61.2 Implementation Chat
-
-
 
 ```text
 
@@ -571,4 +459,3 @@ Do not assume deferred models.
 Use the 61.1 certified baseline as the starting point.
 
 ```
-

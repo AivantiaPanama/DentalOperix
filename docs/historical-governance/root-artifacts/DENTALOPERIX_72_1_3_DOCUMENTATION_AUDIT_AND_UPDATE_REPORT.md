@@ -57,23 +57,23 @@ No I4 implementation source is included in this package. I4 is documented as arc
 
 ## Closure State Reconciliation
 
-| Increment | Reconciled State |
-|---|---|
-| 72.1.1 Governance SDK Core | CLOSED & CERTIFIED |
-| 72.1.2 Governance Validation Engine | CLOSED & CERTIFIED |
-| 72.1.3-R1 RBAC Permission Catalog Alignment | CLOSED & CERTIFIED |
-| 72.1.3-I1 Domain Foundation | CLOSED & CERTIFIED |
-| 72.1.3-I2 Rule Registry Infrastructure | CLOSED & CERTIFIED |
-| 72.1.3-I3 Governance Manifest Integration | CLOSED & CERTIFIED |
+| Increment                                            | Reconciled State                                               |
+| ---------------------------------------------------- | -------------------------------------------------------------- |
+| 72.1.1 Governance SDK Core                           | CLOSED & CERTIFIED                                             |
+| 72.1.2 Governance Validation Engine                  | CLOSED & CERTIFIED                                             |
+| 72.1.3-R1 RBAC Permission Catalog Alignment          | CLOSED & CERTIFIED                                             |
+| 72.1.3-I1 Domain Foundation                          | CLOSED & CERTIFIED                                             |
+| 72.1.3-I2 Rule Registry Infrastructure               | CLOSED & CERTIFIED                                             |
+| 72.1.3-I3 Governance Manifest Integration            | CLOSED & CERTIFIED                                             |
 | 72.1.3-I4 Manifest Validation & Compatibility Engine | APPROVED FOR IMPLEMENTATION PLANNING - CODE NOT YET AUTHORIZED |
 
 ## Evidence Reconciliation
 
-| Validation Area | Result |
-|---|---|
-| I1/R1 full suite evidence | PASS - 135 Test Files / 583 Tests |
-| I2 install/build/typecheck/audit evidence | PASS |
-| I3 install/build/typecheck/audit evidence | PASS |
+| Validation Area                           | Result                            |
+| ----------------------------------------- | --------------------------------- |
+| I1/R1 full suite evidence                 | PASS - 135 Test Files / 583 Tests |
+| I2 install/build/typecheck/audit evidence | PASS                              |
+| I3 install/build/typecheck/audit evidence | PASS                              |
 
 ## Governance Determination
 

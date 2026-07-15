@@ -171,7 +171,7 @@ New governing references:
 - `docs/ai-governance/61.0_AI_DRIVEN_PRODUCT_DEVELOPMENT_STRATEGY.md`
 - `docs/ai-context/DENTALOPERIX_AI_CONTEXT.md`
 
-61.x does not modify the certified persistence architecture. The current product direction is:
+  61.x does not modify the certified persistence architecture. The current product direction is:
 
 ```text
 DentalOperix Starter

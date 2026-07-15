@@ -14,24 +14,24 @@ source: ChatGPT governance consolidation session
 
 ## Configuration Item Taxonomy
 
-| Prefix | CI Type |
-|---|---|
-| CI-ARCH | Architecture |
-| CI-APP | Application |
-| CI-API | API |
-| CI-DB | Database |
-| CI-INF | Infrastructure |
-| CI-DOC | Documentation |
-| CI-TEST | Test assets |
-| CI-REL | Release artifacts |
+| Prefix  | CI Type           |
+| ------- | ----------------- |
+| CI-ARCH | Architecture      |
+| CI-APP  | Application       |
+| CI-API  | API               |
+| CI-DB   | Database          |
+| CI-INF  | Infrastructure    |
+| CI-DOC  | Documentation     |
+| CI-TEST | Test assets       |
+| CI-REL  | Release artifacts |
 
 ## CI Classification Matrix
 
-| Tier | Description | Examples |
-|---|---|---|
+| Tier   | Description                                           | Examples                                                       |
+| ------ | ----------------------------------------------------- | -------------------------------------------------------------- |
 | Tier 1 | Critical; architecture and governance review required | Sources of Truth, certified architecture, protected components |
-| Tier 2 | High impact; technical review required | APIs, adapters, schemas |
-| Tier 3 | Operational; standard control | Scripts, deployment config, documentation, tests |
+| Tier 2 | High impact; technical review required                | APIs, adapters, schemas                                        |
+| Tier 3 | Operational; standard control                         | Scripts, deployment config, documentation, tests               |
 
 ## Closure State
 

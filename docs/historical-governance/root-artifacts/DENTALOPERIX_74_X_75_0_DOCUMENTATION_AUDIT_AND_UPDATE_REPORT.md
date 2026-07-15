@@ -36,11 +36,11 @@ No source-code implementation was added. This package is documentation and gover
 
 ### Closure State Updates
 
-| Program | Status in Updated Package |
-|---|---|
-| 74.x | Closed and recommended for certification |
-| 75.x | Initiated |
-| WP-01 | Pre-implementation reviewed; pending explicit implementation authorization |
+| Program | Status in Updated Package                                                  |
+| ------- | -------------------------------------------------------------------------- |
+| 74.x    | Closed and recommended for certification                                   |
+| 75.x    | Initiated                                                                  |
+| WP-01   | Pre-implementation reviewed; pending explicit implementation authorization |
 
 ### Governance Compliance
 

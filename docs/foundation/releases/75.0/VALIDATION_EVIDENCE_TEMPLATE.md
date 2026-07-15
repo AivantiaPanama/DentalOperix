@@ -6,11 +6,11 @@
 
 ## Required Local Evidence
 
-| Command | Result | Evidence Location / Notes |
-|---|---|---|
-| `npm run build` | PENDING |  |
-| `npx tsc --noEmit` | PENDING |  |
-| `npm run test -- --run` or approved local test command | PENDING |  |
+| Command                                                | Result  | Evidence Location / Notes |
+| ------------------------------------------------------ | ------- | ------------------------- |
+| `npm run build`                                        | PENDING |                           |
+| `npx tsc --noEmit`                                     | PENDING |                           |
+| `npm run test -- --run` or approved local test command | PENDING |                           |
 
 ## Notes
 

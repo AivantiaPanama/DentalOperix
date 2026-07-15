@@ -2,16 +2,16 @@
 
 ## Document Control
 
-| Field | Value |
-|---|---|
-| Document ID | GMI-70.0 |
-| Classification | Normative |
-| Status | APPROVED |
-| Version | 1.0 |
-| Date | 2026-06-24 |
+| Field                     | Value                      |
+| ------------------------- | -------------------------- |
+| Document ID               | GMI-70.0                   |
+| Classification            | Normative                  |
+| Status                    | APPROVED                   |
+| Version                   | 1.0                        |
+| Date                      | 2026-06-24                 |
 | Active Technical Baseline | DENTALOPERIX_BASELINE_69_2 |
-| Governance Framework | DGF v1.0 |
-| Governance Maturity | GML-1 defined |
+| Governance Framework      | DGF v1.0                   |
+| Governance Maturity       | GML-1 defined              |
 
 ## Authority Statement
 
@@ -41,11 +41,11 @@ PatientPersistencePort
 
 ## Sources of Truth
 
-| Domain | Source of Truth |
-|---|---|
-| Leads | Acquisition / Marketing / Lead Lifecycle |
-| Patients | Person Identity |
-| Appointments | Scheduled Operational Events |
+| Domain       | Source of Truth                          |
+| ------------ | ---------------------------------------- |
+| Leads        | Acquisition / Marketing / Lead Lifecycle |
+| Patients     | Person Identity                          |
+| Appointments | Scheduled Operational Events             |
 
 ## Protected Components
 
@@ -87,27 +87,27 @@ Before any implementation proposal, the following must be delivered:
 
 ## Consolidated Program Status
 
-| Program | Status |
-|---|---|
-| 57.x | CLOSED / CERTIFIED / HISTORICAL |
-| 61.x | CLOSED / CERTIFIED |
-| 62.x | CLOSED / CERTIFIED |
-| 63.0 | CLOSED / DOCUMENTALLY CERTIFIED |
-| 64.0 | CLOSED / IMPLEMENTATION PLANNING CERTIFIED |
-| 65.0 | CLOSED / EXECUTION PREPARATION CERTIFIED |
-| 66.1 | CLOSED / CERTIFIED |
-| 67.x | CLOSED / CERTIFIED |
-| 68.1-68.5 | CLOSED / CERTIFIED |
-| 69.0 | CLOSED / AUTHORIZATION REVIEW APPROVED |
-| 69.1 | CLOSED / IMPLEMENTATION PLANNING CERTIFIED |
-| 69.2 | CLOSED / IMPLEMENTATION EXECUTION AUTHORIZED |
-| 70.0 | GOVERNANCE PACK / APPROVED |
-| 70.1 | GOVERNANCE CONSOLIDATION / APPROVED |
-| 71.1 | PATIENTS DOMAIN ANALYSIS / CLOSED / CERTIFIED |
-| 71.2 | PATIENTS FUNCTIONAL SPECIFICATION / CLOSED / CERTIFIED |
-| 71.3 | ARCHITECTURE VALIDATION / CLOSED / CERTIFIED |
-| 71.4 | IMPLEMENTATION PLANNING / CLOSED / CERTIFIED |
-| 71.5 | CONTROLLED DEVELOPMENT / AUTHORIZED TO START |
+| Program   | Status                                                 |
+| --------- | ------------------------------------------------------ |
+| 57.x      | CLOSED / CERTIFIED / HISTORICAL                        |
+| 61.x      | CLOSED / CERTIFIED                                     |
+| 62.x      | CLOSED / CERTIFIED                                     |
+| 63.0      | CLOSED / DOCUMENTALLY CERTIFIED                        |
+| 64.0      | CLOSED / IMPLEMENTATION PLANNING CERTIFIED             |
+| 65.0      | CLOSED / EXECUTION PREPARATION CERTIFIED               |
+| 66.1      | CLOSED / CERTIFIED                                     |
+| 67.x      | CLOSED / CERTIFIED                                     |
+| 68.1-68.5 | CLOSED / CERTIFIED                                     |
+| 69.0      | CLOSED / AUTHORIZATION REVIEW APPROVED                 |
+| 69.1      | CLOSED / IMPLEMENTATION PLANNING CERTIFIED             |
+| 69.2      | CLOSED / IMPLEMENTATION EXECUTION AUTHORIZED           |
+| 70.0      | GOVERNANCE PACK / APPROVED                             |
+| 70.1      | GOVERNANCE CONSOLIDATION / APPROVED                    |
+| 71.1      | PATIENTS DOMAIN ANALYSIS / CLOSED / CERTIFIED          |
+| 71.2      | PATIENTS FUNCTIONAL SPECIFICATION / CLOSED / CERTIFIED |
+| 71.3      | ARCHITECTURE VALIDATION / CLOSED / CERTIFIED           |
+| 71.4      | IMPLEMENTATION PLANNING / CLOSED / CERTIFIED           |
+| 71.5      | CONTROLLED DEVELOPMENT / AUTHORIZED TO START           |
 
 ## Document Hierarchy
 

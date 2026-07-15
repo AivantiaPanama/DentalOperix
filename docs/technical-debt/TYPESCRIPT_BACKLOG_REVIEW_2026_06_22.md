@@ -56,7 +56,6 @@ PR-61.2-04A remains functionally validated in its local scope. This backlog must
 
 ## Backlog Classification
 
-
 | ID    | Program / Area                                | Priority    | Risk   | Summary                                                                                                       |
 | ----- | --------------------------------------------- | ----------- | ------ | ------------------------------------------------------------------------------------------------------------- |
 | TD-01 | CRM / Lead Type Alignment                     | High        | Medium | Align Lead read-model typing across persistence, CRM metrics, and analytics consumers.                        |
@@ -69,7 +68,6 @@ PR-61.2-04A remains functionally validated in its local scope. This backlog must
 | TD-08 | Follow-up Engine Test Contracts               | Medium      | Medium | Align test fixtures with `FollowupRecord` contract.                                                           |
 | TD-09 | Test Infrastructure Typing                    | Low-Medium  | Low    | Fix Vitest namespace typing, `window` redeclaration, and unused `@ts-expect-error`.                           |
 | TD-10 | Goals / Server Handler Contracts              | Medium      | Medium | Align route handler test invocation signatures and server handler signatures.                                 |
-
 
 ---
 
@@ -256,8 +254,6 @@ Remaining TypeScript errors belong to separately classified backlog groups:
 - TD-10 Goals / Server Handler Contracts
 
 TD-01 can be considered locally validated if code review confirms that only type/read-model alignment was changed and no protected component or persistence behavior was modified.
-
-
 
 Final Resolution
 

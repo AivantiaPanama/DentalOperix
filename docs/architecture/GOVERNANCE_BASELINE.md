@@ -38,7 +38,6 @@ Forbidden Patterns:
 - Projection Engine Adoption
 - PRD to Leads Synchronization
 
-
 ## Source of Truth Persistence Clarification
 
 Logical Source of Truth:
@@ -261,7 +260,6 @@ Status: APPROVED TO START
 - retire Google Sheet,
 - alter restricted components.
 
-
 ## 57.5 Executive Review and Authorization Hold
 
 ```text
@@ -290,7 +288,6 @@ Governance baseline after 57.6:
 - Projection Engine remains prohibited.
 
 Any future cutover requires a separate explicit executive authorization record.
-
 
 ---
 

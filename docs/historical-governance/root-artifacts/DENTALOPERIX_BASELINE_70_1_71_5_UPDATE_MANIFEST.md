@@ -1,12 +1,15 @@
 # DENTALOPERIX 70.1 / 71.5 Documentation Update Manifest
 
 ## Package
+
 Documentation audit, governance consolidation, generated-document integration, status update, and ZIP refresh.
 
 ## Date
+
 2026-06-24
 
 ## Active Technical Baseline
+
 DENTALOPERIX_BASELINE_69_2
 
 ## Package Determination

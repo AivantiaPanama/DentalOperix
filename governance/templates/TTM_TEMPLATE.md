@@ -13,4 +13,4 @@ source: ChatGPT governance consolidation session
 # TTM Template
 
 | TEST ID | REQ ID | ADR ID | ARCH ID | Type | Evidence | Result | Release | Notes |
-|---|---|---|---|---|---|---|---|---|
+| ------- | ------ | ------ | ------- | ---- | -------- | ------ | ------- | ----- |

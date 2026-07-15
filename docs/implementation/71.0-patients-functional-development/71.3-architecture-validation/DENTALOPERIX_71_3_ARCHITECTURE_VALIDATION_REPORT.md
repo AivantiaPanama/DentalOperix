@@ -2,17 +2,17 @@
 
 ## Document Control
 
-| Field | Value |
-|---|---|
-| Document ID | DENTALOPERIX_71_3_ARCHITECTURE_VALIDATION_REPORT |
-| Program | 71.0 — Patients Functional Development |
-| Phase | 71.3 — Architecture Validation |
-| Classification | Evidence / Architecture Validation |
-| Status | PASSED / IMPLEMENTATION PLANNING AUTHORIZED |
-| Baseline | DENTALOPERIX_BASELINE_69_2 |
+| Field                | Value                                               |
+| -------------------- | --------------------------------------------------- |
+| Document ID          | DENTALOPERIX_71_3_ARCHITECTURE_VALIDATION_REPORT    |
+| Program              | 71.0 — Patients Functional Development              |
+| Phase                | 71.3 — Architecture Validation                      |
+| Classification       | Evidence / Architecture Validation                  |
+| Status               | PASSED / IMPLEMENTATION PLANNING AUTHORIZED         |
+| Baseline             | DENTALOPERIX_BASELINE_69_2                          |
 | Source Specification | DENTALOPERIX_71_2_PATIENTS_FUNCTIONAL_SPECIFICATION |
-| Date | 2026-06-24 |
-| Governance Framework | DGF v1.0 / GML-1 aligned |
+| Date                 | 2026-06-24                                          |
+| Governance Framework | DGF v1.0 / GML-1 aligned                            |
 
 ---
 
@@ -37,11 +37,11 @@ The specification is implementable without changing the certified architecture a
 
 This validation used the following official documents as governing evidence:
 
-| Evidence | Purpose |
-|---|---|
-| DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md | Confirms current certified baseline, certified architectures, and Patients-only implementation authorization. |
-| DENTALOPERIX_NEW_CHAT_HANDOFF_69_2.md | Confirms protected components, prohibited actions, required governance mode, and Patients-only scope. |
-| DENTALOPERIX_71_2_PATIENTS_FUNCTIONAL_SPECIFICATION.md | Functional specification under validation. |
+| Evidence                                               | Purpose                                                                                                       |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md          | Confirms current certified baseline, certified architectures, and Patients-only implementation authorization. |
+| DENTALOPERIX_NEW_CHAT_HANDOFF_69_2.md                  | Confirms protected components, prohibited actions, required governance mode, and Patients-only scope.         |
+| DENTALOPERIX_71_2_PATIENTS_FUNCTIONAL_SPECIFICATION.md | Functional specification under validation.                                                                    |
 
 ---
 
@@ -146,17 +146,17 @@ The specification does not require modification of:
 
 ## 5. Dependency Validation
 
-| Dependency | Status | Finding |
-|---|---:|---|
-| Patient Domain | Allowed | Primary scope of implementation. |
-| PatientPersistencePort | Allowed | Required architecture boundary. |
-| PatientPersistenceProvider | Allowed | Required provider boundary. |
-| RelationalPatientPersistenceAdapter | Allowed | Certified Supabase adapter. |
-| Supabase PostgreSQL | Allowed | Certified persistence target. |
-| Leads Domain | Restricted | Reference only; no lifecycle or source-of-truth modification. |
-| Appointments Domain | Restricted | Reference only; no scheduling behavior modification. |
-| RBAC Framework | Restricted | Must be respected; no bypass authorized. |
-| Protected Components | Prohibited | No modification authorized. |
+| Dependency                          |     Status | Finding                                                       |
+| ----------------------------------- | ---------: | ------------------------------------------------------------- |
+| Patient Domain                      |    Allowed | Primary scope of implementation.                              |
+| PatientPersistencePort              |    Allowed | Required architecture boundary.                               |
+| PatientPersistenceProvider          |    Allowed | Required provider boundary.                                   |
+| RelationalPatientPersistenceAdapter |    Allowed | Certified Supabase adapter.                                   |
+| Supabase PostgreSQL                 |    Allowed | Certified persistence target.                                 |
+| Leads Domain                        | Restricted | Reference only; no lifecycle or source-of-truth modification. |
+| Appointments Domain                 | Restricted | Reference only; no scheduling behavior modification.          |
+| RBAC Framework                      | Restricted | Must be respected; no bypass authorized.                      |
+| Protected Components                | Prohibited | No modification authorized.                                   |
 
 **Dependency Validation Result:** PASS
 
@@ -164,40 +164,40 @@ The specification does not require modification of:
 
 ## 6. Use Case Traceability Matrix
 
-| Use Case | Required Architecture Path | Source of Truth Impact | Protected Component Impact | Result |
-|---|---|---|---|---|
-| UC-PAT-001 Create Patient | Use Case → PatientPersistencePort → Provider → Adapter | Patients only | None | PASS |
-| UC-PAT-002 Update Patient Attributes | Use Case → PatientPersistencePort → Provider → Adapter | Patients only | None | PASS |
-| UC-PAT-003 Add/Update Contact Point | Use Case → PatientPersistencePort → Provider → Adapter | Patients only | None | PASS |
-| UC-PAT-004 Search Patients | Use Case → PatientPersistencePort → Provider → Adapter | Read Patients only | None | PASS |
-| UC-PAT-005 Archive Patient | Use Case → PatientPersistencePort → Provider → Adapter | Patients lifecycle only | None | PASS |
-| UC-PAT-006 Reactivate Patient | Use Case → PatientPersistencePort → Provider → Adapter | Patients lifecycle only | None | PASS |
-| UC-PAT-007 Duplicate Review | Use Case → PatientPersistencePort → Provider → Adapter | Patients identity review only | None | PASS |
+| Use Case                             | Required Architecture Path                             | Source of Truth Impact        | Protected Component Impact | Result |
+| ------------------------------------ | ------------------------------------------------------ | ----------------------------- | -------------------------- | ------ |
+| UC-PAT-001 Create Patient            | Use Case → PatientPersistencePort → Provider → Adapter | Patients only                 | None                       | PASS   |
+| UC-PAT-002 Update Patient Attributes | Use Case → PatientPersistencePort → Provider → Adapter | Patients only                 | None                       | PASS   |
+| UC-PAT-003 Add/Update Contact Point  | Use Case → PatientPersistencePort → Provider → Adapter | Patients only                 | None                       | PASS   |
+| UC-PAT-004 Search Patients           | Use Case → PatientPersistencePort → Provider → Adapter | Read Patients only            | None                       | PASS   |
+| UC-PAT-005 Archive Patient           | Use Case → PatientPersistencePort → Provider → Adapter | Patients lifecycle only       | None                       | PASS   |
+| UC-PAT-006 Reactivate Patient        | Use Case → PatientPersistencePort → Provider → Adapter | Patients lifecycle only       | None                       | PASS   |
+| UC-PAT-007 Duplicate Review          | Use Case → PatientPersistencePort → Provider → Adapter | Patients identity review only | None                       | PASS   |
 
 ---
 
 ## 7. Permanent Restriction Compliance
 
-| Restriction | Validation Finding | Result |
-|---|---|---:|
-| No Dual Write | Specification does not introduce parallel write paths. | PASS |
-| No Lead Replacement | Lead context may create Patient only without replacing Lead. | PASS |
-| No New Lead Source of Truth | Leads remain acquisition lifecycle source of truth. | PASS |
-| No Persistence Re-Architecture | Certified Patient persistence chain is preserved. | PASS |
-| No RBAC Bypass | Specification requires RBAC compliance. | PASS |
-| No Automated Patient Merge | Automatic merge is explicitly prohibited. | PASS |
+| Restriction                    | Validation Finding                                           | Result |
+| ------------------------------ | ------------------------------------------------------------ | -----: |
+| No Dual Write                  | Specification does not introduce parallel write paths.       |   PASS |
+| No Lead Replacement            | Lead context may create Patient only without replacing Lead. |   PASS |
+| No New Lead Source of Truth    | Leads remain acquisition lifecycle source of truth.          |   PASS |
+| No Persistence Re-Architecture | Certified Patient persistence chain is preserved.            |   PASS |
+| No RBAC Bypass                 | Specification requires RBAC compliance.                      |   PASS |
+| No Automated Patient Merge     | Automatic merge is explicitly prohibited.                    |   PASS |
 
 ---
 
 ## 8. Risk Assessment
 
-| Risk | Level | Mitigation |
-|---|---:|---|
-| Accidental coupling to Leads | Low | Keep Lead references read/contextual only; do not modify Lead lifecycle. |
-| Persistence bypass from UI | Low | Require all persistence through PatientPersistencePort. |
-| Automated merge introduced during implementation | Medium | Treat merge as explicitly blocked unless separately authorized. |
-| RBAC gaps in search/update workflows | Medium | Validate permissions during 71.4 implementation planning. |
-| Overlap with billing/insurance logic | Low | Keep only administrative indicators in Patients; billing logic out of scope. |
+| Risk                                             |  Level | Mitigation                                                                   |
+| ------------------------------------------------ | -----: | ---------------------------------------------------------------------------- |
+| Accidental coupling to Leads                     |    Low | Keep Lead references read/contextual only; do not modify Lead lifecycle.     |
+| Persistence bypass from UI                       |    Low | Require all persistence through PatientPersistencePort.                      |
+| Automated merge introduced during implementation | Medium | Treat merge as explicitly blocked unless separately authorized.              |
+| RBAC gaps in search/update workflows             | Medium | Validate permissions during 71.4 implementation planning.                    |
+| Overlap with billing/insurance logic             |    Low | Keep only administrative indicators in Patients; billing logic out of scope. |
 
 ---
 

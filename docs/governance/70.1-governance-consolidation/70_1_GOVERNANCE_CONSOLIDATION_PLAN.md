@@ -1,9 +1,11 @@
 # Program 70.1 — Governance Consolidation Plan
 
 ## Status
+
 APPROVED
 
 ## Scope
+
 Documentary governance consolidation only. No product code, database schema, API, protected component, or Source of Truth is modified by this program.
 
 ## Objectives
@@ -18,15 +20,16 @@ Documentary governance consolidation only. No product code, database schema, API
 
 ## Deliverables
 
-| ID | Deliverable | Type | Status |
-|---|---|---|---|
-| 70.1-A | Governance Master Index | Normative | Created |
-| 70.1-B | Document Registry | Controlled Record | Created |
-| 70.1-C | Baseline Transition Register | Controlled Record | Created |
-| 70.1-D | Certification Register | Controlled Record | Created |
-| 70.1-E | Governance Change Log | Controlled Record | Created |
-| 70.1-F | Cross Reference Validation Report | Evidence | Created |
-| 70.1-G | Governance Consolidation Closure Report | Certification | Created |
+| ID     | Deliverable                             | Type              | Status  |
+| ------ | --------------------------------------- | ----------------- | ------- |
+| 70.1-A | Governance Master Index                 | Normative         | Created |
+| 70.1-B | Document Registry                       | Controlled Record | Created |
+| 70.1-C | Baseline Transition Register            | Controlled Record | Created |
+| 70.1-D | Certification Register                  | Controlled Record | Created |
+| 70.1-E | Governance Change Log                   | Controlled Record | Created |
+| 70.1-F | Cross Reference Validation Report       | Evidence          | Created |
+| 70.1-G | Governance Consolidation Closure Report | Certification     | Created |
 
 ## Governance Determination
+
 APPROVED FOR DOCUMENTARY CONSOLIDATION.

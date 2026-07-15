@@ -12,10 +12,10 @@ The assistant did not execute tests automatically. Validation was executed local
 
 ## Commands Reported by User
 
-| Command | Result |
-|---|---|
-| `npm run build` | PASS |
-| `npx tsc` | PASS |
+| Command         | Result |
+| --------------- | ------ |
+| `npm run build` | PASS   |
+| `npx tsc`       | PASS   |
 
 ## Build Evidence Summary
 

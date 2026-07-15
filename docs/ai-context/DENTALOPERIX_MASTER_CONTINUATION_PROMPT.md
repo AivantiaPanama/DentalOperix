@@ -71,17 +71,17 @@ No debes proponer cambios que violen esta regla.
 
 Asume como vigente, salvo que la documentacion indique lo contrario:
 
-* Programa 57.x cerrado y certificado.
-* Persistence Transition cerrada.
-* Production Cutover certificado.
-* Supabase PostgreSQL como persistencia oficial.
-* Zona horaria oficial: America/Panama.
-* Booking operativo.
-* Calendar operativo.
-* Gmail operativo.
-* ICS operativo.
-* Outlook compatible.
-* Flujo principal de agendamiento estabilizado.
+- Programa 57.x cerrado y certificado.
+- Persistence Transition cerrada.
+- Production Cutover certificado.
+- Supabase PostgreSQL como persistencia oficial.
+- Zona horaria oficial: America/Panama.
+- Booking operativo.
+- Calendar operativo.
+- Gmail operativo.
+- ICS operativo.
+- Outlook compatible.
+- Flujo principal de agendamiento estabilizado.
 
 \---
 
@@ -89,26 +89,26 @@ Asume como vigente, salvo que la documentacion indique lo contrario:
 
 ## Prohibido
 
-* Dual Write.
-* Lead Replacement.
-* Product Migration.
-* Nuevas fuentes de verdad.
-* Analytics Write Back.
-* Persistence Re-Architecture.
-* Bypass de RBAC.
-* Cambios de arquitectura sin evidencia documental.
-* Generar codigo sin aprobacion explicita.
+- Dual Write.
+- Lead Replacement.
+- Product Migration.
+- Nuevas fuentes de verdad.
+- Analytics Write Back.
+- Persistence Re-Architecture.
+- Bypass de RBAC.
+- Cambios de arquitectura sin evidencia documental.
+- Generar codigo sin aprobacion explicita.
 
 ## No modificar sin autorizacion explicita
 
-* BookingDialog
-* processDentalLead
-* /api/leads/create
-* Calendar
-* Gmail
-* FloatingDentalAIChat
-* Home
-* siteServices.ts
+- BookingDialog
+- processDentalLead
+- /api/leads/create
+- Calendar
+- Gmail
+- FloatingDentalAIChat
+- Home
+- siteServices.ts
 
 \---
 
@@ -120,11 +120,11 @@ Status: COMPLETE
 
 Incluye:
 
-* Product Governance Framework.
-* Multi-AI Operating Model.
-* Software Factory Operating Model.
-* GitHub Governance.
-* Documentation Structure.
+- Product Governance Framework.
+- Multi-AI Operating Model.
+- Software Factory Operating Model.
+- GitHub Governance.
+- Documentation Structure.
 
 \---
 
@@ -142,27 +142,27 @@ RESOLVED_ITEM: BLOCK-61.1-001
 
 Completado:
 
-* RBAC-MATRIX-V1.1.
-* Roles oficiales: Patient, Assistant, Doctor, Administrator.
-* Permission Matrix.
-* Dashboard Routing Definitions.
-* Acceptance Criteria.
-* ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.
-* ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001\_ROLE\_ASSIGNMENT\_WORKFLOW.md.
-* ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.
-* IMPLEMENTATION-READINESS-REVIEW-61.1-V1.0.
-* IMPLEMENTATION-AUTHORIZATION-REVIEW-61.1-V1.0.
-* IMPLEMENTATION-BLUEPRINT-61.1-USERS-RBAC-V1.0.
+- RBAC-MATRIX-V1.1.
+- Roles oficiales: Patient, Assistant, Doctor, Administrator.
+- Permission Matrix.
+- Dashboard Routing Definitions.
+- Acceptance Criteria.
+- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.0.
+- ARCHITECTURE-QUESTION-BRIEF-61.1-BLOCK-001_ROLE_ASSIGNMENT_WORKFLOW.md.
+- ARCHITECTURE-CERTIFICATION-REVIEW-61.1-V1.1.
+- IMPLEMENTATION-READINESS-REVIEW-61.1-V1.0.
+- IMPLEMENTATION-AUTHORIZATION-REVIEW-61.1-V1.0.
+- IMPLEMENTATION-BLUEPRINT-61.1-USERS-RBAC-V1.0.
 
 Certificado como READY / AUTHORIZED:
 
-* User Lifecycle States.
-* Dashboard Routing Rules.
-* User <-> Lead Boundaries.
+- User Lifecycle States.
+- Dashboard Routing Rules.
+- User <-> Lead Boundaries.
 
 Resuelto:
 
-* Role Assignment Workflow.
+- Role Assignment Workflow.
 
 Bloque resuelto:
 
@@ -180,12 +180,12 @@ user.role.assign = Administrator only
 
 Pendiente antes de completar 61.1:
 
-* Crear Cursor Implementation Task Package 61.1.
-* Implementar Users Foundation.
-* Implementar Authentication.
-* Implementar RBAC Enforcement frontend + backend.
-* Implementar Dashboard Routing.
-* Validar y certificar 61.1 despues de implementacion.
+- Crear Cursor Implementation Task Package 61.1.
+- Implementar Users Foundation.
+- Implementar Authentication.
+- Implementar RBAC Enforcement frontend + backend.
+- Implementar Dashboard Routing.
+- Validar y certificar 61.1 despues de implementacion.
 
 \---
 
@@ -200,12 +200,12 @@ IMPLEMENTATION\\\_BLOCKED\\\_UNTIL\\\_61.1\\\_IMPLEMENTATION\\\_COMPLETE
 
 Artefactos completados:
 
-* UX-SPEC-61.2-V1.0.
-* USER-STORIES-61.2-V1.0.
-* BUSINESS-RULES-61.2-V1.0.
-* ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0.
-* TEST-CASE-PACKAGE-61.2-V1.0.
-* Low Fidelity Figma Wireframes iniciados.
+- UX-SPEC-61.2-V1.0.
+- USER-STORIES-61.2-V1.0.
+- BUSINESS-RULES-61.2-V1.0.
+- ARCHITECTURE-REVIEW-SUMMARY-61.2-V1.0.
+- TEST-CASE-PACKAGE-61.2-V1.0.
+- Low Fidelity Figma Wireframes iniciados.
 
 Implementacion:
 
@@ -231,8 +231,8 @@ NOT\\\_STARTED
 
 No iniciar 61.3 hasta resolver dependencias arquitectonicas, especialmente:
 
-* Lead <-> Patient Relationship Model.
-* Doctor <-> Patient Assignment Model.
+- Lead <-> Patient Relationship Model.
+- Doctor <-> Patient Assignment Model.
 
 \---
 
@@ -282,9 +282,9 @@ DentalOperix
 
 Artefactos creados:
 
-* Information Architecture.
-* RBAC Routing.
-* Assistant Dashboard Wireframes.
+- Information Architecture.
+- RBAC Routing.
+- Assistant Dashboard Wireframes.
 
 Madurez:
 
@@ -294,9 +294,9 @@ LOW\\\_FIDELITY
 
 Pendiente:
 
-* High Fidelity.
-* Interactive Prototype.
-* Design System Alignment.
+- High Fidelity.
+- Interactive Prototype.
+- Design System Alignment.
 
 \---
 
@@ -322,11 +322,11 @@ Tu primera respuesta debe incluir:
 
 Explica brevemente:
 
-* Que es DentalOperix.
-* Que problema resuelve.
-* Que esta construido.
-* Que falta.
-* Cual es la vision final.
+- Que es DentalOperix.
+- Que problema resuelve.
+- Que esta construido.
+- Que falta.
+- Cual es la vision final.
 
 ## 2\. Suficiencia documental
 
@@ -342,49 +342,49 @@ Riesgo de perdida de contexto: Bajo / Medio / Alto
 
 Confirma:
 
-* Arquitectura vigente.
-* Source of Truth.
-* Persistencia.
-* Restricciones.
+- Arquitectura vigente.
+- Source of Truth.
+- Persistencia.
+- Restricciones.
 
 ## 4\. Estado funcional
 
 Resume el estado de:
 
-* Booking
-* Supabase
-* Calendar
-* Gmail
-* ICS
-* Dashboards
-* Users
-* RBAC
-* Patient Management
-* Analytics
-* Clinical Intelligence
+- Booking
+- Supabase
+- Calendar
+- Gmail
+- ICS
+- Dashboards
+- Users
+- RBAC
+- Patient Management
+- Analytics
+- Clinical Intelligence
 
 ## 5\. Estado comercial
 
 Resume:
 
-* Release actual.
-* Que falta para vender Starter.
-* Principales dependencias comerciales.
-* Readiness actual.
+- Release actual.
+- Que falta para vender Starter.
+- Principales dependencias comerciales.
+- Readiness actual.
 
 ## 6\. Estado de Software Factory
 
 Confirma el estado de:
 
-* GitHub Governance
-* Labels
-* Milestones
-* Pull Request Workflow
-* Issue Templates
-* AI Delivery Framework
-* AI Task Workflow
-* DentalOperix-Lab
-* Promotion to Product Process
+- GitHub Governance
+- Labels
+- Milestones
+- Pull Request Workflow
+- Issue Templates
+- AI Delivery Framework
+- AI Task Workflow
+- DentalOperix-Lab
+- Promotion to Product Process
 
 Determina si la Fabrica de Software esta lista para soportar el desarrollo de la siguiente iteracion.
 
@@ -392,19 +392,19 @@ Determina si la Fabrica de Software esta lista para soportar el desarrollo de la
 
 Identifica:
 
-* Riesgos tecnicos.
-* Riesgos comerciales.
-* Riesgos arquitectonicos.
-* Riesgos de continuidad.
+- Riesgos tecnicos.
+- Riesgos comerciales.
+- Riesgos arquitectonicos.
+- Riesgos de continuidad.
 
 ## 8\. Recomendacion de siguiente paso
 
 Debe priorizar:
 
-* Valor comercial.
-* Dependencia tecnica.
-* Reduccion de riesgo.
-* Avance hacia DentalOperix Starter.
+- Valor comercial.
+- Dependencia tecnica.
+- Reduccion de riesgo.
+- Avance hacia DentalOperix Starter.
 
 ## 9\. Documentos faltantes o aclaraciones necesarias
 
@@ -458,35 +458,35 @@ Responsabilidades oficiales:
 
 ## ChatGPT
 
-* Arquitectura.
-* Gobierno.
-* Revision tecnica.
-* Coordinacion de entrega IA.
-* Integracion de iniciativas.
-* Certificacion final.
+- Arquitectura.
+- Gobierno.
+- Revision tecnica.
+- Coordinacion de entrega IA.
+- Integracion de iniciativas.
+- Certificacion final.
 
 ## Claude
 
-* Documentacion funcional.
-* Historias de usuario.
-* Reglas de negocio.
-* Criterios de aceptacion.
-* Matrices de roles y permisos.
+- Documentacion funcional.
+- Historias de usuario.
+- Reglas de negocio.
+- Criterios de aceptacion.
+- Matrices de roles y permisos.
 
 ## Cursor
 
-* Implementacion controlada.
-* Refactoring.
-* Tests.
-* Integracion tecnica.
-* Pull Request preparation.
+- Implementacion controlada.
+- Refactoring.
+- Tests.
+- Integracion tecnica.
+- Pull Request preparation.
 
 ## Figma / v0
 
-* UX.
-* Dashboards.
-* Wireframes.
-* Componentes visuales.
+- UX.
+- Dashboards.
+- Wireframes.
+- Componentes visuales.
 
 Ninguna IA puede modificar arquitectura certificada sin revision y aprobacion explicita.
 
@@ -522,11 +522,11 @@ Antes de generar nuevos artefactos funcionales:
 1. Verificar si ya existe el artefacto equivalente.
 2. Preferir implementacion sobre nueva documentacion cuando ya existan:
 
-   * UX Spec.
-   * User Stories.
-   * Business Rules.
-   * Test Cases.
-   * Architecture Review Summary.
+   - UX Spec.
+   - User Stories.
+   - Business Rules.
+   - Test Cases.
+   - Architecture Review Summary.
 
 Estado actual recomendado:
 
@@ -620,4 +620,3 @@ Current Priority:
 CREATE CURSOR IMPLEMENTATION TASK PACKAGE 61.1
 THEN IMPLEMENT 61.1 USERS + RBAC + DASHBOARD ROUTING
 ```
-

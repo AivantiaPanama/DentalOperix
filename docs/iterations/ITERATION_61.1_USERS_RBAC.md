@@ -67,25 +67,25 @@ Status: READY_FOR_IMPLEMENTATION
 
 ## RBAC Business Rules
 
-| ID | Rule |
-|---|---|
-| `BR-RBAC-001` | No role may create, modify, or bypass the persistence adapter, or write directly to Supabase PostgreSQL outside the certified Leads flow. |
-| `BR-RBAC-002` | Only Administrator may assign or change a user's role. |
-| `BR-RBAC-003` | Doctor access to Leads and future Patient Records is limited to assigned patients. The assignment mechanism is an open architecture question. |
-| `BR-RBAC-004` | Patient never has read access to Leads belonging to other patients. |
+| ID            | Rule                                                                                                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BR-RBAC-001` | No role may create, modify, or bypass the persistence adapter, or write directly to Supabase PostgreSQL outside the certified Leads flow.                                                                     |
+| `BR-RBAC-002` | Only Administrator may assign or change a user's role.                                                                                                                                                        |
+| `BR-RBAC-003` | Doctor access to Leads and future Patient Records is limited to assigned patients. The assignment mechanism is an open architecture question.                                                                 |
+| `BR-RBAC-004` | Patient never has read access to Leads belonging to other patients.                                                                                                                                           |
 | `BR-RBAC-005` | Every `lead.status.update`, `lead.notes.update`, or `lead.owner.reassign` action must be attributable using existing model metadata such as `updated_by` and `updated_at`. This does not require a new store. |
-| `BR-RBAC-006` | Physical deletion of Leads is prohibited for all roles. Any visible removal is a logical status change preserving Source of Truth. |
-| `BR-RBAC-007` | Physical deletion of Appointments and Users is prohibited for all roles. Cancellation and deactivation are the terminal operations. |
-| `BR-RBAC-008` | RBAC is an authorization layer only. RBAC does not modify LeadPersistencePort, LeadPersistenceProvider, RelationalLeadPersistenceAdapter, or Supabase PostgreSQL. |
+| `BR-RBAC-006` | Physical deletion of Leads is prohibited for all roles. Any visible removal is a logical status change preserving Source of Truth.                                                                            |
+| `BR-RBAC-007` | Physical deletion of Appointments and Users is prohibited for all roles. Cancellation and deactivation are the terminal operations.                                                                           |
+| `BR-RBAC-008` | RBAC is an authorization layer only. RBAC does not modify LeadPersistencePort, LeadPersistenceProvider, RelationalLeadPersistenceAdapter, or Supabase PostgreSQL.                                             |
 
 ## Dashboard Routing
 
-| Role | Dashboard Target |
-|---|---|
-| Patient | Patient Portal |
-| Assistant | Front Desk Workspace |
-| Doctor | Clinical Workspace |
-| Administrator | Operations Console |
+| Role          | Dashboard Target     |
+| ------------- | -------------------- |
+| Patient       | Patient Portal       |
+| Assistant     | Front Desk Workspace |
+| Doctor        | Clinical Workspace   |
+| Administrator | Operations Console   |
 
 ## Protected Components
 
@@ -113,12 +113,12 @@ Do not modify without explicit approval:
 
 ## AI Assignments
 
-| Work | AI |
-|---|---|
-| Architecture and governance review | ChatGPT |
-| Permission matrix and business rules | Claude |
-| UI management screens | v0 / Figma |
-| Implementation candidate | Cursor after explicit approval |
+| Work                                 | AI                             |
+| ------------------------------------ | ------------------------------ |
+| Architecture and governance review   | ChatGPT                        |
+| Permission matrix and business rules | Claude                         |
+| UI management screens                | v0 / Figma                     |
+| Implementation candidate             | Cursor after explicit approval |
 
 ## Acceptance Criteria
 

@@ -35,14 +35,14 @@ Decision: Existing components cannot be replaced, refactored, or removed without
 
 ## Current Program 73 State
 
-| Increment | Status |
-|---|---|
-| 73.0 - Domain Discovery & Ubiquitous Language | CLOSED & CERTIFIED |
-| 73.1-A - Domain Conformance Audit | CLOSED & CERTIFIED |
-| 73.1-B - Aggregate Alignment | APPROVED FOR IMPLEMENTATION PLANNING |
-| 73.1-C - Value Objects Alignment | PENDING |
-| 73.1-D - Domain Events Alignment | PENDING |
-| 73.1-E - Domain Services & Repository Alignment | PENDING |
+| Increment                                       | Status                               |
+| ----------------------------------------------- | ------------------------------------ |
+| 73.0 - Domain Discovery & Ubiquitous Language   | CLOSED & CERTIFIED                   |
+| 73.1-A - Domain Conformance Audit               | CLOSED & CERTIFIED                   |
+| 73.1-B - Aggregate Alignment                    | APPROVED FOR IMPLEMENTATION PLANNING |
+| 73.1-C - Value Objects Alignment                | PENDING                              |
+| 73.1-D - Domain Events Alignment                | PENDING                              |
+| 73.1-E - Domain Services & Repository Alignment | PENDING                              |
 
 ## Standing Restrictions
 

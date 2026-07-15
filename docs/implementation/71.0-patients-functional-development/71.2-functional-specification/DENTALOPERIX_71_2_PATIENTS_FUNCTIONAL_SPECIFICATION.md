@@ -2,16 +2,16 @@
 
 ## Document Control
 
-| Field | Value |
-|---|---|
-| Document ID | DENTALOPERIX_71_2_PATIENTS_FUNCTIONAL_SPECIFICATION |
-| Program | 71.0 — Patients Functional Development |
-| Phase | 71.2 — Functional Specification |
-| Classification | Normative / Functional Specification |
-| Status | DRAFT FOR GOVERNANCE REVIEW |
-| Baseline | DENTALOPERIX_BASELINE_69_2 |
-| Date | 2026-06-24 |
-| Governance Framework | DGF v1.0 / GML-1 aligned |
+| Field                | Value                                               |
+| -------------------- | --------------------------------------------------- |
+| Document ID          | DENTALOPERIX_71_2_PATIENTS_FUNCTIONAL_SPECIFICATION |
+| Program              | 71.0 — Patients Functional Development              |
+| Phase                | 71.2 — Functional Specification                     |
+| Classification       | Normative / Functional Specification                |
+| Status               | DRAFT FOR GOVERNANCE REVIEW                         |
+| Baseline             | DENTALOPERIX_BASELINE_69_2                          |
+| Date                 | 2026-06-24                                          |
+| Governance Framework | DGF v1.0 / GML-1 aligned                            |
 
 ---
 

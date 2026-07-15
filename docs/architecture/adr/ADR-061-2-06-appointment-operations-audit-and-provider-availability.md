@@ -40,19 +40,19 @@ Toda cita debe registrar el actor y canal que ejecutó la operación.
 Campos conceptuales:
 
 ```ts
-createdByUserId
-createdByRole
-createdVia
-createdAt
-updatedByUserId
-updatedByRole
-updatedVia
-updatedAt
-cancelledByUserId
-cancelledByRole
-cancelledVia
-cancelledAt
-cancellationReason
+createdByUserId;
+createdByRole;
+createdVia;
+createdAt;
+updatedByUserId;
+updatedByRole;
+updatedVia;
+updatedAt;
+cancelledByUserId;
+cancelledByRole;
+cancelledVia;
+cancelledAt;
+cancellationReason;
 ```
 
 Valores conceptuales de `createdVia`:

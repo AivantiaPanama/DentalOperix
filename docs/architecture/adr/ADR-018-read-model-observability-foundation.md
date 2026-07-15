@@ -1,14 +1,17 @@
 # ADR-018 — Read Model Observability Foundation
 
 ## Status
+
 Accepted
 
 ## Context
+
 DentalOperix now has governed read domains for Patient, CRM, and Billing. Each domain is read-only and falls back to Leads when read models are unavailable or fail.
 
 The remaining platform gap is operational observability: fallback usage, aggregate health, domain read source utilization, and telemetry consistency.
 
 ## Decision
+
 Introduce `ReadObservabilityProvider` as the single observability facade for Read Model telemetry.
 
 The provider records four event families:

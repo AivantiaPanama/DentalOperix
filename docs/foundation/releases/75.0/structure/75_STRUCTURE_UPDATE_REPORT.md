@@ -62,12 +62,12 @@ docs/foundation-release/75.0/structure/
 
 ## Findings Resolved
 
-| ID | Finding | Severity | Resolution |
-|---|---|---:|---|
-| STR-75-001 | Root contained many historical governance artifacts from older programs | Major | Moved to `docs/historical-governance/root-artifacts/` |
-| STR-75-002 | Older nested baseline snapshot remained at root | Major | Moved to `docs/historical-governance/baselines/` |
-| STR-75-003 | Foundation Release inventory/checksum files were root-level instead of evidence assets | Minor | Moved to `docs/foundation-release/75.0/evidence/` |
-| STR-75-004 | No explicit structure update report existed | Minor | Added this report and canonical structure guide |
+| ID         | Finding                                                                                | Severity | Resolution                                            |
+| ---------- | -------------------------------------------------------------------------------------- | -------: | ----------------------------------------------------- |
+| STR-75-001 | Root contained many historical governance artifacts from older programs                |    Major | Moved to `docs/historical-governance/root-artifacts/` |
+| STR-75-002 | Older nested baseline snapshot remained at root                                        |    Major | Moved to `docs/historical-governance/baselines/`      |
+| STR-75-003 | Foundation Release inventory/checksum files were root-level instead of evidence assets |    Minor | Moved to `docs/foundation-release/75.0/evidence/`     |
+| STR-75-004 | No explicit structure update report existed                                            |    Minor | Added this report and canonical structure guide       |
 
 ## Certification Statement
 

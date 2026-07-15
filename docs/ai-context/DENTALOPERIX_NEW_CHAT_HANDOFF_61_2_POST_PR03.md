@@ -1,6 +1,7 @@
 # DentalOperix New Chat Handoff - 61.2 Post PR-61.2-03
 
 Read First
+
 1. docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_2.md
 2. docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_61_2_POST_PR02.md
 3. docs/implementation/61.2/61.2_STATUS_REPORT.md
@@ -46,7 +47,6 @@ Status update may use existing LeadPersistencePort.updateLead only after approva
 Notes update requires architecture decision because notes are not currently exposed in LeadPersistenceUpdateInput.
 Do not promote .data/lead-operations.json as source of truth for Lead status/notes.
 ```
-
 
 ## PR-61.2-04A Implementation Addendum - Lead Detail Read-Only
 

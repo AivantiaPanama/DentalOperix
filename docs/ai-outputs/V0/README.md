@@ -1,7 +1,5 @@
 Cursor implementation outputs.
 
-
-
 Stores:
 
 \- Implementation reports
@@ -11,4 +9,3 @@ Stores:
 \- Refactoring reports
 
 \- PR preparation artifacts
-

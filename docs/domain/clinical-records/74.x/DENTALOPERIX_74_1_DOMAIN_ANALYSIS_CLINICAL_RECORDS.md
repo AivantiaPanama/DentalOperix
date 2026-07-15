@@ -59,21 +59,21 @@ Clinical Records owns clinical information generated during care.
 
 ### Domain Ownership Matrix
 
-| Concept | Owner Domain | Reference Allowed | Notes |
-|---|---|---|---|
-| Lead | Leads | Yes | Lead lifecycle Source of Truth. |
-| Patient Identity | Patients | Yes | Identity Source of Truth. |
-| PatientId | Patients | Yes | Required reference for Clinical Records. |
-| Appointment | Appointments | Yes | Operational Scheduling Source of Truth. |
-| AppointmentId | Appointments | Yes | Optional reference. |
-| Clinical Record | Clinical Records | No | Aggregate Root. |
-| Clinical Encounter | Clinical Records | No | Entity owned by Clinical Records. |
-| Clinical Note | Clinical Records | No | Entity owned by Clinical Records. |
-| Clinical Finding | Clinical Records | No | Entity owned by Clinical Records. |
-| Diagnosis | Clinical Records | No | Entity owned by Clinical Records. |
-| Treatment Plan | Future Treatment Plans Domain | Yes | Explicitly outside Clinical Records. |
-| Invoice | Future Billing Domain | Yes | Outside current program. |
-| Payment | Future Payments Domain | Yes | Outside current program. |
+| Concept            | Owner Domain                  | Reference Allowed | Notes                                    |
+| ------------------ | ----------------------------- | ----------------- | ---------------------------------------- |
+| Lead               | Leads                         | Yes               | Lead lifecycle Source of Truth.          |
+| Patient Identity   | Patients                      | Yes               | Identity Source of Truth.                |
+| PatientId          | Patients                      | Yes               | Required reference for Clinical Records. |
+| Appointment        | Appointments                  | Yes               | Operational Scheduling Source of Truth.  |
+| AppointmentId      | Appointments                  | Yes               | Optional reference.                      |
+| Clinical Record    | Clinical Records              | No                | Aggregate Root.                          |
+| Clinical Encounter | Clinical Records              | No                | Entity owned by Clinical Records.        |
+| Clinical Note      | Clinical Records              | No                | Entity owned by Clinical Records.        |
+| Clinical Finding   | Clinical Records              | No                | Entity owned by Clinical Records.        |
+| Diagnosis          | Clinical Records              | No                | Entity owned by Clinical Records.        |
+| Treatment Plan     | Future Treatment Plans Domain | Yes               | Explicitly outside Clinical Records.     |
+| Invoice            | Future Billing Domain         | Yes               | Outside current program.                 |
+| Payment            | Future Payments Domain        | Yes               | Outside current program.                 |
 
 ### Governance Result
 

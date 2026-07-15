@@ -74,16 +74,16 @@ Program 75.x status remains:
 
 ## Compliance Determination
 
-| Requirement | Result |
-|---|---|
-| Documentation audit completed | PASS |
-| Product architecture separated | PASS |
-| Reusable framework formalized | PASS |
-| Baseline preserved | PASS |
-| Code unchanged | PASS |
-| No tests executed | PASS |
-| Certified decisions preserved | PASS |
-| Protected components untouched | PASS |
+| Requirement                    | Result |
+| ------------------------------ | ------ |
+| Documentation audit completed  | PASS   |
+| Product architecture separated | PASS   |
+| Reusable framework formalized  | PASS   |
+| Baseline preserved             | PASS   |
+| Code unchanged                 | PASS   |
+| No tests executed              | PASS   |
+| Certified decisions preserved  | PASS   |
+| Protected components untouched | PASS   |
 
 ## Final Determination
 

@@ -32,11 +32,11 @@ Actualización documental derivada del chat de gobernanza Patient Persistence / 
 
 ## Documentación agregada
 
-- docs/governance/67.0/*
-- docs/implementation/67.0/*
-- docs/implementation/68.0/*
-- docs/audits/67.0/*
-- docs/audits/68.0/*
+- docs/governance/67.0/\*
+- docs/implementation/67.0/\*
+- docs/implementation/68.0/\*
+- docs/audits/67.0/\*
+- docs/audits/68.0/\*
 - docs/ai-context/DENTALOPERIX_NEW_CHAT_HANDOFF_68_1.md
 
 ## No modificado

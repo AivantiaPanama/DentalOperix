@@ -83,9 +83,15 @@ When Google Sheets or external data is involved:
 Recommended probes:
 
 ```js
-fetch("/api/leads/list").then(r => r.json()).then(console.log)
-fetch("/api/analytics/revenue?period=all").then(r => r.json()).then(console.log)
-fetch("/api/crm/metrics").then(r => r.json()).then(console.log)
+fetch("/api/leads/list")
+  .then((r) => r.json())
+  .then(console.log);
+fetch("/api/analytics/revenue?period=all")
+  .then((r) => r.json())
+  .then(console.log);
+fetch("/api/crm/metrics")
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 ## 6. Data Quality

@@ -70,14 +70,14 @@ All helpers are pure, infrastructure-free, and compatible with the existing aggr
 
 ## Specification to Implementation Traceability
 
-| Specification Area | Implementation | Evidence |
-|---|---|---|
-| Existing Patients domain only | No new domain folder or duplicate aggregate created | Changes confined to `src/server/patients/domain` |
-| Value Objects formalization | Added immutable value-object factories | `patient.value-objects.ts` |
-| Boundary vs domain validation separation | Zod remains boundary layer; value checks delegated to pure helpers | `patient.validation.ts` |
-| Aggregate compatibility | Existing factory preserved; value factories used internally | `patient.entity.ts` |
-| Protected components | No changes | Diff scope review |
-| Persistence/API/UI | No changes | Diff scope review |
+| Specification Area                       | Implementation                                                     | Evidence                                         |
+| ---------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------ |
+| Existing Patients domain only            | No new domain folder or duplicate aggregate created                | Changes confined to `src/server/patients/domain` |
+| Value Objects formalization              | Added immutable value-object factories                             | `patient.value-objects.ts`                       |
+| Boundary vs domain validation separation | Zod remains boundary layer; value checks delegated to pure helpers | `patient.validation.ts`                          |
+| Aggregate compatibility                  | Existing factory preserved; value factories used internally        | `patient.entity.ts`                              |
+| Protected components                     | No changes                                                         | Diff scope review                                |
+| Persistence/API/UI                       | No changes                                                         | Diff scope review                                |
 
 ## Backward Compatibility
 

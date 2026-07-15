@@ -12,13 +12,13 @@ Product Architecture describes what DentalOperix is, which domains own which res
 
 ## Certified Domain Ownership
 
-| Domain | Certified Responsibility | Current State |
-|---|---|---|
-| Leads | Acquisition, marketing and lead lifecycle source of truth | Certified |
-| Patients | Person identity domain | Certified |
-| Appointments | Operational scheduling domain | Certified |
-| Clinical Records | Clinical information domain | WP-01 Foundation closed and certified |
-| Future Domains | Must reuse the approved framework and define only domain-specific facts | Pending |
+| Domain           | Certified Responsibility                                                | Current State                         |
+| ---------------- | ----------------------------------------------------------------------- | ------------------------------------- |
+| Leads            | Acquisition, marketing and lead lifecycle source of truth               | Certified                             |
+| Patients         | Person identity domain                                                  | Certified                             |
+| Appointments     | Operational scheduling domain                                           | Certified                             |
+| Clinical Records | Clinical information domain                                             | WP-01 Foundation closed and certified |
+| Future Domains   | Must reuse the approved framework and define only domain-specific facts | Pending                               |
 
 ## Separation Rule
 

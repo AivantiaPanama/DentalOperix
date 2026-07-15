@@ -24,16 +24,16 @@ source: ChatGPT governance consolidation session
 
 ## TTM Model
 
-| Field | Description |
-|---|---|
-| TEST ID | Permanent test identifier |
-| REQ ID | Requirement validated |
-| ADR ID | Decision validated |
-| ARCH ID | Architecture element |
+| Field     | Description                                              |
+| --------- | -------------------------------------------------------- |
+| TEST ID   | Permanent test identifier                                |
+| REQ ID    | Requirement validated                                    |
+| ADR ID    | Decision validated                                       |
+| ARCH ID   | Architecture element                                     |
 | Test Type | Unit, Integration, API, UI, SSR, Architecture Guard, E2E |
-| Evidence | Verifiable result |
-| Result | PASS / FAIL / N/A |
-| Release | Baseline certified |
+| Evidence  | Verifiable result                                        |
+| Result    | PASS / FAIL / N/A                                        |
+| Release   | Baseline certified                                       |
 
 ## Closure State
 

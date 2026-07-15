@@ -14,19 +14,19 @@ Appointment operations must include audit metadata for creation, update/reschedu
 Minimum conceptual fields:
 
 ```ts
-createdByUserId
-createdByRole
-createdVia
-createdAt
-updatedByUserId
-updatedByRole
-updatedVia
-updatedAt
-cancelledByUserId
-cancelledByRole
-cancelledVia
-cancelledAt
-cancellationReason
+createdByUserId;
+createdByRole;
+createdVia;
+createdAt;
+updatedByUserId;
+updatedByRole;
+updatedVia;
+updatedAt;
+cancelledByUserId;
+cancelledByRole;
+cancelledVia;
+cancelledAt;
+cancellationReason;
 ```
 
 ## Consequences

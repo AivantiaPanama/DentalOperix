@@ -1,6 +1,7 @@
 # DENTALOPERIX NEW CHAT HANDOFF — GOVERNANCE CONSOLIDATION 70.1 / CONTROLLED DEVELOPMENT 71.5
 
 ## Current Official Baseline
+
 DENTALOPERIX_BASELINE_69_2
 
 ## Governance State
@@ -108,6 +109,7 @@ Always provide:
 8. Wait for explicit approval before generating code
 
 ## Active Development Increment
+
 71.5.4 — Patient API Integration
 
 ## Completed Controlled Development Increments
@@ -152,6 +154,7 @@ Failed: 0
 ```
 
 ## Documentation Refresh
+
 See:
 
 - docs/implementation/71.0-patients-functional-development/71.5-controlled-development/71.5_PROGRAM_STATUS.md

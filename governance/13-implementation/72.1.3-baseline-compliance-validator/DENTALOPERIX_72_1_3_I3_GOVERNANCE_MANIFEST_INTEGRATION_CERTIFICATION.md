@@ -30,13 +30,13 @@ Implemented scope:
 
 The project owner integrated the package locally and submitted validation evidence showing:
 
-| Validation | Result |
-|---|---|
-| `npm install` | PASS |
-| postinstall build | PASS |
-| `npm run build` | PASS |
-| `npx tsc --noEmit` | PASS |
-| `npm audit` | 0 vulnerabilities |
+| Validation         | Result            |
+| ------------------ | ----------------- |
+| `npm install`      | PASS              |
+| postinstall build  | PASS              |
+| `npm run build`    | PASS              |
+| `npx tsc --noEmit` | PASS              |
+| `npm audit`        | 0 vulnerabilities |
 
 Note: full-suite test evidence remains available for the consolidated 72.1.3 validation cycle after I1/R1 closure. The I3-specific evidence submitted in this cycle covers installation, build, audit, and typecheck.
 

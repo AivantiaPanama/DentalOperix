@@ -44,15 +44,15 @@ Patients owns identity. Other domains reference patient identity through public 
 
 ## 3. Strategic Design Principles
 
-| ID | Principle |
-|---|---|
-| SP-01 | A patient has a unique identity. |
-| SP-02 | Patient identity belongs exclusively to the Patients domain. |
-| SP-03 | External domains do not modify the Patient aggregate directly. |
-| SP-04 | Patient business rules live inside the domain model. |
-| SP-05 | Use cases orchestrate and do not own business rules. |
-| SP-06 | Infrastructure never contains patient business rules. |
-| SP-07 | Integration occurs through ports. |
+| ID    | Principle                                                           |
+| ----- | ------------------------------------------------------------------- |
+| SP-01 | A patient has a unique identity.                                    |
+| SP-02 | Patient identity belongs exclusively to the Patients domain.        |
+| SP-03 | External domains do not modify the Patient aggregate directly.      |
+| SP-04 | Patient business rules live inside the domain model.                |
+| SP-05 | Use cases orchestrate and do not own business rules.                |
+| SP-06 | Infrastructure never contains patient business rules.               |
+| SP-07 | Integration occurs through ports.                                   |
 | SP-08 | Governance validates conformity but does not alter domain behavior. |
 
 ## 4. Bounded Context Definition
@@ -61,16 +61,16 @@ The **Patients Bounded Context** is responsible exclusively for patient identity
 
 It does not own marketing, appointments, clinical records, treatments, billing, or inventory.
 
-| Capability | Owning Domain |
-|---|---|
-| Prospect acquisition | Leads |
-| Commercial conversion | Leads / Application workflow |
-| Patient identity | Patients |
-| Operational scheduled events | Appointments |
-| Clinical history | Clinical Records (future) |
-| Treatment planning | Treatment Planning (future) |
-| Billing | Billing (future) |
-| Inventory | Inventory (future) |
+| Capability                   | Owning Domain                |
+| ---------------------------- | ---------------------------- |
+| Prospect acquisition         | Leads                        |
+| Commercial conversion        | Leads / Application workflow |
+| Patient identity             | Patients                     |
+| Operational scheduled events | Appointments                 |
+| Clinical history             | Clinical Records (future)    |
+| Treatment planning           | Treatment Planning (future)  |
+| Billing                      | Billing (future)             |
+| Inventory                    | Inventory (future)           |
 
 ## 5. Context Map
 
@@ -98,27 +98,27 @@ Patients Domain (Identity Owner)
 
 ## 6. Sources of Truth
 
-| Domain | Source of Truth |
-|---|---|
-| Leads | Acquisition and commercial lifecycle |
-| Patients | Person identity |
-| Appointments | Scheduled operational events |
+| Domain       | Source of Truth                      |
+| ------------ | ------------------------------------ |
+| Leads        | Acquisition and commercial lifecycle |
+| Patients     | Person identity                      |
+| Appointments | Scheduled operational events         |
 
 ## 7. Ubiquitous Language
 
-| Term | Definition | Owning Domain |
-|---|---|---|
-| Patient | Person whose identity is managed by DentalOperix for receiving dental care. | Patients |
-| Lead | Person registered during the commercial acquisition process. | Leads |
-| Conversion | Process by which a Lead originates a Patient without replacing the Lead. | Shared workflow |
-| Patient Identity | Minimum set of information that identifies a patient inside the system. | Patients |
-| Patient Status | Operational lifecycle state of the patient. | Patients |
-| Emergency Contact | Person designated to be contacted in an emergency. | Patients |
-| Guardian | Legal or responsible person for a patient when applicable. | Patients |
-| Appointment | Scheduled operational event associated with a Patient. | Appointments |
-| Clinical Record | Clinical information associated with a Patient. | Clinical Records (future) |
-| Archive | Lifecycle transition that removes a patient from active operation without deleting identity. | Patients |
-| Restore | Lifecycle transition that returns an archived patient to active operation. | Patients |
+| Term              | Definition                                                                                   | Owning Domain             |
+| ----------------- | -------------------------------------------------------------------------------------------- | ------------------------- |
+| Patient           | Person whose identity is managed by DentalOperix for receiving dental care.                  | Patients                  |
+| Lead              | Person registered during the commercial acquisition process.                                 | Leads                     |
+| Conversion        | Process by which a Lead originates a Patient without replacing the Lead.                     | Shared workflow           |
+| Patient Identity  | Minimum set of information that identifies a patient inside the system.                      | Patients                  |
+| Patient Status    | Operational lifecycle state of the patient.                                                  | Patients                  |
+| Emergency Contact | Person designated to be contacted in an emergency.                                           | Patients                  |
+| Guardian          | Legal or responsible person for a patient when applicable.                                   | Patients                  |
+| Appointment       | Scheduled operational event associated with a Patient.                                       | Appointments              |
+| Clinical Record   | Clinical information associated with a Patient.                                              | Clinical Records (future) |
+| Archive           | Lifecycle transition that removes a patient from active operation without deleting identity. | Patients                  |
+| Restore           | Lifecycle transition that returns an archived patient to active operation.                   | Patients                  |
 
 ### Prohibited Synonyms for Patient Aggregate
 
@@ -133,18 +133,18 @@ Patients Domain (Identity Owner)
 
 Initial states:
 
-| State | Description |
-|---|---|
-| Active | Patient available for normal clinic operation. |
+| State    | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| Active   | Patient available for normal clinic operation.                     |
 | Archived | Patient removed from active operation while identity is preserved. |
 
 Allowed transitions:
 
-| From | To | Event |
-|---|---|---|
-| Lead | Active | PatientCreated |
-| Active | Archived | PatientArchived |
-| Archived | Active | PatientRestored |
+| From     | To       | Event           |
+| -------- | -------- | --------------- |
+| Lead     | Active   | PatientCreated  |
+| Active   | Archived | PatientArchived |
+| Archived | Active   | PatientRestored |
 
 Prohibited:
 
@@ -228,18 +228,18 @@ Initial Domain Events:
 
 Business Rules:
 
-| ID | Rule |
-|---|---|
-| BR-001 | Each aggregate represents exactly one patient. |
-| BR-002 | Patient identity does not change after creation. |
-| BR-003 | Patient status must be one of the authorized states. |
-| BR-004 | Archive does not delete identity. |
-| BR-005 | Only an archived patient can be restored. |
-| BR-006 | No automatic patient merge. |
-| BR-007 | All modifications preserve aggregate invariants. |
+| ID     | Rule                                                                                |
+| ------ | ----------------------------------------------------------------------------------- |
+| BR-001 | Each aggregate represents exactly one patient.                                      |
+| BR-002 | Patient identity does not change after creation.                                    |
+| BR-003 | Patient status must be one of the authorized states.                                |
+| BR-004 | Archive does not delete identity.                                                   |
+| BR-005 | Only an archived patient can be restored.                                           |
+| BR-006 | No automatic patient merge.                                                         |
+| BR-007 | All modifications preserve aggregate invariants.                                    |
 | BR-008 | Patients owns identity, not appointments, clinical records, payments, or campaigns. |
-| BR-009 | Patients is the Source of Truth for identity. |
-| BR-010 | Lead conversion does not alter Leads ownership of acquisition. |
+| BR-009 | Patients is the Source of Truth for identity.                                       |
+| BR-010 | Lead conversion does not alter Leads ownership of acquisition.                      |
 
 ## 13. Domain Services and Repository Contracts
 
@@ -270,16 +270,16 @@ Repository must not contain business rules, mutate the aggregate, validate invar
 
 ## 14. Architecture Compliance
 
-| Area | Result |
-|---|---|
-| Hexagonal Architecture | PASS |
-| DDD | PASS |
-| Sources of Truth | PASS |
-| Leads Architecture | PASS |
-| Patients Architecture | PASS |
-| Persistence Architecture | PASS |
-| Governance Platform | PASS |
-| Protected Components | PASS |
+| Area                     | Result |
+| ------------------------ | ------ |
+| Hexagonal Architecture   | PASS   |
+| DDD                      | PASS   |
+| Sources of Truth         | PASS   |
+| Leads Architecture       | PASS   |
+| Patients Architecture    | PASS   |
+| Persistence Architecture | PASS   |
+| Governance Platform      | PASS   |
+| Protected Components     | PASS   |
 
 ## 15. Acceptance Criteria
 
@@ -303,11 +303,11 @@ All criteria are satisfied.
 
 ## 16. Certification
 
-| Review | Result |
-|---|---|
-| Architecture Conformance | PASS |
-| Baseline Compliance | PASS |
-| Governance Validation | PASS |
+| Review                   | Result |
+| ------------------------ | ------ |
+| Architecture Conformance | PASS   |
+| Baseline Compliance      | PASS   |
+| Governance Validation    | PASS   |
 
 **73.0 - Patient Domain Discovery & Ubiquitous Language is CLOSED & CERTIFIED.**
 

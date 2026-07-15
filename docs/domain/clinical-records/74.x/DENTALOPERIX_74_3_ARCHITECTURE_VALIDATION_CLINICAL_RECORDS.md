@@ -60,12 +60,12 @@ Application
 
 ### Cross-Domain Contract Validation
 
-| Consumer | Provider | Concept | Type |
-|---|---|---|---|
-| Clinical Records | Patients | PatientId | Lookup/reference |
-| Clinical Records | Appointments | AppointmentId | Optional lookup/reference |
-| Future Treatment Plans | Clinical Records | Clinical Summary | Future lookup |
-| Future Reporting | Clinical Records | Clinical Timeline | Future lookup |
+| Consumer               | Provider         | Concept           | Type                      |
+| ---------------------- | ---------------- | ----------------- | ------------------------- |
+| Clinical Records       | Patients         | PatientId         | Lookup/reference          |
+| Clinical Records       | Appointments     | AppointmentId     | Optional lookup/reference |
+| Future Treatment Plans | Clinical Records | Clinical Summary  | Future lookup             |
+| Future Reporting       | Clinical Records | Clinical Timeline | Future lookup             |
 
 ### Persistence Validation
 

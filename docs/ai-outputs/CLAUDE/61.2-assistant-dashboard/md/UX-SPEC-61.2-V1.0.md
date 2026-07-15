@@ -12,7 +12,7 @@ Iteration: 61.2 — Assistant Dashboard
 
 Author role: Product Analyst / Functional Designer
 
-*Governing authorization reference: RBAC-MATRIX-V1.1*
+_Governing authorization reference: RBAC-MATRIX-V1.1_
 
 **Permanent constraint honored throughout this document:**
 
@@ -40,12 +40,12 @@ This document does not include:
 
 - Any proposal of Dual Write or alternate Source of Truth.
 
-*Every permission, action, and data-visibility rule referenced in this
+_Every permission, action, and data-visibility rule referenced in this
 document is constrained by RBAC-MATRIX-V1.1. Where this document
 specifies an action for the Assistant role, that action exists in
 RBAC-MATRIX-V1.1; this document does not introduce new permissions — it
 only describes how existing authorized permissions surface in the
-dashboard experience.*
+dashboard experience._
 
 1\. User Personas
 
@@ -57,7 +57,7 @@ introducing a sub-role.
 1.1 Primary Persona — Front Desk Assistant
 
 |                                      |                                                                                                                                                                            |
-|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**                        | **Primary Persona — Front Desk Assistant**                                                                                                                                 |
 | **Role (RBAC)**                      | Assistant                                                                                                                                                                  |
 | **Context of use**                   | Works at the clinic front desk or remotely via phone/tablet during patient-facing hours. Frequently interrupted by phone calls, walk-ins, and in-person patient questions. |
@@ -71,7 +71,7 @@ introducing a sub-role.
 1.2 Secondary Persona — Lead Front Desk Assistant (Shift Lead)
 
 |                            |                                                                                                                                                                                                                     |
-|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**              | **Secondary Persona — Lead Front Desk Assistant (Shift Lead)**                                                                                                                                                      |
 | **Role (RBAC)**            | Assistant (same permission set — no distinct RBAC role; described separately because behavior differs)                                                                                                              |
 | **Context of use**         | Same environment as the Primary Persona, but also responsible for end-of-day handoff and ensuring no lead or appointment was missed during the shift.                                                               |
@@ -79,9 +79,9 @@ introducing a sub-role.
 | **Distinct need**          | Needs an at-a-glance summary view rather than working item by item.                                                                                                                                                 |
 | **Note**                   | This persona does not require a different RBAC role. It is a usage pattern within the Assistant role, included here to justify the existence of summary widgets (Section 7) without implying a new permission tier. |
 
-*Both personas map to the single Assistant role defined in
+_Both personas map to the single Assistant role defined in
 RBAC-MATRIX-V1.1. No new role, permission, or sub-tier is introduced by
-this document.*
+this document._
 
 2\. User Goals
 
@@ -89,7 +89,7 @@ Each goal below is traceable to a permission already authorized in
 RBAC-MATRIX-V1.1. No goal implies a new permission.
 
 |             |                                                                     |                                                                                                                                                                                |
-|-------------|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Goal ID** | **Goal**                                                            | **Why it matters**                                                                                                                                                             |
 | **G-01**    | See today's appointments at a glance                                | Prevents double-booking confusion and lets the Assistant answer "are we fully booked today" instantly.                                                                         |
 | **G-02**    | Identify which leads need action                                    | Leads that sit untouched are lost revenue opportunities; the Assistant's core job is to prevent that.                                                                          |
@@ -121,14 +121,14 @@ the structure appropriate for a high-interruption, time-pressured role
 
   - Notifications Log (drill-in from dashboard widget)
 
-3.2 Content Ownership Map
+  3.2 Content Ownership Map
 
 This table states which underlying data domain feeds each IA node. It
 does not define persistence — it states which already-existing domain
 (per certified architecture) supplies the data.
 
 |                        |                            |                                                           |
-|------------------------|----------------------------|-----------------------------------------------------------|
+| ---------------------- | -------------------------- | --------------------------------------------------------- |
 | **IA Node**            | **Data Domain (existing)** | **Authorization boundary (per RBAC-MATRIX-V1.1)**         |
 | **Today's Schedule**   | Appointments               | appointment.read — Allow (all), Section 5                 |
 | **Lead Queue**         | Leads (application layer)  | lead.read — Allow (all active leads), Section 4           |
@@ -136,9 +136,9 @@ does not define persistence — it states which already-existing domain
 | **Appointment Detail** | Appointments               | appointment.update, appointment.cancel — Allow, Section 5 |
 | **Notifications Log**  | Notifications (Email/ICS)  | Send / Resend — Allow, per preliminary RBAC summary       |
 
-*Lead Detail never exposes lead.owner.reassign or lead.delete controls.
+_Lead Detail never exposes lead.owner.reassign or lead.delete controls.
 Those remain Administrator-only per RBAC-MATRIX-V1.1 Section 4 and
-BR-RBAC-006.*
+BR-RBAC-006._
 
 4\. Navigation Model
 
@@ -170,11 +170,11 @@ dashboard -\> section -\> detail).
 
 4.2 Navigation Map
 
-*Described structurally; no visual layout, iconography, or component
-styling is specified here (see Scope Statement, Section 0).*
+_Described structurally; no visual layout, iconography, or component
+styling is specified here (see Scope Statement, Section 0)._
 
 |                          |                              |                                                |
-|--------------------------|------------------------------|------------------------------------------------|
+| ------------------------ | ---------------------------- | ---------------------------------------------- |
 | **From**                 | **Action**                   | **To**                                         |
 | **Front Desk Workspace** | Open Today's Schedule widget | Today's Schedule (full view)                   |
 | **Front Desk Workspace** | Open Lead Queue widget       | Lead Queue (full view)                         |
@@ -193,7 +193,7 @@ relies on (RBAC-MATRIX-V1.1).
 
 5.1 Flow — Review Today's Schedule
 
-*Goal reference: G-01*
+_Goal reference: G-01_
 
 1.  Assistant lands on Front Desk Workspace after login.
 
@@ -213,9 +213,9 @@ relies on (RBAC-MATRIX-V1.1).
 - If appointment data fails to load, the widget shows a retry option; it
   never silently shows stale or cached data as if current.
 
-5.2 Flow — Triage the Lead Queue
+  5.2 Flow — Triage the Lead Queue
 
-*Goal reference: G-02*
+_Goal reference: G-02_
 
 1.  Assistant opens the Lead Queue widget or its full view.
 
@@ -234,9 +234,9 @@ relies on (RBAC-MATRIX-V1.1).
   lead.read, but do not expose action controls the Assistant cannot
   perform.
 
-5.3 Flow — Update Lead Status or Notes
+  5.3 Flow — Update Lead Status or Notes
 
-*Goal reference: G-03*
+_Goal reference: G-03_
 
 1.  From Lead Detail, Assistant selects the status field and chooses a
     new status value.
@@ -261,9 +261,9 @@ relies on (RBAC-MATRIX-V1.1).
   Assistant; reassignment is Administrator-only (RBAC-MATRIX-V1.1
   Section 4).
 
-5.4 Flow — Create or Modify an Appointment
+  5.4 Flow — Create or Modify an Appointment
 
-*Goal reference: G-04*
+_Goal reference: G-04_
 
 1.  From Today's Schedule (or a future date view), Assistant selects
     "new appointment" or selects an existing appointment to modify.
@@ -285,9 +285,9 @@ relies on (RBAC-MATRIX-V1.1).
 - Modifying an appointment never offers a physical delete option — only
   reschedule or cancel, per BR-RBAC-007.
 
-5.5 Flow — Cancel an Appointment
+  5.5 Flow — Cancel an Appointment
 
-*Goal reference: G-05*
+_Goal reference: G-05_
 
 1.  From Appointment Detail, Assistant selects "Cancel appointment."
 
@@ -305,9 +305,9 @@ relies on (RBAC-MATRIX-V1.1).
   directly — that requires creating a new appointment, since
   cancellation is terminal by design.
 
-5.6 Flow — Resend a Patient Notification
+  5.6 Flow — Resend a Patient Notification
 
-*Goal reference: G-06*
+_Goal reference: G-06_
 
 1.  From Appointment Detail or Notifications Log, Assistant selects
     "Resend notification" for a given appointment or lead communication.
@@ -323,9 +323,9 @@ relies on (RBAC-MATRIX-V1.1).
   system blocks the resend and tells the Assistant why, rather than
   failing silently.
 
-5.7 Flow — End-of-Shift Handoff (Shift Lead usage pattern)
+  5.7 Flow — End-of-Shift Handoff (Shift Lead usage pattern)
 
-*Goal reference: G-07*
+_Goal reference: G-07_
 
 1.  Shift Lead opens the Front Desk Workspace near the end of their
     shift.
@@ -348,7 +348,7 @@ The Front Desk Workspace landing view is composed of the sections below.
 Each section corresponds to one or more widgets defined in Section 7.
 
 |                       |                                                                                                      |                             |                                              |
-|-----------------------|------------------------------------------------------------------------------------------------------|-----------------------------|----------------------------------------------|
+| --------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------- | -------------------------------------------- |
 | **Section**           | **Purpose**                                                                                          | **Primary data source**     | **Key permission(s) used**                   |
 | **Today's Schedule**  | Show the Assistant what is happening today across all providers.                                     | Appointments                | appointment.read (all)                       |
 | **Lead Queue**        | Surface active leads that may require action, ordered by urgency.                                    | Leads (application layer)   | lead.read (all active leads)                 |
@@ -365,7 +365,7 @@ layout, sizing, or styling is specified (see Scope Statement).
 7.1 Widget — Today's Schedule
 
 |                       |                                                                                                                               |
-|-----------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**         | **Definition**                                                                                                                |
 | **Displays**          | List of appointments for the current date, ordered by start time, with patient name, time, and provider.                      |
 | **Data source**       | Appointments domain, read via appointment.read.                                                                               |
@@ -377,7 +377,7 @@ layout, sizing, or styling is specified (see Scope Statement).
 7.2 Widget — Lead Queue
 
 |                       |                                                                                                                                                                                                                                     |
-|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**         | **Definition**                                                                                                                                                                                                                      |
 | **Displays**          | List of active leads with status, last updated time, and an indicator of how long the lead has been unactioned.                                                                                                                     |
 | **Data source**       | Leads, application layer, read via lead.read (Allow — all active leads).                                                                                                                                                            |
@@ -389,7 +389,7 @@ layout, sizing, or styling is specified (see Scope Statement).
 7.3 Widget — Quick Actions
 
 |                       |                                                                                               |
-|-----------------------|-----------------------------------------------------------------------------------------------|
+| --------------------- | --------------------------------------------------------------------------------------------- |
 | **Attribute**         | **Definition**                                                                                |
 | **Displays**          | A short set of one-step entry points for the most frequent Assistant tasks.                   |
 | **Data source**       | None directly — this widget is a set of navigation shortcuts into existing flows (Section 5). |
@@ -399,7 +399,7 @@ layout, sizing, or styling is specified (see Scope Statement).
 7.4 Widget — Notifications Log
 
 |                       |                                                                                                                                                                                                                       |
-|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**         | **Definition**                                                                                                                                                                                                        |
 | **Displays**          | Recent outbound notifications (confirmations, reminders) with recipient, channel, timestamp, and delivery status.                                                                                                     |
 | **Data source**       | Notifications domain (Email/ICS).                                                                                                                                                                                     |
@@ -410,7 +410,7 @@ layout, sizing, or styling is specified (see Scope Statement).
 7.5 Widget — Shift Summary
 
 |                       |                                                                                                                                    |
-|-----------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | **Attribute**         | **Definition**                                                                                                                     |
 | **Displays**          | Count-based overview: number of open leads, number of unconfirmed appointments, number of pending notification resends.            |
 | **Data source**       | Aggregated counts from Leads and Appointments domains; no new data store implied — counts are derived from existing readable data. |
@@ -549,7 +549,7 @@ component resizing — those are visual/interaction design decisions
 outside this document's scope.
 
 |                                                                    |                                                                                                                                                                                                                                                                                                                                                            |
-|--------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Breakpoint context**                                             | **Required behavior (functional, not visual)**                                                                                                                                                                                                                                                                                                             |
 | **Desktop (primary front-desk use)**                               | All five dashboard sections (Section 6) are reachable without horizontal scrolling. Today's Schedule and Lead Queue are the two highest-priority sections and must be the first content the Assistant sees without scrolling past lower-priority widgets.                                                                                                  |
 | **Tablet (mobile front-desk use, e.g., walking the clinic floor)** | All functional flows (Section 5) remain fully completable — no flow may be desktop-only. Widgets may stack vertically; the priority order (Today's Schedule, Lead Queue, then the rest) must be preserved in the stacking order.                                                                                                                           |
@@ -562,7 +562,7 @@ Accessibility requirements are stated functionally, aligned to WCAG 2.1
 AA intent, without prescribing specific visual implementation.
 
 |                                                    |                                                                                                                                                                                                                                                                                                |
-|----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Requirement area**                               | **Functional requirement**                                                                                                                                                                                                                                                                     |
 | **Keyboard operability**                           | Every action defined in Sections 5 and 7 (open detail, change status, save, cancel, resend, confirm) must be completable using keyboard alone, with no action reachable only by pointer/touch.                                                                                                 |
 | **Screen reader support**                          | Every widget (Section 7) must expose its purpose and current state (e.g., "Today's Schedule, 6 appointments") in a way a screen reader can announce, including empty states (Section 7.1, 7.2, 7.4).                                                                                           |
@@ -596,5 +596,5 @@ responsibility of Architecture Review or future iterations:
 
 - Global search — explicitly deferred (Section 4.1).
 
-*This functional/UX specification intentionally does not propose answers
-to the items above. Resolution is deferred to Architecture Review.*
+_This functional/UX specification intentionally does not propose answers
+to the items above. Resolution is deferred to Architecture Review._

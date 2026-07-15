@@ -237,10 +237,18 @@ Each change should include at least one validation path:
 Useful manual probes:
 
 ```js
-fetch("/api/leads/list").then(r => r.json()).then(console.log)
-fetch("/api/analytics/revenue?period=all").then(r => r.json()).then(console.log)
-fetch("/api/crm/metrics").then(r => r.json()).then(console.log)
-fetch("/api/admin/session").then(r => r.json()).then(console.log)
+fetch("/api/leads/list")
+  .then((r) => r.json())
+  .then(console.log);
+fetch("/api/analytics/revenue?period=all")
+  .then((r) => r.json())
+  .then(console.log);
+fetch("/api/crm/metrics")
+  .then((r) => r.json())
+  .then(console.log);
+fetch("/api/admin/session")
+  .then((r) => r.json())
+  .then(console.log);
 ```
 
 ## Required Pre-Implementation Checklist
@@ -288,7 +296,6 @@ Document used:
 
 These patterns are now part of the DentalOperix development baseline. Future implementations should cite this document when applying any certified pattern listed here.
 
-
 ## Runtime Persistence Alignment Pattern
 
 Lead runtime access must resolve through `LeadPersistenceProvider`. Direct Google Sheets reads or writes are permitted only inside the Google Sheets adapter or explicitly approved diagnostic tooling. After 60.4, Google Sheets is a rollback path, not the default active persistence.
@@ -300,7 +307,6 @@ Required controls:
 - Google Sheets requires explicit rollback approval
 - no dual write or parallel source of truth is allowed
 - derived analytics remain read-only
-
 
 ## Booking Confirmation Action Guard Pattern
 

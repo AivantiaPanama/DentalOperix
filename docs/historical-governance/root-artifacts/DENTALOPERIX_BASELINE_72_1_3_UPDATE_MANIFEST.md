@@ -14,8 +14,8 @@ This update records the current Program 72.1.3 governance state after closure an
 
 ## Certified State
 
-| Increment | Status |
-|---|---|
+| Increment | Status             |
+| --------- | ------------------ |
 | 72.1.3-R1 | CLOSED & CERTIFIED |
 | 72.1.3-I1 | CLOSED & CERTIFIED |
 | 72.1.3-I2 | CLOSED & CERTIFIED |
@@ -23,8 +23,8 @@ This update records the current Program 72.1.3 governance state after closure an
 
 ## Planning State
 
-| Increment | Status |
-|---|---|
+| Increment                                            | Status                                                         |
+| ---------------------------------------------------- | -------------------------------------------------------------- |
 | 72.1.3-I4 Manifest Validation & Compatibility Engine | APPROVED FOR IMPLEMENTATION PLANNING - CODE NOT YET AUTHORIZED |
 
 ## Architecture Confirmation

@@ -22,14 +22,14 @@ PASS.
 
 ## Findings
 
-| Area | Finding | Result |
-|---|---|---|
-| Architecture | No certified functional architecture change introduced | PASS |
-| Dependencies | Only governance documentation and repository structure affected | PASS |
-| Risks | Main risk is future automation overreach; mitigated by non-invasive boundary | PASS |
-| Technical Impact | No runtime, database, API, adapter, provider, UI, or Source of Truth impact | PASS |
-| Baseline Compatibility | Compatible with DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE | PASS |
-| Governance | 72.0.1 may be reviewed for closure/certification | PASS |
+| Area                   | Finding                                                                      | Result |
+| ---------------------- | ---------------------------------------------------------------------------- | ------ |
+| Architecture           | No certified functional architecture change introduced                       | PASS   |
+| Dependencies           | Only governance documentation and repository structure affected              | PASS   |
+| Risks                  | Main risk is future automation overreach; mitigated by non-invasive boundary | PASS   |
+| Technical Impact       | No runtime, database, API, adapter, provider, UI, or Source of Truth impact  | PASS   |
+| Baseline Compatibility | Compatible with DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE                 | PASS   |
+| Governance             | 72.0.1 may be reviewed for closure/certification                             | PASS   |
 
 ## Closure Recommendation
 

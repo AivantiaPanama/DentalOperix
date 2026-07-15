@@ -82,13 +82,13 @@ User access must not be enabled until an initial role is assigned.
 
 ## 5. Readiness Findings
 
-| Area | Result | Notes |
-|---|---|---|
-| Users Foundation | READY | Identity layer can be implemented without modifying Leads. |
-| RBAC Enforcement | READY | Must be enforced in frontend and backend. |
-| Dashboard Routing | READY | Routing is role-based and must not contain business or clinical logic. |
-| Lead Boundaries | PASS | User remains identity; Lead remains commercial source of truth. |
-| 61.2 Dependency | CONFIRMED | Assistant Dashboard remains blocked until 61.1 implementation is complete. |
+| Area              | Result    | Notes                                                                      |
+| ----------------- | --------- | -------------------------------------------------------------------------- |
+| Users Foundation  | READY     | Identity layer can be implemented without modifying Leads.                 |
+| RBAC Enforcement  | READY     | Must be enforced in frontend and backend.                                  |
+| Dashboard Routing | READY     | Routing is role-based and must not contain business or clinical logic.     |
+| Lead Boundaries   | PASS      | User remains identity; Lead remains commercial source of truth.            |
+| 61.2 Dependency   | CONFIRMED | Assistant Dashboard remains blocked until 61.1 implementation is complete. |
 
 ---
 

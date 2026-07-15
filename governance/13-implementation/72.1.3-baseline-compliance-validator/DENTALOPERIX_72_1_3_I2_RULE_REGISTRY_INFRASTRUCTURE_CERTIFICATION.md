@@ -27,13 +27,13 @@ Implemented scope:
 
 The project owner integrated the package locally and submitted validation evidence showing:
 
-| Validation | Result |
-|---|---|
-| `npm install` | PASS |
-| postinstall build | PASS |
-| `npm run build` | PASS |
-| `npx tsc --noEmit` | PASS |
-| `npm audit` | 0 vulnerabilities |
+| Validation         | Result            |
+| ------------------ | ----------------- |
+| `npm install`      | PASS              |
+| postinstall build  | PASS              |
+| `npm run build`    | PASS              |
+| `npx tsc --noEmit` | PASS              |
+| `npm audit`        | 0 vulnerabilities |
 
 ## Architecture Conformance Review
 

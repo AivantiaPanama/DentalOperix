@@ -11,14 +11,14 @@ DentalOperix gains the ability to register, consult, update and visualize clinic
 
 ## Delivered increments
 
-| Increment | Scope | Status |
-|---|---|---|
-| I1-M1 | ClinicalNote Domain Entity | IMPLEMENTED / CONSOLIDATED |
-| I1-M2 | ClinicalNote Domain Service | IMPLEMENTED / CONSOLIDATED |
-| I1-M3 | ClinicalNote Application Layer | IMPLEMENTED / CONSOLIDATED |
-| I1-M4 | ClinicalNote Persistence Adapter | IMPLEMENTED / CONSOLIDATED |
-| I1-M5 | Clinical Note API Contracts | IMPLEMENTED / CONSOLIDATED |
-| I1-M6 | Clinical Note UI Integration | IMPLEMENTED / CONSOLIDATED / USER VALIDATION OWNED EXTERNALLY |
+| Increment | Scope                            | Status                                                        |
+| --------- | -------------------------------- | ------------------------------------------------------------- |
+| I1-M1     | ClinicalNote Domain Entity       | IMPLEMENTED / CONSOLIDATED                                    |
+| I1-M2     | ClinicalNote Domain Service      | IMPLEMENTED / CONSOLIDATED                                    |
+| I1-M3     | ClinicalNote Application Layer   | IMPLEMENTED / CONSOLIDATED                                    |
+| I1-M4     | ClinicalNote Persistence Adapter | IMPLEMENTED / CONSOLIDATED                                    |
+| I1-M5     | Clinical Note API Contracts      | IMPLEMENTED / CONSOLIDATED                                    |
+| I1-M6     | Clinical Note UI Integration     | IMPLEMENTED / CONSOLIDATED / USER VALIDATION OWNED EXTERNALLY |
 
 ## Certified Pattern
 

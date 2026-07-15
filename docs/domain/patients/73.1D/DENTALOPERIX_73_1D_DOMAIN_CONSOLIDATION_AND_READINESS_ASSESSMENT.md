@@ -22,16 +22,16 @@ Result: the Patients domain is architecturally mature, governance-compliant, and
 
 ## D.1 Domain Maturity Assessment
 
-| Dimension | Score | Level |
-|---|---:|---|
-| Aggregate Design | 5/5 | Optimized |
-| Entity Modeling | 5/5 | Optimized |
-| Value Objects | 4/5 | Managed |
-| Domain Invariants | 4/5 | Managed |
-| Ubiquitous Language | 5/5 | Optimized |
-| Encapsulation | 5/5 | Optimized |
-| Boundary Separation | 5/5 | Optimized |
-| Contract Stability | 5/5 | Optimized |
+| Dimension           | Score | Level     |
+| ------------------- | ----: | --------- |
+| Aggregate Design    |   5/5 | Optimized |
+| Entity Modeling     |   5/5 | Optimized |
+| Value Objects       |   4/5 | Managed   |
+| Domain Invariants   |   4/5 | Managed   |
+| Ubiquitous Language |   5/5 | Optimized |
+| Encapsulation       |   5/5 | Optimized |
+| Boundary Separation |   5/5 | Optimized |
+| Contract Stability  |   5/5 | Optimized |
 
 Global maturity: 4.75 / 5.00.  
 Classification: Advanced.
@@ -45,40 +45,40 @@ Classification: Advanced.
 
 ## D.2 Boundary & Dependency Review
 
-| Boundary | Status | Determination |
-|---|---|---|
-| Domain -> Application | Compliant | No dependency from Domain to Application. |
-| Domain -> Persistence | Compliant | No persistence coupling. |
+| Boundary                 | Status    | Determination                              |
+| ------------------------ | --------- | ------------------------------------------ |
+| Domain -> Application    | Compliant | No dependency from Domain to Application.  |
+| Domain -> Persistence    | Compliant | No persistence coupling.                   |
 | Domain -> Infrastructure | Compliant | No framework or infrastructure dependency. |
-| Application -> Domain | Compliant | Correct dependency direction. |
-| Persistence -> Domain | Compliant | Compatible with Ports & Adapters. |
-| UI/API impact | Compliant | No direct changes or coupling introduced. |
+| Application -> Domain    | Compliant | Correct dependency direction.              |
+| Persistence -> Domain    | Compliant | Compatible with Ports & Adapters.          |
+| UI/API impact            | Compliant | No direct changes or coupling introduced.  |
 
 The Patients domain remains compatible with Hexagonal Architecture and Ports & Adapters.
 
 ## D.3 Public Contract Stability Assessment
 
-| Contract Area | Status | Notes |
-|---|---|---|
-| Public domain types | Stable | No incompatible removals or renames. |
-| Aggregate factory | Stable | Existing behavior preserved. |
-| Value Object factories | Stable | Introduced additively. |
-| Domain exports | Stable | Compatibility maintained. |
-| Consumers | Stable | Application/Persistence/API/UI not forced to change. |
+| Contract Area          | Status | Notes                                                |
+| ---------------------- | ------ | ---------------------------------------------------- |
+| Public domain types    | Stable | No incompatible removals or renames.                 |
+| Aggregate factory      | Stable | Existing behavior preserved.                         |
+| Value Object factories | Stable | Introduced additively.                               |
+| Domain exports         | Stable | Compatibility maintained.                            |
+| Consumers              | Stable | Application/Persistence/API/UI not forced to change. |
 
 Recommendation: future evolution should remain additive; deprecate before removing certified contracts.
 
 ## D.4 Governance Compliance Review
 
-| Restriction | Status |
-|---|---|
-| Leads = Source of Truth | Compliant |
-| Patients = Identity Domain | Compliant |
+| Restriction                       | Status    |
+| --------------------------------- | --------- |
+| Leads = Source of Truth           | Compliant |
+| Patients = Identity Domain        | Compliant |
 | Appointments = Operational Domain | Compliant |
-| No Dual Write | Compliant |
-| No New Patient Domain | Compliant |
-| No Persistence Re-Architecture | Compliant |
-| No Protected Components Changes | Compliant |
+| No Dual Write                     | Compliant |
+| No New Patient Domain             | Compliant |
+| No Persistence Re-Architecture    | Compliant |
+| No Protected Components Changes   | Compliant |
 
 Protected components remain untouched:
 
@@ -93,13 +93,13 @@ Protected components remain untouched:
 
 ## D.5 Technical Debt Assessment
 
-| Category | Status | Severity |
-|---|---|---|
-| Architecture | Very healthy | Very low |
-| Domain DDD | Healthy | Low |
-| Code | Healthy | Low |
-| Documentation | Improve | Medium |
-| Platform | Improve | Low |
+| Category      | Status       | Severity |
+| ------------- | ------------ | -------- |
+| Architecture  | Very healthy | Very low |
+| Domain DDD    | Healthy      | Low      |
+| Code          | Healthy      | Low      |
+| Documentation | Improve      | Medium   |
+| Platform      | Improve      | Low      |
 
 No critical technical debt was identified. The main improvement opportunities are governance documentation consolidation and non-blocking platform optimizations.
 
@@ -112,15 +112,15 @@ No critical technical debt was identified. The main improvement opportunities ar
 
 ## D.6 Capability Roadmap
 
-| Capability | Status | Notes |
-|---|---|---|
-| Patient Identity | Consolidated | Advanced maturity after 73.1-B and 73.1-C. |
-| Appointment Management | Stable | Future evolution should respect existing operational boundaries. |
-| Lead Acquisition | Consolidated | Leads remains Source of Truth. |
-| Clinical Records | Planned | Recommended next business capability; requires separate rector and analysis. |
-| Communications | Planned | Must consume existing domains and must not become Source of Truth. |
-| Billing & Payments | Planned | Should be modeled as an independent domain. |
-| Analytics & Reporting | Planned | Should operate over read models, without affecting transactional domains. |
+| Capability             | Status       | Notes                                                                        |
+| ---------------------- | ------------ | ---------------------------------------------------------------------------- |
+| Patient Identity       | Consolidated | Advanced maturity after 73.1-B and 73.1-C.                                   |
+| Appointment Management | Stable       | Future evolution should respect existing operational boundaries.             |
+| Lead Acquisition       | Consolidated | Leads remains Source of Truth.                                               |
+| Clinical Records       | Planned      | Recommended next business capability; requires separate rector and analysis. |
+| Communications         | Planned      | Must consume existing domains and must not become Source of Truth.           |
+| Billing & Payments     | Planned      | Should be modeled as an independent domain.                                  |
+| Analytics & Reporting  | Planned      | Should operate over read models, without affecting transactional domains.    |
 
 Priority recommendation: start any future Clinical Records program only after a dedicated charter, baseline review, and architecture analysis.
 
@@ -134,12 +134,12 @@ The Patients domain has reached advanced DDD maturity and can evolve under the e
 
 ### Risk Residual
 
-| Area | Level |
-|---|---|
+| Area         | Level    |
+| ------------ | -------- |
 | Architecture | Very low |
-| Governance | Very low |
-| Evolution | Low |
-| Maintenance | Low |
+| Governance   | Very low |
+| Evolution    | Low      |
+| Maintenance  | Low      |
 
 ### Retrospective
 

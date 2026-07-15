@@ -16,20 +16,20 @@ The Domain Glossary Registry establishes official business terms for DentalOperi
 
 ## Registry
 
-| Term | Definition | Owning Domain | Status |
-|---|---|---|---|
-| Lead | Person registered during the acquisition or commercial lifecycle. | Leads | Approved |
-| Patient | Person whose identity is managed by DentalOperix to receive dental care. | Patients | Approved |
-| Conversion | Process by which a Lead originates a Patient without replacing the Lead. | Shared Workflow | Approved |
-| Patient Identity | Minimum information set used to identify a patient inside the system. | Patients | Approved |
-| PatientId | Immutable technical identifier for a Patient aggregate. | Patients | Approved |
-| Appointment | Scheduled operational event associated with clinic activity. | Appointments | Approved |
-| Clinical Record | Clinical information associated with a Patient. | Clinical Records | Future |
-| Emergency Contact | Person designated for emergency communication regarding a Patient. | Patients | Approved |
-| Guardian | Legal/responsible person associated with a Patient when business rules require it. | Patients | Approved |
-| Archive | Lifecycle transition that removes a Patient from active operation without deleting identity. | Patients | Approved |
-| Restore | Lifecycle transition that returns an archived Patient to active operation. | Patients | Approved |
-| Source of Truth | Domain that owns a category of information. | Governance | Approved |
+| Term              | Definition                                                                                   | Owning Domain    | Status   |
+| ----------------- | -------------------------------------------------------------------------------------------- | ---------------- | -------- |
+| Lead              | Person registered during the acquisition or commercial lifecycle.                            | Leads            | Approved |
+| Patient           | Person whose identity is managed by DentalOperix to receive dental care.                     | Patients         | Approved |
+| Conversion        | Process by which a Lead originates a Patient without replacing the Lead.                     | Shared Workflow  | Approved |
+| Patient Identity  | Minimum information set used to identify a patient inside the system.                        | Patients         | Approved |
+| PatientId         | Immutable technical identifier for a Patient aggregate.                                      | Patients         | Approved |
+| Appointment       | Scheduled operational event associated with clinic activity.                                 | Appointments     | Approved |
+| Clinical Record   | Clinical information associated with a Patient.                                              | Clinical Records | Future   |
+| Emergency Contact | Person designated for emergency communication regarding a Patient.                           | Patients         | Approved |
+| Guardian          | Legal/responsible person associated with a Patient when business rules require it.           | Patients         | Approved |
+| Archive           | Lifecycle transition that removes a Patient from active operation without deleting identity. | Patients         | Approved |
+| Restore           | Lifecycle transition that returns an archived Patient to active operation.                   | Patients         | Approved |
+| Source of Truth   | Domain that owns a category of information.                                                  | Governance       | Approved |
 
 ## Prohibited Patient Synonyms
 

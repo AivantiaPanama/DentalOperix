@@ -32,7 +32,6 @@ Projection Engine:
 - Not Recommended
 - Closed
 
-
 ## Source of Truth Persistence Boundary
 
 `Leads` remains the logical Source of Truth.

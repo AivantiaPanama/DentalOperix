@@ -11,15 +11,15 @@ This remains the official baseline until a future rector document formally appro
 
 ## Baseline Notes
 
-| Baseline / Manifest | Role | Status |
-|---|---|---|
-| DENTALOPERIX_BASELINE_68_1_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
-| DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
-| DENTALOPERIX_BASELINE_70_1_71_5_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
-| DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE | Current official baseline package | Active |
-| DENTALOPERIX_BASELINE_72_1_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
-| DENTALOPERIX_BASELINE_72_1_2_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
-| DENTALOPERIX_BASELINE_72_1_3_UPDATE_MANIFEST.md | Historical update manifest | Preserved |
+| Baseline / Manifest                                | Role                              | Status    |
+| -------------------------------------------------- | --------------------------------- | --------- |
+| DENTALOPERIX_BASELINE_68_1_UPDATE_MANIFEST.md      | Historical update manifest        | Preserved |
+| DENTALOPERIX_BASELINE_69_2_UPDATE_MANIFEST.md      | Historical update manifest        | Preserved |
+| DENTALOPERIX_BASELINE_70_1_71_5_UPDATE_MANIFEST.md | Historical update manifest        | Preserved |
+| DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE       | Current official baseline package | Active    |
+| DENTALOPERIX_BASELINE_72_1_UPDATE_MANIFEST.md      | Historical update manifest        | Preserved |
+| DENTALOPERIX_BASELINE_72_1_2_UPDATE_MANIFEST.md    | Historical update manifest        | Preserved |
+| DENTALOPERIX_BASELINE_72_1_3_UPDATE_MANIFEST.md    | Historical update manifest        | Preserved |
 
 ## 73.x Closure Clarification
 
