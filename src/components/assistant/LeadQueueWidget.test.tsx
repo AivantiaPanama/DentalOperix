@@ -56,7 +56,9 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     expect(screen.getByText("Ortodoncia")).toBeDefined();
     expect(screen.getByText("2026-06-22")).toBeDefined();
     expect(fetchMock).toHaveBeenCalledWith("/api/leads/list", { credentials: "same-origin" });
-    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar/i })).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar/i }),
+    ).toBeNull();
   });
 
   it("supports local read-only filtering without additional writes", async () => {
@@ -71,13 +73,14 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     render(<LeadQueueWidget />);
 
     await screen.findByText("Ana Perez");
-    fireEvent.change(screen.getByLabelText("Buscar en cola de leads"), { target: { value: "implantes" } });
+    fireEvent.change(screen.getByLabelText("Buscar en cola de leads"), {
+      target: { value: "implantes" },
+    });
 
     expect(screen.queryByText("Ana Perez")).toBeNull();
     expect(screen.getByText("Bruno Rios")).toBeDefined();
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
-
 
   it("opens a Lead Detail panel with controlled status and notes update writes", async () => {
     const fetchMock = vi.fn().mockResolvedValue(
@@ -94,7 +97,11 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
 
     expect(screen.getByRole("button", { name: "Volver a la cola de leads" })).toBeDefined();
-    expect(screen.getByText("Vista del lead seleccionado con actualización controlada de estado y notas internas. No edita asignaciones ni datos clínicos.")).toBeDefined();
+    expect(
+      screen.getByText(
+        "Vista del lead seleccionado con actualización controlada de estado y notas internas. No edita asignaciones ni datos clínicos.",
+      ),
+    ).toBeDefined();
     expect(screen.getByText("Quiere evaluación inicial.")).toBeDefined();
     expect(screen.getByText("Lead interesado en ortodoncia.")).toBeDefined();
     expect(screen.getByDisplayValue("Prefiere WhatsApp.")).toBeDefined();
@@ -105,7 +112,6 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     expect(screen.getByText("Flujo de cita asistida")).toBeDefined();
     expect(screen.queryByRole("button", { name: /editar|eliminar|asignar|reasignar/i })).toBeNull();
   });
-
 
   it("updates Lead status through /api/leads/update-status and updates local state", async () => {
     const fetchMock = vi
@@ -146,7 +152,6 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
   });
 
-
   it("updates Lead notes through /api/leads/update-notes and updates local state", async () => {
     const fetchMock = vi
       .fn()
@@ -157,10 +162,17 @@ describe("LeadQueueWidget PR-61.2-05", () => {
         }),
       )
       .mockResolvedValueOnce(
-        new Response(JSON.stringify({ success: true, leadId: "LEAD-001", notes: "Enviar recordatorio por WhatsApp" }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }),
+        new Response(
+          JSON.stringify({
+            success: true,
+            leadId: "LEAD-001",
+            notes: "Enviar recordatorio por WhatsApp",
+          }),
+          {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          },
+        ),
       );
     vi.stubGlobal("fetch", fetchMock);
 
@@ -210,7 +222,9 @@ describe("LeadQueueWidget PR-61.2-05", () => {
 
     await screen.findByText("Ana Perez");
     fireEvent.click(screen.getByRole("button", { name: "Ver detalle de Ana Perez" }));
-    fireEvent.change(screen.getByLabelText("Estado del lead"), { target: { value: "seguimiento" } });
+    fireEvent.change(screen.getByLabelText("Estado del lead"), {
+      target: { value: "seguimiento" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "Actualizar estado" }));
 
     expect(await screen.findByText("Status inválido")).toBeDefined();
@@ -276,8 +290,12 @@ describe("LeadQueueWidget PR-61.2-05", () => {
     render(<LeadQueueWidget />);
 
     expect(await screen.findByText("Modo demo de Leads")).toBeDefined();
-    expect(screen.getByText("No se pudo leer la persistencia certificada de Leads, usando demo.")).toBeDefined();
-    expect(screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar/i })).toBeNull();
+    expect(
+      screen.getByText("No se pudo leer la persistencia certificada de Leads, usando demo."),
+    ).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: /crear|editar|eliminar|agendar|asignar/i }),
+    ).toBeNull();
   });
 
   it("renders API errors without bypassing RBAC", async () => {

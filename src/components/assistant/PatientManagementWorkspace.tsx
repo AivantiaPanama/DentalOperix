@@ -1,5 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, FilePenLine, RefreshCcw, Save, Search, ShieldAlert, ShieldCheck, UserRound } from "lucide-react";
+import {
+  CheckCircle2,
+  FilePenLine,
+  RefreshCcw,
+  Save,
+  Search,
+  ShieldAlert,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -119,9 +128,15 @@ export function PatientManagementWorkspace() {
     );
   }, [patients, query]);
 
-  const verifiedCount = patients.filter((patient) => patient.administrativeStatus === "verified").length;
-  const pendingCount = patients.filter((patient) => patient.administrativeStatus === "pending-verification").length;
-  const incompleteCount = patients.filter((patient) => patient.administrativeStatus === "incomplete").length;
+  const verifiedCount = patients.filter(
+    (patient) => patient.administrativeStatus === "verified",
+  ).length;
+  const pendingCount = patients.filter(
+    (patient) => patient.administrativeStatus === "pending-verification",
+  ).length;
+  const incompleteCount = patients.filter(
+    (patient) => patient.administrativeStatus === "incomplete",
+  ).length;
 
   const loadPatients = async () => {
     setLoading(true);
@@ -147,7 +162,11 @@ export function PatientManagementWorkspace() {
       setPatients([]);
       setSelectedPatientId(null);
       setForm(emptyForm);
-      setError(loadError instanceof Error ? loadError.message : "No se pudieron cargar los perfiles administrativos.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudieron cargar los perfiles administrativos.",
+      );
     } finally {
       setLoading(false);
     }
@@ -185,24 +204,33 @@ export function PatientManagementWorkspace() {
     setNotice(null);
 
     try {
-      const response = await fetch(`/api/patients/${encodeURIComponent(selectedPatient.id)}/admin-profile`, {
-        method: "PATCH",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `/api/patients/${encodeURIComponent(selectedPatient.id)}/admin-profile`,
+        {
+          method: "PATCH",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       const result = (await response.json()) as PatientMutationResponse;
 
       if (!response.ok || !result.success || !result.patient) {
         throw new Error(result.error ?? "No se pudo actualizar el perfil administrativo.");
       }
 
-      setPatients((current) => current.map((patient) => (patient.id === result.patient?.id ? result.patient : patient)));
+      setPatients((current) =>
+        current.map((patient) => (patient.id === result.patient?.id ? result.patient : patient)),
+      );
       setSelectedPatientId(result.patient.id);
       setForm(profileToForm(result.patient));
       setNotice("Perfil administrativo actualizado con seguridad.");
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "No se pudo actualizar el perfil administrativo.");
+      setError(
+        saveError instanceof Error
+          ? saveError.message
+          : "No se pudo actualizar el perfil administrativo.",
+      );
     } finally {
       setSaving(false);
     }
@@ -216,22 +244,31 @@ export function PatientManagementWorkspace() {
     setNotice(null);
 
     try {
-      const response = await fetch(`/api/patients/${encodeURIComponent(selectedPatient.id)}/verify-profile`, {
-        method: "POST",
-        credentials: "same-origin",
-      });
+      const response = await fetch(
+        `/api/patients/${encodeURIComponent(selectedPatient.id)}/verify-profile`,
+        {
+          method: "POST",
+          credentials: "same-origin",
+        },
+      );
       const result = (await response.json()) as PatientMutationResponse;
 
       if (!response.ok || !result.success || !result.patient) {
         throw new Error(result.error ?? "No se pudo verificar el perfil administrativo.");
       }
 
-      setPatients((current) => current.map((patient) => (patient.id === result.patient?.id ? result.patient : patient)));
+      setPatients((current) =>
+        current.map((patient) => (patient.id === result.patient?.id ? result.patient : patient)),
+      );
       setSelectedPatientId(result.patient.id);
       setForm(profileToForm(result.patient));
       setNotice("Perfil verificado administrativamente.");
     } catch (verifyError) {
-      setError(verifyError instanceof Error ? verifyError.message : "No se pudo verificar el perfil administrativo.");
+      setError(
+        verifyError instanceof Error
+          ? verifyError.message
+          : "No se pudo verificar el perfil administrativo.",
+      );
     } finally {
       setVerifying(false);
     }
@@ -243,10 +280,17 @@ export function PatientManagementWorkspace() {
         <div>
           <CardTitle>Gestión administrativa de pacientes</CardTitle>
           <CardDescription>
-            Edición segura de datos administrativos. No incluye historia clínica, diagnóstico ni tratamientos médicos.
+            Edición segura de datos administrativos. No incluye historia clínica, diagnóstico ni
+            tratamientos médicos.
           </CardDescription>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={() => void loadPatients()} disabled={loading || saving || verifying}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => void loadPatients()}
+          disabled={loading || saving || verifying}
+        >
           <RefreshCcw className="mr-2 h-4 w-4" />
           Actualizar perfiles
         </Button>
@@ -254,15 +298,21 @@ export function PatientManagementWorkspace() {
       <CardContent className="space-y-5">
         <section className="grid gap-3 md:grid-cols-3">
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Verificados</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Verificados
+            </p>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : verifiedCount}</p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Pendientes</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Pendientes
+            </p>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : pendingCount}</p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Incompletos</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Incompletos
+            </p>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : incompleteCount}</p>
           </div>
         </section>
@@ -314,7 +364,9 @@ export function PatientManagementWorkspace() {
                   type="button"
                   onClick={() => selectPatient(patient)}
                   className={`w-full rounded-2xl border p-4 text-left transition hover:border-primary/40 ${
-                    selectedPatient?.id === patient.id ? "border-primary/50 bg-primary/5" : "border-border bg-background/70"
+                    selectedPatient?.id === patient.id
+                      ? "border-primary/50 bg-primary/5"
+                      : "border-border bg-background/70"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -327,8 +379,12 @@ export function PatientManagementWorkspace() {
                       {statusLabel(patient.administrativeStatus)}
                     </Badge>
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground">Interés: {patient.treatmentInterest}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Folio(s): {patient.sourceLeadIds.join(", ")}</p>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Interés: {patient.treatmentInterest}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Folio(s): {patient.sourceLeadIds.join(", ")}
+                  </p>
                 </button>
               ))}
             </div>
@@ -343,10 +399,17 @@ export function PatientManagementWorkspace() {
                       <UserRound className="h-4 w-4" />
                       Perfil seleccionado
                     </div>
-                    <h3 className="mt-2 text-xl font-semibold text-deep">{selectedPatient.displayName}</h3>
-                    <p className="text-sm text-muted-foreground">Origen: {selectedPatient.source}</p>
+                    <h3 className="mt-2 text-xl font-semibold text-deep">
+                      {selectedPatient.displayName}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Origen: {selectedPatient.source}
+                    </p>
                   </div>
-                  <Badge variant="outline" className={statusClass(selectedPatient.administrativeStatus)}>
+                  <Badge
+                    variant="outline"
+                    className={statusClass(selectedPatient.administrativeStatus)}
+                  >
                     {statusLabel(selectedPatient.administrativeStatus)}
                   </Badge>
                 </div>
@@ -354,41 +417,67 @@ export function PatientManagementWorkspace() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Nombre completo
-                    <Input value={form.displayName} onChange={(event) => updateFormField("displayName", event.target.value)} />
+                    <Input
+                      value={form.displayName}
+                      onChange={(event) => updateFormField("displayName", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Nombre(s)
-                    <Input value={form.firstName} onChange={(event) => updateFormField("firstName", event.target.value)} />
+                    <Input
+                      value={form.firstName}
+                      onChange={(event) => updateFormField("firstName", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Apellidos
-                    <Input value={form.lastName} onChange={(event) => updateFormField("lastName", event.target.value)} />
+                    <Input
+                      value={form.lastName}
+                      onChange={(event) => updateFormField("lastName", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Teléfono
-                    <Input value={form.phone} onChange={(event) => updateFormField("phone", event.target.value)} />
+                    <Input
+                      value={form.phone}
+                      onChange={(event) => updateFormField("phone", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Email
-                    <Input value={form.email} onChange={(event) => updateFormField("email", event.target.value)} />
+                    <Input
+                      value={form.email}
+                      onChange={(event) => updateFormField("email", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Fecha de nacimiento
-                    <Input value={form.birthDate} onChange={(event) => updateFormField("birthDate", event.target.value)} />
+                    <Input
+                      value={form.birthDate}
+                      onChange={(event) => updateFormField("birthDate", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep md:col-span-2">
                     Dirección
-                    <Input value={form.address} onChange={(event) => updateFormField("address", event.target.value)} />
+                    <Input
+                      value={form.address}
+                      onChange={(event) => updateFormField("address", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Contacto de emergencia
-                    <Input value={form.emergencyContact} onChange={(event) => updateFormField("emergencyContact", event.target.value)} />
+                    <Input
+                      value={form.emergencyContact}
+                      onChange={(event) => updateFormField("emergencyContact", event.target.value)}
+                    />
                   </label>
                   <label className="space-y-2 text-sm font-medium text-deep">
                     Método de contacto preferido
                     <Input
                       value={form.preferredContactMethod}
-                      onChange={(event) => updateFormField("preferredContactMethod", event.target.value)}
+                      onChange={(event) =>
+                        updateFormField("preferredContactMethod", event.target.value)
+                      }
                     />
                   </label>
                 </div>
@@ -396,20 +485,34 @@ export function PatientManagementWorkspace() {
                 <div className="rounded-2xl border border-dashed border-border bg-white p-4 text-sm leading-6 text-muted-foreground">
                   <p className="font-medium text-deep">Límite de seguridad</p>
                   <p className="mt-1">
-                    Esta sección solo guarda datos administrativos. Cualquier dato clínico debe permanecer fuera de este
-                    flujo y ser atendido en una fase clínica futura.
+                    Esta sección solo guarda datos administrativos. Cualquier dato clínico debe
+                    permanecer fuera de este flujo y ser atendido en una fase clínica futura.
                   </p>
                 </div>
 
                 <div className="flex flex-col gap-3 md:flex-row md:justify-end">
-                  <Button type="button" variant="outline" onClick={() => setForm(profileToForm(selectedPatient))} disabled={saving || verifying}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setForm(profileToForm(selectedPatient))}
+                    disabled={saving || verifying}
+                  >
                     Descartar cambios
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => void verifyAdministrativeProfile()} disabled={saving || verifying}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => void verifyAdministrativeProfile()}
+                    disabled={saving || verifying}
+                  >
                     <ShieldCheck className="mr-2 h-4 w-4" />
                     {verifying ? "Verificando..." : "Verificar perfil"}
                   </Button>
-                  <Button type="button" onClick={() => void saveAdministrativeProfile()} disabled={saving || verifying}>
+                  <Button
+                    type="button"
+                    onClick={() => void saveAdministrativeProfile()}
+                    disabled={saving || verifying}
+                  >
                     <Save className="mr-2 h-4 w-4" />
                     {saving ? "Guardando..." : "Guardar cambios"}
                   </Button>

@@ -1,5 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { ClipboardList, MessageSquareText, RefreshCcw, Save, Search, ShieldAlert } from "lucide-react";
+import {
+  ClipboardList,
+  MessageSquareText,
+  RefreshCcw,
+  Save,
+  Search,
+  ShieldAlert,
+} from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -104,7 +111,16 @@ function dateInputValue(value: string) {
 }
 
 function leadText(lead: MockLead) {
-  return [lead.id, lead.name, lead.phone, lead.email, lead.treatment, lead.status, lead.source, lead.notes]
+  return [
+    lead.id,
+    lead.name,
+    lead.phone,
+    lead.email,
+    lead.treatment,
+    lead.status,
+    lead.source,
+    lead.notes,
+  ]
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
@@ -145,16 +161,23 @@ export function LeadOperationsWorkspace() {
       const nextLeadOperations = payload.leadOperations ?? [];
       setLeadOperations(nextLeadOperations);
 
-      const nextSelected = selectedLeadId && nextLeadOperations.some((item) => item.leadId === selectedLeadId)
-        ? selectedLeadId
-        : nextLeadOperations[0]?.leadId ?? null;
+      const nextSelected =
+        selectedLeadId && nextLeadOperations.some((item) => item.leadId === selectedLeadId)
+          ? selectedLeadId
+          : (nextLeadOperations[0]?.leadId ?? null);
       setSelectedLeadId(nextSelected);
-      setForm(leadOperationsToForm(nextLeadOperations.find((item) => item.leadId === nextSelected) ?? null));
+      setForm(
+        leadOperationsToForm(
+          nextLeadOperations.find((item) => item.leadId === nextSelected) ?? null,
+        ),
+      );
     } catch (loadError) {
       setLeadOperations([]);
       setSelectedLeadId(null);
       setForm(emptyForm);
-      setError(loadError instanceof Error ? loadError.message : "No se pudo cargar la operación de leads.");
+      setError(
+        loadError instanceof Error ? loadError.message : "No se pudo cargar la operación de leads.",
+      );
     } finally {
       setLoading(false);
     }
@@ -175,16 +198,26 @@ export function LeadOperationsWorkspace() {
     if (!normalizedQuery) return leadOperations;
 
     return leadOperations.filter((item) =>
-      [leadText(item.lead), item.operationalStatus, item.priority, item.contactResult, item.internalNote]
+      [
+        leadText(item.lead),
+        item.operationalStatus,
+        item.priority,
+        item.contactResult,
+        item.internalNote,
+      ]
         .join(" ")
         .toLowerCase()
         .includes(normalizedQuery),
     );
   }, [leadOperations, query]);
 
-  const followUpCount = leadOperations.filter((item) => item.operationalStatus === "seguimiento").length;
+  const followUpCount = leadOperations.filter(
+    (item) => item.operationalStatus === "seguimiento",
+  ).length;
   const highPriorityCount = leadOperations.filter((item) => item.priority === "alta").length;
-  const contactedCount = leadOperations.filter((item) => item.operationalStatus === "contactado").length;
+  const contactedCount = leadOperations.filter(
+    (item) => item.operationalStatus === "contactado",
+  ).length;
 
   const selectLead = (item: LeadOperationsProfile) => {
     setSelectedLeadId(item.leadId);
@@ -211,12 +244,15 @@ export function LeadOperationsWorkspace() {
     setNotice(null);
 
     try {
-      const response = await fetch(`/api/leads/${encodeURIComponent(selectedLeadOperations.leadId)}/operations`, {
-        method: "PATCH",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `/api/leads/${encodeURIComponent(selectedLeadOperations.leadId)}/operations`,
+        {
+          method: "PATCH",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       const result = (await response.json()) as LeadOperationMutationResponse;
 
       if (!response.ok || !result.success || !result.leadOperations) {
@@ -224,13 +260,19 @@ export function LeadOperationsWorkspace() {
       }
 
       setLeadOperations((current) =>
-        current.map((item) => (item.leadId === result.leadOperations?.leadId ? result.leadOperations : item)),
+        current.map((item) =>
+          item.leadId === result.leadOperations?.leadId ? result.leadOperations : item,
+        ),
       );
       setSelectedLeadId(result.leadOperations.leadId);
       setForm(leadOperationsToForm(result.leadOperations));
       setNotice("Seguimiento operativo actualizado con seguridad.");
     } catch (saveError) {
-      setError(saveError instanceof Error ? saveError.message : "No se pudo actualizar la operación del lead.");
+      setError(
+        saveError instanceof Error
+          ? saveError.message
+          : "No se pudo actualizar la operación del lead.",
+      );
     } finally {
       setSaving(false);
     }
@@ -242,10 +284,17 @@ export function LeadOperationsWorkspace() {
         <div>
           <CardTitle>Operación de leads</CardTitle>
           <CardDescription>
-            Seguimiento administrativo paralelo. No crea citas, no escribe Calendar, no envía Gmail y no modifica datos clínicos.
+            Seguimiento administrativo paralelo. No crea citas, no escribe Calendar, no envía Gmail
+            y no modifica datos clínicos.
           </CardDescription>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={() => void loadLeadOperations()} disabled={loading || saving}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => void loadLeadOperations()}
+          disabled={loading || saving}
+        >
           <RefreshCcw className="mr-2 h-4 w-4" />
           Actualizar leads
         </Button>
@@ -253,15 +302,23 @@ export function LeadOperationsWorkspace() {
       <CardContent className="space-y-5">
         <section className="grid gap-3 md:grid-cols-3">
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">En seguimiento</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              En seguimiento
+            </p>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : followUpCount}</p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Prioridad alta</p>
-            <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : highPriorityCount}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Prioridad alta
+            </p>
+            <p className="mt-2 text-2xl font-bold text-deep">
+              {loading ? "..." : highPriorityCount}
+            </p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Contactados</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Contactados
+            </p>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : contactedCount}</p>
           </div>
         </section>
@@ -270,7 +327,8 @@ export function LeadOperationsWorkspace() {
           <ShieldAlert className="h-4 w-4" />
           <AlertTitle>Límite arquitectónico activo</AlertTitle>
           <AlertDescription>
-            Esta sección solo registra seguimiento interno. La creación de citas permanece exclusivamente en BookingDialog.
+            Esta sección solo registra seguimiento interno. La creación de citas permanece
+            exclusivamente en BookingDialog.
           </AlertDescription>
         </Alert>
 
@@ -318,7 +376,9 @@ export function LeadOperationsWorkspace() {
                 type="button"
                 onClick={() => selectLead(item)}
                 className={`w-full rounded-2xl border bg-background/70 p-4 text-left transition hover:border-primary/40 ${
-                  item.leadId === selectedLeadId ? "border-primary/50 ring-2 ring-primary/10" : "border-border"
+                  item.leadId === selectedLeadId
+                    ? "border-primary/50 ring-2 ring-primary/10"
+                    : "border-border"
                 }`}
               >
                 <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
@@ -331,8 +391,12 @@ export function LeadOperationsWorkspace() {
                         Prioridad {priorityLabel(item.priority)}
                       </Badge>
                     </div>
-                    <p className="mt-3 font-semibold text-deep">{item.lead.name || "Lead sin nombre"}</p>
-                    <p className="text-sm text-muted-foreground">{item.lead.treatment || "Servicio por definir"}</p>
+                    <p className="mt-3 font-semibold text-deep">
+                      {item.lead.name || "Lead sin nombre"}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.lead.treatment || "Servicio por definir"}
+                    </p>
                   </div>
                   <div className="text-sm text-muted-foreground md:text-right">
                     <p>{item.lead.phone || "Teléfono no registrado"}</p>
@@ -464,7 +528,12 @@ export function LeadOperationsWorkspace() {
                   />
                 </label>
 
-                <Button type="button" className="w-full" onClick={() => void saveLeadOperations()} disabled={saving}>
+                <Button
+                  type="button"
+                  className="w-full"
+                  onClick={() => void saveLeadOperations()}
+                  disabled={saving}
+                >
                   <Save className="mr-2 h-4 w-4" />
                   {saving ? "Guardando..." : "Guardar seguimiento operativo"}
                 </Button>

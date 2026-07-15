@@ -12,7 +12,8 @@ import type { AppointmentRepository } from "./appointment-repository";
  * - Tests may override the repository factory without changing production wiring.
  */
 class AppointmentServiceProvider {
-  private repositoryFactory: () => AppointmentRepository = () => new RelationalAppointmentRepository();
+  private repositoryFactory: () => AppointmentRepository = () =>
+    new RelationalAppointmentRepository();
 
   getAppointmentService(): AppointmentService {
     return new AppointmentService(this.repositoryFactory());

@@ -77,5 +77,4 @@ describe("/api/followups/history", () => {
     });
     expect(readAutomationRunRecords).toHaveBeenCalledOnce();
   });
-
 });

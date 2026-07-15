@@ -54,7 +54,9 @@ describe("61.2 PR-02 Today's Schedule widget", () => {
   });
 
   it("renders patient name, time, and provider for today's appointments", () => {
-    const html = renderToStaticMarkup(<TodayScheduleWidget appointments={appointments} today="2026-06-22" />);
+    const html = renderToStaticMarkup(
+      <TodayScheduleWidget appointments={appointments} today="2026-06-22" />,
+    );
 
     expect(html).toContain("Agenda diaria");
     expect(html).toContain("10:00");
@@ -71,6 +73,6 @@ describe("61.2 PR-02 Today's Schedule widget", () => {
     const html = renderToStaticMarkup(<TodayScheduleWidget appointments={[]} today="2026-06-22" />);
 
     expect(html).toContain("No hay citas programadas para hoy.");
-    expect(html).toContain("role=\"status\"");
+    expect(html).toContain('role="status"');
   });
 });

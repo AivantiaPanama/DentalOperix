@@ -55,7 +55,10 @@ export class AppointmentService {
     });
   }
 
-  async cancelAppointment(id: string, input: { actor: AppointmentAuditActor; reason?: string }): Promise<Appointment> {
+  async cancelAppointment(
+    id: string,
+    input: { actor: AppointmentAuditActor; reason?: string },
+  ): Promise<Appointment> {
     return this.repository.updateAppointment(id, {
       status: "cancelled",
       cancellationReason: input.reason,
@@ -78,7 +81,9 @@ export class AppointmentService {
     return applyAppointmentUpdate(
       appointment,
       {
-        status: statusConsumesProviderCapacity(appointment.status) ? appointment.status : "needs_assistant_review",
+        status: statusConsumesProviderCapacity(appointment.status)
+          ? appointment.status
+          : "needs_assistant_review",
         actor,
       },
       appointment.updatedAt,

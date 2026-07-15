@@ -83,7 +83,11 @@ export function OperationalDataQualityPanel() {
       setQuality(payload.quality);
     } catch (loadError) {
       setQuality(null);
-      setError(loadError instanceof Error ? loadError.message : "No se pudo cargar la calidad de datos operativa.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudo cargar la calidad de datos operativa.",
+      );
     } finally {
       setLoading(false);
     }
@@ -107,9 +111,12 @@ export function OperationalDataQualityPanel() {
             </Badge>
           </div>
           <CardDescription>
-            Verificaciones administrativas y operativas. Solo detecta inconsistencias; no corrige registros ni incluye datos clínicos.
+            Verificaciones administrativas y operativas. Solo detecta inconsistencias; no corrige
+            registros ni incluye datos clínicos.
           </CardDescription>
-          <p className="mt-2 text-xs text-muted-foreground">Generado: {formatGeneratedAt(quality?.generatedAt)}</p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Generado: {formatGeneratedAt(quality?.generatedAt)}
+          </p>
         </div>
         <Button type="button" variant="outline" size="sm" onClick={loadQuality} disabled={loading}>
           <RefreshCcw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
@@ -118,35 +125,56 @@ export function OperationalDataQualityPanel() {
       </CardHeader>
       <CardContent className="space-y-5">
         {error ? (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">{error}</div>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+            {error}
+          </div>
         ) : null}
 
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           <div className="rounded-2xl border bg-muted/30 p-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Quality Score</p>
-                <p className="mt-1 text-3xl font-semibold text-foreground">{loading ? "..." : `${quality?.score ?? 0}/100`}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                  Quality Score
+                </p>
+                <p className="mt-1 text-3xl font-semibold text-foreground">
+                  {loading ? "..." : `${quality?.score ?? 0}/100`}
+                </p>
               </div>
               <CheckCircle2 className="h-5 w-5 text-primary" />
             </div>
             <Progress value={quality?.score ?? 0} className="mt-4" />
           </div>
           <div className="rounded-2xl border bg-background p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Incidencias</p>
-            <p className="mt-1 text-3xl font-semibold text-foreground">{loading ? "..." : (quality?.totals.issues ?? 0)}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{quality?.totals.critical ?? 0} críticas · {quality?.totals.warnings ?? 0} advertencias</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Incidencias
+            </p>
+            <p className="mt-1 text-3xl font-semibold text-foreground">
+              {loading ? "..." : (quality?.totals.issues ?? 0)}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {quality?.totals.critical ?? 0} críticas · {quality?.totals.warnings ?? 0}{" "}
+              advertencias
+            </p>
           </div>
           <div className="rounded-2xl border bg-background p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Registros revisados</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Registros revisados
+            </p>
             <p className="mt-1 text-3xl font-semibold text-foreground">
-              {loading ? "..." : (quality?.totals.checkedPatients ?? 0) + (quality?.totals.checkedLeads ?? 0)}
+              {loading
+                ? "..."
+                : (quality?.totals.checkedPatients ?? 0) + (quality?.totals.checkedLeads ?? 0)}
             </p>
             <p className="mt-1 text-xs text-muted-foreground">pacientes y leads administrativos</p>
           </div>
           <div className="rounded-2xl border bg-background p-4">
-            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Duplicados potenciales</p>
-            <p className="mt-1 text-3xl font-semibold text-foreground">{loading ? "..." : (quality?.totals.duplicateGroups ?? 0)}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Duplicados potenciales
+            </p>
+            <p className="mt-1 text-3xl font-semibold text-foreground">
+              {loading ? "..." : (quality?.totals.duplicateGroups ?? 0)}
+            </p>
             <p className="mt-1 text-xs text-muted-foreground">requieren revisión manual</p>
           </div>
         </div>
@@ -157,7 +185,9 @@ export function OperationalDataQualityPanel() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-semibold text-foreground">Estado de calidad</p>
-                  <p className="text-sm text-muted-foreground">Detección pasiva de datos incompletos, inconsistentes o duplicados.</p>
+                  <p className="text-sm text-muted-foreground">
+                    Detección pasiva de datos incompletos, inconsistentes o duplicados.
+                  </p>
                 </div>
                 <Badge variant="outline" className={statusTone(quality.status)}>
                   {statusLabel(quality.status)}
@@ -179,7 +209,9 @@ export function OperationalDataQualityPanel() {
                   {visibleIssues.map((issue) => (
                     <div key={issue.id} className="rounded-xl border p-3">
                       <div className="flex flex-wrap items-center gap-2">
-                        <Badge variant="outline" className={severityTone(issue.severity)}>{issue.severity}</Badge>
+                        <Badge variant="outline" className={severityTone(issue.severity)}>
+                          {issue.severity}
+                        </Badge>
                         <Badge variant="secondary">{issue.resourceType}</Badge>
                       </div>
                       <p className="mt-2 text-sm font-medium text-foreground">{issue.title}</p>
@@ -197,8 +229,12 @@ export function OperationalDataQualityPanel() {
         ) : null}
 
         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1"><DatabaseZap className="h-3 w-3" /> Solo lectura</span>
-          <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1"><AlertTriangle className="h-3 w-3" /> Sin autocorrecciones</span>
+          <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1">
+            <DatabaseZap className="h-3 w-3" /> Solo lectura
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1">
+            <AlertTriangle className="h-3 w-3" /> Sin autocorrecciones
+          </span>
         </div>
       </CardContent>
     </Card>

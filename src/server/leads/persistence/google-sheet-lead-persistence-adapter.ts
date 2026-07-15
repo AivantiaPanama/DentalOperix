@@ -1,8 +1,4 @@
-import {
-  appendLeadToSheet,
-  readLeadsFromSheet,
-  updateLeadInSheet,
-} from "@/server/google/crm";
+import { appendLeadToSheet, readLeadsFromSheet, updateLeadInSheet } from "@/server/google/crm";
 import type {
   LeadPersistenceAppendInput,
   LeadPersistenceHealth,

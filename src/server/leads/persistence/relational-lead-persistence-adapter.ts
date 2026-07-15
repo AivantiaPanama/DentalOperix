@@ -96,7 +96,10 @@ type PgClient = {
   ): Promise<{ rows: T[]; rowCount: number | null }>;
 };
 
-type PgClientConstructor = new (config: { connectionString: string; ssl?: { rejectUnauthorized: boolean } }) => PgClient;
+type PgClientConstructor = new (config: {
+  connectionString: string;
+  ssl?: { rejectUnauthorized: boolean };
+}) => PgClient;
 
 function normalizeCRMStatus(raw?: string): CRMStatus {
   const normalized = raw?.toString().trim().toLowerCase() ?? "";

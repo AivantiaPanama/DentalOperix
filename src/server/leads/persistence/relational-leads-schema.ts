@@ -3,7 +3,8 @@ import { CRM_STATUS_VALUES } from "@/server/google/types";
 export const RELATIONAL_LEADS_SCHEMA_VERSION = "57.1-B" as const;
 
 export const RELATIONAL_LEADS_TABLE_NAME = "leads" as const;
-export const RELATIONAL_LEADS_MIGRATION_AUDIT_TABLE_NAME = "lead_persistence_migration_audit" as const;
+export const RELATIONAL_LEADS_MIGRATION_AUDIT_TABLE_NAME =
+  "lead_persistence_migration_audit" as const;
 
 export type RelationalLeadColumn = {
   name: string;

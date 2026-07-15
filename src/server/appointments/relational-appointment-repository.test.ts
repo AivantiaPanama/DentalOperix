@@ -38,7 +38,10 @@ const row = {
   updated_at: "2026-06-23T20:00:00.000Z",
 };
 
-function createClient(rows: Record<string, unknown>[], calls: QueryCall[]): AppointmentPersistenceClient {
+function createClient(
+  rows: Record<string, unknown>[],
+  calls: QueryCall[],
+): AppointmentPersistenceClient {
   return {
     async query<T = Record<string, unknown>>(text: string, values?: unknown[]) {
       calls.push({ text, values });

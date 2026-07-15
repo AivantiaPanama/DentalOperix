@@ -7,7 +7,10 @@ export const Route = createFileRoute("/assistant")({
   head: () => ({
     meta: [
       { title: "Asistente — DentalOperix" },
-      { name: "description", content: "Dashboard operativo protegido para asistentes DentalOperix." },
+      {
+        name: "description",
+        content: "Dashboard operativo protegido para asistentes DentalOperix.",
+      },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

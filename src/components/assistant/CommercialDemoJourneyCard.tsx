@@ -12,7 +12,8 @@ export function CommercialDemoJourneyCard({ journey }: CommercialDemoJourneyCard
   const { scenario, patientJourney, clinicJourney, commercialEvidence } = commercialDemoFoundation;
   const resolvedJourney = journey ?? {
     title: "Commercial Demo Journey",
-    description: "Vista read-only para componer el recorrido comercial sobre capacidades existentes.",
+    description:
+      "Vista read-only para componer el recorrido comercial sobre capacidades existentes.",
     rationale: "El recorrido se organiza para acompañar a la clínica con un propósito claro.",
   };
 
@@ -25,7 +26,9 @@ export function CommercialDemoJourneyCard({ journey }: CommercialDemoJourneyCard
               <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
               {resolvedJourney.title}
             </CardTitle>
-            <CardDescription className="mt-2 leading-6">{resolvedJourney.description}</CardDescription>
+            <CardDescription className="mt-2 leading-6">
+              {resolvedJourney.description}
+            </CardDescription>
           </div>
           <Badge variant="secondary">Vista read-only</Badge>
         </div>

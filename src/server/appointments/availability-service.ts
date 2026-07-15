@@ -1,4 +1,8 @@
-import { intervalsOverlap, statusConsumesProviderCapacity, type Appointment } from "./appointment-domain";
+import {
+  intervalsOverlap,
+  statusConsumesProviderCapacity,
+  type Appointment,
+} from "./appointment-domain";
 import type { AppointmentRepository } from "./appointment-repository";
 
 export type AvailabilityCheckInput = {
@@ -17,7 +21,9 @@ export type AvailabilityCheckResult = {
 };
 
 export class AppointmentAvailabilityService {
-  constructor(private readonly repository: Pick<AppointmentRepository, "listProviderCapacityConflicts">) {}
+  constructor(
+    private readonly repository: Pick<AppointmentRepository, "listProviderCapacityConflicts">,
+  ) {}
 
   async checkProviderAvailability(input: AvailabilityCheckInput): Promise<AvailabilityCheckResult> {
     const conflicts = await this.repository.listProviderCapacityConflicts(input);

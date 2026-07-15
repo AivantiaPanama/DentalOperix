@@ -5,7 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { LeadDetailPanel, type LeadStatusOption } from "./LeadDetailPanel";
 
 export type LeadQueueItem = {
@@ -49,7 +56,15 @@ function formatPreferredDate(value: string | null | undefined) {
 }
 
 function getLeadSearchText(lead: LeadQueueItem) {
-  return [lead.name, lead.email, lead.phone, lead.treatment, lead.status, lead.source, lead.preferredDate]
+  return [
+    lead.name,
+    lead.email,
+    lead.phone,
+    lead.treatment,
+    lead.status,
+    lead.source,
+    lead.preferredDate,
+  ]
     .filter(Boolean)
     .join(" ")
     .toLowerCase();
@@ -93,12 +108,16 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
 
         if (!cancelled) {
           setLeads(Array.isArray(payload.leads) ? payload.leads : []);
-          setFallbackMessage(payload.fallback ? payload.message || "Mostrando datos demo de Leads." : null);
+          setFallbackMessage(
+            payload.fallback ? payload.message || "Mostrando datos demo de Leads." : null,
+          );
           setState("ready");
         }
       } catch (error) {
         if (!cancelled) {
-          setErrorMessage(error instanceof Error ? error.message : "No se pudo cargar la cola de leads.");
+          setErrorMessage(
+            error instanceof Error ? error.message : "No se pudo cargar la cola de leads.",
+          );
           setState("error");
         }
       }
@@ -134,7 +153,10 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
 
   if (selectedLead) {
     return (
-      <Card aria-label={`Detalle read-only de lead ${normalize(selectedLead.name)}`} className="shadow-soft">
+      <Card
+        aria-label={`Detalle read-only de lead ${normalize(selectedLead.name)}`}
+        className="shadow-soft"
+      >
         <CardContent className="pt-6">
           <LeadDetailPanel
             lead={selectedLead}
@@ -157,7 +179,8 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
               Cola de leads
             </CardTitle>
             <CardDescription className="mt-2 leading-6">
-              Vista read-only de Leads para recepción. Consume /api/leads/list y conserva Leads como Source of Truth.
+              Vista read-only de Leads para recepción. Consume /api/leads/list y conserva Leads como
+              Source of Truth.
             </CardDescription>
           </div>
           <Badge variant="secondary" className="w-fit">
@@ -176,7 +199,10 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
         ) : null}
 
         <div className="relative">
-          <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" aria-hidden="true" />
+          <Search
+            className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-muted-foreground"
+            aria-hidden="true"
+          />
           <Input
             aria-label="Buscar en cola de leads"
             className="pl-9"
@@ -188,7 +214,10 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
         </div>
 
         {isLoading ? (
-          <div className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground" role="status">
+          <div
+            className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground"
+            role="status"
+          >
             Cargando cola de leads...
           </div>
         ) : null}
@@ -202,13 +231,19 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
         ) : null}
 
         {state === "ready" && leads.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground" role="status">
+          <div
+            className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground"
+            role="status"
+          >
             No hay leads disponibles en la cola.
           </div>
         ) : null}
 
         {state === "ready" && leads.length > 0 && filteredLeads.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground" role="status">
+          <div
+            className="rounded-2xl border border-dashed border-border bg-background/70 px-4 py-5 text-sm text-muted-foreground"
+            role="status"
+          >
             No hay leads que coincidan con la búsqueda.
           </div>
         ) : null}

@@ -17,7 +17,10 @@ import {
 export const RELATIONAL_APPOINTMENTS_TABLE_NAME = "appointments" as const;
 
 export type AppointmentPersistenceClient = {
-  query<T = Record<string, unknown>>(text: string, values?: unknown[]): Promise<{ rows: T[]; rowCount: number | null }>;
+  query<T = Record<string, unknown>>(
+    text: string,
+    values?: unknown[],
+  ): Promise<{ rows: T[]; rowCount: number | null }>;
 };
 
 type PgClient = AppointmentPersistenceClient & {
@@ -25,7 +28,10 @@ type PgClient = AppointmentPersistenceClient & {
   end(): Promise<void>;
 };
 
-type PgClientConstructor = new (config: { connectionString: string; ssl?: { rejectUnauthorized: boolean } }) => PgClient;
+type PgClientConstructor = new (config: {
+  connectionString: string;
+  ssl?: { rejectUnauthorized: boolean };
+}) => PgClient;
 
 type RelationalAppointmentRow = {
   id: string;
@@ -125,7 +131,9 @@ const RETURNING_APPOINTMENT_COLUMNS = `
 `;
 
 export class RelationalAppointmentRepository implements AppointmentRepository {
-  constructor(private readonly clientFactory: () => Promise<AppointmentPersistenceClient> = createPgClient) {}
+  constructor(
+    private readonly clientFactory: () => Promise<AppointmentPersistenceClient> = createPgClient,
+  ) {}
 
   async createAppointment(input: CreateAppointmentInput): Promise<Appointment> {
     const appointment = createAppointmentEntity(input);
@@ -215,17 +223,22 @@ export class RelationalAppointmentRepository implements AppointmentRepository {
     if (update.providerId !== undefined) addAssignment("provider_id", update.providerId);
     if (update.requestedDate !== undefined) addAssignment("requested_date", update.requestedDate);
     if (update.requestedTime !== undefined) addAssignment("requested_time", update.requestedTime);
-    if (update.scheduledStartAt !== undefined) addAssignment("scheduled_start_at", update.scheduledStartAt);
-    if (update.scheduledEndAt !== undefined) addAssignment("scheduled_end_at", update.scheduledEndAt);
-    if (update.durationMinutes !== undefined) addAssignment("duration_minutes", update.durationMinutes);
+    if (update.scheduledStartAt !== undefined)
+      addAssignment("scheduled_start_at", update.scheduledStartAt);
+    if (update.scheduledEndAt !== undefined)
+      addAssignment("scheduled_end_at", update.scheduledEndAt);
+    if (update.durationMinutes !== undefined)
+      addAssignment("duration_minutes", update.durationMinutes);
     if (update.service !== undefined) addAssignment("service", update.service);
     if (update.status !== undefined) addAssignment("status", update.status);
     if (update.patientName !== undefined) addAssignment("patient_name", update.patientName);
     if (update.patientEmail !== undefined) addAssignment("patient_email", update.patientEmail);
     if (update.patientPhone !== undefined) addAssignment("patient_phone", update.patientPhone);
     if (update.notes !== undefined) addAssignment("notes", update.notes);
-    if (update.calendarEventId !== undefined) addAssignment("calendar_event_id", update.calendarEventId);
-    if (update.cancellationReason !== undefined) addAssignment("cancellation_reason", update.cancellationReason);
+    if (update.calendarEventId !== undefined)
+      addAssignment("calendar_event_id", update.calendarEventId);
+    if (update.cancellationReason !== undefined)
+      addAssignment("cancellation_reason", update.cancellationReason);
 
     if (update.actor) {
       addAssignment("updated_by_user_id", update.actor.userId);

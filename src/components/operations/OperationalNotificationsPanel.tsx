@@ -81,7 +81,9 @@ export function OperationalNotificationsPanel() {
     setError(null);
 
     try {
-      const response = await fetch("/api/notifications/operational", { credentials: "same-origin" });
+      const response = await fetch("/api/notifications/operational", {
+        credentials: "same-origin",
+      });
       const payload = (await response.json()) as OperationalNotificationsResponse;
 
       if (!response.ok || !payload.success) {
@@ -94,7 +96,11 @@ export function OperationalNotificationsPanel() {
       });
     } catch (loadError) {
       setState(emptyState);
-      setError(loadError instanceof Error ? loadError.message : "No se pudieron cargar las notificaciones operativas.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudieron cargar las notificaciones operativas.",
+      );
     } finally {
       setLoading(false);
     }
@@ -104,7 +110,10 @@ export function OperationalNotificationsPanel() {
     void loadNotifications();
   }, []);
 
-  const visibleNotifications = useMemo(() => state.notifications.slice(0, 6), [state.notifications]);
+  const visibleNotifications = useMemo(
+    () => state.notifications.slice(0, 6),
+    [state.notifications],
+  );
 
   return (
     <Card className="shadow-soft">
@@ -115,10 +124,17 @@ export function OperationalNotificationsPanel() {
             Notificaciones operativas
           </CardTitle>
           <CardDescription>
-            Monitoreo interno para administración y asistencia, sin correos, calendario ni automatizaciones externas.
+            Monitoreo interno para administración y asistencia, sin correos, calendario ni
+            automatizaciones externas.
           </CardDescription>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={() => void loadNotifications()} disabled={loading}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => void loadNotifications()}
+          disabled={loading}
+        >
           <RefreshCcw className="mr-2 h-4 w-4" />
           Actualizar
         </Button>
@@ -135,15 +151,21 @@ export function OperationalNotificationsPanel() {
         <section className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl border border-border bg-background/70 p-4">
             <p className="text-xs text-muted-foreground">Total</p>
-            <p className="mt-1 text-2xl font-bold text-deep">{loading ? "..." : state.summary?.total ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-deep">
+              {loading ? "..." : (state.summary?.total ?? 0)}
+            </p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
             <p className="text-xs text-muted-foreground">Atención</p>
-            <p className="mt-1 text-2xl font-bold text-deep">{loading ? "..." : state.summary?.attention ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-deep">
+              {loading ? "..." : (state.summary?.attention ?? 0)}
+            </p>
           </div>
           <div className="rounded-2xl border border-border bg-background/70 p-4">
             <p className="text-xs text-muted-foreground">Prioridad</p>
-            <p className="mt-1 text-2xl font-bold text-deep">{loading ? "..." : state.summary?.warnings ?? 0}</p>
+            <p className="mt-1 text-2xl font-bold text-deep">
+              {loading ? "..." : (state.summary?.warnings ?? 0)}
+            </p>
           </div>
         </section>
 
@@ -165,7 +187,10 @@ export function OperationalNotificationsPanel() {
               const Icon = resourceIcon(notification.resourceType);
 
               return (
-                <article key={notification.id} className="grid gap-3 p-4 sm:grid-cols-[auto_1fr_auto] sm:items-start">
+                <article
+                  key={notification.id}
+                  className="grid gap-3 p-4 sm:grid-cols-[auto_1fr_auto] sm:items-start"
+                >
                   <span className="grid h-10 w-10 place-items-center rounded-2xl bg-primary/10 text-primary">
                     <Icon className="h-4 w-4" />
                   </span>
@@ -176,8 +201,12 @@ export function OperationalNotificationsPanel() {
                         {severityLabel(notification.severity)}
                       </Badge>
                     </div>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{notification.description}</p>
-                    <p className="mt-2 text-xs text-muted-foreground">{formatDateTime(notification.createdAt)}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                      {notification.description}
+                    </p>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {formatDateTime(notification.createdAt)}
+                    </p>
                   </div>
                   <Badge variant="secondary">{notification.resourceType}</Badge>
                 </article>

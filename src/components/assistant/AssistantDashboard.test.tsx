@@ -65,10 +65,12 @@ describe("AssistantDashboard 61.2 shell", () => {
     expect(await screen.findByText("Ana Perez")).toBeDefined();
     expect(screen.getByText("Ortodoncia")).toBeDefined();
     expect(fetchMock).toHaveBeenCalledWith("/api/leads/list", { credentials: "same-origin" });
-    expect(screen.queryByRole("button", { name: /cancelar|editar|eliminar|agendar|asignar/i })).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: /cancelar|editar|eliminar|agendar|asignar/i }),
+    ).toBeNull();
   });
 
-  it("opens PR-61.2-04B Lead Detail and updates status without changing Today\'s Schedule", async () => {
+  it("opens PR-61.2-04B Lead Detail and updates status without changing Today's Schedule", async () => {
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(
@@ -114,26 +116,21 @@ describe("AssistantDashboard 61.2 shell", () => {
     expect(screen.getByText("Quiere conocer opciones de carillas.")).toBeDefined();
     expect(screen.getByText("Lead interesado en carillas.")).toBeDefined();
 
-    fireEvent.change(screen.getByLabelText("Estado del lead"), { target: { value: "seguimiento" } });
+    fireEvent.change(screen.getByLabelText("Estado del lead"), {
+      target: { value: "seguimiento" },
+    });
     fireEvent.click(screen.getByRole("button", { name: "Actualizar estado" }));
 
     expect(await screen.findByText("Estado del lead actualizado correctamente.")).toBeDefined();
     expect(screen.getByText("No hay citas programadas para hoy.")).toBeDefined();
     expect(fetchMock).toHaveBeenCalledWith("/api/leads/list", { credentials: "same-origin" });
-    expect(fetchMock).toHaveBeenCalledWith("/api/leads/update-status", expect.objectContaining({ method: "POST" }));
-    expect(fetchMock).toHaveBeenCalledTimes(2);
-    expect(fetchMock).not.toHaveBeenCalledWith(
-      "/api/leads/create",
-      expect.anything(),
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/leads/update-status",
+      expect.objectContaining({ method: "POST" }),
     );
-    
-    expect(
-      screen.getByRole(
-        "button",
-        { name: /crear solicitud de cita/i }
-      )
-    ).toBeDefined();
-  
-  });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock).not.toHaveBeenCalledWith("/api/leads/create", expect.anything());
 
+    expect(screen.getByRole("button", { name: /crear solicitud de cita/i })).toBeDefined();
+  });
 });

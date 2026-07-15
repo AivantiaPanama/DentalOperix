@@ -1,4 +1,8 @@
-import type { Appointment, CreateAppointmentInput, UpdateAppointmentInput } from "./appointment-domain";
+import type {
+  Appointment,
+  CreateAppointmentInput,
+  UpdateAppointmentInput,
+} from "./appointment-domain";
 
 export type AppointmentConflictSearch = {
   providerId: string;

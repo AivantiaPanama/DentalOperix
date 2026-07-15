@@ -3,7 +3,11 @@ import { dirname, resolve } from "node:path";
 import { mockLeads, type MockLead } from "@/lib/mock/leads";
 import { getServerConfig } from "@/lib/config.server";
 import { leadPersistenceProvider } from "@/server/leads/persistence";
-import type { LeadOperationPriority, LeadOperationalStatus, LeadOperationsUpdate } from "./api-validation";
+import type {
+  LeadOperationPriority,
+  LeadOperationalStatus,
+  LeadOperationsUpdate,
+} from "./api-validation";
 
 export class LeadNotFoundError extends Error {}
 
@@ -75,7 +79,8 @@ async function readBaseLeads(): Promise<LeadOperationsProfile["lead"][]> {
 
 function deriveOperationalStatus(lead: LeadOperationsProfile["lead"]): LeadOperationalStatus {
   const normalized = (lead.status ?? "").toLowerCase().trim();
-  if (normalized === "cancelada" || normalized === "no asistió" || normalized === "no asistio") return "seguimiento";
+  if (normalized === "cancelada" || normalized === "no asistió" || normalized === "no asistio")
+    return "seguimiento";
   if (normalized === "agendada" || normalized === "completada") return "contactado";
   return "nuevo";
 }

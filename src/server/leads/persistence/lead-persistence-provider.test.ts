@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { LeadPersistenceNotConfiguredError } from "./lead-persistence-port";
-import { getActiveLeadPersistenceAdapter, getLeadPersistenceAdapter } from "./lead-persistence-provider";
+import {
+  getActiveLeadPersistenceAdapter,
+  getLeadPersistenceAdapter,
+} from "./lead-persistence-provider";
 
 const ORIGINAL_ENV = { ...process.env };
 

@@ -1,5 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, ClipboardCheck, Layers3, RefreshCcw, Search, ShieldCheck, UserRound } from "lucide-react";
+import {
+  AlertTriangle,
+  ClipboardCheck,
+  Layers3,
+  RefreshCcw,
+  Search,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +47,10 @@ function normalize(value: string | undefined) {
   return (value ?? "").toLowerCase().trim();
 }
 
-function patientMatchesLead(patient: PatientAdministrativeProfile, leadOperations: LeadOperationsProfile) {
+function patientMatchesLead(
+  patient: PatientAdministrativeProfile,
+  leadOperations: LeadOperationsProfile,
+) {
   const lead = leadOperations.lead;
   const sourceIds = patient.sourceLeadIds ?? [];
 
@@ -72,8 +83,10 @@ function administrativeStatusLabel(status: ConsolidatedRecord["administrativeSta
 }
 
 function statusClass(status: string) {
-  if (status === "verified" || status === "contactado") return "border-emerald-200 bg-emerald-50 text-emerald-700";
-  if (status === "pending-verification" || status === "seguimiento") return "border-blue-200 bg-blue-50 text-blue-700";
+  if (status === "verified" || status === "contactado")
+    return "border-emerald-200 bg-emerald-50 text-emerald-700";
+  if (status === "pending-verification" || status === "seguimiento")
+    return "border-blue-200 bg-blue-50 text-blue-700";
   if (status === "descartado") return "border-slate-200 bg-slate-50 text-slate-700";
   return "border-amber-200 bg-amber-50 text-amber-700";
 }
@@ -136,7 +149,9 @@ export function OperationalConsolidationWorkspace() {
       }
 
       if (!patientsResponse.ok || !patientsPayload.success) {
-        throw new Error(patientsPayload.error ?? "No se pudo cargar la gestión administrativa de pacientes.");
+        throw new Error(
+          patientsPayload.error ?? "No se pudo cargar la gestión administrativa de pacientes.",
+        );
       }
 
       setLeadOperations(leadOperationsPayload.leadOperations ?? []);
@@ -144,7 +159,11 @@ export function OperationalConsolidationWorkspace() {
     } catch (loadError) {
       setLeadOperations([]);
       setPatients([]);
-      setError(loadError instanceof Error ? loadError.message : "No se pudo cargar la consolidación operativa.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudo cargar la consolidación operativa.",
+      );
     } finally {
       setLoading(false);
     }
@@ -154,7 +173,10 @@ export function OperationalConsolidationWorkspace() {
     void loadConsolidatedData();
   }, []);
 
-  const records = useMemo(() => buildConsolidatedRecords(leadOperations, patients), [leadOperations, patients]);
+  const records = useMemo(
+    () => buildConsolidatedRecords(leadOperations, patients),
+    [leadOperations, patients],
+  );
 
   const filteredRecords = useMemo(() => {
     const normalizedQuery = normalize(query);
@@ -177,10 +199,14 @@ export function OperationalConsolidationWorkspace() {
     );
   }, [records, query]);
 
-  const pendingFollowUps = records.filter((record) => record.operationalStatus === "seguimiento").length;
+  const pendingFollowUps = records.filter(
+    (record) => record.operationalStatus === "seguimiento",
+  ).length;
   const highPriority = records.filter((record) => record.priority === "alta").length;
   const pendingVerification = records.filter(
-    (record) => record.administrativeStatus === "incomplete" || record.administrativeStatus === "pending-verification",
+    (record) =>
+      record.administrativeStatus === "incomplete" ||
+      record.administrativeStatus === "pending-verification",
   ).length;
 
   return (
@@ -192,10 +218,17 @@ export function OperationalConsolidationWorkspace() {
             Consolidación operativa
           </CardTitle>
           <CardDescription>
-            Une leads, seguimiento y perfil administrativo sin crear citas ni exponer información clínica.
+            Une leads, seguimiento y perfil administrativo sin crear citas ni exponer información
+            clínica.
           </CardDescription>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={() => void loadConsolidatedData()} disabled={loading}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => void loadConsolidatedData()}
+          disabled={loading}
+        >
           <RefreshCcw className="mr-2 h-4 w-4" />
           Actualizar
         </Button>
@@ -215,8 +248,12 @@ export function OperationalConsolidationWorkspace() {
               <p className="text-sm font-medium text-muted-foreground">Seguimientos</p>
               <ClipboardCheck className="h-4 w-4 text-primary" />
             </div>
-            <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : pendingFollowUps}</p>
-            <p className="mt-1 text-xs text-muted-foreground">requieren acompañamiento administrativo.</p>
+            <p className="mt-2 text-2xl font-bold text-deep">
+              {loading ? "..." : pendingFollowUps}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              requieren acompañamiento administrativo.
+            </p>
           </div>
 
           <div className="rounded-2xl border border-border bg-background/70 p-4">
@@ -225,7 +262,9 @@ export function OperationalConsolidationWorkspace() {
               <AlertTriangle className="h-4 w-4 text-primary" />
             </div>
             <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : highPriority}</p>
-            <p className="mt-1 text-xs text-muted-foreground">sin crear urgencia artificial ni presión comercial.</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              sin crear urgencia artificial ni presión comercial.
+            </p>
           </div>
 
           <div className="rounded-2xl border border-border bg-background/70 p-4">
@@ -233,8 +272,12 @@ export function OperationalConsolidationWorkspace() {
               <p className="text-sm font-medium text-muted-foreground">Perfiles por validar</p>
               <ShieldCheck className="h-4 w-4 text-primary" />
             </div>
-            <p className="mt-2 text-2xl font-bold text-deep">{loading ? "..." : pendingVerification}</p>
-            <p className="mt-1 text-xs text-muted-foreground">solo datos administrativos, no clínicos.</p>
+            <p className="mt-2 text-2xl font-bold text-deep">
+              {loading ? "..." : pendingVerification}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              solo datos administrativos, no clínicos.
+            </p>
           </div>
         </section>
 
@@ -262,7 +305,10 @@ export function OperationalConsolidationWorkspace() {
 
         <div className="space-y-3">
           {filteredRecords.map((record) => (
-            <article key={record.id} className="rounded-2xl border border-border bg-background/70 p-4">
+            <article
+              key={record.id}
+              className="rounded-2xl border border-border bg-background/70 p-4"
+            >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">

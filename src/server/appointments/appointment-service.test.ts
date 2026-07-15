@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { AppointmentProviderConflictError, AppointmentService } from "./appointment-service";
-import type { Appointment, CreateAppointmentInput, UpdateAppointmentInput } from "./appointment-domain";
+import type {
+  Appointment,
+  CreateAppointmentInput,
+  UpdateAppointmentInput,
+} from "./appointment-domain";
 import { createAppointmentEntity, applyAppointmentUpdate } from "./appointment-domain";
 import type { AppointmentConflictSearch, AppointmentRepository } from "./appointment-repository";
 
@@ -8,7 +12,9 @@ class MemoryAppointmentRepository implements AppointmentRepository {
   appointments = new Map<string, Appointment>();
 
   async createAppointment(input: CreateAppointmentInput): Promise<Appointment> {
-    const appointment = createAppointmentEntity(input, { id: input.id ?? `appt_${this.appointments.size + 1}` });
+    const appointment = createAppointmentEntity(input, {
+      id: input.id ?? `appt_${this.appointments.size + 1}`,
+    });
     this.appointments.set(appointment.id, appointment);
     return appointment;
   }

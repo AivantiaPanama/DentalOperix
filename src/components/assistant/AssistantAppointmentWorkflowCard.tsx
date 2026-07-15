@@ -79,7 +79,9 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const canBuildInterval = Boolean(providerId.trim() && requestedDate && requestedTime && durationMinutes > 0);
+  const canBuildInterval = Boolean(
+    providerId.trim() && requestedDate && requestedTime && durationMinutes > 0,
+  );
   const interval = useMemo(() => {
     if (!canBuildInterval) return null;
     try {
@@ -120,7 +122,11 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
       setAppointment(payload.appointment);
       setMessage("Solicitud de cita creada para revisión de disponibilidad.");
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "No se pudo crear la solicitud de cita.");
+      setError(
+        requestError instanceof Error
+          ? requestError.message
+          : "No se pudo crear la solicitud de cita.",
+      );
     } finally {
       setBusy(false);
     }
@@ -154,9 +160,17 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
       }
 
       setAvailability(payload);
-      setMessage(payload.available ? "Proveedor disponible para confirmar la cita." : "Proveedor no disponible; envía la solicitud a revisión.");
+      setMessage(
+        payload.available
+          ? "Proveedor disponible para confirmar la cita."
+          : "Proveedor no disponible; envía la solicitud a revisión.",
+      );
     } catch (availabilityError) {
-      setError(availabilityError instanceof Error ? availabilityError.message : "No se pudo verificar disponibilidad.");
+      setError(
+        availabilityError instanceof Error
+          ? availabilityError.message
+          : "No se pudo verificar disponibilidad.",
+      );
     } finally {
       setBusy(false);
     }
@@ -189,7 +203,9 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
       setAppointment(payload.appointment);
       setMessage("Cita confirmada con disponibilidad por proveedor.");
     } catch (confirmError) {
-      setError(confirmError instanceof Error ? confirmError.message : "No se pudo confirmar la cita.");
+      setError(
+        confirmError instanceof Error ? confirmError.message : "No se pudo confirmar la cita.",
+      );
     } finally {
       setBusy(false);
     }
@@ -220,7 +236,11 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
       setAppointment(payload.appointment);
       setMessage("Solicitud enviada a revisión de Front Desk.");
     } catch (reviewError) {
-      setError(reviewError instanceof Error ? reviewError.message : "No se pudo enviar la solicitud a revisión.");
+      setError(
+        reviewError instanceof Error
+          ? reviewError.message
+          : "No se pudo enviar la solicitud a revisión.",
+      );
     } finally {
       setBusy(false);
     }
@@ -234,7 +254,8 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
           Flujo de cita asistida
         </CardTitle>
         <CardDescription>
-          Crea una solicitud de cita desde Front Desk, valida disponibilidad por proveedor y confirma sólo si hay capacidad.
+          Crea una solicitud de cita desde Front Desk, valida disponibilidad por proveedor y
+          confirma sólo si hay capacidad.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -304,21 +325,41 @@ export function AssistantAppointmentWorkflowCard({ lead }: { lead: LeadQueueItem
         </label>
 
         <div className="flex flex-wrap gap-2">
-          <Button disabled={busy || Boolean(appointment) || !service.trim()} onClick={createRequest} type="button">
+          <Button
+            disabled={busy || Boolean(appointment) || !service.trim()}
+            onClick={createRequest}
+            type="button"
+          >
             {busy && !appointment ? "Creando..." : "Crear solicitud de cita"}
           </Button>
-          <Button disabled={busy || !appointment || !interval} onClick={checkAvailability} type="button" variant="outline">
+          <Button
+            disabled={busy || !appointment || !interval}
+            onClick={checkAvailability}
+            type="button"
+            variant="outline"
+          >
             Verificar disponibilidad
           </Button>
           <Button
-            disabled={busy || !appointment || !interval || availability?.available !== true || appointment.status === "confirmed"}
+            disabled={
+              busy ||
+              !appointment ||
+              !interval ||
+              availability?.available !== true ||
+              appointment.status === "confirmed"
+            }
             onClick={confirmAppointment}
             type="button"
           >
             Confirmar cita
           </Button>
           <Button
-            disabled={busy || !appointment || appointment.status === "confirmed" || appointment.status === "needs_assistant_review"}
+            disabled={
+              busy ||
+              !appointment ||
+              appointment.status === "confirmed" ||
+              appointment.status === "needs_assistant_review"
+            }
             onClick={markNeedsReview}
             type="button"
             variant="secondary"

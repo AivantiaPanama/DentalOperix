@@ -87,7 +87,10 @@ function isDueFollowUp(leadOperations: LeadOperationsProfile) {
   return Number.isNaN(followUpTime) || followUpTime <= Date.now();
 }
 
-function countPatientsByStatus(patients: PatientAdministrativeProfile[], status: PatientAdministrativeProfile["administrativeStatus"]) {
+function countPatientsByStatus(
+  patients: PatientAdministrativeProfile[],
+  status: PatientAdministrativeProfile["administrativeStatus"],
+) {
   return patients.filter((patient) => patient.administrativeStatus === status).length;
 }
 
@@ -119,16 +122,22 @@ function buildHealthSummary(params: {
   const recommendations: string[] = [];
 
   if (params.dueFollowUps > 0) {
-    recommendations.push("Revisar seguimientos vencidos con acompañamiento claro y sin presión comercial.");
+    recommendations.push(
+      "Revisar seguimientos vencidos con acompañamiento claro y sin presión comercial.",
+    );
   }
   if (params.pendingVerification > 0) {
     recommendations.push("Priorizar verificación administrativa de perfiles listos para revisión.");
   }
   if (params.incompletePatients > 0) {
-    recommendations.push("Completar datos administrativos faltantes antes de escalar nuevos procesos.");
+    recommendations.push(
+      "Completar datos administrativos faltantes antes de escalar nuevos procesos.",
+    );
   }
   if (!recommendations.length) {
-    recommendations.push("Mantener monitoreo operativo y revisar tendencias antes de abrir nuevas fases.");
+    recommendations.push(
+      "Mantener monitoreo operativo y revisar tendencias antes de abrir nuevas fases.",
+    );
   }
 
   return {
@@ -159,10 +168,16 @@ export function buildOperationalExecutiveKpis(params: {
   const auditEvents = params.auditEvents;
 
   const totalLeads = leadOperations.length;
-  const closedLeads = leadOperations.filter((lead) => lead.operationalStatus === "descartado").length;
+  const closedLeads = leadOperations.filter(
+    (lead) => lead.operationalStatus === "descartado",
+  ).length;
   const activeLeads = totalLeads - closedLeads;
-  const pendingLeads = leadOperations.filter((lead) => lead.operationalStatus === "nuevo" || lead.operationalStatus === "seguimiento").length;
-  const highPriority = leadOperations.filter((lead) => lead.priority === "alta" && lead.operationalStatus !== "descartado").length;
+  const pendingLeads = leadOperations.filter(
+    (lead) => lead.operationalStatus === "nuevo" || lead.operationalStatus === "seguimiento",
+  ).length;
+  const highPriority = leadOperations.filter(
+    (lead) => lead.priority === "alta" && lead.operationalStatus !== "descartado",
+  ).length;
   const dueFollowUps = leadOperations.filter(isDueFollowUp).length;
   const scheduled = leadOperations.filter((lead) => isScheduledStatus(lead.lead.status)).length;
 
@@ -170,13 +185,25 @@ export function buildOperationalExecutiveKpis(params: {
   const pendingVerification = countPatientsByStatus(patients, "pending-verification");
   const incompletePatients = countPatientsByStatus(patients, "incomplete");
   const averageCompletion = patients.length
-    ? Math.round(patients.reduce((sum, patient) => sum + patient.completionPercentage, 0) / patients.length)
+    ? Math.round(
+        patients.reduce((sum, patient) => sum + patient.completionPercentage, 0) / patients.length,
+      )
     : 0;
 
-  const patientUpdates = auditEvents.filter((event) => event.action === "patient.admin_profile.updated" || event.action === "patient.profile.verified").length;
-  const leadUpdates = auditEvents.filter((event) => event.action === "lead.operations.updated").length;
-  const reportViews = auditEvents.filter((event) => event.action === "report.operational.viewed").length;
-  const reportExports = auditEvents.filter((event) => event.action === "report.operational.exported").length;
+  const patientUpdates = auditEvents.filter(
+    (event) =>
+      event.action === "patient.admin_profile.updated" ||
+      event.action === "patient.profile.verified",
+  ).length;
+  const leadUpdates = auditEvents.filter(
+    (event) => event.action === "lead.operations.updated",
+  ).length;
+  const reportViews = auditEvents.filter(
+    (event) => event.action === "report.operational.viewed",
+  ).length;
+  const reportExports = auditEvents.filter(
+    (event) => event.action === "report.operational.exported",
+  ).length;
   const conversionRate = percentage(scheduled, totalLeads);
   const verificationRate = percentage(verifiedPatients, patients.length);
 
@@ -245,18 +272,42 @@ export function buildOperationalExecutiveKpis(params: {
     trends: {
       leadStatus: [
         { label: "Activos", value: activeLeads, percentage: percentage(activeLeads, totalLeads) },
-        { label: "Pendientes", value: pendingLeads, percentage: percentage(pendingLeads, totalLeads) },
+        {
+          label: "Pendientes",
+          value: pendingLeads,
+          percentage: percentage(pendingLeads, totalLeads),
+        },
         { label: "Cerrados", value: closedLeads, percentage: percentage(closedLeads, totalLeads) },
       ],
       patientStatus: [
         { label: "Verificados", value: verifiedPatients, percentage: verificationRate },
-        { label: "Pendientes", value: pendingVerification, percentage: percentage(pendingVerification, patients.length) },
-        { label: "Incompletos", value: incompletePatients, percentage: percentage(incompletePatients, patients.length) },
+        {
+          label: "Pendientes",
+          value: pendingVerification,
+          percentage: percentage(pendingVerification, patients.length),
+        },
+        {
+          label: "Incompletos",
+          value: incompletePatients,
+          percentage: percentage(incompletePatients, patients.length),
+        },
       ],
       activity: [
-        { label: "Pacientes", value: patientUpdates, percentage: percentage(patientUpdates, auditEvents.length) },
-        { label: "Leads", value: leadUpdates, percentage: percentage(leadUpdates, auditEvents.length) },
-        { label: "Reportes", value: reportViews + reportExports, percentage: percentage(reportViews + reportExports, auditEvents.length) },
+        {
+          label: "Pacientes",
+          value: patientUpdates,
+          percentage: percentage(patientUpdates, auditEvents.length),
+        },
+        {
+          label: "Leads",
+          value: leadUpdates,
+          percentage: percentage(leadUpdates, auditEvents.length),
+        },
+        {
+          label: "Reportes",
+          value: reportViews + reportExports,
+          percentage: percentage(reportViews + reportExports, auditEvents.length),
+        },
       ],
     },
   };

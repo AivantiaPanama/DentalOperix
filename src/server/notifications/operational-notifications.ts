@@ -1,6 +1,12 @@
 import type { Role } from "@/lib/rbac/roles";
-import { listLeadOperationsProfiles, type LeadOperationsProfile } from "@/server/leads/operations-repository";
-import { createPatientReadService, type PatientAdministrativeProfileDTO } from "@/server/patients/read";
+import {
+  listLeadOperationsProfiles,
+  type LeadOperationsProfile,
+} from "@/server/leads/operations-repository";
+import {
+  createPatientReadService,
+  type PatientAdministrativeProfileDTO,
+} from "@/server/patients/read";
 import { listOperationalAuditEvents } from "@/server/audit/operational-audit";
 
 export const OPERATIONAL_NOTIFICATION_TYPES = [
@@ -51,11 +57,15 @@ export type OperationalNotificationFilters = {
   severity?: OperationalNotificationSeverity;
 };
 
-function isOperationalNotificationSeverity(value: string): value is OperationalNotificationSeverity {
+function isOperationalNotificationSeverity(
+  value: string,
+): value is OperationalNotificationSeverity {
   return value === "info" || value === "attention" || value === "warning";
 }
 
-export function parseOperationalNotificationFilters(request: Request): OperationalNotificationFilters {
+export function parseOperationalNotificationFilters(
+  request: Request,
+): OperationalNotificationFilters {
   const url = new URL(request.url);
   const limitParam = url.searchParams.get("limit")?.trim();
   const severity = url.searchParams.get("severity")?.trim();
@@ -64,7 +74,9 @@ export function parseOperationalNotificationFilters(request: Request): Operation
   if (limitParam) {
     const parsedLimit = Number.parseInt(limitParam, 10);
     if (!Number.isInteger(parsedLimit) || parsedLimit < 1 || parsedLimit > MAX_LIMIT) {
-      throw new InvalidOperationalNotificationFiltersError(`Invalid limit filter. Use 1-${MAX_LIMIT}.`);
+      throw new InvalidOperationalNotificationFiltersError(
+        `Invalid limit filter. Use 1-${MAX_LIMIT}.`,
+      );
     }
     filters.limit = parsedLimit;
   }
@@ -97,22 +109,25 @@ function shouldFollowUp(leadOperations: LeadOperationsProfile) {
 }
 
 function buildLeadNotifications(leadOperations: LeadOperationsProfile[], createdAt: string) {
-  const pendingFollowUps = leadOperations.filter(shouldFollowUp).slice(0, 8).map<OperationalNotification>((item) => ({
-    id: `lead-follow-up-${item.leadId}`,
-    type: "lead.follow_up.pending",
-    severity: "attention",
-    title: "Seguimiento operativo pendiente",
-    description: `${getLeadDisplayName(item)} requiere acompañamiento administrativo sin presión comercial.`,
-    createdAt,
-    resourceType: "lead",
-    resourceId: item.leadId,
-    audience: ["administrator", "assistant"],
-    metadata: {
-      status: item.operationalStatus,
-      priority: item.priority,
-      nextFollowUpAt: item.nextFollowUpAt || null,
-    },
-  }));
+  const pendingFollowUps = leadOperations
+    .filter(shouldFollowUp)
+    .slice(0, 8)
+    .map<OperationalNotification>((item) => ({
+      id: `lead-follow-up-${item.leadId}`,
+      type: "lead.follow_up.pending",
+      severity: "attention",
+      title: "Seguimiento operativo pendiente",
+      description: `${getLeadDisplayName(item)} requiere acompañamiento administrativo sin presión comercial.`,
+      createdAt,
+      resourceType: "lead",
+      resourceId: item.leadId,
+      audience: ["administrator", "assistant"],
+      metadata: {
+        status: item.operationalStatus,
+        priority: item.priority,
+        nextFollowUpAt: item.nextFollowUpAt || null,
+      },
+    }));
 
   const highPriority = leadOperations
     .filter((item) => item.priority === "alta" && item.operationalStatus !== "descartado")
@@ -184,7 +199,10 @@ async function buildAuditNotifications(createdAt: string) {
     id: `audit-recent-${event.id}`,
     type: event.resourceType === "report" ? "report.activity.recent" : "audit.activity.recent",
     severity: "info",
-    title: event.resourceType === "report" ? "Actividad reciente de reportes" : "Actividad operativa reciente",
+    title:
+      event.resourceType === "report"
+        ? "Actividad reciente de reportes"
+        : "Actividad operativa reciente",
     description: `${event.actorName || event.actorEmail || event.actorRole} registró ${event.action}.`,
     createdAt: event.timestamp || createdAt,
     resourceType: event.resourceType === "report" ? "report" : "audit",
@@ -219,7 +237,9 @@ export async function getOperationalNotifications(
     ...buildPatientNotifications(patients, generatedAt),
     ...auditNotifications,
   ]
-    .filter((notification) => notification.audience.includes(role as OperationalNotificationAudience))
+    .filter((notification) =>
+      notification.audience.includes(role as OperationalNotificationAudience),
+    )
     .filter((notification) => !filters.severity || notification.severity === filters.severity)
     .sort((a, b) => priorityRank(a) - priorityRank(b) || b.createdAt.localeCompare(a.createdAt))
     .slice(0, filters.limit);

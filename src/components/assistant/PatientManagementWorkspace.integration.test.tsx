@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PatientManagementWorkspace } from "./PatientManagementWorkspace";
@@ -116,9 +116,12 @@ describe("PatientManagementWorkspace runtime reconciliation", () => {
     render(<PatientManagementWorkspace />);
 
     expect(await screen.findAllByText("Ana Perez")).toHaveLength(2);
-    fireEvent.change(screen.getByPlaceholderText("Buscar por nombre, teléfono, correo o servicio"), {
-      target: { value: "ortodoncia" },
-    });
+    fireEvent.change(
+      screen.getByPlaceholderText("Buscar por nombre, teléfono, correo o servicio"),
+      {
+        target: { value: "ortodoncia" },
+      },
+    );
 
     expect(screen.queryAllByText("Ana Perez")).toHaveLength(1);
     expect(screen.getAllByText("Bruno Rios").length).toBeGreaterThan(0);
@@ -148,7 +151,11 @@ describe("PatientManagementWorkspace runtime reconciliation", () => {
 
     render(<PatientManagementWorkspace />);
 
-    expect(await screen.findByText("No hay perfiles administrativos con los filtros actuales.")).toBeDefined();
-    expect(screen.getByText("Selecciona un perfil para gestionar sus datos administrativos.")).toBeDefined();
+    expect(
+      await screen.findByText("No hay perfiles administrativos con los filtros actuales."),
+    ).toBeDefined();
+    expect(
+      screen.getByText("Selecciona un perfil para gestionar sus datos administrativos."),
+    ).toBeDefined();
   });
 });

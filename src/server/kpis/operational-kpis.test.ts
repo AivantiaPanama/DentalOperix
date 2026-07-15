@@ -62,9 +62,20 @@ describe("operational executive KPIs", () => {
       generatedAt: "2026-06-16T12:00:00.000Z",
       leadOperations: [
         lead({ operationalStatus: "nuevo" }),
-        lead({ leadId: "lead-2", operationalStatus: "descartado", lead: { ...lead({}).lead, id: "lead-2", status: "cancelada" } }),
+        lead({
+          leadId: "lead-2",
+          operationalStatus: "descartado",
+          lead: { ...lead({}).lead, id: "lead-2", status: "cancelada" },
+        }),
       ],
-      patients: [patient({}), patient({ id: "patient-2", administrativeStatus: "pending-verification", completionPercentage: 70 })],
+      patients: [
+        patient({}),
+        patient({
+          id: "patient-2",
+          administrativeStatus: "pending-verification",
+          completionPercentage: 70,
+        }),
+      ],
       auditEvents: [
         {
           id: "audit-1",

@@ -1,6 +1,11 @@
 import { z } from "zod";
 
-export const LEAD_OPERATIONAL_STATUSES = ["nuevo", "contactado", "seguimiento", "descartado"] as const;
+export const LEAD_OPERATIONAL_STATUSES = [
+  "nuevo",
+  "contactado",
+  "seguimiento",
+  "descartado",
+] as const;
 export const LEAD_OPERATION_PRIORITIES = ["baja", "normal", "alta"] as const;
 
 export type LeadOperationalStatus = (typeof LEAD_OPERATIONAL_STATUSES)[number];
@@ -48,7 +53,10 @@ const optionalDateValue = z
   .string()
   .trim()
   .max(40)
-  .refine((value) => value === "" || !Number.isNaN(Date.parse(value)), "La fecha enviada no es válida.")
+  .refine(
+    (value) => value === "" || !Number.isNaN(Date.parse(value)),
+    "La fecha enviada no es válida.",
+  )
   .optional();
 
 const leadOperationsUpdateSchema = z
@@ -90,11 +98,15 @@ export function parseLeadOperationsUpdate(payload: unknown): LeadOperationsUpdat
 
   const result = leadOperationsUpdateSchema.safeParse(payload);
   if (!result.success) {
-    throw new InvalidLeadOperationsPayloadError(result.error.issues.map((issue) => issue.message).join(" "));
+    throw new InvalidLeadOperationsPayloadError(
+      result.error.issues.map((issue) => issue.message).join(" "),
+    );
   }
 
   if (Object.keys(result.data).length === 0) {
-    throw new InvalidLeadOperationsPayloadError("No se enviaron campos operativos para actualizar.");
+    throw new InvalidLeadOperationsPayloadError(
+      "No se enviaron campos operativos para actualizar.",
+    );
   }
 
   return result.data;

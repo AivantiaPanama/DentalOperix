@@ -24,9 +24,13 @@ export async function GET(request: Request) {
       return createForbiddenResponse();
     }
 
-    logger.error("followups.history", "Failed to load automation history; returning degraded empty history", {
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
+    logger.error(
+      "followups.history",
+      "Failed to load automation history; returning degraded empty history",
+      {
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+    );
     return new Response(
       JSON.stringify({
         success: true,

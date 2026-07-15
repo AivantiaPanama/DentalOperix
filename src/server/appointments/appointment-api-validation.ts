@@ -11,8 +11,14 @@ export const appointmentAvailabilityRequestSchema = z.object({
 export const appointmentRequestApiSchema = z.object({
   leadId: z.string().trim().min(1).optional(),
   providerId: z.string().trim().min(1).optional(),
-  requestedDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  requestedTime: z.string().regex(/^\d{2}:\d{2}$/).optional(),
+  requestedDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+  requestedTime: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/)
+    .optional(),
   durationMinutes: z.number().int().positive().optional(),
   service: z.string().trim().min(1),
   source: appointmentSourceSchema,

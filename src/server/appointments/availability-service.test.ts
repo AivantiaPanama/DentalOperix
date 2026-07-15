@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { createAppointmentEntity } from "./appointment-domain";
-import { appointmentConflictsWithInterval, AppointmentAvailabilityService } from "./availability-service";
+import {
+  appointmentConflictsWithInterval,
+  AppointmentAvailabilityService,
+} from "./availability-service";
 import type { AppointmentRepository } from "./appointment-repository";
 
 const interval = {

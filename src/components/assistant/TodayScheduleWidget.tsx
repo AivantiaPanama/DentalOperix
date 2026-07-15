@@ -27,7 +27,10 @@ function formatTime(time: string) {
 
 export function getTodayScheduleAppointments(appointments: Appointment[], today = getTodayDate()) {
   return appointments
-    .filter((appointment: Appointment) => appointment.date === today && appointment.status !== "cancelled")
+    .filter(
+      (appointment: Appointment) =>
+        appointment.date === today && appointment.status !== "cancelled",
+    )
     .slice()
     .sort((a: Appointment, b: Appointment) => a.time.localeCompare(b.time));
 }
@@ -53,7 +56,8 @@ export function TodayScheduleWidget({
               Agenda diaria
             </CardTitle>
             <CardDescription className="mt-2 leading-6">
-              Citas de hoy ordenadas por hora de inicio, visibles para recepción con permiso appointment.read.
+              Citas de hoy ordenadas por hora de inicio, visibles para recepción con permiso
+              appointment.read.
             </CardDescription>
           </div>
           <Badge variant="secondary" className="w-fit">
@@ -76,14 +80,19 @@ export function TodayScheduleWidget({
                 key={appointment.id}
                 className="grid gap-3 rounded-2xl border border-border bg-background/70 p-4 sm:grid-cols-[90px_minmax(0,1fr)_minmax(140px,auto)] sm:items-center"
               >
-                <time className="text-sm font-semibold text-primary" dateTime={`${appointment.date}T${appointment.time}`}>
+                <time
+                  className="text-sm font-semibold text-primary"
+                  dateTime={`${appointment.date}T${appointment.time}`}
+                >
                   {formatTime(appointment.time)}
                 </time>
                 <div>
                   <p className="font-semibold text-deep">{appointment.name}</p>
                   <p className="text-sm text-muted-foreground">{appointment.service}</p>
                 </div>
-                <p className="text-sm font-medium text-muted-foreground">{resolveProvider(appointment)}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {resolveProvider(appointment)}
+                </p>
               </li>
             ))}
           </ol>

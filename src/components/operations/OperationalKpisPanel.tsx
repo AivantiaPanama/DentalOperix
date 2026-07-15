@@ -1,5 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { BarChart3, ClipboardCheck, RefreshCcw, ShieldCheck, Users, type LucideIcon } from "lucide-react";
+import {
+  BarChart3,
+  ClipboardCheck,
+  RefreshCcw,
+  ShieldCheck,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,7 +97,9 @@ function KpiTile({
           <Icon className="h-4 w-4" />
         </span>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{title}</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {title}
+          </p>
           <p className="mt-1 text-2xl font-semibold text-foreground">{value}</p>
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
         </div>
@@ -119,7 +128,11 @@ export function OperationalKpisPanel() {
       setKpis(payload.kpis);
     } catch (loadError) {
       setKpis(null);
-      setError(loadError instanceof Error ? loadError.message : "No se pudieron cargar los KPIs operativos.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudieron cargar los KPIs operativos.",
+      );
     } finally {
       setLoading(false);
     }
@@ -142,9 +155,12 @@ export function OperationalKpisPanel() {
             </Badge>
           </div>
           <CardDescription>
-            KPIs agregados de leads, pacientes administrativos, auditoría y reportes. No incluye información clínica.
+            KPIs agregados de leads, pacientes administrativos, auditoría y reportes. No incluye
+            información clínica.
           </CardDescription>
-          <p className="mt-2 text-xs text-muted-foreground">Generado: {formatGeneratedAt(kpis?.generatedAt)}</p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            Generado: {formatGeneratedAt(kpis?.generatedAt)}
+          </p>
         </div>
         <Button type="button" variant="outline" size="sm" onClick={loadKpis} disabled={loading}>
           <RefreshCcw className={`mr-2 h-4 w-4 ${loading ? "animate-spin" : ""}`} />
@@ -153,7 +169,9 @@ export function OperationalKpisPanel() {
       </CardHeader>
       <CardContent className="space-y-5">
         {error ? (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">{error}</div>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+            {error}
+          </div>
         ) : null}
 
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
