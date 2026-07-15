@@ -24,13 +24,10 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <SiteLayout>
-      {(
-        openBooking: (id?: string) => void,
-        openServiceInfo: (serviceIdOrSlug: string) => void,
-      ) => (
+      {(openBooking: (id?: string) => void, openServiceInfo: (serviceIdOrSlug: string) => void) => (
         <>
           <Hero onBook={() => openBooking()} onServiceInfo={openServiceInfo} />
-          
+
           <BookingCTA onBook={() => openBooking()} />
         </>
       )}

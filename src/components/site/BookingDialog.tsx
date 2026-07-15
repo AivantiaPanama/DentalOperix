@@ -299,7 +299,13 @@ export function BookingDialog({ open, onOpenChange, initialData }: Props) {
 
         {!done && (
           <div className="flex items-center justify-between border-t border-border px-6 py-4">
-            <Button type="button" variant="ghost" onClick={back} disabled={step === 1 || Boolean(submitting)} className="rounded-full">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={back}
+              disabled={step === 1 || Boolean(submitting)}
+              className="rounded-full"
+            >
               <ChevronLeft className="mr-1 h-4 w-4" /> Atrás
             </Button>
             {step < 3 ? (
@@ -428,10 +434,12 @@ function Step2({ data, setData, errors }: StepProps) {
             }}
             className="mt-3 grid grid-cols-2 gap-3"
           >
-            {([
-              { v: "brackets", l: "Brackets" },
-              { v: "alineadores", l: "Alineadores Invisibles" },
-            ] satisfies Array<{ v: "brackets" | "alineadores"; l: string }>).map((o) => (
+            {(
+              [
+                { v: "brackets", l: "Brackets" },
+                { v: "alineadores", l: "Alineadores Invisibles" },
+              ] satisfies Array<{ v: "brackets" | "alineadores"; l: string }>
+            ).map((o) => (
               <label
                 key={o.v}
                 className={`flex cursor-pointer items-center gap-2 rounded-xl border p-3 text-sm transition ${data.orthoType === o.v ? "border-primary bg-primary/5" : "border-border bg-white"}`}
@@ -455,10 +463,12 @@ function Step2({ data, setData, errors }: StepProps) {
             }}
             className="mt-3 grid grid-cols-2 gap-3"
           >
-            {([
-              { v: "si", l: "Sí" },
-              { v: "no", l: "No" },
-            ] satisfies Array<{ v: "si" | "no"; l: string }>).map((o) => (
+            {(
+              [
+                { v: "si", l: "Sí" },
+                { v: "no", l: "No" },
+              ] satisfies Array<{ v: "si" | "no"; l: string }>
+            ).map((o) => (
               <label
                 key={o.v}
                 className={`flex cursor-pointer items-center gap-2 rounded-xl border p-3 text-sm transition ${data.sensitivity === o.v ? "border-primary bg-primary/5" : "border-border bg-white"}`}

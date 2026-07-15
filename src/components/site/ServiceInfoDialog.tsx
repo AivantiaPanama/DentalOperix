@@ -17,12 +17,7 @@ type ServiceInfoDialogProps = {
   onBook: (serviceId?: string) => void;
 };
 
-export function ServiceInfoDialog({
-  service,
-  open,
-  onOpenChange,
-  onBook,
-}: ServiceInfoDialogProps) {
+export function ServiceInfoDialog({ service, open, onOpenChange, onBook }: ServiceInfoDialogProps) {
   if (!service) return null;
 
   const handleBook = () => {
@@ -34,7 +29,11 @@ export function ServiceInfoDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92vh] overflow-y-auto rounded-3xl border-white/20 bg-white p-0 shadow-2xl sm:max-w-2xl">
         <div className="relative min-h-56 overflow-hidden rounded-t-3xl">
-          <img src={service.image} alt={service.alt} className="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src={service.image}
+            alt={service.alt}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10" />
           <DialogHeader className="relative z-10 justify-end p-6 text-left text-white sm:p-8">
             <DialogDescription className="text-sm font-medium uppercase tracking-[0.24em] text-white/75">
@@ -74,10 +73,19 @@ export function ServiceInfoDialog({
         </div>
 
         <DialogFooter className="gap-3 border-t border-border px-6 py-5 sm:px-8">
-          <Button type="button" variant="outline" className="rounded-full" onClick={() => onOpenChange(false)}>
+          <Button
+            type="button"
+            variant="outline"
+            className="rounded-full"
+            onClick={() => onOpenChange(false)}
+          >
             Cerrar
           </Button>
-          <Button type="button" className="rounded-full bg-deep px-7 text-white hover:bg-primary" onClick={handleBook}>
+          <Button
+            type="button"
+            className="rounded-full bg-deep px-7 text-white hover:bg-primary"
+            onClick={handleBook}
+          >
             Agendar consulta <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </DialogFooter>

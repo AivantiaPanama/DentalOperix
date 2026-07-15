@@ -88,9 +88,7 @@ describe("BookingDialog confirmation action guard", () => {
     fireEvent.click(screen.getByRole("button", { name: /continuar/i }));
     fireEvent.click(screen.getByRole("button", { name: /confirmar reserva/i }));
 
-    expect(
-      screen.getByText(/selecciona una fecha y un horario disponible/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/selecciona una fecha y un horario disponible/i)).toBeInTheDocument();
     expect(mutateAsync).not.toHaveBeenCalled();
   });
 });

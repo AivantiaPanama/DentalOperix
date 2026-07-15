@@ -83,7 +83,8 @@ export const siteServices: SiteService[] = [
     modalDescription:
       "Valoración para revisar alineación dental, mordida y alternativas de tratamiento. El plan puede variar según estudios, aparatología y controles necesarios.",
     suggestedPrice: "Evaluación desde B/.40 · tratamiento desde B/.1,500",
-    priceNote: "Referencia para consulta inicial y tratamientos de ortodoncia con brackets o alternativas similares.",
+    priceNote:
+      "Referencia para consulta inicial y tratamientos de ortodoncia con brackets o alternativas similares.",
   },
   {
     id: "diseno-de-sonrisa",
@@ -115,7 +116,8 @@ export const siteServices: SiteService[] = [
     modalDescription:
       "Evaluación estética y funcional para valorar forma, color, proporción y armonía de la sonrisa antes de proponer alternativas como blanqueamiento, restauraciones o carillas.",
     suggestedPrice: "B/.1,000 – B/.5,000",
-    priceNote: "Rango referencial para planes de diseño de sonrisa en Panamá, según procedimientos incluidos.",
+    priceNote:
+      "Rango referencial para planes de diseño de sonrisa en Panamá, según procedimientos incluidos.",
   },
   {
     id: "implantes-dentales",
@@ -146,7 +148,8 @@ export const siteServices: SiteService[] = [
     modalDescription:
       "Valoración para reemplazar piezas ausentes mediante una solución fija planificada. Requiere revisar encías, hueso disponible, estudios y restauración final.",
     suggestedPrice: "B/.1,500 – B/.3,000 por implante",
-    priceNote: "Referencia de mercado por implante unitario; puede variar por corona, injertos, estudios o complejidad clínica.",
+    priceNote:
+      "Referencia de mercado por implante unitario; puede variar por corona, injertos, estudios o complejidad clínica.",
   },
   {
     id: "odontopediatria",

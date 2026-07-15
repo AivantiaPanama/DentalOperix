@@ -8,5 +8,9 @@ export const Route = createFileRoute("/clinicas/gracias")({
 });
 
 function AssessmentThanksRoute() {
-  return <SiteLayout><AssessmentThankYouPage /></SiteLayout>;
+  return (
+    <SiteLayout>
+      <AssessmentThankYouPage />
+    </SiteLayout>
+  );
 }

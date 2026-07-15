@@ -28,10 +28,7 @@ export const Route = createFileRoute("/servicios")({
 function ServicesPage() {
   return (
     <SiteLayout>
-      {(
-        openBooking: (id?: string) => void,
-        openServiceInfo: (serviceIdOrSlug: string) => void,
-      ) => (
+      {(openBooking: (id?: string) => void, openServiceInfo: (serviceIdOrSlug: string) => void) => (
         <>
           <section className="gradient-hero">
             <div className="mx-auto max-w-7xl px-6 py-20 text-center">

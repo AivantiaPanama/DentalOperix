@@ -19,10 +19,7 @@ export function CareJourney() {
           const isReversed = index % 2 === 1;
 
           return (
-            <article
-              key={story.title}
-              className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12"
-            >
+            <article key={story.title} className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
               <div className={isReversed ? "lg:order-2" : undefined}>
                 <div className="overflow-hidden rounded-[2rem] border border-border bg-white shadow-soft">
                   <img
@@ -50,8 +47,8 @@ export function CareJourney() {
       <div className="mt-16 rounded-[2rem] border border-border bg-white p-8 text-center shadow-soft sm:mt-24 sm:p-12">
         <span className="chip">Nuestra filosofía</span>
         <h3 className="mx-auto mt-4 max-w-3xl text-2xl font-bold leading-tight text-deep sm:text-3xl">
-          Creemos que una atención adecuada comienza por escuchar, explicar con claridad y
-          acompañar cada decisión de manera respetuosa.
+          Creemos que una atención adecuada comienza por escuchar, explicar con claridad y acompañar
+          cada decisión de manera respetuosa.
         </h3>
         <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
           Sin presión comercial, sin urgencia artificial y sin lenguaje exagerado: solo una
