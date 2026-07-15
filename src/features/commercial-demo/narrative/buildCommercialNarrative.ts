@@ -1,4 +1,7 @@
-import type { CommercialDemoContext, CommercialFocusArea } from "../context/commercialDemoContext.types";
+import type {
+  CommercialDemoContext,
+  CommercialFocusArea,
+} from "../context/commercialDemoContext.types";
 import { commercialNarrativeCatalog } from "./commercialNarrative.catalog";
 import type { CommercialNarrative } from "./commercialNarrative.types";
 
@@ -19,7 +22,9 @@ function buildEvidenceEmphasis(context: CommercialDemoContext): string[] {
     (entry, index) => evidenceEntries.indexOf(entry) === index,
   );
 
-  return uniqueEvidence.length > 0 ? uniqueEvidence : [commercialNarrativeCatalog.focusAreas[DEFAULT_FOCUS_AREA].evidence];
+  return uniqueEvidence.length > 0
+    ? uniqueEvidence
+    : [commercialNarrativeCatalog.focusAreas[DEFAULT_FOCUS_AREA].evidence];
 }
 
 function buildJourneyRationale(context: CommercialDemoContext): string {

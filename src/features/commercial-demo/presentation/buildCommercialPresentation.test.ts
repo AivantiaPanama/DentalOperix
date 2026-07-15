@@ -9,7 +9,8 @@ function createNarrative(overrides: Partial<CommercialNarrative> = {}): Commerci
       "Esta demostración fue preparada considerando las oportunidades identificadas para la clínica.",
     clinicSituation:
       "La clínica cuenta con una base funcional que puede avanzar hacia una operación más coordinada.",
-    primaryOpportunity: "La principal oportunidad está en mejorar la continuidad desde el primer contacto.",
+    primaryOpportunity:
+      "La principal oportunidad está en mejorar la continuidad desde el primer contacto.",
     expectedBenefit:
       "Esto puede reducir oportunidades perdidas y facilitar un seguimiento más consistente.",
     meetingObjective:
@@ -32,7 +33,9 @@ describe("buildCommercialPresentation", () => {
 
     expect(presentation.header.title).toBe("Una oportunidad para fortalecer el seguimiento");
     expect(presentation.header.description).toContain("considerando las oportunidades");
-    expect(presentation.header.badges).toContain("La principal oportunidad está en mejorar la continuidad desde el primer contacto.");
+    expect(presentation.header.badges).toContain(
+      "La principal oportunidad está en mejorar la continuidad desde el primer contacto.",
+    );
     expect(presentation.steps).toHaveLength(4);
     expect(presentation.steps[0]?.title).toBe("Contexto");
     expect(presentation.steps[1]?.title).toBe("Oportunidad");
@@ -64,9 +67,13 @@ describe("buildCommercialPresentation", () => {
   });
 
   it("excludes empty badges", () => {
-    const presentation = buildCommercialPresentation(createNarrative({ primaryOpportunity: "", expectedBenefit: "   " }));
+    const presentation = buildCommercialPresentation(
+      createNarrative({ primaryOpportunity: "", expectedBenefit: "   " }),
+    );
 
-    expect(presentation.header.badges).toEqual(["Mostrar cómo DentalOperix puede acompañar ese proceso sin aumentar la carga administrativa."]);
+    expect(presentation.header.badges).toEqual([
+      "Mostrar cómo DentalOperix puede acompañar ese proceso sin aumentar la carga administrativa.",
+    ]);
   });
 
   it("generates exactly four presentation steps", () => {
@@ -87,13 +94,17 @@ describe("buildCommercialPresentation", () => {
   it("uses the meeting objective in the journey description", () => {
     const presentation = buildCommercialPresentation(createNarrative());
 
-    expect(presentation.journey.description).toBe("Mostrar cómo DentalOperix puede acompañar ese proceso sin aumentar la carga administrativa.");
+    expect(presentation.journey.description).toBe(
+      "Mostrar cómo DentalOperix puede acompañar ese proceso sin aumentar la carga administrativa.",
+    );
   });
 
   it("uses the journey rationale in the journey rationale field", () => {
     const presentation = buildCommercialPresentation(createNarrative());
 
-    expect(presentation.journey.rationale).toBe("El recorrido comienza con el contacto inicial, continúa con la cita y termina con evidencia operativa.");
+    expect(presentation.journey.rationale).toBe(
+      "El recorrido comienza con el contacto inicial, continúa con la cita y termina con evidencia operativa.",
+    );
   });
 
   it("preserves the order of evidence emphasis", () => {
@@ -107,7 +118,14 @@ describe("buildCommercialPresentation", () => {
 
   it("removes duplicated evidence and empty entries", () => {
     const presentation = buildCommercialPresentation(
-      createNarrative({ evidenceEmphasis: ["Trazabilidad del seguimiento y avance de oportunidades.", "", "Trazabilidad del seguimiento y avance de oportunidades.", "Visibilidad del recorrido entre contacto, cita y seguimiento."] }),
+      createNarrative({
+        evidenceEmphasis: [
+          "Trazabilidad del seguimiento y avance de oportunidades.",
+          "",
+          "Trazabilidad del seguimiento y avance de oportunidades.",
+          "Visibilidad del recorrido entre contacto, cita y seguimiento.",
+        ],
+      }),
     );
 
     expect(presentation.evidence.items).toEqual([
@@ -119,7 +137,9 @@ describe("buildCommercialPresentation", () => {
   it("uses a fallback item when evidence emphasis is empty", () => {
     const presentation = buildCommercialPresentation(createNarrative({ evidenceEmphasis: [] }));
 
-    expect(presentation.evidence.items).toEqual(["Evidencia de valor y trazabilidad para la clínica."]); 
+    expect(presentation.evidence.items).toEqual([
+      "Evidencia de valor y trazabilidad para la clínica.",
+    ]);
   });
 
   it("uses the closing message directly", () => {
@@ -164,7 +184,9 @@ describe("buildCommercialPresentation", () => {
       presentation.closingMessage,
     ];
 
-    expect(textValues.every((value) => typeof value === "string" && value.trim().length > 0)).toBe(true);
+    expect(textValues.every((value) => typeof value === "string" && value.trim().length > 0)).toBe(
+      true,
+    );
   });
 
   it("does not contain functions in the model", () => {
@@ -180,7 +202,9 @@ describe("buildCommercialPresentation", () => {
       }
 
       if (value && typeof value === "object") {
-        return Object.values(value as Record<string, unknown>).some((item) => containsFunction(item));
+        return Object.values(value as Record<string, unknown>).some((item) =>
+          containsFunction(item),
+        );
       }
 
       return false;

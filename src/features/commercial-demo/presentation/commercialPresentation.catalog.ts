@@ -21,7 +21,8 @@ export const commercialPresentationCatalog = {
   },
   evidence: {
     title: "Evidencia comercial relevante",
-    description: "Estos elementos permiten observar cómo la propuesta responde a las oportunidades identificadas para la clínica.",
+    description:
+      "Estos elementos permiten observar cómo la propuesta responde a las oportunidades identificadas para la clínica.",
     fallbackItem: "Evidencia de valor y trazabilidad para la clínica.",
   },
 } as const;

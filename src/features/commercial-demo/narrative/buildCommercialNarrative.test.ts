@@ -54,17 +54,30 @@ describe("buildCommercialNarrative", () => {
 
   it("adds evidence emphasis from multiple focus areas", () => {
     const narrative = buildCommercialNarrative(
-      createContext({ focusAreas: ["patient-follow-up", "appointment-management", "team-coordination"] }),
+      createContext({
+        focusAreas: ["patient-follow-up", "appointment-management", "team-coordination"],
+      }),
     );
 
     expect(narrative.evidenceEmphasis.length).toBeGreaterThanOrEqual(2);
-    expect(narrative.evidenceEmphasis.some((item) => item.toLowerCase().includes("seguimiento"))).toBe(true);
-    expect(narrative.evidenceEmphasis.some((item) => item.toLowerCase().includes("visibilidad"))).toBe(true);
+    expect(
+      narrative.evidenceEmphasis.some((item) => item.toLowerCase().includes("seguimiento")),
+    ).toBe(true);
+    expect(
+      narrative.evidenceEmphasis.some((item) => item.toLowerCase().includes("visibilidad")),
+    ).toBe(true);
   });
 
   it("builds a journey rationale from several journey steps", () => {
     const narrative = buildCommercialNarrative(
-      createContext({ recommendedJourney: ["lead-management", "appointment-operations", "assistant-workspace", "operational-evidence"] }),
+      createContext({
+        recommendedJourney: [
+          "lead-management",
+          "appointment-operations",
+          "assistant-workspace",
+          "operational-evidence",
+        ],
+      }),
     );
 
     expect(narrative.journeyRationale.toLowerCase()).toContain("recorrido");
@@ -86,7 +99,10 @@ describe("buildCommercialNarrative", () => {
   });
 
   it("is deterministic for the same input", () => {
-    const context = createContext({ readinessLevel: "organized", focusAreas: ["operational-visibility", "team-coordination"] });
+    const context = createContext({
+      readinessLevel: "organized",
+      focusAreas: ["operational-visibility", "team-coordination"],
+    });
 
     const first = buildCommercialNarrative(context);
     const second = buildCommercialNarrative(context);
@@ -117,7 +133,9 @@ describe("buildCommercialNarrative", () => {
       narrative.closingMessage,
     ];
 
-    expect(stringFields.every((value) => typeof value === "string" && value.trim().length > 0)).toBe(true);
+    expect(
+      stringFields.every((value) => typeof value === "string" && value.trim().length > 0),
+    ).toBe(true);
     expect(Array.isArray(narrative.evidenceEmphasis)).toBe(true);
     expect(narrative.evidenceEmphasis.length).toBeGreaterThan(0);
   });

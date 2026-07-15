@@ -24,7 +24,12 @@ function CommercialDemoRoute() {
 
   return (
     <SiteLayout>
-      <CommercialDemoPage context={commercialDemoContext} />
+      {(openBooking) => (
+        <CommercialDemoPage
+          context={commercialDemoContext}
+          onContinueToBooking={() => openBooking()}
+        />
+      )}
     </SiteLayout>
   );
 }

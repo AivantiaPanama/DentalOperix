@@ -69,12 +69,14 @@ export const commercialNarrativeCatalog = {
   focusAreas: {
     "patient-follow-up": {
       opportunity: "Mejorar la continuidad desde el primer contacto hasta la siguiente acción.",
-      benefit: "Reducir oportunidades perdidas y mantener una relación más consistente con pacientes interesados.",
+      benefit:
+        "Reducir oportunidades perdidas y mantener una relación más consistente con pacientes interesados.",
       evidence: "Trazabilidad del seguimiento y avance de oportunidades.",
     },
     "appointment-management": {
       opportunity: "Coordinar mejor las citas y los pasos necesarios para concretarlas.",
-      benefit: "Reducir fricción administrativa y facilitar el avance desde el interés hasta la atención.",
+      benefit:
+        "Reducir fricción administrativa y facilitar el avance desde el interés hasta la atención.",
       evidence: "Visibilidad del recorrido entre contacto, cita y seguimiento.",
     },
     "administrative-efficiency": {
@@ -93,26 +95,32 @@ export const commercialNarrativeCatalog = {
       evidence: "Experiencia más coherente desde el primer contacto.",
     },
     "team-coordination": {
-      opportunity: "Coordinar mejor responsabilidades, información y seguimiento entre miembros del equipo.",
+      opportunity:
+        "Coordinar mejor responsabilidades, información y seguimiento entre miembros del equipo.",
       benefit: "Reducir confusión y mejorar la continuidad de la atención.",
       evidence: "Responsabilidades y acciones visibles dentro del recorrido operativo.",
     },
   } satisfies Record<CommercialFocusArea, CommercialNarrativeFocusAreaCatalogEntry>,
   journeys: {
     "lead-management": {
-      explanation: "El recorrido comienza con el contacto inicial para mostrar cómo una consulta puede convertirse en una oportunidad organizada.",
+      explanation:
+        "El recorrido comienza con el contacto inicial para mostrar cómo una consulta puede convertirse en una oportunidad organizada.",
     },
     "patient-identity": {
-      explanation: "El recorrido mantiene una identidad consistente del paciente para que la historia sea clara desde el inicio.",
+      explanation:
+        "El recorrido mantiene una identidad consistente del paciente para que la historia sea clara desde el inicio.",
     },
     "appointment-operations": {
-      explanation: "El recorrido avanza hacia la cita para mostrar cómo una intención se convierte en una operación coordinada.",
+      explanation:
+        "El recorrido avanza hacia la cita para mostrar cómo una intención se convierte en una operación coordinada.",
     },
     "assistant-workspace": {
-      explanation: "El recorrido incorpora el trabajo del equipo para mostrar cómo se gestionan tareas y seguimiento de forma ordenada.",
+      explanation:
+        "El recorrido incorpora el trabajo del equipo para mostrar cómo se gestionan tareas y seguimiento de forma ordenada.",
     },
     "operational-evidence": {
-      explanation: "El recorrido cierra con evidencia operativa para mostrar cómo la clínica puede sostener trazabilidad y aprendizaje.",
+      explanation:
+        "El recorrido cierra con evidencia operativa para mostrar cómo la clínica puede sostener trazabilidad y aprendizaje.",
     },
   } satisfies Record<DemoJourneyStep, CommercialNarrativeJourneyCatalogEntry>,
   sources: {

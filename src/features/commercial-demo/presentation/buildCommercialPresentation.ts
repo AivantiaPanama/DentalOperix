@@ -45,27 +45,37 @@ function buildSteps(narrative: CommercialNarrative) {
   return [
     {
       title: commercialPresentationCatalog.steps.context.title,
-      description: normalizeText(narrative.clinicSituation, "La clínica cuenta con una base sólida para avanzar con mayor claridad."),
+      description: normalizeText(
+        narrative.clinicSituation,
+        "La clínica cuenta con una base sólida para avanzar con mayor claridad.",
+      ),
     },
     {
       title: commercialPresentationCatalog.steps.opportunity.title,
-      description: normalizeText(narrative.primaryOpportunity, "La oportunidad principal se presenta con claridad y enfoque comercial."),
+      description: normalizeText(
+        narrative.primaryOpportunity,
+        "La oportunidad principal se presenta con claridad y enfoque comercial.",
+      ),
     },
     {
       title: commercialPresentationCatalog.steps.journey.title,
-      description: normalizeText(narrative.journeyRationale, "El recorrido se presenta como una historia coherente para la clínica."),
+      description: normalizeText(
+        narrative.journeyRationale,
+        "El recorrido se presenta como una historia coherente para la clínica.",
+      ),
     },
     {
       title: commercialPresentationCatalog.steps.result.title,
-      description: normalizeText(narrative.expectedBenefit, "El resultado esperado se presenta con foco en el valor comercial."),
+      description: normalizeText(
+        narrative.expectedBenefit,
+        "El resultado esperado se presenta con foco en el valor comercial.",
+      ),
     },
   ];
 }
 
 function buildEvidenceItems(narrative: CommercialNarrative): string[] {
-  const items = narrative.evidenceEmphasis
-    .map((item) => normalizeText(item, ""))
-    .filter(Boolean);
+  const items = narrative.evidenceEmphasis.map((item) => normalizeText(item, "")).filter(Boolean);
 
   if (items.length > 0) {
     const uniqueItems = items.filter((item, index) => items.indexOf(item) === index);
@@ -94,17 +104,40 @@ function buildEvidenceBeforeMessage(narrative: CommercialNarrative): string {
   return "Existe una oportunidad de fortalecer la propuesta comercial.";
 }
 
-export function buildCommercialPresentation(narrative: CommercialNarrative): CommercialPresentationModel {
+export function buildCommercialPresentation(
+  narrative: CommercialNarrative,
+): CommercialPresentationModel {
   const normalizedNarrative = {
     headline: normalizeText(narrative.headline, "Narrativa comercial preparada para la clínica"),
-    openingMessage: normalizeText(narrative.openingMessage, "Esta demostración presenta una propuesta preparada para la clínica."),
-    clinicSituation: normalizeText(narrative.clinicSituation, "La clínica cuenta con una base sólida para avanzar con mayor claridad."),
-    primaryOpportunity: normalizeText(narrative.primaryOpportunity, "La oportunidad principal se presenta con claridad y enfoque comercial."),
-    expectedBenefit: normalizeText(narrative.expectedBenefit, "El beneficio esperado se presenta con foco en el valor comercial."),
-    meetingObjective: normalizeText(narrative.meetingObjective, "El objetivo de la reunión se presenta con claridad y enfoque comercial."),
-    journeyRationale: normalizeText(narrative.journeyRationale, "El recorrido se presenta como una historia coherente para la clínica."),
+    openingMessage: normalizeText(
+      narrative.openingMessage,
+      "Esta demostración presenta una propuesta preparada para la clínica.",
+    ),
+    clinicSituation: normalizeText(
+      narrative.clinicSituation,
+      "La clínica cuenta con una base sólida para avanzar con mayor claridad.",
+    ),
+    primaryOpportunity: normalizeText(
+      narrative.primaryOpportunity,
+      "La oportunidad principal se presenta con claridad y enfoque comercial.",
+    ),
+    expectedBenefit: normalizeText(
+      narrative.expectedBenefit,
+      "El beneficio esperado se presenta con foco en el valor comercial.",
+    ),
+    meetingObjective: normalizeText(
+      narrative.meetingObjective,
+      "El objetivo de la reunión se presenta con claridad y enfoque comercial.",
+    ),
+    journeyRationale: normalizeText(
+      narrative.journeyRationale,
+      "El recorrido se presenta como una historia coherente para la clínica.",
+    ),
     evidenceEmphasis: narrative.evidenceEmphasis,
-    closingMessage: normalizeText(narrative.closingMessage, "La demostración busca acompañar a la clínica con una propuesta clara."),
+    closingMessage: normalizeText(
+      narrative.closingMessage,
+      "La demostración busca acompañar a la clínica con una propuesta clara.",
+    ),
   };
 
   return {
