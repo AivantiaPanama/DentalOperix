@@ -51,7 +51,9 @@ export const createPatientEmailInputSchema = z.object({
   email: z
     .string()
     .trim()
-    .refine((value) => validatePatientEmailValue(value).valid, { message: "Patient email must be valid." })
+    .refine((value) => validatePatientEmailValue(value).valid, {
+      message: "Patient email must be valid.",
+    })
     .transform((value) => normalizeEmail(value)),
   label: optionalTrimmedString,
   isPrimary: z.boolean().optional().default(false),
@@ -60,9 +62,12 @@ export const createPatientEmailInputSchema = z.object({
 
 export const createPatientAddressInputSchema = z.object({
   id: optionalTrimmedString,
-  line1: requiredTrimmedString.refine((value) => validatePatientAddressValue({ line1: value }).valid, {
-    message: domainValueObjectIssue(validatePatientAddressValue({}).message),
-  }),
+  line1: requiredTrimmedString.refine(
+    (value) => validatePatientAddressValue({ line1: value }).valid,
+    {
+      message: domainValueObjectIssue(validatePatientAddressValue({}).message),
+    },
+  ),
   line2: optionalTrimmedString,
   city: optionalTrimmedString,
   state: optionalTrimmedString,
@@ -90,7 +95,10 @@ export type PatientDomainInvariantViolation = {
 };
 
 export function collectCreatePatientDomainInvariantViolations(
-  value: Pick<CreatePatientInput, "displayName" | "firstName" | "lastName" | "secondLastName" | "source" | "requiresInvoice"> & {
+  value: Pick<
+    CreatePatientInput,
+    "displayName" | "firstName" | "lastName" | "secondLastName" | "source" | "requiresInvoice"
+  > & {
     emails: Array<unknown>;
     phones: Array<unknown>;
     identifiers: Array<{ type?: string }>;
@@ -100,7 +108,10 @@ export function collectCreatePatientDomainInvariantViolations(
   const nameValidation = validatePatientNameValue(value);
 
   if (!nameValidation.valid) {
-    violations.push({ path: ["displayName"], message: domainValueObjectIssue(nameValidation.message) });
+    violations.push({
+      path: ["displayName"],
+      message: domainValueObjectIssue(nameValidation.message),
+    });
   }
 
   if (["web", "chat", "whatsapp"].includes(value.source) && value.emails.length === 0) {
@@ -110,7 +121,10 @@ export function collectCreatePatientDomainInvariantViolations(
     });
   }
 
-  if (["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) && value.phones.length === 0) {
+  if (
+    ["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) &&
+    value.phones.length === 0
+  ) {
     violations.push({
       path: ["phones"],
       message: "Clinic/internal patient creation requires at least one phone.",
@@ -127,7 +141,9 @@ export function collectCreatePatientDomainInvariantViolations(
   return violations;
 }
 
-export function collectUpdatePatientDomainInvariantViolations(value: UpdatePatientInput): PatientDomainInvariantViolation[] {
+export function collectUpdatePatientDomainInvariantViolations(
+  value: UpdatePatientInput,
+): PatientDomainInvariantViolation[] {
   if (Object.keys(value).length === 0) {
     return [{ path: [], message: "At least one patient field must be provided for update." }];
   }
@@ -157,7 +173,11 @@ export const createPatientInputSchema = z
   })
   .superRefine((value, ctx) => {
     collectCreatePatientDomainInvariantViolations(value).forEach((violation) => {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, path: violation.path, message: violation.message });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: violation.path,
+        message: violation.message,
+      });
     });
   });
 
@@ -175,7 +195,11 @@ export const updatePatientInputSchema = z
   })
   .superRefine((value, ctx) => {
     collectUpdatePatientDomainInvariantViolations(value).forEach((violation) => {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, path: violation.path, message: violation.message });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: violation.path,
+        message: violation.message,
+      });
     });
   });
 

@@ -26,7 +26,9 @@ export class PatientApplicationLayerNotFoundError extends PatientApplicationLaye
 
 export class PatientDuplicateReviewRequiredError extends PatientApplicationLayerError {
   constructor() {
-    super("Possible duplicate patients require manual review. Automated patient merge is not allowed.");
+    super(
+      "Possible duplicate patients require manual review. Automated patient merge is not allowed.",
+    );
     this.name = "PatientDuplicateReviewRequiredError";
   }
 }

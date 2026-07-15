@@ -1,6 +1,14 @@
-import { normalizeIdentifier, normalizeName, normalizePhone, type Patient } from "../../patient-domain";
+import {
+  normalizeIdentifier,
+  normalizeName,
+  normalizePhone,
+  type Patient,
+} from "../../patient-domain";
 import type { PatientIdentitySearch, PatientRepository } from "../../patient-repository";
-import type { IdentityResolutionCandidate, IdentityResolutionResult } from "../contracts/identity-resolution-result";
+import type {
+  IdentityResolutionCandidate,
+  IdentityResolutionResult,
+} from "../contracts/identity-resolution-result";
 import type { ResolvePatientIdentityCommand } from "../contracts/resolve-patient-identity-command";
 import type { PatientApplicationError } from "../types/patient-application-errors";
 import type { PatientServiceResult } from "../types/patient-service-result";
@@ -10,7 +18,9 @@ function failure(code: string, message: string, details?: string): PatientServic
   return { success: false, errors: [error] };
 }
 
-function buildSearch(command: ResolvePatientIdentityCommand): PatientIdentitySearch | PatientApplicationError {
+function buildSearch(
+  command: ResolvePatientIdentityCommand,
+): PatientIdentitySearch | PatientApplicationError {
   const hasName = Boolean(command.firstName || command.lastName);
   const hasCriterion = hasName || Boolean(command.phone || command.email || command.identifier);
   if (!hasCriterion) {
@@ -31,10 +41,17 @@ function buildSearch(command: ResolvePatientIdentityCommand): PatientIdentitySea
 
 function matchedFields(patient: Patient, search: PatientIdentitySearch): string[] {
   const fields: string[] = [];
-  if (search.normalizedName && patient.normalizedName === search.normalizedName) fields.push("name");
-  if (search.email && patient.emails.some((email) => email.normalizedEmail === search.email)) fields.push("email");
-  if (search.phone && patient.phones.some((phone) => phone.normalizedPhone === search.phone)) fields.push("phone");
-  if (search.identifierValue && patient.identifiers.some((identifier) => identifier.normalizedValue === search.identifierValue)) fields.push("identifier");
+  if (search.normalizedName && patient.normalizedName === search.normalizedName)
+    fields.push("name");
+  if (search.email && patient.emails.some((email) => email.normalizedEmail === search.email))
+    fields.push("email");
+  if (search.phone && patient.phones.some((phone) => phone.normalizedPhone === search.phone))
+    fields.push("phone");
+  if (
+    search.identifierValue &&
+    patient.identifiers.some((identifier) => identifier.normalizedValue === search.identifierValue)
+  )
+    fields.push("identifier");
   return fields;
 }
 
@@ -58,7 +75,9 @@ function toCandidate(patient: Patient, search: PatientIdentitySearch): IdentityR
 export class ResolvePatientIdentityService {
   constructor(private readonly repository: PatientRepository) {}
 
-  async execute(command: ResolvePatientIdentityCommand): Promise<PatientServiceResult<IdentityResolutionResult>> {
+  async execute(
+    command: ResolvePatientIdentityCommand,
+  ): Promise<PatientServiceResult<IdentityResolutionResult>> {
     const search = buildSearch(command);
     if ("code" in search) {
       return { success: false, errors: [search] };
@@ -79,7 +98,11 @@ export class ResolvePatientIdentityService {
         errors: [],
       };
     } catch (error) {
-      return failure("PATIENT_IDENTITY_RESOLUTION_FAILED", "Patient identity resolution failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_IDENTITY_RESOLUTION_FAILED",
+        "Patient identity resolution failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }

@@ -1,4 +1,10 @@
-import { normalizeIdentifier, normalizeName, normalizePhone, type CreatePatientInput, type Patient } from "./patient-domain";
+import {
+  normalizeIdentifier,
+  normalizeName,
+  normalizePhone,
+  type CreatePatientInput,
+  type Patient,
+} from "./patient-domain";
 import type { PatientIdentitySearch, PatientRepository } from "./patient-repository";
 
 export type PatientIdentityResolutionStatus = "strong_match" | "ambiguous_match" | "no_match";
@@ -23,7 +29,9 @@ function getPrimaryIdentifier(input: CreatePatientInput) {
 }
 
 function buildSearch(input: CreatePatientInput): PatientIdentitySearch {
-  const displayName = input.displayName ?? [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ");
+  const displayName =
+    input.displayName ??
+    [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ");
   const identifier = getPrimaryIdentifier(input);
   return {
     normalizedName: displayName ? normalizeName(displayName) : undefined,
@@ -71,7 +79,8 @@ export class PatientIdentityResolutionService {
       status: "ambiguous_match",
       matches,
       requiredDifferentiators: ["second_last_name", "cid", "phone", "additional_identifier"],
-      reason: "Potential patient match requires manual differentiation. Automatic merge is not allowed.",
+      reason:
+        "Potential patient match requires manual differentiation. Automatic merge is not allowed.",
     };
   }
 }

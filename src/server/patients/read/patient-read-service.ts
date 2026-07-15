@@ -22,8 +22,14 @@ export type PatientReadService = Readonly<{
   listPatients(consumerName?: string): Promise<PatientSummaryDTO[]>;
   listAdministrativeProfiles(consumerName?: string): Promise<PatientAdministrativeProfileDTO[]>;
   getPatientById(patientId: string, consumerName?: string): Promise<PatientDetailDTO>;
-  searchPatients(query: PatientReadSearchQuery, consumerName?: string): Promise<PatientSearchResultDTO[]>;
-  getAdministrativeProfile(patientId: string, consumerName?: string): Promise<PatientAdministrativeProfileDTO>;
+  searchPatients(
+    query: PatientReadSearchQuery,
+    consumerName?: string,
+  ): Promise<PatientSearchResultDTO[]>;
+  getAdministrativeProfile(
+    patientId: string,
+    consumerName?: string,
+  ): Promise<PatientAdministrativeProfileDTO>;
 }>;
 
 function includesNormalized(value: string | undefined, query: string | undefined): boolean {
@@ -38,7 +44,10 @@ function matchesPhone(value: string | undefined, query: string | undefined): boo
   return normalizePatientReadPhone(value).includes(normalizedQuery);
 }
 
-function matchesPatient(patient: PatientAdministrativeProfile, query: PatientReadSearchQuery): boolean {
+function matchesPatient(
+  patient: PatientAdministrativeProfile,
+  query: PatientReadSearchQuery,
+): boolean {
   if (query.excludePatientId && patient.id === query.excludePatientId) return false;
 
   const name = query.normalizedName ?? query.name;
@@ -64,7 +73,9 @@ export function createPatientReadService(): PatientReadService {
       return patients.map(toPatientSummaryDTO);
     },
 
-    async listAdministrativeProfiles(consumerName = "Patient Read Service Administrative Profile List") {
+    async listAdministrativeProfiles(
+      consumerName = "Patient Read Service Administrative Profile List",
+    ) {
       const patients = await loadPatients(consumerName);
       return patients.map(toPatientAdministrativeProfileDTO);
     },
@@ -72,19 +83,29 @@ export function createPatientReadService(): PatientReadService {
     async getPatientById(patientId: string, consumerName = "Patient Read Service Detail") {
       const patients = await loadPatients(consumerName);
       const patient = patients.find((candidate) => candidate.id === patientId);
-      if (!patient) throw new PatientReadServiceNotFoundError(`Paciente ${patientId} no encontrado.`);
+      if (!patient)
+        throw new PatientReadServiceNotFoundError(`Paciente ${patientId} no encontrado.`);
       return toPatientDetailDTO(patient);
     },
 
-    async searchPatients(query: PatientReadSearchQuery, consumerName = "Patient Read Service Search") {
+    async searchPatients(
+      query: PatientReadSearchQuery,
+      consumerName = "Patient Read Service Search",
+    ) {
       const patients = await loadPatients(consumerName);
-      return patients.filter((patient) => matchesPatient(patient, query)).map(toPatientSearchResultDTO);
+      return patients
+        .filter((patient) => matchesPatient(patient, query))
+        .map(toPatientSearchResultDTO);
     },
 
-    async getAdministrativeProfile(patientId: string, consumerName = "Patient Read Service Administrative Profile") {
+    async getAdministrativeProfile(
+      patientId: string,
+      consumerName = "Patient Read Service Administrative Profile",
+    ) {
       const patients = await loadPatients(consumerName);
       const patient = patients.find((candidate) => candidate.id === patientId);
-      if (!patient) throw new PatientReadServiceNotFoundError(`Paciente ${patientId} no encontrado.`);
+      if (!patient)
+        throw new PatientReadServiceNotFoundError(`Paciente ${patientId} no encontrado.`);
       return toPatientAdministrativeProfileDTO(patient);
     },
   });

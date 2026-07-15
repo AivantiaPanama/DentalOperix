@@ -235,7 +235,11 @@ export const createPatientPhoneInputSchema = z.object({
 
 export const createPatientEmailInputSchema = z.object({
   id: optionalTrimmedString,
-  email: z.string().trim().email().transform((value) => value.toLowerCase()),
+  email: z
+    .string()
+    .trim()
+    .email()
+    .transform((value) => value.toLowerCase()),
   label: optionalTrimmedString,
   isPrimary: z.boolean().optional().default(false),
   status: patientContactPointStatusSchema.optional().default("active"),
@@ -284,9 +288,15 @@ export const createPatientInputSchema = z
     actor: patientAuditActorSchema.optional(),
   })
   .superRefine((value, ctx) => {
-    const hasName = Boolean(value.displayName || value.firstName || value.lastName || value.secondLastName);
+    const hasName = Boolean(
+      value.displayName || value.firstName || value.lastName || value.secondLastName,
+    );
     if (!hasName) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["displayName"], message: "Patient name is required." });
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["displayName"],
+        message: "Patient name is required.",
+      });
     }
 
     if (["web", "chat", "whatsapp"].includes(value.source) && value.emails.length === 0) {
@@ -297,7 +307,10 @@ export const createPatientInputSchema = z
       });
     }
 
-    if (["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) && value.phones.length === 0) {
+    if (
+      ["phone", "walk_in", "assistant", "admin", "doctor"].includes(value.source) &&
+      value.phones.length === 0
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["phones"],
@@ -305,7 +318,10 @@ export const createPatientInputSchema = z
       });
     }
 
-    if (value.requiresInvoice && !value.identifiers.some((identifier) => identifier.type === "cid")) {
+    if (
+      value.requiresInvoice &&
+      !value.identifiers.some((identifier) => identifier.type === "cid")
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["identifiers"],
@@ -354,8 +370,13 @@ export function normalizeIdentifier(value: string): string {
   return value.trim().replace(/\s+/g, "").toUpperCase();
 }
 
-function buildDisplayName(input: Pick<CreatePatientInput, "displayName" | "firstName" | "lastName" | "secondLastName">): string {
-  return (input.displayName ?? [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ")).trim();
+function buildDisplayName(
+  input: Pick<CreatePatientInput, "displayName" | "firstName" | "lastName" | "secondLastName">,
+): string {
+  return (
+    input.displayName ??
+    [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ")
+  ).trim();
 }
 
 function normalizePrimaryFlags<T extends { isPrimary: boolean }>(items: T[]): T[] {
@@ -375,7 +396,10 @@ export function validateUpdatePatientInput(input: unknown) {
   return result.data;
 }
 
-export function createPatientEntity(input: CreatePatientInput, options: { id?: PatientId; now?: string } = {}): Patient {
+export function createPatientEntity(
+  input: CreatePatientInput,
+  options: { id?: PatientId; now?: string } = {},
+): Patient {
   const validated = validateCreatePatientInput(input);
   const now = options.now ?? new Date().toISOString();
   const id = validated.id ?? options.id ?? `patient_${Date.now()}`;
@@ -469,7 +493,11 @@ export function createPatientEntity(input: CreatePatientInput, options: { id?: P
   };
 }
 
-export function applyPatientUpdate(patient: Patient, input: UpdatePatientInput, now = new Date().toISOString()): Patient {
+export function applyPatientUpdate(
+  patient: Patient,
+  input: UpdatePatientInput,
+  now = new Date().toISOString(),
+): Patient {
   const validated = validateUpdatePatientInput(input);
   const actor = validated.actor;
   const nextDisplayName = validated.displayName ?? patient.displayName;

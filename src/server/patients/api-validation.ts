@@ -4,8 +4,16 @@ import {
   PATIENT_ADMINISTRATIVE_UPDATE_FIELDS,
   type PatientAdministrativeProfileUpdate,
 } from "@/lib/patients/admin-profile";
-import { PATIENT_CREATION_SOURCES, PATIENT_IDENTIFIER_TYPES, PATIENT_STATUSES } from "@/server/patients/domain/patient.enums";
-import type { CreatePatientApplicationCommand, PatientIdentitySearchCommand, UpdatePatientApplicationCommand } from "@/server/patients/application";
+import {
+  PATIENT_CREATION_SOURCES,
+  PATIENT_IDENTIFIER_TYPES,
+  PATIENT_STATUSES,
+} from "@/server/patients/domain/patient.enums";
+import type {
+  CreatePatientApplicationCommand,
+  PatientIdentitySearchCommand,
+  UpdatePatientApplicationCommand,
+} from "@/server/patients/application";
 
 const administrativeUpdateSchema = z
   .object({
@@ -81,9 +89,12 @@ const createPatientSchema = z
   .refine((value) => value.displayName || value.firstName || value.lastName, {
     message: "Patient creation requires displayName, firstName, or lastName.",
   })
-  .refine((value) => !value.actor || value.actor.via === undefined || value.actor.via === value.source, {
-    message: "Patient actor.via must match the creation source when provided.",
-  });
+  .refine(
+    (value) => !value.actor || value.actor.via === undefined || value.actor.via === value.source,
+    {
+      message: "Patient actor.via must match the creation source when provided.",
+    },
+  );
 
 const updatePatientSchema = z
   .object({
@@ -113,8 +124,7 @@ const searchPatientSchema = z
   })
   .strict()
   .refine(
-    (value) =>
-      Boolean(value.normalizedName || value.email || value.phone || value.identifierValue),
+    (value) => Boolean(value.normalizedName || value.email || value.phone || value.identifierValue),
     { message: "Patient search requires at least one identity criterion." },
   )
   .refine((value) => !value.identifierType || Boolean(value.identifierValue), {
@@ -131,7 +141,9 @@ function getPayloadKeys(payload: unknown): string[] {
 function parseSchema<T>(schema: z.ZodType<T>, payload: unknown): T {
   const result = schema.safeParse(payload);
   if (!result.success) {
-    throw new InvalidPatientPayloadError(result.error.issues.map((issue) => issue.message).join(" "));
+    throw new InvalidPatientPayloadError(
+      result.error.issues.map((issue) => issue.message).join(" "),
+    );
   }
 
   return result.data;
@@ -149,12 +161,17 @@ export function parsePatientCreatePayload(payload: unknown): CreatePatientApplic
   return parseSchema(createPatientSchema, payload) as CreatePatientApplicationCommand;
 }
 
-export function parsePatientUpdatePayload(payload: unknown): { patientId: string; command: UpdatePatientApplicationCommand } {
+export function parsePatientUpdatePayload(payload: unknown): {
+  patientId: string;
+  command: UpdatePatientApplicationCommand;
+} {
   const parsed = parseSchema(updatePatientSchema, payload);
   const { patientId, ...command } = parsed;
 
   if (Object.keys(command).filter((key) => key !== "metadata" && key !== "actor").length === 0) {
-    throw new InvalidPatientPayloadError("Patient update requires at least one mutable patient field.");
+    throw new InvalidPatientPayloadError(
+      "Patient update requires at least one mutable patient field.",
+    );
   }
 
   return { patientId, command: command as UpdatePatientApplicationCommand };
@@ -164,7 +181,9 @@ export function parsePatientSearchPayload(payload: unknown): PatientIdentitySear
   return parseSchema(searchPatientSchema, payload) as PatientIdentitySearchCommand;
 }
 
-export function parseAdministrativeProfileUpdate(payload: unknown): PatientAdministrativeProfileUpdate {
+export function parseAdministrativeProfileUpdate(
+  payload: unknown,
+): PatientAdministrativeProfileUpdate {
   const keys = getPayloadKeys(payload);
   const clinicalFields = keys.filter((key) =>
     CLINICAL_PROFILE_FIELDS.some((field) => field.toLowerCase() === key.toLowerCase()),
@@ -188,7 +207,9 @@ export function parseAdministrativeProfileUpdate(payload: unknown): PatientAdmin
 
   const result = administrativeUpdateSchema.safeParse(payload);
   if (!result.success) {
-    throw new InvalidPatientPayloadError(result.error.issues.map((issue) => issue.message).join(" "));
+    throw new InvalidPatientPayloadError(
+      result.error.issues.map((issue) => issue.message).join(" "),
+    );
   }
 
   if (Object.keys(result.data).length === 0) {

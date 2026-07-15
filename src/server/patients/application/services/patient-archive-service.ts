@@ -25,7 +25,9 @@ export class ArchivePatientService {
     private readonly audit: PatientAuditContract = new NoopPatientAuditContract(),
   ) {}
 
-  async execute(command: ArchivePatientCommand): Promise<PatientServiceResult<ArchivePatientResult>> {
+  async execute(
+    command: ArchivePatientCommand,
+  ): Promise<PatientServiceResult<ArchivePatientResult>> {
     try {
       const current = await this.repository.findPatientById(command.patientId);
       if (!current) {
@@ -70,7 +72,11 @@ export class ArchivePatientService {
       if (error instanceof PatientNotFoundError) {
         return failure("PATIENT_NOT_FOUND", error.message);
       }
-      return failure("PATIENT_ARCHIVE_FAILED", "Patient archive failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_ARCHIVE_FAILED",
+        "Patient archive failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }

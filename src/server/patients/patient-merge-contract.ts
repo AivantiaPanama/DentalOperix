@@ -18,7 +18,9 @@ export interface PatientMergeContract {
 
 export class AutomatedPatientMergeNotAllowedError extends Error {
   constructor() {
-    super("Automated patient merge is not allowed. Patient merge must be manual, authorized and auditable.");
+    super(
+      "Automated patient merge is not allowed. Patient merge must be manual, authorized and auditable.",
+    );
     this.name = "AutomatedPatientMergeNotAllowedError";
   }
 }

@@ -5,7 +5,10 @@ import {
   RelationalPatientPersistenceAdapter,
   RELATIONAL_PATIENT_PERSISTENCE_ADAPTER_VERSION,
 } from "./relational-patient-persistence-adapter";
-import { RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION, mapRelationalPatientGraphToDomain } from "./patient-persistence-mappers";
+import {
+  RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION,
+  mapRelationalPatientGraphToDomain,
+} from "./patient-persistence-mappers";
 
 function row(overrides: Record<string, unknown> = {}) {
   return {
@@ -34,19 +37,55 @@ function row(overrides: Record<string, unknown> = {}) {
   };
 }
 
-function createPatientGraphClient(patientRow = row()): PatientPersistenceQueryClient & { calls: Array<{ text: string; values?: unknown[] }> } {
+function createPatientGraphClient(
+  patientRow = row(),
+): PatientPersistenceQueryClient & { calls: Array<{ text: string; values?: unknown[] }> } {
   const calls: Array<{ text: string; values?: unknown[] }> = [];
   return {
     calls,
     async query<T>(text: string, values?: unknown[]) {
       calls.push({ text, values });
-      if (text.startsWith("SELECT") && text.includes(" FROM patients ")) return { rows: [patientRow] as T[], rowCount: 1 };
-      if (text.includes("FROM patient_phones")) return { rows: [{ id: "phone_1", patient_id: patientRow.id, phone: "(555) 000-1111", normalized_phone: "5550001111", label: null, is_primary: true, status: "active", created_at: patientRow.created_at, updated_at: patientRow.updated_at }] as T[], rowCount: 1 };
-      if (text.includes("FROM patient_emails")) return { rows: [{ id: "email_1", patient_id: patientRow.id, email: "ana@example.com", normalized_email: "ana@example.com", label: null, is_primary: true, status: "active", created_at: patientRow.created_at, updated_at: patientRow.updated_at }] as T[], rowCount: 1 };
+      if (text.startsWith("SELECT") && text.includes(" FROM patients "))
+        return { rows: [patientRow] as T[], rowCount: 1 };
+      if (text.includes("FROM patient_phones"))
+        return {
+          rows: [
+            {
+              id: "phone_1",
+              patient_id: patientRow.id,
+              phone: "(555) 000-1111",
+              normalized_phone: "5550001111",
+              label: null,
+              is_primary: true,
+              status: "active",
+              created_at: patientRow.created_at,
+              updated_at: patientRow.updated_at,
+            },
+          ] as T[],
+          rowCount: 1,
+        };
+      if (text.includes("FROM patient_emails"))
+        return {
+          rows: [
+            {
+              id: "email_1",
+              patient_id: patientRow.id,
+              email: "ana@example.com",
+              normalized_email: "ana@example.com",
+              label: null,
+              is_primary: true,
+              status: "active",
+              created_at: patientRow.created_at,
+              updated_at: patientRow.updated_at,
+            },
+          ] as T[],
+          rowCount: 1,
+        };
       if (text.includes("FROM patient_addresses")) return { rows: [] as T[], rowCount: 0 };
       if (text.includes("FROM patient_identifiers")) return { rows: [] as T[], rowCount: 0 };
       if (text.startsWith("UPDATE")) return { rows: [patientRow] as T[], rowCount: 1 };
-      if (text.startsWith("SELECT DISTINCT")) return { rows: [{ id: patientRow.id }] as T[], rowCount: 1 };
+      if (text.startsWith("SELECT DISTINCT"))
+        return { rows: [{ id: patientRow.id }] as T[], rowCount: 1 };
       return { rows: [] as T[], rowCount: null };
     },
   };
@@ -54,8 +93,12 @@ function createPatientGraphClient(patientRow = row()): PatientPersistenceQueryCl
 
 describe("71.5.3 Relational Patient Persistence Adapter", () => {
   it("declares certified persistence versions", () => {
-    expect(RELATIONAL_PATIENT_PERSISTENCE_ADAPTER_VERSION).toBe("71.5.3-RELATIONAL-PATIENT-PERSISTENCE-ADAPTER");
-    expect(RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION).toBe("71.5.3-PATIENT-PERSISTENCE-MAPPERS");
+    expect(RELATIONAL_PATIENT_PERSISTENCE_ADAPTER_VERSION).toBe(
+      "71.5.3-RELATIONAL-PATIENT-PERSISTENCE-ADAPTER",
+    );
+    expect(RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION).toBe(
+      "71.5.3-PATIENT-PERSISTENCE-MAPPERS",
+    );
   });
 
   it("creates patients through relational tables without touching Leads or APIs", async () => {
@@ -97,7 +140,9 @@ describe("71.5.3 Relational Patient Persistence Adapter", () => {
   });
 
   it("updates patient scalar fields and throws a persistence error when missing", async () => {
-    const client = createPatientGraphClient(row({ display_name: "After", normalized_name: "after" }));
+    const client = createPatientGraphClient(
+      row({ display_name: "After", normalized_name: "after" }),
+    );
     const adapter = new RelationalPatientPersistenceAdapter(async () => client);
 
     const updated = await adapter.updatePatient("patient_rel_1", { displayName: "After" });
@@ -110,7 +155,9 @@ describe("71.5.3 Relational Patient Persistence Adapter", () => {
         return { rows: [] as T[], rowCount: 0 };
       },
     }));
-    await expect(missingAdapter.updatePatient("missing", { displayName: "Nope" })).rejects.toBeInstanceOf(PatientPersistenceNotFoundError);
+    await expect(
+      missingAdapter.updatePatient("missing", { displayName: "Nope" }),
+    ).rejects.toBeInstanceOf(PatientPersistenceNotFoundError);
   });
 
   it("searches identity candidates without automated merge", async () => {

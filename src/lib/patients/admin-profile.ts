@@ -168,7 +168,10 @@ function createPatientKey(lead: PatientLeadLike): string {
   const name = sanitizeAdministrativeName(lead.name);
   if (email) {
     const fallback =
-      normalizeValue(lead.id) || normalizeValue(lead.createdAt) || normalizeKey(name) || "sin-identificador";
+      normalizeValue(lead.id) ||
+      normalizeValue(lead.createdAt) ||
+      normalizeKey(name) ||
+      "sin-identificador";
     return `email-review:${normalizeKey(email)}:${fallback}`;
   }
   if (name) return `name:${normalizeKey(name)}`;

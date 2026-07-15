@@ -69,7 +69,10 @@ export function buildDisplayName(input: {
   lastName?: string;
   secondLastName?: string;
 }): string {
-  return (input.displayName ?? [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ")).trim();
+  return (
+    input.displayName ??
+    [input.firstName, input.lastName, input.secondLastName].filter(Boolean).join(" ")
+  ).trim();
 }
 
 export function validatePatientNameValue(input: {
@@ -94,7 +97,8 @@ export function createPatientNameValue(input: {
 export function validatePatientEmailValue(value: string): PatientValueObjectValidationResult {
   const normalizedEmail = normalizeEmail(value);
   if (!normalizedEmail) return { valid: false, message: "Patient email is required." };
-  if (!EMAIL_PATTERN.test(normalizedEmail)) return { valid: false, message: "Patient email must be valid." };
+  if (!EMAIL_PATTERN.test(normalizedEmail))
+    return { valid: false, message: "Patient email must be valid." };
   return { valid: true };
 }
 
@@ -123,7 +127,9 @@ export function createPatientIdentifierValue(value: string): PatientIdentifierVa
   return Object.freeze({ value, normalizedValue: normalizeIdentifier(value) });
 }
 
-export function validatePatientAddressValue(input: { line1?: string }): PatientValueObjectValidationResult {
+export function validatePatientAddressValue(input: {
+  line1?: string;
+}): PatientValueObjectValidationResult {
   return rejectBlank(input.line1 ?? "", "Patient address line1 is required.");
 }
 

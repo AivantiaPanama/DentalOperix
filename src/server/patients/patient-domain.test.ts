@@ -26,7 +26,10 @@ describe("Patient Identity Foundation domain", () => {
     expect(patient.normalizedName).toBe("maria perez");
     expect(patient.status).toBe("active");
     expect(patient.phones[0]).toMatchObject({ normalizedPhone: "525512345678", isPrimary: true });
-    expect(patient.emails[0]).toMatchObject({ normalizedEmail: "maria@example.com", isPrimary: true });
+    expect(patient.emails[0]).toMatchObject({
+      normalizedEmail: "maria@example.com",
+      isPrimary: true,
+    });
     expect(patient.createdVia).toBe("assistant");
   });
 

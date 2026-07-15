@@ -1,8 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-  createPatientReadService,
-  PatientReadServiceNotFoundError,
-} from "./patient-read-service";
+import { createPatientReadService, PatientReadServiceNotFoundError } from "./patient-read-service";
 
 const { getReadModelSource } = vi.hoisted(() => ({
   getReadModelSource: vi.fn(),
@@ -72,7 +69,8 @@ describe("PatientReadService", () => {
   });
 
   it("lists administrative profile DTOs for internal patient read consumers", async () => {
-    const result = await createPatientReadService().listAdministrativeProfiles("Administrative Consumer");
+    const result =
+      await createPatientReadService().listAdministrativeProfiles("Administrative Consumer");
 
     expect(result[0]).toMatchObject({
       id: "PAT-001",

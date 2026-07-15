@@ -5,7 +5,10 @@ import {
   requirePermission,
   UnauthorizedError,
 } from "@/lib/rbac/guards.server";
-import { PatientApplicationLayerNotFoundError, updatePatientUseCase } from "@/server/patients/application";
+import {
+  PatientApplicationLayerNotFoundError,
+  updatePatientUseCase,
+} from "@/server/patients/application";
 import { createPatientPersistencePort } from "@/server/patients/persistence";
 import {
   InvalidPatientPayloadError,

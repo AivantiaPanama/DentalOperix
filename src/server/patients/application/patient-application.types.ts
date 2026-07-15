@@ -1,4 +1,9 @@
-import type { CreatePatientInput, Patient, PatientId, UpdatePatientInput } from "../domain/patient.types";
+import type {
+  CreatePatientInput,
+  Patient,
+  PatientId,
+  UpdatePatientInput,
+} from "../domain/patient.types";
 import type { PatientIdentitySearch } from "../domain/patient-persistence-port";
 
 /**
@@ -41,8 +46,13 @@ export type PatientDuplicateReview = {
 };
 
 export type PatientApplicationServiceContract = {
-  createPatient(command: CreatePatientApplicationCommand): Promise<PatientApplicationResult<Patient>>;
+  createPatient(
+    command: CreatePatientApplicationCommand,
+  ): Promise<PatientApplicationResult<Patient>>;
   getPatientById(id: PatientId): Promise<PatientApplicationResult<Patient>>;
-  updatePatient(id: PatientId, command: UpdatePatientApplicationCommand): Promise<PatientApplicationResult<Patient>>;
+  updatePatient(
+    id: PatientId,
+    command: UpdatePatientApplicationCommand,
+  ): Promise<PatientApplicationResult<Patient>>;
   searchPatientsByIdentity(command: PatientIdentitySearchCommand): Promise<PatientSearchResult>;
 };

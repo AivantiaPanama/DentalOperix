@@ -24,12 +24,17 @@ export async function GET(request: Request) {
     if (params.get("email")) searchPayload.email = params.get("email");
     if (params.get("phone")) searchPayload.phone = params.get("phone");
     if (params.get("identifierType")) searchPayload.identifierType = params.get("identifierType");
-    if (params.get("identifierValue")) searchPayload.identifierValue = params.get("identifierValue");
-    if (params.get("excludePatientId")) searchPayload.excludePatientId = params.get("excludePatientId");
+    if (params.get("identifierValue"))
+      searchPayload.identifierValue = params.get("identifierValue");
+    if (params.get("excludePatientId"))
+      searchPayload.excludePatientId = params.get("excludePatientId");
     if (correlationId) searchPayload.metadata = { correlationId };
 
     const query = parsePatientSearchPayload(searchPayload);
-    const patients = await createPatientReadService().searchPatients(query, "Patient Management Search");
+    const patients = await createPatientReadService().searchPatients(
+      query,
+      "Patient Management Search",
+    );
 
     return jsonResponse({ success: true, patients });
   } catch (error) {

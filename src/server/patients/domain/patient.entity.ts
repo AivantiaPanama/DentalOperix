@@ -21,7 +21,10 @@ function resolveOperationTimestamp(now?: string): string {
   return now ?? new Date().toISOString();
 }
 
-function resolvePatientId(inputId: PatientId | undefined, optionId: PatientId | undefined): PatientId {
+function resolvePatientId(
+  inputId: PatientId | undefined,
+  optionId: PatientId | undefined,
+): PatientId {
   return inputId ?? optionId ?? `patient_${Date.now()}`;
 }
 
@@ -32,7 +35,10 @@ function resolvePatientId(inputId: PatientId | undefined, optionId: PatientId | 
  * Patients domain. This function remains the backward-compatible factory used
  * by application and persistence layers.
  */
-export function createPatientEntity(input: CreatePatientInput, options: CreatePatientAggregateOptions = {}): PatientAggregateRoot {
+export function createPatientEntity(
+  input: CreatePatientInput,
+  options: CreatePatientAggregateOptions = {},
+): PatientAggregateRoot {
   const validated = validateCreatePatientInput(input);
   const now = resolveOperationTimestamp(options.now);
   const id = resolvePatientId(validated.id, options.id);
@@ -151,7 +157,9 @@ export function applyPatientAggregateUpdate(
   const patientUpdates = Object.fromEntries(
     Object.entries(validated).filter(([key, value]) => key !== "actor" && value !== undefined),
   ) as Omit<UpdatePatientInput, "actor">;
-  const nextPatientName = createPatientNameValue({ displayName: patientUpdates.displayName ?? patient.displayName });
+  const nextPatientName = createPatientNameValue({
+    displayName: patientUpdates.displayName ?? patient.displayName,
+  });
 
   return {
     ...patient,
@@ -165,7 +173,11 @@ export function applyPatientAggregateUpdate(
   };
 }
 
-export function applyPatientUpdate(patient: Patient, input: UpdatePatientInput, now = new Date().toISOString()): Patient {
+export function applyPatientUpdate(
+  patient: Patient,
+  input: UpdatePatientInput,
+  now = new Date().toISOString(),
+): Patient {
   return applyPatientAggregateUpdate(patient, input, { now });
 }
 

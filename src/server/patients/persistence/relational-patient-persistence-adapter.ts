@@ -1,8 +1,20 @@
 import { createPatientEntity } from "../domain/patient.entity";
-import type { PatientIdentitySearch, PatientPersistencePort } from "../domain/patient-persistence-port";
-import type { CreatePatientInput, Patient, PatientId, UpdatePatientInput } from "../domain/patient.types";
+import type {
+  PatientIdentitySearch,
+  PatientPersistencePort,
+} from "../domain/patient-persistence-port";
+import type {
+  CreatePatientInput,
+  Patient,
+  PatientId,
+  UpdatePatientInput,
+} from "../domain/patient.types";
 import { validateUpdatePatientInput } from "../domain/patient.validation";
-import { normalizeIdentifier, normalizeName, normalizePhone } from "../domain/patient.value-objects";
+import {
+  normalizeIdentifier,
+  normalizeName,
+  normalizePhone,
+} from "../domain/patient.value-objects";
 import {
   RELATIONAL_PATIENT_ADDRESSES_TABLE_NAME,
   RELATIONAL_PATIENT_EMAILS_TABLE_NAME,
@@ -20,14 +32,21 @@ import {
   type RelationalPatientRow,
 } from "./patient-persistence-mappers";
 
-export const RELATIONAL_PATIENT_PERSISTENCE_ADAPTER_VERSION = "71.5.3-RELATIONAL-PATIENT-PERSISTENCE-ADAPTER" as const;
+export const RELATIONAL_PATIENT_PERSISTENCE_ADAPTER_VERSION =
+  "71.5.3-RELATIONAL-PATIENT-PERSISTENCE-ADAPTER" as const;
 
 export type PatientPersistenceQueryClient = {
-  query<T = Record<string, unknown>>(text: string, values?: unknown[]): Promise<{ rows: T[]; rowCount: number | null }>;
+  query<T = Record<string, unknown>>(
+    text: string,
+    values?: unknown[],
+  ): Promise<{ rows: T[]; rowCount: number | null }>;
 };
 
 type PgClient = PatientPersistenceQueryClient & { connect(): Promise<void>; end(): Promise<void> };
-type PgClientConstructor = new (config: { connectionString: string; ssl?: { rejectUnauthorized: boolean } }) => PgClient;
+type PgClientConstructor = new (config: {
+  connectionString: string;
+  ssl?: { rejectUnauthorized: boolean };
+}) => PgClient;
 export type PatientPersistenceClientFactory = () => Promise<PatientPersistenceQueryClient>;
 
 export class PatientPersistenceNotFoundError extends Error {
@@ -45,7 +64,10 @@ export async function createDefaultPatientPersistenceClient(): Promise<PgClient>
   const databaseUrl = getDatabaseUrl();
   if (!databaseUrl) throw new Error("Patient persistence requires DATABASE_URL or POSTGRES_URL.");
   const pgModule = (await import("pg")) as unknown as { Client: PgClientConstructor };
-  const client = new pgModule.Client({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false } });
+  const client = new pgModule.Client({
+    connectionString: databaseUrl,
+    ssl: { rejectUnauthorized: false },
+  });
   await client.connect();
   return client;
 }
@@ -59,7 +81,9 @@ function contactStatus(status: string): string {
 }
 
 export class RelationalPatientPersistenceAdapter implements PatientPersistencePort {
-  constructor(private readonly clientFactory: PatientPersistenceClientFactory = createDefaultPatientPersistenceClient) {}
+  constructor(
+    private readonly clientFactory: PatientPersistenceClientFactory = createDefaultPatientPersistenceClient,
+  ) {}
 
   async createPatient(input: CreatePatientInput): Promise<Patient> {
     const patient = createPatientEntity(input);
@@ -78,25 +102,70 @@ export class RelationalPatientPersistenceAdapter implements PatientPersistencePo
       for (const phone of patient.phones) {
         await client.query(
           `INSERT INTO ${RELATIONAL_PATIENT_PHONES_TABLE_NAME} (id, patient_id, phone, normalized_phone, label, is_primary, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-          [phone.id, phone.patientId, phone.phone, phone.normalizedPhone, phone.label ?? null, phone.isPrimary, contactStatus(phone.status), phone.createdAt, phone.updatedAt],
+          [
+            phone.id,
+            phone.patientId,
+            phone.phone,
+            phone.normalizedPhone,
+            phone.label ?? null,
+            phone.isPrimary,
+            contactStatus(phone.status),
+            phone.createdAt,
+            phone.updatedAt,
+          ],
         );
       }
       for (const email of patient.emails) {
         await client.query(
           `INSERT INTO ${RELATIONAL_PATIENT_EMAILS_TABLE_NAME} (id, patient_id, email, normalized_email, label, is_primary, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-          [email.id, email.patientId, email.email, email.normalizedEmail, email.label ?? null, email.isPrimary, contactStatus(email.status), email.createdAt, email.updatedAt],
+          [
+            email.id,
+            email.patientId,
+            email.email,
+            email.normalizedEmail,
+            email.label ?? null,
+            email.isPrimary,
+            contactStatus(email.status),
+            email.createdAt,
+            email.updatedAt,
+          ],
         );
       }
       for (const address of patient.addresses) {
         await client.query(
           `INSERT INTO ${RELATIONAL_PATIENT_ADDRESSES_TABLE_NAME} (id, patient_id, line1, line2, city, state, postal_code, country, label, is_primary, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-          [address.id, address.patientId, address.line1, address.line2 ?? null, address.city ?? null, address.state ?? null, address.postalCode ?? null, address.country ?? null, address.label ?? null, address.isPrimary, contactStatus(address.status), address.createdAt, address.updatedAt],
+          [
+            address.id,
+            address.patientId,
+            address.line1,
+            address.line2 ?? null,
+            address.city ?? null,
+            address.state ?? null,
+            address.postalCode ?? null,
+            address.country ?? null,
+            address.label ?? null,
+            address.isPrimary,
+            contactStatus(address.status),
+            address.createdAt,
+            address.updatedAt,
+          ],
         );
       }
       for (const identifier of patient.identifiers) {
         await client.query(
           `INSERT INTO ${RELATIONAL_PATIENT_IDENTIFIERS_TABLE_NAME} (id, patient_id, type, value, normalized_value, issuing_authority, is_primary, status, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-          [identifier.id, identifier.patientId, identifier.type, identifier.value, identifier.normalizedValue, identifier.issuingAuthority ?? null, identifier.isPrimary, contactStatus(identifier.status), identifier.createdAt, identifier.updatedAt],
+          [
+            identifier.id,
+            identifier.patientId,
+            identifier.type,
+            identifier.value,
+            identifier.normalizedValue,
+            identifier.issuingAuthority ?? null,
+            identifier.isPrimary,
+            contactStatus(identifier.status),
+            identifier.createdAt,
+            identifier.updatedAt,
+          ],
         );
       }
       await client.query("COMMIT");
@@ -127,9 +196,11 @@ export class RelationalPatientPersistenceAdapter implements PatientPersistencePo
     }
     if (update.firstName !== undefined) addAssignment("first_name", update.firstName);
     if (update.lastName !== undefined) addAssignment("last_name", update.lastName);
-    if (update.secondLastName !== undefined) addAssignment("second_last_name", update.secondLastName);
+    if (update.secondLastName !== undefined)
+      addAssignment("second_last_name", update.secondLastName);
     if (update.status !== undefined) addAssignment("status", update.status);
-    if (update.requiresInvoice !== undefined) addAssignment("requires_invoice", update.requiresInvoice);
+    if (update.requiresInvoice !== undefined)
+      addAssignment("requires_invoice", update.requiresInvoice);
     if (update.isRetired !== undefined) addAssignment("is_retired", update.isRetired);
     if (update.hasInsurance !== undefined) addAssignment("has_insurance", update.hasInsurance);
     if (update.actor) {
@@ -159,7 +230,8 @@ export class RelationalPatientPersistenceAdapter implements PatientPersistencePo
       clauses.push(sql.replace("?", `$${values.length}`));
     };
 
-    if (search.normalizedName) addClause("p.normalized_name = ?", normalizeName(search.normalizedName));
+    if (search.normalizedName)
+      addClause("p.normalized_name = ?", normalizeName(search.normalizedName));
     if (search.email) addClause("e.normalized_email = ?", search.email.trim().toLowerCase());
     if (search.phone) addClause("ph.normalized_phone = ?", normalizePhone(search.phone));
     if (search.identifierType && search.identifierValue) {
@@ -187,20 +259,46 @@ export class RelationalPatientPersistenceAdapter implements PatientPersistencePo
       values,
     );
 
-    const patients = await Promise.all(result.rows.map((row) => this.loadPatientGraph(client, row.id)));
+    const patients = await Promise.all(
+      result.rows.map((row) => this.loadPatientGraph(client, row.id)),
+    );
     return patients.filter((patient): patient is Patient => Boolean(patient));
   }
 
-  private async loadPatientGraph(client: PatientPersistenceQueryClient, id: PatientId): Promise<Patient | null> {
-    const patientResult = await client.query<RelationalPatientRow>(`SELECT ${PATIENT_COLUMNS} FROM ${RELATIONAL_PATIENTS_TABLE_NAME} WHERE id = $1 LIMIT 1`, [id]);
+  private async loadPatientGraph(
+    client: PatientPersistenceQueryClient,
+    id: PatientId,
+  ): Promise<Patient | null> {
+    const patientResult = await client.query<RelationalPatientRow>(
+      `SELECT ${PATIENT_COLUMNS} FROM ${RELATIONAL_PATIENTS_TABLE_NAME} WHERE id = $1 LIMIT 1`,
+      [id],
+    );
     const patient = patientResult.rows[0];
     if (!patient) return null;
     const [phones, emails, addresses, identifiers] = await Promise.all([
-      client.query<RelationalPatientPhoneRow>(`SELECT * FROM ${RELATIONAL_PATIENT_PHONES_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`, [id]),
-      client.query<RelationalPatientEmailRow>(`SELECT * FROM ${RELATIONAL_PATIENT_EMAILS_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`, [id]),
-      client.query<RelationalPatientAddressRow>(`SELECT * FROM ${RELATIONAL_PATIENT_ADDRESSES_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`, [id]),
-      client.query<RelationalPatientIdentifierRow>(`SELECT * FROM ${RELATIONAL_PATIENT_IDENTIFIERS_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`, [id]),
+      client.query<RelationalPatientPhoneRow>(
+        `SELECT * FROM ${RELATIONAL_PATIENT_PHONES_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`,
+        [id],
+      ),
+      client.query<RelationalPatientEmailRow>(
+        `SELECT * FROM ${RELATIONAL_PATIENT_EMAILS_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`,
+        [id],
+      ),
+      client.query<RelationalPatientAddressRow>(
+        `SELECT * FROM ${RELATIONAL_PATIENT_ADDRESSES_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`,
+        [id],
+      ),
+      client.query<RelationalPatientIdentifierRow>(
+        `SELECT * FROM ${RELATIONAL_PATIENT_IDENTIFIERS_TABLE_NAME} WHERE patient_id = $1 ORDER BY is_primary DESC, created_at ASC`,
+        [id],
+      ),
     ]);
-    return mapRelationalPatientGraphToDomain({ patient, phones: phones.rows, emails: emails.rows, addresses: addresses.rows, identifiers: identifiers.rows });
+    return mapRelationalPatientGraphToDomain({
+      patient,
+      phones: phones.rows,
+      emails: emails.rows,
+      addresses: addresses.rows,
+      identifiers: identifiers.rows,
+    });
   }
 }

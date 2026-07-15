@@ -64,7 +64,9 @@ describe("/api/patients/:id", () => {
   });
 
   it("returns 404 when Patient Read Service cannot find the patient", async () => {
-    getPatientById.mockRejectedValue(new PatientReadServiceNotFoundError("Paciente PAT-404 no encontrado."));
+    getPatientById.mockRejectedValue(
+      new PatientReadServiceNotFoundError("Paciente PAT-404 no encontrado."),
+    );
 
     const response = await GET(new Request("http://localhost/api/patients/PAT-404"));
 

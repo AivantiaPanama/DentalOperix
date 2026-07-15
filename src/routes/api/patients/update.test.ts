@@ -28,7 +28,9 @@ vi.mock("@/server/patients/persistence", () => ({
 }));
 
 vi.mock("@/server/patients/application", async () => {
-  const actual = await vi.importActual<typeof import("@/server/patients/application")>("@/server/patients/application");
+  const actual = await vi.importActual<typeof import("@/server/patients/application")>(
+    "@/server/patients/application",
+  );
   return { ...actual, updatePatientUseCase };
 });
 
@@ -39,7 +41,10 @@ describe("PATCH /api/patients/update", () => {
     vi.resetAllMocks();
     vi.resetModules();
     createPatientPersistencePort.mockReturnValue({ port: "patient" });
-    updatePatientUseCase.mockResolvedValue({ ok: true, patient: { id: "PAT-001", displayName: "Ana P." } });
+    updatePatientUseCase.mockResolvedValue({
+      ok: true,
+      patient: { id: "PAT-001", displayName: "Ana P." },
+    });
     const routeModule = await import("./update");
     PATCH = routeModule.PATCH;
   });
@@ -54,8 +59,13 @@ describe("PATCH /api/patients/update", () => {
 
     expect(response.status).toBe(200);
     expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:update");
-    expect(updatePatientUseCase).toHaveBeenCalledWith({ port: "patient" }, "PAT-001", { displayName: "Ana P." });
-    expect(await response.json()).toEqual({ success: true, patient: { id: "PAT-001", displayName: "Ana P." } });
+    expect(updatePatientUseCase).toHaveBeenCalledWith({ port: "patient" }, "PAT-001", {
+      displayName: "Ana P.",
+    });
+    expect(await response.json()).toEqual({
+      success: true,
+      patient: { id: "PAT-001", displayName: "Ana P." },
+    });
   });
 
   it("rejects empty updates", async () => {

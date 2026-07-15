@@ -27,16 +27,76 @@ export type RelationalPatientColumn = {
 };
 
 export const RELATIONAL_PATIENT_COLUMNS: RelationalPatientColumn[] = [
-  { table: "patients", name: "id", source: "identity", required: true, description: "Stable Patient identity identifier." },
-  { table: "patients", name: "display_name", source: "identity", required: true, description: "Human-readable Patient name." },
-  { table: "patients", name: "normalized_name", source: "identity", required: true, description: "Normalized name for identity resolution." },
-  { table: "patients", name: "status", source: "identity", required: true, description: "Patient lifecycle state." },
-  { table: "patient_phones", name: "normalized_phone", source: "contact-point", required: true, description: "Normalized phone for duplicate detection." },
-  { table: "patient_emails", name: "normalized_email", source: "contact-point", required: true, description: "Normalized email for duplicate detection." },
-  { table: "patient_identifiers", name: "normalized_value", source: "identifier", required: true, description: "Normalized external/CID identifier." },
-  { table: "patients", name: "requires_invoice", source: "administrative", required: true, description: "Administrative invoice flag; not billing automation." },
-  { table: "patients", name: "is_retired", source: "administrative", required: true, description: "Administrative retired flag; not discount automation." },
-  { table: "patients", name: "has_insurance", source: "administrative", required: true, description: "Administrative insurance flag; not coverage calculation." },
+  {
+    table: "patients",
+    name: "id",
+    source: "identity",
+    required: true,
+    description: "Stable Patient identity identifier.",
+  },
+  {
+    table: "patients",
+    name: "display_name",
+    source: "identity",
+    required: true,
+    description: "Human-readable Patient name.",
+  },
+  {
+    table: "patients",
+    name: "normalized_name",
+    source: "identity",
+    required: true,
+    description: "Normalized name for identity resolution.",
+  },
+  {
+    table: "patients",
+    name: "status",
+    source: "identity",
+    required: true,
+    description: "Patient lifecycle state.",
+  },
+  {
+    table: "patient_phones",
+    name: "normalized_phone",
+    source: "contact-point",
+    required: true,
+    description: "Normalized phone for duplicate detection.",
+  },
+  {
+    table: "patient_emails",
+    name: "normalized_email",
+    source: "contact-point",
+    required: true,
+    description: "Normalized email for duplicate detection.",
+  },
+  {
+    table: "patient_identifiers",
+    name: "normalized_value",
+    source: "identifier",
+    required: true,
+    description: "Normalized external/CID identifier.",
+  },
+  {
+    table: "patients",
+    name: "requires_invoice",
+    source: "administrative",
+    required: true,
+    description: "Administrative invoice flag; not billing automation.",
+  },
+  {
+    table: "patients",
+    name: "is_retired",
+    source: "administrative",
+    required: true,
+    description: "Administrative retired flag; not discount automation.",
+  },
+  {
+    table: "patients",
+    name: "has_insurance",
+    source: "administrative",
+    required: true,
+    description: "Administrative insurance flag; not coverage calculation.",
+  },
 ] as const;
 
 export const RELATIONAL_PATIENTS_SCHEMA_GOVERNANCE = {

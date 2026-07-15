@@ -28,7 +28,9 @@ vi.mock("@/server/patients/persistence", () => ({
 }));
 
 vi.mock("@/server/patients/application", async () => {
-  const actual = await vi.importActual<typeof import("@/server/patients/application")>("@/server/patients/application");
+  const actual = await vi.importActual<typeof import("@/server/patients/application")>(
+    "@/server/patients/application",
+  );
   return { ...actual, createPatientUseCase };
 });
 
@@ -73,7 +75,10 @@ describe("POST /api/patients/create", () => {
     expect(response.status).toBe(201);
     expect(requirePermission).toHaveBeenCalledWith(expect.any(Request), "patients:update");
     expect(createPatientPersistencePort).toHaveBeenCalledTimes(1);
-    expect(createPatientUseCase).toHaveBeenCalledWith({ port: "patient" }, { displayName: "Ana Perez", source: "admin" });
+    expect(createPatientUseCase).toHaveBeenCalledWith(
+      { port: "patient" },
+      { displayName: "Ana Perez", source: "admin" },
+    );
     expect(await response.json()).toEqual({ success: true, patient });
   });
 

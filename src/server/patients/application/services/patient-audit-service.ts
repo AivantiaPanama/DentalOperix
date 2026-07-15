@@ -30,7 +30,9 @@ function toAuditEventType(value: string): PatientAuditEventType | PatientApplica
 export class RegisterPatientAuditEventService {
   constructor(private readonly audit: PatientAuditContract) {}
 
-  async execute(command: RegisterPatientAuditEventCommand): Promise<PatientServiceResult<RegisterPatientAuditEventResult>> {
+  async execute(
+    command: RegisterPatientAuditEventCommand,
+  ): Promise<PatientServiceResult<RegisterPatientAuditEventResult>> {
     const eventType = toAuditEventType(command.eventType);
     if (typeof eventType !== "string") {
       return { success: false, errors: [eventType] };
@@ -62,7 +64,11 @@ export class RegisterPatientAuditEventService {
         errors: [],
       };
     } catch (error) {
-      return failure("PATIENT_AUDIT_REGISTRATION_FAILED", "Patient audit registration failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_AUDIT_REGISTRATION_FAILED",
+        "Patient audit registration failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }

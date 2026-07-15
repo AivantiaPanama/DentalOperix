@@ -1,6 +1,12 @@
 import type { PatientAuditContract } from "./patient-audit-contract";
 import { NoopPatientAuditContract } from "./patient-audit-contract";
-import type { CreatePatientInput, Patient, PatientAuditActor, PatientId, UpdatePatientInput } from "./patient-domain";
+import type {
+  CreatePatientInput,
+  Patient,
+  PatientAuditActor,
+  PatientId,
+  UpdatePatientInput,
+} from "./patient-domain";
 import type { PatientRepository } from "./patient-repository";
 import { DuplicatePatientIdentityError } from "./patient-repository";
 import { PatientIdentityResolutionService } from "./patient-identity-resolution";
@@ -53,7 +59,10 @@ export class PatientService {
     return patient;
   }
 
-  async updatePatient(id: PatientId, input: UpdatePatientInput & { actor: PatientAuditActor }): Promise<Patient> {
+  async updatePatient(
+    id: PatientId,
+    input: UpdatePatientInput & { actor: PatientAuditActor },
+  ): Promise<Patient> {
     const patient = await this.repository.updatePatient(id, input);
     await this.audit.recordPatientAuditEvent({
       patientId: patient.id,

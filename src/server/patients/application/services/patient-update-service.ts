@@ -62,7 +62,11 @@ export class UpdatePatientService {
       if (error instanceof PatientNotFoundError) {
         return failure("PATIENT_NOT_FOUND", error.message);
       }
-      return failure("PATIENT_UPDATE_FAILED", "Patient update failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_UPDATE_FAILED",
+        "Patient update failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }

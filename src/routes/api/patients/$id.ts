@@ -12,7 +12,10 @@ export async function GET(request: Request) {
   try {
     requirePermission(request, "patients:read");
     const id = getPatientIdFromPath(request);
-    const patient = await createPatientReadService().getPatientById(id, "Patient Management Detail");
+    const patient = await createPatientReadService().getPatientById(
+      id,
+      "Patient Management Detail",
+    );
 
     return jsonResponse({ success: true, patient });
   } catch (error) {
@@ -22,7 +25,10 @@ export async function GET(request: Request) {
       return jsonResponse({ success: false, error: error.message }, 404);
     }
 
-    console.error("Failed to get patient administrative profile through Patient Read Service:", error);
+    console.error(
+      "Failed to get patient administrative profile through Patient Read Service:",
+      error,
+    );
     return jsonResponse(
       { success: false, error: error instanceof Error ? error.message : "Unknown error" },
       500,

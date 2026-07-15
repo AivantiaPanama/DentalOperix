@@ -72,10 +72,10 @@ describe("71.5.1 Patient Domain Foundation", () => {
         }),
       searchPatientsByIdentity: async () => [],
     };
-  
+
     await expect(port.findPatientById("missing")).resolves.toBeNull();
   });
-  
+
   it("keeps automated patient merge explicitly blocked", () => {
     expect(() => {
       throw new AutomatedPatientMergeNotAllowedError();

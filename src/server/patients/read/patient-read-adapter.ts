@@ -25,10 +25,16 @@ export function toPatientSummaryDTO(patient: PatientAdministrativeProfile): Pati
 }
 
 export function toPatientDetailDTO(patient: PatientAdministrativeProfile): PatientDetailDTO {
-  return Object.freeze({ ...patient, sourceLeadIds: [...patient.sourceLeadIds], missingFields: [...patient.missingFields] });
+  return Object.freeze({
+    ...patient,
+    sourceLeadIds: [...patient.sourceLeadIds],
+    missingFields: [...patient.missingFields],
+  });
 }
 
-export function toPatientSearchResultDTO(patient: PatientAdministrativeProfile): PatientSearchResultDTO {
+export function toPatientSearchResultDTO(
+  patient: PatientAdministrativeProfile,
+): PatientSearchResultDTO {
   return toPatientSummaryDTO(patient);
 }
 

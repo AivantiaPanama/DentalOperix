@@ -91,7 +91,8 @@ export type RelationalPatientGraphRows = {
   identifiers: RelationalPatientIdentifierRow[];
 };
 
-export const RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION = "71.5.3-PATIENT-PERSISTENCE-MAPPERS" as const;
+export const RELATIONAL_PATIENT_PERSISTENCE_MAPPER_VERSION =
+  "71.5.3-PATIENT-PERSISTENCE-MAPPERS" as const;
 
 function toIsoString(value: string | Date): string {
   return value instanceof Date ? value.toISOString() : value.toString();

@@ -16,12 +16,22 @@ describe("Relational Patient schema metadata", () => {
   });
 
   it("uses approved lifecycle states", () => {
-    expect(RELATIONAL_PATIENT_STATUS_VALUES).toEqual(["active", "inactive", "lost_contact", "archived"]);
+    expect(RELATIONAL_PATIENT_STATUS_VALUES).toEqual([
+      "active",
+      "inactive",
+      "lost_contact",
+      "archived",
+    ]);
   });
 
   it("documents normalized foundational tables", () => {
     expect(RELATIONAL_PATIENT_COLUMNS.map((column) => column.table)).toEqual(
-      expect.arrayContaining(["patients", "patient_phones", "patient_emails", "patient_identifiers"]),
+      expect.arrayContaining([
+        "patients",
+        "patient_phones",
+        "patient_emails",
+        "patient_identifiers",
+      ]),
     );
   });
 });

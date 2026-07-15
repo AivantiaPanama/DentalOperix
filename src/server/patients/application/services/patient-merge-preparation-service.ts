@@ -10,7 +10,12 @@ function failure(code: string, message: string, details?: string): PatientServic
   return { success: false, errors: [error] };
 }
 
-function addConflict(conflicts: MergeConflict[], fieldName: string, sourceValue?: string | boolean, targetValue?: string | boolean) {
+function addConflict(
+  conflicts: MergeConflict[],
+  fieldName: string,
+  sourceValue?: string | boolean,
+  targetValue?: string | boolean,
+) {
   if (sourceValue === undefined || targetValue === undefined || sourceValue === targetValue) return;
   conflicts.push({ fieldName, sourceValue: String(sourceValue), targetValue: String(targetValue) });
 }
@@ -29,9 +34,14 @@ function buildConflicts(source: Patient, target: Patient): MergeConflict[] {
 export class PreparePatientMergeService {
   constructor(private readonly repository: PatientRepository) {}
 
-  async execute(command: PreparePatientMergeCommand): Promise<PatientServiceResult<MergePreparationResult>> {
+  async execute(
+    command: PreparePatientMergeCommand,
+  ): Promise<PatientServiceResult<MergePreparationResult>> {
     if (command.sourcePatientId === command.targetPatientId) {
-      return failure("INVALID_MERGE_TARGET", "Source and target patient identifiers must be different.");
+      return failure(
+        "INVALID_MERGE_TARGET",
+        "Source and target patient identifiers must be different.",
+      );
     }
 
     try {
@@ -40,8 +50,16 @@ export class PreparePatientMergeService {
         this.repository.findPatientById(command.targetPatientId),
       ]);
 
-      if (!source) return failure("SOURCE_PATIENT_NOT_FOUND", `Patient ${command.sourcePatientId} was not found.`);
-      if (!target) return failure("TARGET_PATIENT_NOT_FOUND", `Patient ${command.targetPatientId} was not found.`);
+      if (!source)
+        return failure(
+          "SOURCE_PATIENT_NOT_FOUND",
+          `Patient ${command.sourcePatientId} was not found.`,
+        );
+      if (!target)
+        return failure(
+          "TARGET_PATIENT_NOT_FOUND",
+          `Patient ${command.targetPatientId} was not found.`,
+        );
 
       return {
         success: true,
@@ -54,7 +72,11 @@ export class PreparePatientMergeService {
         errors: [],
       };
     } catch (error) {
-      return failure("PATIENT_MERGE_PREPARATION_FAILED", "Patient merge preparation failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_MERGE_PREPARATION_FAILED",
+        "Patient merge preparation failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }

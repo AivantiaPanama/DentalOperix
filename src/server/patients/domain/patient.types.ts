@@ -180,7 +180,17 @@ export type CreatePatientInput = {
 };
 
 export type UpdatePatientInput = Partial<
-  Pick<Patient, "displayName" | "firstName" | "lastName" | "secondLastName" | "status" | "requiresInvoice" | "isRetired" | "hasInsurance">
+  Pick<
+    Patient,
+    | "displayName"
+    | "firstName"
+    | "lastName"
+    | "secondLastName"
+    | "status"
+    | "requiresInvoice"
+    | "isRetired"
+    | "hasInsurance"
+  >
 > & {
   actor?: PatientAuditActor;
 };

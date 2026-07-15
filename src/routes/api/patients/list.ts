@@ -18,7 +18,10 @@ export async function GET(request: Request) {
     if (error instanceof UnauthorizedError) return createUnauthorizedResponse();
     if (error instanceof ForbiddenError) return createForbiddenResponse();
 
-    console.error("Failed to list patient administrative profiles through Patient Read Service:", error);
+    console.error(
+      "Failed to list patient administrative profiles through Patient Read Service:",
+      error,
+    );
     return jsonResponse(
       { success: false, error: error instanceof Error ? error.message : "Unknown error" },
       500,

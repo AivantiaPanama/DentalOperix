@@ -31,7 +31,9 @@ function toActorRole(value: string): PatientActorRole | undefined {
   return patientActorRoles.has(value) ? (value as PatientActorRole) : undefined;
 }
 
-function buildCreateInput(command: CreatePatientCommand): CreatePatientInput | PatientApplicationError {
+function buildCreateInput(
+  command: CreatePatientCommand,
+): CreatePatientInput | PatientApplicationError {
   if (!isPatientCreationSource(command.source)) {
     return {
       code: "INVALID_PATIENT_SOURCE",
@@ -73,7 +75,10 @@ export class CreatePatientService {
     try {
       const resolution = await this.identityResolution.resolveBeforeCreate(input);
       if (resolution.status === "strong_match") {
-        return failure("DUPLICATE_PATIENT_IDENTITY", "Strong patient identity match found before create.");
+        return failure(
+          "DUPLICATE_PATIENT_IDENTITY",
+          "Strong patient identity match found before create.",
+        );
       }
 
       if (resolution.status === "ambiguous_match") {
@@ -110,7 +115,11 @@ export class CreatePatientService {
       if (error instanceof DuplicatePatientIdentityError) {
         return failure("DUPLICATE_PATIENT_IDENTITY", error.message);
       }
-      return failure("PATIENT_CREATE_FAILED", "Patient creation failed.", error instanceof Error ? error.message : String(error));
+      return failure(
+        "PATIENT_CREATE_FAILED",
+        "Patient creation failed.",
+        error instanceof Error ? error.message : String(error),
+      );
     }
   }
 }
