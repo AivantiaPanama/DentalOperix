@@ -15,7 +15,13 @@ const foundationSource = readFileSync(
 
 describe("17.4 executive dashboard UI foundation pack", () => {
   it("creates one approved foundation pack covering 17.4-A through 17.4-J", () => {
-    const pack = createExecutiveDashboardUiFoundationPack(undefined, undefined, undefined, undefined, "2026-01-01T00:00:00.000Z");
+    const pack = createExecutiveDashboardUiFoundationPack(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(pack).toMatchObject({
       version: EXECUTIVE_DASHBOARD_UI_FOUNDATION_PACK_VERSION,
@@ -32,15 +38,29 @@ describe("17.4 executive dashboard UI foundation pack", () => {
   it("defines layout shells, navigation, and composition for exactly the approved dashboard surfaces", () => {
     const pack = createExecutiveDashboardUiFoundationPack();
 
-    expect(pack.layoutShells.map((layout) => layout.surface)).toEqual(["executive", "operational", "governance"]);
+    expect(pack.layoutShells.map((layout) => layout.surface)).toEqual([
+      "executive",
+      "operational",
+      "governance",
+    ]);
     expect(pack.navigation.map((item) => item.path)).toEqual([
       "/admin/dashboard/executive",
       "/admin/dashboard/operational",
       "/admin/dashboard/governance",
     ]);
-    expect(pack.compositionRuntime.map((composition) => composition.surface)).toEqual(["executive", "operational", "governance"]);
-    expect(pack.layoutShells.every((layout) => layout.regions.join("|") === "header|navigation|content|status")).toBe(true);
-    expect(pack.layoutShells.every((layout) => layout.runtimeStatus === "foundation-contract-only")).toBe(true);
+    expect(pack.compositionRuntime.map((composition) => composition.surface)).toEqual([
+      "executive",
+      "operational",
+      "governance",
+    ]);
+    expect(
+      pack.layoutShells.every(
+        (layout) => layout.regions.join("|") === "header|navigation|content|status",
+      ),
+    ).toBe(true);
+    expect(
+      pack.layoutShells.every((layout) => layout.runtimeStatus === "foundation-contract-only"),
+    ).toBe(true);
     expect(pack.layoutShells.every((layout) => layout.implementationIncluded === false)).toBe(true);
   });
 
@@ -60,8 +80,16 @@ describe("17.4 executive dashboard UI foundation pack", () => {
       "isolation-status-widget",
       "read-model-freeze-status-widget",
     ]);
-    expect(pack.widgetRegistry.every((entry) => entry.allowedContract === "ExecutiveDashboardApiContracts")).toBe(true);
-    expect(pack.widgetRegistry.every((entry) => entry.requiredPermission === "executive-observability:read")).toBe(true);
+    expect(
+      pack.widgetRegistry.every(
+        (entry) => entry.allowedContract === "ExecutiveDashboardApiContracts",
+      ),
+    ).toBe(true);
+    expect(
+      pack.widgetRegistry.every(
+        (entry) => entry.requiredPermission === "executive-observability:read",
+      ),
+    ).toBe(true);
     expect(pack.widgetRegistry.every((entry) => entry.exposure === "metric-only")).toBe(true);
     expect(pack.widgetRegistry.every((entry) => !entry.visualImplementationIncluded)).toBe(true);
     expect(pack.widgetRegistry.every((entry) => !entry.domainLogicIncluded)).toBe(true);
@@ -71,27 +99,61 @@ describe("17.4 executive dashboard UI foundation pack", () => {
   it("binds access guards and data clients without credential storage, fetch, transport, or client fallback", () => {
     const pack = createExecutiveDashboardUiFoundationPack();
 
-    expect(pack.accessGuardBindings.every((binding) => binding.requiredPermission === "executive-observability:read")).toBe(true);
-    expect(pack.accessGuardBindings.every((binding) => binding.accessLevel === "metric-only-read")).toBe(true);
-    expect(pack.accessGuardBindings.every((binding) => binding.guardSource === "executive-dashboard-access-model/v1")).toBe(true);
-    expect(pack.accessGuardBindings.every((binding) => binding.credentialStorageIncluded === false)).toBe(true);
+    expect(
+      pack.accessGuardBindings.every(
+        (binding) => binding.requiredPermission === "executive-observability:read",
+      ),
+    ).toBe(true);
+    expect(
+      pack.accessGuardBindings.every((binding) => binding.accessLevel === "metric-only-read"),
+    ).toBe(true);
+    expect(
+      pack.accessGuardBindings.every(
+        (binding) => binding.guardSource === "executive-dashboard-access-model/v1",
+      ),
+    ).toBe(true);
+    expect(
+      pack.accessGuardBindings.every((binding) => binding.credentialStorageIncluded === false),
+    ).toBe(true);
 
     expect(pack.dataClientBindings.every((binding) => binding.method === "GET")).toBe(true);
-    expect(pack.dataClientBindings.every((binding) => binding.bindingSource === "executive-dashboard-data-client-design/v1")).toBe(true);
-    expect(pack.dataClientBindings.every((binding) => binding.transportImplementationIncluded === false)).toBe(true);
-    expect(pack.dataClientBindings.every((binding) => binding.fetchImplementationIncluded === false)).toBe(true);
-    expect(pack.dataClientBindings.every((binding) => binding.clientSideFallbackIncluded === false)).toBe(true);
-    expect(pack.dataClientBindings.every((binding) => binding.responseExposure === "metric-only")).toBe(true);
+    expect(
+      pack.dataClientBindings.every(
+        (binding) => binding.bindingSource === "executive-dashboard-data-client-design/v1",
+      ),
+    ).toBe(true);
+    expect(
+      pack.dataClientBindings.every((binding) => binding.transportImplementationIncluded === false),
+    ).toBe(true);
+    expect(
+      pack.dataClientBindings.every((binding) => binding.fetchImplementationIncluded === false),
+    ).toBe(true);
+    expect(
+      pack.dataClientBindings.every((binding) => binding.clientSideFallbackIncluded === false),
+    ).toBe(true);
+    expect(
+      pack.dataClientBindings.every((binding) => binding.responseExposure === "metric-only"),
+    ).toBe(true);
   });
 
   it("keeps empty, error, and forbidden UX state contracts sanitized and metric-only", () => {
     const pack = createExecutiveDashboardUiFoundationPack();
 
-    expect(pack.uxStateContracts.map((state) => state.state)).toEqual(["empty", "error", "forbidden"]);
+    expect(pack.uxStateContracts.map((state) => state.state)).toEqual([
+      "empty",
+      "error",
+      "forbidden",
+    ]);
     expect(pack.uxStateContracts.every((state) => state.sanitized)).toBe(true);
-    expect(pack.uxStateContracts.every((state) => state.mayDisplayRawTelemetry === false)).toBe(true);
-    expect(pack.uxStateContracts.every((state) => state.mayDisplayAggregateState === false)).toBe(true);
-    expect(pack.uxStateContracts.every((state) => state.mayDisplayAdapterState === false)).toBe(true);
+    expect(pack.uxStateContracts.every((state) => state.mayDisplayRawTelemetry === false)).toBe(
+      true,
+    );
+    expect(pack.uxStateContracts.every((state) => state.mayDisplayAggregateState === false)).toBe(
+      true,
+    );
+    expect(pack.uxStateContracts.every((state) => state.mayDisplayAdapterState === false)).toBe(
+      true,
+    );
     expect(pack.uxStateContracts.every((state) => state.mayTriggerFallback === false)).toBe(true);
     expect(pack.uxStateContracts.every((state) => state.exposure === "metric-only")).toBe(true);
   });
@@ -144,7 +206,9 @@ describe("17.4 executive dashboard UI foundation pack", () => {
     expect(foundationSource).not.toMatch(
       /ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/,
     );
-    expect(foundationSource).not.toMatch(/fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/);
+    expect(foundationSource).not.toMatch(
+      /fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/,
+    );
     expect(foundationSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
     expect(foundationSource).not.toMatch(/admin-auth|login\.tsx|api\/admin\/login/);
     expect(foundationSource).not.toMatch(

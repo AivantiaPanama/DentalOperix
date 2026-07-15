@@ -136,31 +136,33 @@ export type ExecutiveDashboardReleaseCandidatePack = {
   nextPhase: "19.3 Dashboard Production Activation Review";
 };
 
-export const EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_SCOPES: ExecutiveDashboardReleaseCandidateScope[] = [
-  "19.0-A-release-candidate-contract",
-  "19.0-B-approved-capability-consolidation",
-  "19.0-C-runtime-wiring-inclusion",
-  "19.0-D-no-new-domain-capability",
-  "19.1-A-governance-matrix",
-  "19.1-B-metric-only-verification",
-  "19.1-C-read-only-verification",
-  "19.1-D-feature-flag-verification",
-  "19.1-E-permission-gate-verification",
-  "19.1-F-no-direct-internal-access-verification",
-  "19.1-G-no-client-fallback-verification",
-  "19.2-A-release-candidate-tests",
-  "19.2-B-document-pack",
-  "19.2-C-production-handoff-checklist",
-  "19.2-D-regression-closure",
-];
+export const EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_SCOPES: ExecutiveDashboardReleaseCandidateScope[] =
+  [
+    "19.0-A-release-candidate-contract",
+    "19.0-B-approved-capability-consolidation",
+    "19.0-C-runtime-wiring-inclusion",
+    "19.0-D-no-new-domain-capability",
+    "19.1-A-governance-matrix",
+    "19.1-B-metric-only-verification",
+    "19.1-C-read-only-verification",
+    "19.1-D-feature-flag-verification",
+    "19.1-E-permission-gate-verification",
+    "19.1-F-no-direct-internal-access-verification",
+    "19.1-G-no-client-fallback-verification",
+    "19.2-A-release-candidate-tests",
+    "19.2-B-document-pack",
+    "19.2-C-production-handoff-checklist",
+    "19.2-D-regression-closure",
+  ];
 
-export const EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_CAPABILITIES: ExecutiveDashboardReleaseCandidateCapability[] = [
-  "runtime-wiring",
-  "runtime-consumption",
-  "controlled-activation",
-  "production-readiness",
-  "admin-route-candidate",
-];
+export const EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_CAPABILITIES: ExecutiveDashboardReleaseCandidateCapability[] =
+  [
+    "runtime-wiring",
+    "runtime-consumption",
+    "controlled-activation",
+    "production-readiness",
+    "admin-route-candidate",
+  ];
 
 function createGuardrails(): ExecutiveDashboardReleaseCandidateGuardrails {
   return {
@@ -213,12 +215,22 @@ function createGovernanceMatrix(): ExecutiveDashboardReleaseCandidateMatrixEntry
     { rule: "no-route-mutation", decision: "pass", evidence: "release-candidate-guardrail" },
     { rule: "no-login-mutation", decision: "pass", evidence: "release-candidate-guardrail" },
     { rule: "no-api-mutation", decision: "pass", evidence: "release-candidate-guardrail" },
-    { rule: "source-of-truth-preserved", decision: "pass", evidence: "release-candidate-guardrail" },
-    { rule: "platform-freeze-preserved", decision: "pass", evidence: "release-candidate-guardrail" },
+    {
+      rule: "source-of-truth-preserved",
+      decision: "pass",
+      evidence: "release-candidate-guardrail",
+    },
+    {
+      rule: "platform-freeze-preserved",
+      decision: "pass",
+      evidence: "release-candidate-guardrail",
+    },
   ];
 }
 
-function createSurface(binding: ExecutiveDashboardRuntimeWiringViewBinding): ExecutiveDashboardReleaseCandidateSurface {
+function createSurface(
+  binding: ExecutiveDashboardRuntimeWiringViewBinding,
+): ExecutiveDashboardReleaseCandidateSurface {
   return {
     surface: binding.surface,
     binding,
@@ -259,16 +271,23 @@ export function createExecutiveDashboardReleaseCandidatePack({
   };
 }
 
-export function assertExecutiveDashboardReleaseCandidatePack(pack: ExecutiveDashboardReleaseCandidatePack): void {
+export function assertExecutiveDashboardReleaseCandidatePack(
+  pack: ExecutiveDashboardReleaseCandidatePack,
+): void {
   if (pack.phase !== "19.0-19.2" || pack.status !== "approved-release-candidate") {
     throw new Error("Executive dashboard release candidate pack is not approved.");
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_SCOPES.join("|")) {
-    throw new Error("Executive dashboard release candidate pack does not cover the full 19.0-19.2 scope.");
+    throw new Error(
+      "Executive dashboard release candidate pack does not cover the full 19.0-19.2 scope.",
+    );
   }
 
-  if (pack.approvedCapabilities.join("|") !== EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_CAPABILITIES.join("|")) {
+  if (
+    pack.approvedCapabilities.join("|") !==
+    EXECUTIVE_DASHBOARD_RELEASE_CANDIDATE_CAPABILITIES.join("|")
+  ) {
     throw new Error("Executive dashboard release candidate capabilities are incomplete.");
   }
 
@@ -314,7 +333,9 @@ export function assertExecutiveDashboardReleaseCandidatePack(pack: ExecutiveDash
   }
 
   if (pack.surfaces.length !== 3) {
-    throw new Error("Executive dashboard release candidate must cover exactly three dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard release candidate must cover exactly three dashboard surfaces.",
+    );
   }
 
   if (pack.governanceMatrix.some((entry) => entry.decision !== "pass")) {
@@ -333,7 +354,9 @@ export function assertExecutiveDashboardReleaseCandidatePack(pack: ExecutiveDash
       (surface.rendersMetrics && surface.renderState !== "ready") ||
       (surface.rendersRestrictedState && surface.renderState !== "forbidden")
     ) {
-      throw new Error(`Executive dashboard release candidate surface violates governance: ${surface.surface}`);
+      throw new Error(
+        `Executive dashboard release candidate surface violates governance: ${surface.surface}`,
+      );
     }
   }
 }

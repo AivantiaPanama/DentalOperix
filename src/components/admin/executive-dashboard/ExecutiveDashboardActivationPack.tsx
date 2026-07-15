@@ -56,7 +56,10 @@ export type ExecutiveDashboardActivationFeatureFlag = {
 
 export type ExecutiveDashboardActivationRouteCandidate = {
   surface: ExecutiveDashboardSurface;
-  candidatePath: "/admin/dashboard/executive" | "/admin/dashboard/operational" | "/admin/dashboard/governance";
+  candidatePath:
+    | "/admin/dashboard/executive"
+    | "/admin/dashboard/operational"
+    | "/admin/dashboard/governance";
   apiRoute: ExecutiveDashboardApiRoute;
   routeImplementationIncluded: false;
   modifiesAdminLogin: false;
@@ -145,7 +148,10 @@ export const EXECUTIVE_DASHBOARD_ACTIVATION_SCOPES: ExecutiveDashboardActivation
   "17.6-J-formal-readiness-document",
 ];
 
-const MOUNT_IDS: Record<ExecutiveDashboardSurface, ExecutiveDashboardActivationMountContract["mountId"]> = {
+const MOUNT_IDS: Record<
+  ExecutiveDashboardSurface,
+  ExecutiveDashboardActivationMountContract["mountId"]
+> = {
   executive: "executive-dashboard-root",
   operational: "operational-dashboard-root",
   governance: "governance-dashboard-root",
@@ -188,7 +194,9 @@ function createGuardrails(): ExecutiveDashboardActivationGuardrails {
 
 export function createExecutiveDashboardActivationPack(
   foundation: ExecutiveDashboardUiFoundationPack = createExecutiveDashboardUiFoundationPack(),
-  implementation: ExecutiveDashboardUiImplementationPack = createExecutiveDashboardUiImplementationPack(foundation),
+  implementation: ExecutiveDashboardUiImplementationPack = createExecutiveDashboardUiImplementationPack(
+    foundation,
+  ),
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardActivationPack {
   assertExecutiveDashboardUiFoundationPack(foundation);
@@ -196,23 +204,25 @@ export function createExecutiveDashboardActivationPack(
 
   const accessModel = createExecutiveDashboardAccessModel();
 
-  const routeCandidates: ExecutiveDashboardActivationRouteCandidate[] = foundation.layoutShells.map((layout) => {
-    const policy = accessModel.policies.find((candidate) => candidate.surface === layout.surface);
+  const routeCandidates: ExecutiveDashboardActivationRouteCandidate[] = foundation.layoutShells.map(
+    (layout) => {
+      const policy = accessModel.policies.find((candidate) => candidate.surface === layout.surface);
 
-    if (!policy) {
-      throw new Error(`Missing activation policy for dashboard surface: ${layout.surface}`);
-    }
+      if (!policy) {
+        throw new Error(`Missing activation policy for dashboard surface: ${layout.surface}`);
+      }
 
-    return {
-      surface: layout.surface,
-      candidatePath: layout.path,
-      apiRoute: policy.route,
-      routeImplementationIncluded: false,
-      modifiesAdminLogin: false,
-      modifiesExistingRoutes: false,
-      exposure: "metric-only",
-    };
-  });
+      return {
+        surface: layout.surface,
+        candidatePath: layout.path,
+        apiRoute: policy.route,
+        routeImplementationIncluded: false,
+        modifiesAdminLogin: false,
+        modifiesExistingRoutes: false,
+        exposure: "metric-only",
+      };
+    },
+  );
 
   return {
     version: EXECUTIVE_DASHBOARD_ACTIVATION_PACK_VERSION,
@@ -255,7 +265,9 @@ export function createExecutiveDashboardActivationPack(
   };
 }
 
-export function assertExecutiveDashboardActivationPack(pack: ExecutiveDashboardActivationPack): void {
+export function assertExecutiveDashboardActivationPack(
+  pack: ExecutiveDashboardActivationPack,
+): void {
   if (pack.phase !== "17.6" || pack.status !== "approved-controlled-activation-boundary") {
     throw new Error("Executive dashboard activation pack is not approved.");
   }
@@ -310,8 +322,14 @@ export function assertExecutiveDashboardActivationPack(pack: ExecutiveDashboardA
     throw new Error("Executive dashboard activation feature flag is outside governance.");
   }
 
-  if (pack.routeCandidates.length !== 3 || pack.mountContracts.length !== 3 || pack.permissionGates.length !== 3) {
-    throw new Error("Executive dashboard activation pack must define exactly three surface bindings.");
+  if (
+    pack.routeCandidates.length !== 3 ||
+    pack.mountContracts.length !== 3 ||
+    pack.permissionGates.length !== 3
+  ) {
+    throw new Error(
+      "Executive dashboard activation pack must define exactly three surface bindings.",
+    );
   }
 
   const unsafeRoute = pack.routeCandidates.find(
@@ -325,19 +343,28 @@ export function assertExecutiveDashboardActivationPack(pack: ExecutiveDashboardA
   );
 
   if (unsafeRoute) {
-    throw new Error(`Executive dashboard activation route is outside governance: ${unsafeRoute.surface}`);
+    throw new Error(
+      `Executive dashboard activation route is outside governance: ${unsafeRoute.surface}`,
+    );
   }
 
   const unsafeMount = pack.mountContracts.find(
-    (mount) => !mount.requiresFeatureFlag || mount.requiresPermission !== "executive-observability:read" || !mount.readOnly,
+    (mount) =>
+      !mount.requiresFeatureFlag ||
+      mount.requiresPermission !== "executive-observability:read" ||
+      !mount.readOnly,
   );
 
   if (unsafeMount) {
-    throw new Error(`Executive dashboard activation mount is outside governance: ${unsafeMount.surface}`);
+    throw new Error(
+      `Executive dashboard activation mount is outside governance: ${unsafeMount.surface}`,
+    );
   }
 }
 
-export function isExecutiveDashboardActivationEnabled(mode: ExecutiveDashboardActivationMode): boolean {
+export function isExecutiveDashboardActivationEnabled(
+  mode: ExecutiveDashboardActivationMode,
+): boolean {
   return mode === "preview" || mode === "enabled";
 }
 
@@ -353,7 +380,11 @@ export function canMountExecutiveDashboardSurface(
     return false;
   }
 
-  const decision = evaluateExecutiveDashboardAccess(createExecutiveDashboardAccessModel(), principal, surface);
+  const decision = evaluateExecutiveDashboardAccess(
+    createExecutiveDashboardAccessModel(),
+    principal,
+    surface,
+  );
   return decision.decision === "allow";
 }
 
@@ -381,6 +412,9 @@ export function ExecutiveDashboardActivationBoundary({
   return <>{children ?? <ExecutiveDashboardShell viewModel={viewModel} />}</>;
 }
 
-export function getExecutiveDashboardActivationPermission(): Extract<Permission, "executive-observability:read"> {
+export function getExecutiveDashboardActivationPermission(): Extract<
+  Permission,
+  "executive-observability:read"
+> {
   return "executive-observability:read";
 }

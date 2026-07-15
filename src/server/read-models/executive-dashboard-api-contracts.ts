@@ -89,7 +89,10 @@ const FORBIDDEN_EXECUTIVE_DASHBOARD_API_PAYLOAD_KEYS = [
   "ticketRecords",
 ] as const;
 
-function apiResponse<TPayload>(payload: TPayload, generatedAt: string): ExecutiveDashboardApiResponse<TPayload> {
+function apiResponse<TPayload>(
+  payload: TPayload,
+  generatedAt: string,
+): ExecutiveDashboardApiResponse<TPayload> {
   return {
     version: EXECUTIVE_DASHBOARD_API_CONTRACT_VERSION,
     dashboardContractVersion: EXECUTIVE_DASHBOARD_CONTRACT_VERSION,
@@ -116,15 +119,23 @@ export function createExecutiveDashboardApiContracts(
   };
 }
 
-export function serializeExecutiveDashboardApiContracts(contracts: ExecutiveDashboardApiContracts): string {
+export function serializeExecutiveDashboardApiContracts(
+  contracts: ExecutiveDashboardApiContracts,
+): string {
   return JSON.stringify(contracts);
 }
 
-export function assertExecutiveDashboardApiContractsAreMetricOnly(contracts: ExecutiveDashboardApiContracts): void {
+export function assertExecutiveDashboardApiContractsAreMetricOnly(
+  contracts: ExecutiveDashboardApiContracts,
+): void {
   const serialized = serializeExecutiveDashboardApiContracts(contracts);
-  const forbiddenKey = FORBIDDEN_EXECUTIVE_DASHBOARD_API_PAYLOAD_KEYS.find((key) => serialized.includes(key));
+  const forbiddenKey = FORBIDDEN_EXECUTIVE_DASHBOARD_API_PAYLOAD_KEYS.find((key) =>
+    serialized.includes(key),
+  );
 
   if (forbiddenKey) {
-    throw new Error(`Executive dashboard API contract contains forbidden payload key: ${forbiddenKey}`);
+    throw new Error(
+      `Executive dashboard API contract contains forbidden payload key: ${forbiddenKey}`,
+    );
   }
 }

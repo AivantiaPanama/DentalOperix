@@ -7,7 +7,10 @@ import {
   executiveObservabilityProvider,
 } from "./executive-observability-provider";
 
-const providerSource = readFileSync(fileURLToPath(new URL("./executive-observability-provider.ts", import.meta.url)), "utf8");
+const providerSource = readFileSync(
+  fileURLToPath(new URL("./executive-observability-provider.ts", import.meta.url)),
+  "utf8",
+);
 
 describe("executive observability hardening and closure", () => {
   beforeEach(() => {
@@ -90,7 +93,9 @@ describe("executive observability hardening and closure", () => {
     expect(Object.keys(executiveDashboard).sort()).toEqual(["domains", "platform"]);
     expect(Object.keys(operationalDashboard).sort()).toEqual(["aggregates"]);
     expect(Object.keys(governanceDashboard).sort()).toEqual(["governance"]);
-    expect(executiveDashboard.domains.find((metric) => metric.domain === "Support")).toMatchObject({ readVolume: 1 });
+    expect(executiveDashboard.domains.find((metric) => metric.domain === "Support")).toMatchObject({
+      readVolume: 1,
+    });
     expect(governanceDashboard.governance.adrCompliance).toBe(1);
     expect(governanceDashboard.governance.registryCompliance).toBe(1);
   });

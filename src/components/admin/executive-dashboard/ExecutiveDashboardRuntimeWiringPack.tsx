@@ -229,13 +229,17 @@ export function createExecutiveDashboardRuntimeWiringPack({
   };
 }
 
-export function assertExecutiveDashboardRuntimeWiringPack(pack: ExecutiveDashboardRuntimeWiringPack): void {
+export function assertExecutiveDashboardRuntimeWiringPack(
+  pack: ExecutiveDashboardRuntimeWiringPack,
+): void {
   if (pack.phase !== "18.7-18.9" || pack.status !== "approved-runtime-wiring-candidate") {
     throw new Error("Executive dashboard runtime wiring pack is not approved.");
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_RUNTIME_WIRING_SCOPES.join("|")) {
-    throw new Error("Executive dashboard runtime wiring pack does not cover the full 18.7-18.9 scope.");
+    throw new Error(
+      "Executive dashboard runtime wiring pack does not cover the full 18.7-18.9 scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -279,7 +283,9 @@ export function assertExecutiveDashboardRuntimeWiringPack(pack: ExecutiveDashboa
   }
 
   if (pack.viewBindings.length !== 3) {
-    throw new Error("Executive dashboard runtime wiring must cover exactly three dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard runtime wiring must cover exactly three dashboard surfaces.",
+    );
   }
 
   for (const binding of pack.viewBindings) {
@@ -305,7 +311,9 @@ export function assertExecutiveDashboardRuntimeWiringPack(pack: ExecutiveDashboa
       (binding.rendersMetrics && binding.viewState !== "ready") ||
       (binding.rendersRestrictedState && binding.viewState !== "forbidden")
     ) {
-      throw new Error(`Executive dashboard runtime wiring binding violates governance: ${binding.surface}`);
+      throw new Error(
+        `Executive dashboard runtime wiring binding violates governance: ${binding.surface}`,
+      );
     }
   }
 }
@@ -348,8 +356,16 @@ export function createExecutiveDashboardRuntimeWiringPackFromRuntime({
   responseKind: ExecutiveDashboardRuntimeApiResponseKind;
   generatedAt?: string;
 }): ExecutiveDashboardRuntimeWiringPack {
-  const controlledActivation = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled, mode, principal });
-  const runtimeConsumption = createExecutiveDashboardRuntimeConsumptionPack({ controlledActivation, responseKind, generatedAt });
+  const controlledActivation = createExecutiveDashboardControlledActivationPack({
+    featureFlagEnabled,
+    mode,
+    principal,
+  });
+  const runtimeConsumption = createExecutiveDashboardRuntimeConsumptionPack({
+    controlledActivation,
+    responseKind,
+    generatedAt,
+  });
 
   return createExecutiveDashboardRuntimeWiringPack({ runtimeConsumption, generatedAt });
 }

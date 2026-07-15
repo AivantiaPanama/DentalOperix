@@ -65,7 +65,10 @@ describe("18.1-18.3 Executive Dashboard Controlled Activation Pack", () => {
   });
 
   it("hides admin navigation when the feature flag is disabled", () => {
-    const pack = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled: false, principal });
+    const pack = createExecutiveDashboardControlledActivationPack({
+      featureFlagEnabled: false,
+      principal,
+    });
     const entries = getExecutiveDashboardControlledAdminNavigationEntries(pack);
 
     expect(entries).toHaveLength(3);
@@ -89,17 +92,40 @@ describe("18.1-18.3 Executive Dashboard Controlled Activation Pack", () => {
   });
 
   it("exposes admin navigation only when flag and permission are both present", () => {
-    const allowed = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled: true, principal });
-    const denied = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled: true, principal: deniedPrincipal });
+    const allowed = createExecutiveDashboardControlledActivationPack({
+      featureFlagEnabled: true,
+      principal,
+    });
+    const denied = createExecutiveDashboardControlledActivationPack({
+      featureFlagEnabled: true,
+      principal: deniedPrincipal,
+    });
 
-    expect(getExecutiveDashboardControlledAdminNavigationEntries(allowed).every((entry) => entry.visible)).toBe(true);
-    expect(getExecutiveDashboardControlledAdminNavigationEntries(allowed).every((entry) => entry.reason === "available")).toBe(true);
-    expect(getExecutiveDashboardControlledAdminNavigationEntries(denied).every((entry) => entry.visible)).toBe(false);
-    expect(getExecutiveDashboardControlledAdminNavigationEntries(denied).every((entry) => entry.reason === "permission-missing")).toBe(true);
+    expect(
+      getExecutiveDashboardControlledAdminNavigationEntries(allowed).every(
+        (entry) => entry.visible,
+      ),
+    ).toBe(true);
+    expect(
+      getExecutiveDashboardControlledAdminNavigationEntries(allowed).every(
+        (entry) => entry.reason === "available",
+      ),
+    ).toBe(true);
+    expect(
+      getExecutiveDashboardControlledAdminNavigationEntries(denied).every((entry) => entry.visible),
+    ).toBe(false);
+    expect(
+      getExecutiveDashboardControlledAdminNavigationEntries(denied).every(
+        (entry) => entry.reason === "permission-missing",
+      ),
+    ).toBe(true);
   });
 
   it("keeps controlled access read-only, metric-only and forbidden when permission is missing", () => {
-    const pack = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled: true, principal: deniedPrincipal });
+    const pack = createExecutiveDashboardControlledActivationPack({
+      featureFlagEnabled: true,
+      principal: deniedPrincipal,
+    });
     const decision = getExecutiveDashboardControlledAccessDecision("executive", pack);
 
     expect(decision.allowed).toBe(false);
@@ -128,12 +154,14 @@ describe("18.1-18.3 Executive Dashboard Controlled Activation Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-controlled-activation-pack=\"executive-dashboard-controlled-activation-pack/v1\"");
-    expect(html).toContain("data-feature-flag=\"EXECUTIVE_DASHBOARD_UI_ENABLED\"");
-    expect(html).toContain("data-feature-flag-value=\"disabled\"");
-    expect(html).toContain("data-access-allowed=\"false\"");
-    expect(html).toContain("data-render-state=\"forbidden\"");
-    expect(html).toContain("data-access-reason=\"feature-flag-disabled\"");
+    expect(html).toContain(
+      'data-controlled-activation-pack="executive-dashboard-controlled-activation-pack/v1"',
+    );
+    expect(html).toContain('data-feature-flag="EXECUTIVE_DASHBOARD_UI_ENABLED"');
+    expect(html).toContain('data-feature-flag-value="disabled"');
+    expect(html).toContain('data-access-allowed="false"');
+    expect(html).toContain('data-render-state="forbidden"');
+    expect(html).toContain('data-access-reason="feature-flag-disabled"');
     expect(html).not.toContain("Platform Health");
   });
 
@@ -147,16 +175,21 @@ describe("18.1-18.3 Executive Dashboard Controlled Activation Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-access-allowed=\"true\"");
-    expect(html).toContain("data-render-state=\"ready\"");
-    expect(html).toContain("data-production-readiness-pack=\"executive-dashboard-production-readiness-pack/v1\"");
-    expect(html).toContain("data-exposure=\"metric-only\"");
-    expect(html).toContain("data-read-only=\"true\"");
+    expect(html).toContain('data-access-allowed="true"');
+    expect(html).toContain('data-render-state="ready"');
+    expect(html).toContain(
+      'data-production-readiness-pack="executive-dashboard-production-readiness-pack/v1"',
+    );
+    expect(html).toContain('data-exposure="metric-only"');
+    expect(html).toContain('data-read-only="true"');
     expect(html).toContain("Platform Health");
   });
 
   it("does not reference raw telemetry, adapters, route mutation, login mutation or restricted files", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardControlledActivationPack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardControlledActivationPack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

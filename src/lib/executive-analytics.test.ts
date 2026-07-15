@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import type { CrmLeadRow } from "./crm-metrics";
-import { createExecutiveAnalyticsSnapshot, EXECUTIVE_ANALYTICS_VERSION } from "./executive-analytics";
+import {
+  createExecutiveAnalyticsSnapshot,
+  EXECUTIVE_ANALYTICS_VERSION,
+} from "./executive-analytics";
 import { createRevenueForecastSnapshot } from "./revenue-forecast";
 import { createRevenueSnapshotV1 } from "./revenue-intelligence";
 

@@ -14,20 +14,20 @@ const serviceSource = readFileSync(
 );
 
 const handlerSource = readFileSync(
-  fileURLToPath(new URL("../../routes/api/internal/executive-observability/-handler.ts", import.meta.url)),
+  fileURLToPath(
+    new URL("../../routes/api/internal/executive-observability/-handler.ts", import.meta.url),
+  ),
   "utf8",
 );
 
-const endpointSources = [
-  "executive.ts",
-  "operational.ts",
-  "governance.ts",
-  "snapshot.ts",
-].map((fileName) =>
-  readFileSync(
-    fileURLToPath(new URL(`../../routes/api/internal/executive-observability/${fileName}`, import.meta.url)),
-    "utf8",
-  ),
+const endpointSources = ["executive.ts", "operational.ts", "governance.ts", "snapshot.ts"].map(
+  (fileName) =>
+    readFileSync(
+      fileURLToPath(
+        new URL(`../../routes/api/internal/executive-observability/${fileName}`, import.meta.url),
+      ),
+      "utf8",
+    ),
 );
 
 describe("17.2-E executive dashboard internal API validation and closure", () => {

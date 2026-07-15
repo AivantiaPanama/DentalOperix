@@ -122,29 +122,30 @@ export const EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES: ExecutiveDashboardRender
   "forbidden",
 ];
 
-const FORBIDDEN_RENDER_CONTRACT_DEPENDENCIES: ExecutiveDashboardRenderContractForbiddenDependency[] = [
-  "aggregates",
-  "adapters",
-  "raw-telemetry",
-  "read-sources",
-  "read-model-source-provider",
-  "read-model-direct-access",
-  "lead-write-paths",
-  "persistence",
-  "domain-logic",
-  "fallback-logic",
-  "computed-health",
-  "public-api-expansion",
-  "admin-login-credential-storage",
-  "browser-storage",
-  "credential-forwarding",
-  "client-side-aggregation",
-  "client-side-fallback",
-  "transport-implementation",
-  "fetch-implementation",
-  "route-implementation",
-  "visual-ui-implementation",
-];
+const FORBIDDEN_RENDER_CONTRACT_DEPENDENCIES: ExecutiveDashboardRenderContractForbiddenDependency[] =
+  [
+    "aggregates",
+    "adapters",
+    "raw-telemetry",
+    "read-sources",
+    "read-model-source-provider",
+    "read-model-direct-access",
+    "lead-write-paths",
+    "persistence",
+    "domain-logic",
+    "fallback-logic",
+    "computed-health",
+    "public-api-expansion",
+    "admin-login-credential-storage",
+    "browser-storage",
+    "credential-forwarding",
+    "client-side-aggregation",
+    "client-side-fallback",
+    "transport-implementation",
+    "fetch-implementation",
+    "route-implementation",
+    "visual-ui-implementation",
+  ];
 
 function createRenderStatePolicies(): ExecutiveDashboardRenderStatePolicy[] {
   return [
@@ -176,7 +177,8 @@ function createRenderStatePolicies(): ExecutiveDashboardRenderStatePolicy[] {
     },
     {
       state: "empty",
-      description: "Presentation of an authorized metric-only response with no displayable metrics.",
+      description:
+        "Presentation of an authorized metric-only response with no displayable metrics.",
       allowedDataExposure: "metric-only",
       allowedContract: "ExecutiveDashboardApiContracts",
       requiredPermission: "executive-observability:read",
@@ -189,7 +191,8 @@ function createRenderStatePolicies(): ExecutiveDashboardRenderStatePolicy[] {
     },
     {
       state: "error",
-      description: "Presentation of a sanitized request failure without exposing raw telemetry or internals.",
+      description:
+        "Presentation of a sanitized request failure without exposing raw telemetry or internals.",
       allowedDataExposure: "metric-only",
       allowedContract: "ExecutiveDashboardApiContracts",
       requiredPermission: "executive-observability:read",
@@ -222,18 +225,19 @@ export function createExecutiveDashboardRenderContractDesign(
 ): ExecutiveDashboardRenderContractDesign {
   assertExecutiveDashboardIntegrationBoundaryDesign(integrationBoundaryDesign);
 
-  const renderContracts: ExecutiveDashboardSurfaceRenderContract[] = integrationBoundaryDesign.boundaries.map((boundary) => ({
-    surface: boundary.surface,
-    route: boundary.route,
-    method: boundary.method,
-    renderOwnership: "presentation-render-only",
-    runtimeStatus: "design-contract-only",
-    allowedContract: boundary.allowedContract,
-    requiredPermission: boundary.requiredPermission,
-    exposure: boundary.exposure,
-    allowedStates: EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES,
-    statePolicies: createRenderStatePolicies(),
-  }));
+  const renderContracts: ExecutiveDashboardSurfaceRenderContract[] =
+    integrationBoundaryDesign.boundaries.map((boundary) => ({
+      surface: boundary.surface,
+      route: boundary.route,
+      method: boundary.method,
+      renderOwnership: "presentation-render-only",
+      runtimeStatus: "design-contract-only",
+      allowedContract: boundary.allowedContract,
+      requiredPermission: boundary.requiredPermission,
+      exposure: boundary.exposure,
+      allowedStates: EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES,
+      statePolicies: createRenderStatePolicies(),
+    }));
 
   return {
     version: EXECUTIVE_DASHBOARD_RENDER_CONTRACT_DESIGN_VERSION,
@@ -275,9 +279,13 @@ export function createExecutiveDashboardRenderContractDesign(
   };
 }
 
-export function assertExecutiveDashboardRenderContractDesign(design: ExecutiveDashboardRenderContractDesign): void {
+export function assertExecutiveDashboardRenderContractDesign(
+  design: ExecutiveDashboardRenderContractDesign,
+): void {
   if (design.phase !== "17.3-G" || design.status !== "approved-for-future-view-model-design") {
-    throw new Error("Executive dashboard render contract design is not approved for future view model design.");
+    throw new Error(
+      "Executive dashboard render contract design is not approved for future view model design.",
+    );
   }
 
   if (design.mode !== "metric-only-render-contract") {
@@ -315,7 +323,9 @@ export function assertExecutiveDashboardRenderContractDesign(design: ExecutiveDa
   }
 
   if (design.renderContracts.length !== 3) {
-    throw new Error("Executive dashboard render contract design must define exactly three surface contracts.");
+    throw new Error(
+      "Executive dashboard render contract design must define exactly three surface contracts.",
+    );
   }
 
   const invalidContract = design.renderContracts.find(
@@ -331,11 +341,15 @@ export function assertExecutiveDashboardRenderContractDesign(design: ExecutiveDa
   );
 
   if (invalidContract) {
-    throw new Error(`Executive dashboard render contract is outside governance: ${invalidContract.surface}`);
+    throw new Error(
+      `Executive dashboard render contract is outside governance: ${invalidContract.surface}`,
+    );
   }
 
   const unsafePolicy = design.renderContracts
-    .flatMap((contract) => contract.statePolicies.map((policy) => ({ surface: contract.surface, policy })))
+    .flatMap((contract) =>
+      contract.statePolicies.map((policy) => ({ surface: contract.surface, policy })),
+    )
     .find(
       ({ policy }) =>
         policy.allowedDataExposure !== "metric-only" ||
@@ -349,6 +363,8 @@ export function assertExecutiveDashboardRenderContractDesign(design: ExecutiveDa
     );
 
   if (unsafePolicy) {
-    throw new Error(`Executive dashboard render state policy is outside governance: ${unsafePolicy.surface}`);
+    throw new Error(
+      `Executive dashboard render state policy is outside governance: ${unsafePolicy.surface}`,
+    );
   }
 }

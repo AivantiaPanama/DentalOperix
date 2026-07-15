@@ -24,7 +24,11 @@ describe("17.3-D executive dashboard permission and access model", () => {
       undefined,
       "2026-01-01T00:00:00.000Z",
     );
-    const model = createExecutiveDashboardAccessModel(contracts, componentDesign, "2026-01-01T00:00:00.000Z");
+    const model = createExecutiveDashboardAccessModel(
+      contracts,
+      componentDesign,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(model).toMatchObject({
       version: EXECUTIVE_DASHBOARD_ACCESS_MODEL_VERSION,
@@ -62,7 +66,11 @@ describe("17.3-D executive dashboard permission and access model", () => {
         requiredPermission: "executive-observability:read",
         accessLevel: "metric-only-read",
         allowedContract: "ExecutiveDashboardApiContracts",
-        allowedWidgetIds: ["domain-health-matrix-widget", "operational-status-widget", "domain-trend-summary-widget"],
+        allowedWidgetIds: [
+          "domain-health-matrix-widget",
+          "operational-status-widget",
+          "domain-trend-summary-widget",
+        ],
         metricOnly: true,
         uiAccessGateOnly: true,
       },
@@ -90,7 +98,11 @@ describe("17.3-D executive dashboard permission and access model", () => {
     const deniedPermissions: Permission[] = ["reports:read", "kpis:read"];
 
     expect(
-      evaluateExecutiveDashboardAccess(model, { id: "admin-user", permissions: allowedPermissions }, "executive"),
+      evaluateExecutiveDashboardAccess(
+        model,
+        { id: "admin-user", permissions: allowedPermissions },
+        "executive",
+      ),
     ).toMatchObject({
       decision: "allow",
       reason: "permission-present",
@@ -100,7 +112,11 @@ describe("17.3-D executive dashboard permission and access model", () => {
     });
 
     expect(
-      evaluateExecutiveDashboardAccess(model, { id: "assistant-user", permissions: deniedPermissions }, "governance"),
+      evaluateExecutiveDashboardAccess(
+        model,
+        { id: "assistant-user", permissions: deniedPermissions },
+        "governance",
+      ),
     ).toMatchObject({
       decision: "deny",
       reason: "missing-executive-observability-read",
@@ -164,7 +180,9 @@ describe("17.3-D executive dashboard permission and access model", () => {
     expect(accessModelSource).not.toMatch(/from\s+["'].+read-adapter["']/);
     expect(accessModelSource).not.toMatch(/from\s+["'].+read-source["']/);
     expect(accessModelSource).not.toMatch(/from\s+["'].+read-model-source-provider["']/);
-    expect(accessModelSource).not.toMatch(/ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/);
+    expect(accessModelSource).not.toMatch(
+      /ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/,
+    );
     expect(accessModelSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
     expect(accessModelSource).not.toMatch(/admin-auth|login\.tsx|api\/admin\/login/);
     expect(accessModelSource).not.toMatch(

@@ -19,8 +19,16 @@ const dataClientSource = readFileSync(
 describe("17.3-E executive dashboard data client design", () => {
   it("creates a contract-bound data client design approved for future implementation", () => {
     const contracts = createExecutiveDashboardApiContracts(undefined, "2026-01-01T00:00:00.000Z");
-    const accessModel = createExecutiveDashboardAccessModel(contracts, undefined, "2026-01-01T00:00:00.000Z");
-    const design = createExecutiveDashboardDataClientDesign(contracts, accessModel, "2026-01-01T00:00:00.000Z");
+    const accessModel = createExecutiveDashboardAccessModel(
+      contracts,
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
+    const design = createExecutiveDashboardDataClientDesign(
+      contracts,
+      accessModel,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(design).toMatchObject({
       version: EXECUTIVE_DASHBOARD_DATA_CLIENT_DESIGN_VERSION,
@@ -77,8 +85,16 @@ describe("17.3-E executive dashboard data client design", () => {
 
   it("creates approved request descriptors only when access model allows the principal", () => {
     const contracts = createExecutiveDashboardApiContracts(undefined, "2026-01-01T00:00:00.000Z");
-    const accessModel = createExecutiveDashboardAccessModel(contracts, undefined, "2026-01-01T00:00:00.000Z");
-    const design = createExecutiveDashboardDataClientDesign(contracts, accessModel, "2026-01-01T00:00:00.000Z");
+    const accessModel = createExecutiveDashboardAccessModel(
+      contracts,
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
+    const design = createExecutiveDashboardDataClientDesign(
+      contracts,
+      accessModel,
+      "2026-01-01T00:00:00.000Z",
+    );
     const allowedPermissions: Permission[] = ["executive-observability:read"];
     const deniedPermissions: Permission[] = ["reports:read", "kpis:read"];
 
@@ -180,8 +196,11 @@ describe("17.3-E executive dashboard data client design", () => {
       "client-side-aggregation",
     ]);
 
-    expect(design.endpointBindings.every((binding) => binding.clientComputation === "projection-free-display-mapping-only"))
-      .toBe(true);
+    expect(
+      design.endpointBindings.every(
+        (binding) => binding.clientComputation === "projection-free-display-mapping-only",
+      ),
+    ).toBe(true);
   });
 
   it("does not import UI components, routes, aggregates, adapters, raw telemetry, admin login, browser storage, or lead write paths", () => {
@@ -193,8 +212,12 @@ describe("17.3-E executive dashboard data client design", () => {
     expect(dataClientSource).not.toMatch(/from\s+["'].+read-adapter["']/);
     expect(dataClientSource).not.toMatch(/from\s+["'].+read-source["']/);
     expect(dataClientSource).not.toMatch(/from\s+["'].+read-model-source-provider["']/);
-    expect(dataClientSource).not.toMatch(/ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/);
-    expect(dataClientSource).not.toMatch(/fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/);
+    expect(dataClientSource).not.toMatch(
+      /ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/,
+    );
+    expect(dataClientSource).not.toMatch(
+      /fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/,
+    );
     expect(dataClientSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
     expect(dataClientSource).not.toMatch(/admin-auth|login\.tsx|api\/admin\/login/);
     expect(dataClientSource).not.toMatch(

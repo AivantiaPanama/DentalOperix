@@ -22,7 +22,10 @@ export type ExecutiveDashboardAccessLevel = "metric-only-read";
 
 export type ExecutiveDashboardAccessDecision = "allow" | "deny";
 
-export type ExecutiveDashboardRequiredPermission = Extract<Permission, "executive-observability:read">;
+export type ExecutiveDashboardRequiredPermission = Extract<
+  Permission,
+  "executive-observability:read"
+>;
 
 export type ExecutiveDashboardAccessPrincipal = {
   id: string;
@@ -116,7 +119,9 @@ const FORBIDDEN_ACCESS_DEPENDENCIES: ExecutiveDashboardAccessForbiddenDependency
 
 export function createExecutiveDashboardAccessModel(
   contracts: ExecutiveDashboardApiContracts = createExecutiveDashboardApiContracts(),
-  componentDesign: ExecutiveDashboardComponentDesign = createExecutiveDashboardComponentDesign(contracts),
+  componentDesign: ExecutiveDashboardComponentDesign = createExecutiveDashboardComponentDesign(
+    contracts,
+  ),
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardAccessModel {
   assertExecutiveDashboardComponentDesign(componentDesign);
@@ -126,7 +131,9 @@ export function createExecutiveDashboardAccessModel(
 
   const policies: ExecutiveDashboardAccessPolicy[] = componentDesign.panels.map((panel) => {
     if (!allowedApiRoutes.has(panel.route) || !policyRoutes.has(panel.route)) {
-      throw new Error(`Executive dashboard access policy route is outside approved API contracts: ${panel.route}`);
+      throw new Error(
+        `Executive dashboard access policy route is outside approved API contracts: ${panel.route}`,
+      );
     }
 
     return {
@@ -236,7 +243,9 @@ export function assertExecutiveDashboardAccessModel(model: ExecutiveDashboardAcc
   }
 
   if (model.policies.length !== 3) {
-    throw new Error("Executive dashboard access model must define exactly three dashboard policies.");
+    throw new Error(
+      "Executive dashboard access model must define exactly three dashboard policies.",
+    );
   }
 
   const invalidPolicy = model.policies.find(
@@ -250,7 +259,9 @@ export function assertExecutiveDashboardAccessModel(model: ExecutiveDashboardAcc
   );
 
   if (invalidPolicy) {
-    throw new Error(`Executive dashboard access policy is outside governance: ${invalidPolicy.surface}`);
+    throw new Error(
+      `Executive dashboard access policy is outside governance: ${invalidPolicy.surface}`,
+    );
   }
 
   const forbiddenDependency = model.forbiddenDependencies.find(
@@ -258,6 +269,8 @@ export function assertExecutiveDashboardAccessModel(model: ExecutiveDashboardAcc
   );
 
   if (forbiddenDependency) {
-    throw new Error(`Executive dashboard access model contains unknown forbidden dependency: ${forbiddenDependency}`);
+    throw new Error(
+      `Executive dashboard access model contains unknown forbidden dependency: ${forbiddenDependency}`,
+    );
   }
 }

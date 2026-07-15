@@ -16,7 +16,11 @@ const uiArchitectureSource = readFileSync(
 describe("17.3-B executive dashboard UI architecture design", () => {
   it("creates an architecture-only design approved for component design", () => {
     const contracts = createExecutiveDashboardApiContracts(undefined, "2026-01-01T00:00:00.000Z");
-    const design = createExecutiveDashboardUiArchitectureDesign(contracts, undefined, "2026-01-01T00:00:00.000Z");
+    const design = createExecutiveDashboardUiArchitectureDesign(
+      contracts,
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(design).toMatchObject({
       version: EXECUTIVE_DASHBOARD_UI_ARCHITECTURE_VERSION,
@@ -137,6 +141,8 @@ describe("17.3-B executive dashboard UI architecture design", () => {
     expect(uiArchitectureSource).not.toMatch(/from\s+["'].+read-source["']/);
     expect(uiArchitectureSource).not.toMatch(/from\s+["'].+read-model-source-provider["']/);
     expect(uiArchitectureSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
-    expect(uiArchitectureSource).not.toMatch(/processDentalLead|\/api\/leads\/create|BookingDialog|Calendar|Gmail|FloatingDentalAIChat|Home|siteServices/);
+    expect(uiArchitectureSource).not.toMatch(
+      /processDentalLead|\/api\/leads\/create|BookingDialog|Calendar|Gmail|FloatingDentalAIChat|Home|siteServices/,
+    );
   });
 });

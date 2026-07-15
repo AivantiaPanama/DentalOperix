@@ -23,7 +23,10 @@ const deniedPrincipal = {
 
 describe("17.5 Executive Dashboard UI Implementation Pack", () => {
   it("declares the full A/J implementation scope without route, API, fetch, fallback or write paths", () => {
-    const pack = createExecutiveDashboardUiImplementationPack(undefined, "2026-06-18T00:00:00.000Z");
+    const pack = createExecutiveDashboardUiImplementationPack(
+      undefined,
+      "2026-06-18T00:00:00.000Z",
+    );
 
     assertExecutiveDashboardUiImplementationPack(pack);
 
@@ -50,7 +53,9 @@ describe("17.5 Executive Dashboard UI Implementation Pack", () => {
           {
             widgetId: "platform-health-widget",
             title: "Platform Health",
-            metricCards: [{ label: "Estado", value: "Healthy", description: "Métrica ejecutiva aprobada" }],
+            metricCards: [
+              { label: "Estado", value: "Healthy", description: "Métrica ejecutiva aprobada" },
+            ],
           },
         ]}
       />,
@@ -58,14 +63,18 @@ describe("17.5 Executive Dashboard UI Implementation Pack", () => {
 
     expect(html).toContain("Executive Dashboard");
     expect(html).toContain("Platform Health");
-    expect(html).toContain("data-exposure=\"metric-only\"");
+    expect(html).toContain('data-exposure="metric-only"');
     expect(html).not.toContain("ReadTelemetryEvent");
     expect(html).not.toContain("AggregateTelemetryEvent");
   });
 
   it("renders operational and governance surfaces without mixing dashboard ownership", () => {
-    const operational = renderToStaticMarkup(<OperationalDashboardView principal={principal} state="empty" widgets={[]} />);
-    const governance = renderToStaticMarkup(<GovernanceDashboardView principal={principal} state="error" widgets={[]} />);
+    const operational = renderToStaticMarkup(
+      <OperationalDashboardView principal={principal} state="empty" widgets={[]} />,
+    );
+    const governance = renderToStaticMarkup(
+      <GovernanceDashboardView principal={principal} state="error" widgets={[]} />,
+    );
 
     expect(operational).toContain("Operational Dashboard");
     expect(operational).toContain("Sin métricas ejecutivas disponibles");

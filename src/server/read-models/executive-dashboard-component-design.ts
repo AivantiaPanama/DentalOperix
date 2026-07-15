@@ -10,7 +10,8 @@ import {
   type ExecutiveDashboardSurface,
 } from "./executive-dashboard-ui-architecture";
 
-export const EXECUTIVE_DASHBOARD_COMPONENT_DESIGN_VERSION = "executive-dashboard-component-design/v1";
+export const EXECUTIVE_DASHBOARD_COMPONENT_DESIGN_VERSION =
+  "executive-dashboard-component-design/v1";
 
 export type ExecutiveDashboardComponentDesignPhase = "17.3-C";
 
@@ -142,14 +143,19 @@ function widget(
 
 export function createExecutiveDashboardComponentDesign(
   contracts: ExecutiveDashboardApiContracts = createExecutiveDashboardApiContracts(),
-  architecture: ExecutiveDashboardUiArchitectureDesign = createExecutiveDashboardUiArchitectureDesign(contracts),
+  architecture: ExecutiveDashboardUiArchitectureDesign = createExecutiveDashboardUiArchitectureDesign(
+    contracts,
+  ),
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardComponentDesign {
   assertExecutiveDashboardUiArchitectureDesign(architecture);
 
-  const executiveRoute: ExecutiveDashboardApiRoute = "/api/internal/executive-observability/executive";
-  const operationalRoute: ExecutiveDashboardApiRoute = "/api/internal/executive-observability/operational";
-  const governanceRoute: ExecutiveDashboardApiRoute = "/api/internal/executive-observability/governance";
+  const executiveRoute: ExecutiveDashboardApiRoute =
+    "/api/internal/executive-observability/executive";
+  const operationalRoute: ExecutiveDashboardApiRoute =
+    "/api/internal/executive-observability/operational";
+  const governanceRoute: ExecutiveDashboardApiRoute =
+    "/api/internal/executive-observability/governance";
 
   return {
     version: EXECUTIVE_DASHBOARD_COMPONENT_DESIGN_VERSION,
@@ -193,7 +199,11 @@ export function createExecutiveDashboardComponentDesign(
         surface: "operational",
         label: "Operational Dashboard",
         route: operationalRoute,
-        widgets: ["domain-health-matrix-widget", "operational-status-widget", "domain-trend-summary-widget"],
+        widgets: [
+          "domain-health-matrix-widget",
+          "operational-status-widget",
+          "domain-trend-summary-widget",
+        ],
         compositionStatus: "design-only",
         allowedContract: "ExecutiveDashboardApiContracts",
       },
@@ -212,42 +222,76 @@ export function createExecutiveDashboardComponentDesign(
       },
     ],
     widgets: [
-      widget("platform-health-widget", "Platform Health", "executive", executiveRoute, ["PlatformHealthMetric"]),
-      widget("aggregate-health-summary-widget", "Aggregate Health Summary", "executive", executiveRoute, [
-        "AggregateHealthMetric",
+      widget("platform-health-widget", "Platform Health", "executive", executiveRoute, [
+        "PlatformHealthMetric",
       ]),
-      widget("domain-health-overview-widget", "Domain Health Overview", "executive", executiveRoute, [
-        "DomainHealthMetric",
-      ]),
-      widget("executive-governance-summary-widget", "Executive Governance Summary", "executive", executiveRoute, [
-        "GovernanceHealthMetric",
-      ]),
-      widget("domain-health-matrix-widget", "Domain Health Matrix", "operational", operationalRoute, [
-        "DomainHealthMetric",
-      ]),
+      widget(
+        "aggregate-health-summary-widget",
+        "Aggregate Health Summary",
+        "executive",
+        executiveRoute,
+        ["AggregateHealthMetric"],
+      ),
+      widget(
+        "domain-health-overview-widget",
+        "Domain Health Overview",
+        "executive",
+        executiveRoute,
+        ["DomainHealthMetric"],
+      ),
+      widget(
+        "executive-governance-summary-widget",
+        "Executive Governance Summary",
+        "executive",
+        executiveRoute,
+        ["GovernanceHealthMetric"],
+      ),
+      widget(
+        "domain-health-matrix-widget",
+        "Domain Health Matrix",
+        "operational",
+        operationalRoute,
+        ["DomainHealthMetric"],
+      ),
       widget("operational-status-widget", "Operational Status", "operational", operationalRoute, [
         "AggregateHealthMetric",
         "DomainHealthMetric",
       ]),
-      widget("domain-trend-summary-widget", "Domain Trend Summary", "operational", operationalRoute, [
-        "DomainHealthMetric",
-      ]),
+      widget(
+        "domain-trend-summary-widget",
+        "Domain Trend Summary",
+        "operational",
+        operationalRoute,
+        ["DomainHealthMetric"],
+      ),
       widget("governance-health-widget", "Governance Health", "governance", governanceRoute, [
         "GovernanceHealthMetric",
       ]),
-      widget("adr-compliance-widget", "ADR Compliance", "governance", governanceRoute, ["GovernanceHealthMetric"]),
-      widget("isolation-status-widget", "Isolation Status", "governance", governanceRoute, ["GovernanceHealthMetric"]),
-      widget("read-model-freeze-status-widget", "Read Model Freeze Status", "governance", governanceRoute, [
+      widget("adr-compliance-widget", "ADR Compliance", "governance", governanceRoute, [
         "GovernanceHealthMetric",
       ]),
+      widget("isolation-status-widget", "Isolation Status", "governance", governanceRoute, [
+        "GovernanceHealthMetric",
+      ]),
+      widget(
+        "read-model-freeze-status-widget",
+        "Read Model Freeze Status",
+        "governance",
+        governanceRoute,
+        ["GovernanceHealthMetric"],
+      ),
     ],
     nextPhase: "17.3-D Dashboard UI Implementation Readiness Gate",
   };
 }
 
-export function assertExecutiveDashboardComponentDesign(design: ExecutiveDashboardComponentDesign): void {
+export function assertExecutiveDashboardComponentDesign(
+  design: ExecutiveDashboardComponentDesign,
+): void {
   if (design.phase !== "17.3-C" || design.status !== "approved-for-future-ui-implementation") {
-    throw new Error("Executive dashboard component design is not approved for future UI implementation.");
+    throw new Error(
+      "Executive dashboard component design is not approved for future UI implementation.",
+    );
   }
 
   if (

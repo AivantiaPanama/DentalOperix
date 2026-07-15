@@ -10,7 +10,10 @@ import {
   serializeExecutiveDashboardContracts,
 } from "./executive-dashboard-contracts";
 
-const contractSource = readFileSync(fileURLToPath(new URL("./executive-dashboard-contracts.ts", import.meta.url)), "utf8");
+const contractSource = readFileSync(
+  fileURLToPath(new URL("./executive-dashboard-contracts.ts", import.meta.url)),
+  "utf8",
+);
 
 describe("executive dashboard contracts assessment", () => {
   beforeEach(() => {

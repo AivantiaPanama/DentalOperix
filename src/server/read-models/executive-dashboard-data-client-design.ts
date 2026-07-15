@@ -14,21 +14,28 @@ import {
 } from "./executive-dashboard-access-model";
 import type { ExecutiveDashboardSurface } from "./executive-dashboard-ui-architecture";
 
-export const EXECUTIVE_DASHBOARD_DATA_CLIENT_DESIGN_VERSION = "executive-dashboard-data-client-design/v1";
+export const EXECUTIVE_DASHBOARD_DATA_CLIENT_DESIGN_VERSION =
+  "executive-dashboard-data-client-design/v1";
 
 export type ExecutiveDashboardDataClientDesignPhase = "17.3-E";
 
-export type ExecutiveDashboardDataClientDesignStatus = "approved-for-future-dashboard-client-implementation";
+export type ExecutiveDashboardDataClientDesignStatus =
+  "approved-for-future-dashboard-client-implementation";
 
 export type ExecutiveDashboardDataClientMode = "contract-bound-metric-read";
 
 export type ExecutiveDashboardDataClientTransportStatus = "transport-contract-only";
 
-export type ExecutiveDashboardDataClientPermission = Extract<Permission, "executive-observability:read">;
+export type ExecutiveDashboardDataClientPermission = Extract<
+  Permission,
+  "executive-observability:read"
+>;
 
 export type ExecutiveDashboardDataClientExposure = "metric-only";
 
-export type ExecutiveDashboardDataClientRequestStatus = "approved-request-descriptor" | "denied-request-descriptor";
+export type ExecutiveDashboardDataClientRequestStatus =
+  | "approved-request-descriptor"
+  | "denied-request-descriptor";
 
 export type ExecutiveDashboardDataClientForbiddenDependency =
   | "aggregates"
@@ -139,23 +146,27 @@ export function createExecutiveDashboardDataClientDesign(
 
   const approvedContractRoutes = new Set(contracts.endpoints.map((endpoint) => endpoint.route));
 
-  const endpointBindings: ExecutiveDashboardDataClientEndpointBinding[] = accessModel.policies.map((policy) => {
-    if (!approvedContractRoutes.has(policy.route)) {
-      throw new Error(`Executive dashboard data client route is outside approved API contracts: ${policy.route}`);
-    }
+  const endpointBindings: ExecutiveDashboardDataClientEndpointBinding[] = accessModel.policies.map(
+    (policy) => {
+      if (!approvedContractRoutes.has(policy.route)) {
+        throw new Error(
+          `Executive dashboard data client route is outside approved API contracts: ${policy.route}`,
+        );
+      }
 
-    return {
-      surface: policy.surface,
-      route: policy.route,
-      method: "GET",
-      requiredPermission: REQUIRED_PERMISSION,
-      allowedContract: "ExecutiveDashboardApiContracts",
-      accessModelVersion: accessModel.version,
-      responseExposure: "metric-only",
-      transportStatus: "transport-contract-only",
-      clientComputation: "projection-free-display-mapping-only",
-    };
-  });
+      return {
+        surface: policy.surface,
+        route: policy.route,
+        method: "GET",
+        requiredPermission: REQUIRED_PERMISSION,
+        allowedContract: "ExecutiveDashboardApiContracts",
+        accessModelVersion: accessModel.version,
+        responseExposure: "metric-only",
+        transportStatus: "transport-contract-only",
+        clientComputation: "projection-free-display-mapping-only",
+      };
+    },
+  );
 
   return {
     version: EXECUTIVE_DASHBOARD_DATA_CLIENT_DESIGN_VERSION,
@@ -233,9 +244,16 @@ export function createExecutiveDashboardDataClientRequestDescriptor(
   };
 }
 
-export function assertExecutiveDashboardDataClientDesign(design: ExecutiveDashboardDataClientDesign): void {
-  if (design.phase !== "17.3-E" || design.status !== "approved-for-future-dashboard-client-implementation") {
-    throw new Error("Executive dashboard data client design is not approved for future dashboard client implementation.");
+export function assertExecutiveDashboardDataClientDesign(
+  design: ExecutiveDashboardDataClientDesign,
+): void {
+  if (
+    design.phase !== "17.3-E" ||
+    design.status !== "approved-for-future-dashboard-client-implementation"
+  ) {
+    throw new Error(
+      "Executive dashboard data client design is not approved for future dashboard client implementation.",
+    );
   }
 
   if (
@@ -267,11 +285,15 @@ export function assertExecutiveDashboardDataClientDesign(design: ExecutiveDashbo
   }
 
   if (design.mode !== "contract-bound-metric-read") {
-    throw new Error("Executive dashboard data client must remain contract-bound and metric-read only.");
+    throw new Error(
+      "Executive dashboard data client must remain contract-bound and metric-read only.",
+    );
   }
 
   if (design.endpointBindings.length !== 3) {
-    throw new Error("Executive dashboard data client design must define exactly three dashboard endpoint bindings.");
+    throw new Error(
+      "Executive dashboard data client design must define exactly three dashboard endpoint bindings.",
+    );
   }
 
   const invalidBinding = design.endpointBindings.find(
@@ -285,7 +307,9 @@ export function assertExecutiveDashboardDataClientDesign(design: ExecutiveDashbo
   );
 
   if (invalidBinding) {
-    throw new Error(`Executive dashboard data client binding is outside governance: ${invalidBinding.surface}`);
+    throw new Error(
+      `Executive dashboard data client binding is outside governance: ${invalidBinding.surface}`,
+    );
   }
 
   const forbiddenDependency = design.forbiddenDependencies.find(
@@ -293,6 +317,8 @@ export function assertExecutiveDashboardDataClientDesign(design: ExecutiveDashbo
   );
 
   if (forbiddenDependency) {
-    throw new Error(`Executive dashboard data client contains unknown forbidden dependency: ${forbiddenDependency}`);
+    throw new Error(
+      `Executive dashboard data client contains unknown forbidden dependency: ${forbiddenDependency}`,
+    );
   }
 }

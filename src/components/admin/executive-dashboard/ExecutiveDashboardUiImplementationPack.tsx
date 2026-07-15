@@ -97,18 +97,19 @@ export type ExecutiveDashboardUiImplementationPack = {
   nextPhase: "17.6 Dashboard Route Binding Pack";
 };
 
-export const EXECUTIVE_DASHBOARD_UI_IMPLEMENTATION_SCOPES: ExecutiveDashboardUiImplementationPackScope[] = [
-  "17.5-A-dashboard-shell-components",
-  "17.5-B-executive-dashboard-view",
-  "17.5-C-operational-dashboard-view",
-  "17.5-D-governance-dashboard-view",
-  "17.5-E-metric-card-components",
-  "17.5-F-render-state-components",
-  "17.5-G-permission-aware-view-guards",
-  "17.5-H-widget-renderer",
-  "17.5-I-dashboard-composition-tests",
-  "17.5-J-governance-regression-tests",
-];
+export const EXECUTIVE_DASHBOARD_UI_IMPLEMENTATION_SCOPES: ExecutiveDashboardUiImplementationPackScope[] =
+  [
+    "17.5-A-dashboard-shell-components",
+    "17.5-B-executive-dashboard-view",
+    "17.5-C-operational-dashboard-view",
+    "17.5-D-governance-dashboard-view",
+    "17.5-E-metric-card-components",
+    "17.5-F-render-state-components",
+    "17.5-G-permission-aware-view-guards",
+    "17.5-H-widget-renderer",
+    "17.5-I-dashboard-composition-tests",
+    "17.5-J-governance-regression-tests",
+  ];
 
 function createGuardrails(): ExecutiveDashboardUiImplementationGuardrails {
   return {
@@ -162,13 +163,17 @@ export function createExecutiveDashboardUiImplementationPack(
   };
 }
 
-export function assertExecutiveDashboardUiImplementationPack(pack: ExecutiveDashboardUiImplementationPack): void {
+export function assertExecutiveDashboardUiImplementationPack(
+  pack: ExecutiveDashboardUiImplementationPack,
+): void {
   if (pack.phase !== "17.5" || pack.status !== "approved-presentational-ui-pack") {
     throw new Error("Executive dashboard UI implementation pack is not approved.");
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_UI_IMPLEMENTATION_SCOPES.join("|")) {
-    throw new Error("Executive dashboard UI implementation pack does not cover the full 17.5 A/J scope.");
+    throw new Error(
+      "Executive dashboard UI implementation pack does not cover the full 17.5 A/J scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -202,8 +207,14 @@ export function assertExecutiveDashboardUiImplementationPack(pack: ExecutiveDash
     throw new Error("Executive dashboard UI implementation guardrails are not satisfied.");
   }
 
-  if (pack.surfaces.length !== 3 || pack.widgetIds.length !== 11 || pack.exposure !== "metric-only") {
-    throw new Error("Executive dashboard UI implementation pack has incomplete metric-only coverage.");
+  if (
+    pack.surfaces.length !== 3 ||
+    pack.widgetIds.length !== 11 ||
+    pack.exposure !== "metric-only"
+  ) {
+    throw new Error(
+      "Executive dashboard UI implementation pack has incomplete metric-only coverage.",
+    );
   }
 }
 
@@ -211,7 +222,11 @@ export function hasExecutiveDashboardPermission(permissions: readonly Permission
   return permissions.includes("executive-observability:read");
 }
 
-export function ExecutiveDashboardRenderStateView({ state }: { state: ExecutiveDashboardRenderState }) {
+export function ExecutiveDashboardRenderStateView({
+  state,
+}: {
+  state: ExecutiveDashboardRenderState;
+}) {
   const labels: Record<ExecutiveDashboardRenderState, string> = {
     loading: "Cargando métricas ejecutivas",
     ready: "Métricas ejecutivas listas",
@@ -223,23 +238,44 @@ export function ExecutiveDashboardRenderStateView({ state }: { state: ExecutiveD
   return <p data-render-state={state}>{labels[state]}</p>;
 }
 
-export function ExecutiveDashboardMetricCard({ metric }: { metric: ExecutiveDashboardMetricCardViewModel }) {
+export function ExecutiveDashboardMetricCard({
+  metric,
+}: {
+  metric: ExecutiveDashboardMetricCardViewModel;
+}) {
   return (
-    <article className="rounded-2xl border border-border bg-white p-4 shadow-sm" data-exposure="metric-only">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{metric.label}</p>
+    <article
+      className="rounded-2xl border border-border bg-white p-4 shadow-sm"
+      data-exposure="metric-only"
+    >
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        {metric.label}
+      </p>
       <p className="mt-3 text-3xl font-bold text-deep">{metric.value}</p>
-      {metric.description ? <p className="mt-2 text-sm text-muted-foreground">{metric.description}</p> : null}
+      {metric.description ? (
+        <p className="mt-2 text-sm text-muted-foreground">{metric.description}</p>
+      ) : null}
     </article>
   );
 }
 
-export function ExecutiveDashboardWidget({ widget }: { widget: ExecutiveDashboardWidgetViewModel }) {
+export function ExecutiveDashboardWidget({
+  widget,
+}: {
+  widget: ExecutiveDashboardWidgetViewModel;
+}) {
   return (
-    <section className="rounded-3xl border border-border bg-slate-50 p-5" data-widget-id={widget.widgetId}>
+    <section
+      className="rounded-3xl border border-border bg-slate-50 p-5"
+      data-widget-id={widget.widgetId}
+    >
       <h3 className="text-lg font-semibold text-deep">{widget.title}</h3>
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         {widget.metricCards.map((metric) => (
-          <ExecutiveDashboardMetricCard key={`${widget.widgetId}-${metric.label}`} metric={metric} />
+          <ExecutiveDashboardMetricCard
+            key={`${widget.widgetId}-${metric.label}`}
+            metric={metric}
+          />
         ))}
       </div>
     </section>
@@ -279,7 +315,11 @@ export function ExecutiveDashboardPermissionGuard({
   surface: ExecutiveDashboardSurface;
   children: ReactNode;
 }) {
-  const decision = evaluateExecutiveDashboardAccess(createExecutiveDashboardAccessModel(), principal, surface);
+  const decision = evaluateExecutiveDashboardAccess(
+    createExecutiveDashboardAccessModel(),
+    principal,
+    surface,
+  );
 
   if (decision.decision !== "allow") {
     return <ExecutiveDashboardRenderStateView state="forbidden" />;
@@ -294,12 +334,21 @@ const surfaceTitles: Record<ExecutiveDashboardSurface, string> = {
   governance: "Governance Dashboard",
 };
 
-export function ExecutiveDashboardShell({ viewModel }: { viewModel: ExecutiveDashboardSurfaceViewModel }) {
+export function ExecutiveDashboardShell({
+  viewModel,
+}: {
+  viewModel: ExecutiveDashboardSurfaceViewModel;
+}) {
   return (
     <ExecutiveDashboardPermissionGuard principal={viewModel.principal} surface={viewModel.surface}>
-      <main className="rounded-3xl border border-border bg-white p-6 shadow-soft" data-surface={viewModel.surface}>
+      <main
+        className="rounded-3xl border border-border bg-white p-6 shadow-soft"
+        data-surface={viewModel.surface}
+      >
         <header className="flex flex-col gap-2 border-b border-border pb-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Metric-only dashboard</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            Metric-only dashboard
+          </p>
           <h2 className="text-2xl font-bold text-deep">{surfaceTitles[viewModel.surface]}</h2>
         </header>
         <div className="mt-6">
@@ -314,10 +363,14 @@ export function ExecutiveDashboardView(props: Omit<ExecutiveDashboardSurfaceView
   return <ExecutiveDashboardShell viewModel={{ ...props, surface: "executive" }} />;
 }
 
-export function OperationalDashboardView(props: Omit<ExecutiveDashboardSurfaceViewModel, "surface">) {
+export function OperationalDashboardView(
+  props: Omit<ExecutiveDashboardSurfaceViewModel, "surface">,
+) {
   return <ExecutiveDashboardShell viewModel={{ ...props, surface: "operational" }} />;
 }
 
-export function GovernanceDashboardView(props: Omit<ExecutiveDashboardSurfaceViewModel, "surface">) {
+export function GovernanceDashboardView(
+  props: Omit<ExecutiveDashboardSurfaceViewModel, "surface">,
+) {
   return <ExecutiveDashboardShell viewModel={{ ...props, surface: "governance" }} />;
 }

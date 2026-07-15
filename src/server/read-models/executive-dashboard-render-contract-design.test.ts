@@ -16,8 +16,14 @@ const renderContractSource = readFileSync(
 
 describe("17.3-G executive dashboard render contract design", () => {
   it("creates an approved metric-only render contract design for future view model design", () => {
-    const integrationBoundaryDesign = createExecutiveDashboardIntegrationBoundaryDesign(undefined, "2026-01-01T00:00:00.000Z");
-    const design = createExecutiveDashboardRenderContractDesign(integrationBoundaryDesign, "2026-01-01T00:00:00.000Z");
+    const integrationBoundaryDesign = createExecutiveDashboardIntegrationBoundaryDesign(
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
+    const design = createExecutiveDashboardRenderContractDesign(
+      integrationBoundaryDesign,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(design).toMatchObject({
       version: EXECUTIVE_DASHBOARD_RENDER_CONTRACT_DESIGN_VERSION,
@@ -35,10 +41,30 @@ describe("17.3-G executive dashboard render contract design", () => {
   it("defines only the approved render states for every dashboard surface", () => {
     const design = createExecutiveDashboardRenderContractDesign();
 
-    expect(EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES).toEqual(["loading", "ready", "empty", "error", "forbidden"]);
-    expect(design.renderContracts.map((contract) => contract.surface)).toEqual(["executive", "operational", "governance"]);
-    expect(design.renderContracts.every((contract) => contract.allowedStates === EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES)).toBe(true);
-    expect(design.renderContracts.every((contract) => contract.statePolicies.map((policy) => policy.state).join("|") === "loading|ready|empty|error|forbidden")).toBe(true);
+    expect(EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES).toEqual([
+      "loading",
+      "ready",
+      "empty",
+      "error",
+      "forbidden",
+    ]);
+    expect(design.renderContracts.map((contract) => contract.surface)).toEqual([
+      "executive",
+      "operational",
+      "governance",
+    ]);
+    expect(
+      design.renderContracts.every(
+        (contract) => contract.allowedStates === EXECUTIVE_DASHBOARD_ALLOWED_RENDER_STATES,
+      ),
+    ).toBe(true);
+    expect(
+      design.renderContracts.every(
+        (contract) =>
+          contract.statePolicies.map((policy) => policy.state).join("|") ===
+          "loading|ready|empty|error|forbidden",
+      ),
+    ).toBe(true);
   });
 
   it("binds render contracts to integration boundary routes without implementing route, fetch, or transport behavior", () => {
@@ -83,15 +109,27 @@ describe("17.3-G executive dashboard render contract design", () => {
     const policies = design.renderContracts.flatMap((contract) => contract.statePolicies);
 
     expect(policies.every((policy) => policy.allowedDataExposure === "metric-only")).toBe(true);
-    expect(policies.every((policy) => policy.allowedContract === "ExecutiveDashboardApiContracts")).toBe(true);
-    expect(policies.every((policy) => policy.requiredPermission === "executive-observability:read")).toBe(true);
+    expect(
+      policies.every((policy) => policy.allowedContract === "ExecutiveDashboardApiContracts"),
+    ).toBe(true);
+    expect(
+      policies.every((policy) => policy.requiredPermission === "executive-observability:read"),
+    ).toBe(true);
     expect(policies.every((policy) => policy.mayDisplayRawTelemetry === false)).toBe(true);
     expect(policies.every((policy) => policy.mayDisplayAggregateState === false)).toBe(true);
     expect(policies.every((policy) => policy.mayDisplayAdapterState === false)).toBe(true);
     expect(policies.every((policy) => policy.mayTriggerFallback === false)).toBe(true);
     expect(policies.every((policy) => policy.mayPersistData === false)).toBe(true);
-    expect(policies.filter((policy) => policy.state === "ready").every((policy) => policy.mayDisplayMetricValues)).toBe(true);
-    expect(policies.filter((policy) => policy.state !== "ready").every((policy) => !policy.mayDisplayMetricValues)).toBe(true);
+    expect(
+      policies
+        .filter((policy) => policy.state === "ready")
+        .every((policy) => policy.mayDisplayMetricValues),
+    ).toBe(true);
+    expect(
+      policies
+        .filter((policy) => policy.state !== "ready")
+        .every((policy) => !policy.mayDisplayMetricValues),
+    ).toBe(true);
   });
 
   it("preserves governance guardrails and excludes UI implementation, computed health, fallback, persistence, aggregation, and raw telemetry", () => {
@@ -164,7 +202,9 @@ describe("17.3-G executive dashboard render contract design", () => {
     expect(renderContractSource).not.toMatch(
       /ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/,
     );
-    expect(renderContractSource).not.toMatch(/fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/);
+    expect(renderContractSource).not.toMatch(
+      /fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/,
+    );
     expect(renderContractSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
     expect(renderContractSource).not.toMatch(/admin-auth|login\.tsx|api\/admin\/login/);
     expect(renderContractSource).not.toMatch(

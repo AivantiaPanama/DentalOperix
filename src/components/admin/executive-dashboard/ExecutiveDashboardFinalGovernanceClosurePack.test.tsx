@@ -130,7 +130,9 @@ describe("19.3-19.5 Executive Dashboard Final Governance Closure Pack", () => {
 
     const executive = getExecutiveDashboardFinalGovernanceClosureSurface("executive", pack);
     expect(executive.surface).toBe("executive");
-    expect(executive.releaseCandidateSurface.binding.allowedContract).toBe("ExecutiveDashboardApiContracts");
+    expect(executive.releaseCandidateSurface.binding.allowedContract).toBe(
+      "ExecutiveDashboardApiContracts",
+    );
   });
 
   it("preserves restricted state when permission is missing", () => {
@@ -158,13 +160,17 @@ describe("19.3-19.5 Executive Dashboard Final Governance Closure Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-final-governance-closure-pack=\"executive-dashboard-final-governance-closure-pack/v1\"");
-    expect(html).toContain("data-final-governance-closure-phase=\"19.3-19.5\"");
-    expect(html).toContain("data-render-state=\"ready\"");
-    expect(html).toContain("data-final-closure=\"true\"");
-    expect(html).toContain("data-release-candidate-pack=\"executive-dashboard-release-candidate-pack/v1\"");
-    expect(html).toContain("data-client-fallback=\"false\"");
-    expect(html).toContain("data-write-path=\"false\"");
+    expect(html).toContain(
+      'data-final-governance-closure-pack="executive-dashboard-final-governance-closure-pack/v1"',
+    );
+    expect(html).toContain('data-final-governance-closure-phase="19.3-19.5"');
+    expect(html).toContain('data-render-state="ready"');
+    expect(html).toContain('data-final-closure="true"');
+    expect(html).toContain(
+      'data-release-candidate-pack="executive-dashboard-release-candidate-pack/v1"',
+    );
+    expect(html).toContain('data-client-fallback="false"');
+    expect(html).toContain('data-write-path="false"');
     expect(html).toContain("Platform Health");
   });
 
@@ -184,14 +190,17 @@ describe("19.3-19.5 Executive Dashboard Final Governance Closure Pack", () => {
         />,
       );
 
-      expect(html).toContain(`data-render-state=\"${renderState}\"`);
-      expect(html).toContain("data-renders-metrics=\"false\"");
+      expect(html).toContain(`data-render-state="${renderState}"`);
+      expect(html).toContain('data-renders-metrics="false"');
       expect(html).not.toContain("Platform Health");
     }
   });
 
   it("does not reference restricted internals, route mutation, login mutation or raw event names", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardFinalGovernanceClosurePack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardFinalGovernanceClosurePack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

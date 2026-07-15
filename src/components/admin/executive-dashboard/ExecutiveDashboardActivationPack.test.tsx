@@ -23,7 +23,11 @@ const deniedPrincipal = {
 
 describe("17.6 Executive Dashboard Activation Pack", () => {
   it("declares the full A/J activation scope without routes, login, API, fetch, fallback or writes", () => {
-    const pack = createExecutiveDashboardActivationPack(undefined, undefined, "2026-06-18T00:00:00.000Z");
+    const pack = createExecutiveDashboardActivationPack(
+      undefined,
+      undefined,
+      "2026-06-18T00:00:00.000Z",
+    );
 
     assertExecutiveDashboardActivationPack(pack);
 
@@ -86,7 +90,9 @@ describe("17.6 Executive Dashboard Activation Pack", () => {
     expect(isExecutiveDashboardActivationEnabled("enabled")).toBe(true);
     expect(canMountExecutiveDashboardSurface(pack, principal, "executive", "disabled")).toBe(false);
     expect(canMountExecutiveDashboardSurface(pack, principal, "executive", "preview")).toBe(true);
-    expect(canMountExecutiveDashboardSurface(pack, deniedPrincipal, "executive", "enabled")).toBe(false);
+    expect(canMountExecutiveDashboardSurface(pack, deniedPrincipal, "executive", "enabled")).toBe(
+      false,
+    );
   });
 
   it("renders empty while disabled, forbidden when denied, and mounts presentational dashboard when allowed", () => {
@@ -104,7 +110,11 @@ describe("17.6 Executive Dashboard Activation Pack", () => {
     };
 
     const disabled = renderToStaticMarkup(
-      <ExecutiveDashboardActivationBoundary mode="disabled" principal={principal} viewModel={readyViewModel} />,
+      <ExecutiveDashboardActivationBoundary
+        mode="disabled"
+        principal={principal}
+        viewModel={readyViewModel}
+      />,
     );
     const forbidden = renderToStaticMarkup(
       <ExecutiveDashboardActivationBoundary
@@ -114,14 +124,18 @@ describe("17.6 Executive Dashboard Activation Pack", () => {
       />,
     );
     const allowed = renderToStaticMarkup(
-      <ExecutiveDashboardActivationBoundary mode="enabled" principal={principal} viewModel={readyViewModel} />,
+      <ExecutiveDashboardActivationBoundary
+        mode="enabled"
+        principal={principal}
+        viewModel={readyViewModel}
+      />,
     );
 
     expect(disabled).toContain("Sin métricas ejecutivas disponibles");
     expect(forbidden).toContain("Acceso restringido a observabilidad ejecutiva");
     expect(allowed).toContain("Executive Dashboard");
     expect(allowed).toContain("Platform Health");
-    expect(allowed).toContain("data-exposure=\"metric-only\"");
+    expect(allowed).toContain('data-exposure="metric-only"');
   });
 
   it("does not import or reference forbidden implementation dependencies", () => {

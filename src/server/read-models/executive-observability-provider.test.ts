@@ -76,7 +76,12 @@ describe("executive observability provider", () => {
     expect(snapshot.executive.platform.domainCoverage).toBe(0.25);
 
     const crm = snapshot.executive.domains.find((metric) => metric.domain === "CRM");
-    expect(crm).toMatchObject({ readVolume: 1, fallbackVolume: 1, errorVolume: 0, adoptionScore: 0.5 });
+    expect(crm).toMatchObject({
+      readVolume: 1,
+      fallbackVolume: 1,
+      errorVolume: 0,
+      adoptionScore: 0.5,
+    });
 
     const crmAggregate = snapshot.operational.aggregates.find(
       (metric) => metric.aggregate === "CRMReadAggregateService",
@@ -124,13 +129,22 @@ describe("executive observability provider", () => {
       recordCount: 8,
     });
 
-    const executiveDashboard: ExecutiveDashboardContract = executiveObservabilityProvider.getExecutiveDashboard();
-    const operationalDashboard: OperationalDashboardContract = executiveObservabilityProvider.getOperationalDashboard();
-    const governanceDashboard: GovernanceDashboardContract = executiveObservabilityProvider.getGovernanceDashboard();
-    const serialized = JSON.stringify({ executiveDashboard, operationalDashboard, governanceDashboard });
+    const executiveDashboard: ExecutiveDashboardContract =
+      executiveObservabilityProvider.getExecutiveDashboard();
+    const operationalDashboard: OperationalDashboardContract =
+      executiveObservabilityProvider.getOperationalDashboard();
+    const governanceDashboard: GovernanceDashboardContract =
+      executiveObservabilityProvider.getGovernanceDashboard();
+    const serialized = JSON.stringify({
+      executiveDashboard,
+      operationalDashboard,
+      governanceDashboard,
+    });
 
     expect(executiveDashboard.platform.totalReads).toBe(1);
-    expect(operationalDashboard.aggregates[0]).toMatchObject({ aggregate: "SupportAggregateReadService" });
+    expect(operationalDashboard.aggregates[0]).toMatchObject({
+      aggregate: "SupportAggregateReadService",
+    });
     expect(governanceDashboard.governance.registryCompliance).toBe(1);
     expect(serialized).not.toContain("diagnostics");
     expect(serialized).not.toContain("telemetry");

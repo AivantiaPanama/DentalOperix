@@ -140,6 +140,8 @@ describe("17.3-A executive dashboard UI readiness assessment", () => {
     expect(uiReadinessSource).not.toMatch(/from\s+["'].+components\//);
     expect(uiReadinessSource).not.toMatch(/from\s+["'].+routes\//);
     expect(uiReadinessSource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
-    expect(uiReadinessSource).not.toMatch(/processDentalLead|\/api\/leads\/create|BookingDialog|siteServices/);
+    expect(uiReadinessSource).not.toMatch(
+      /processDentalLead|\/api\/leads\/create|BookingDialog|siteServices/,
+    );
   });
 });

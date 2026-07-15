@@ -67,8 +67,14 @@ describe("18.4-18.6 Executive Dashboard Runtime Consumption Pack", () => {
   });
 
   it("keeps runtime request and response descriptors metric-only and read-only", () => {
-    const controlledActivation = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled: true, principal });
-    const pack = createExecutiveDashboardRuntimeConsumptionPack({ controlledActivation, responseKind: "metric-response" });
+    const controlledActivation = createExecutiveDashboardControlledActivationPack({
+      featureFlagEnabled: true,
+      principal,
+    });
+    const pack = createExecutiveDashboardRuntimeConsumptionPack({
+      controlledActivation,
+      responseKind: "metric-response",
+    });
     const binding = getExecutiveDashboardRuntimeConsumptionBinding("executive", pack);
 
     expect(binding.allowed).toBe(true);
@@ -97,7 +103,10 @@ describe("18.4-18.6 Executive Dashboard Runtime Consumption Pack", () => {
       featureFlagEnabled: true,
       principal: deniedPrincipal,
     });
-    const pack = createExecutiveDashboardRuntimeConsumptionPack({ controlledActivation, responseKind: "metric-response" });
+    const pack = createExecutiveDashboardRuntimeConsumptionPack({
+      controlledActivation,
+      responseKind: "metric-response",
+    });
     const binding = getExecutiveDashboardRuntimeConsumptionBinding("executive", pack);
 
     expect(binding.allowed).toBe(false);
@@ -123,13 +132,15 @@ describe("18.4-18.6 Executive Dashboard Runtime Consumption Pack", () => {
         />,
       );
 
-      expect(html).toContain("data-runtime-consumption-pack=\"executive-dashboard-runtime-consumption-pack/v1\"");
-      expect(html).toContain(`data-runtime-response-kind=\"${responseKind}\"`);
-      expect(html).toContain(`data-render-state=\"${renderState}\"`);
-      expect(html).toContain("data-client-fallback=\"false\"");
-      expect(html).toContain("data-raw-telemetry=\"false\"");
-      expect(html).toContain("data-aggregate-access=\"false\"");
-      expect(html).toContain("data-adapter-access=\"false\"");
+      expect(html).toContain(
+        'data-runtime-consumption-pack="executive-dashboard-runtime-consumption-pack/v1"',
+      );
+      expect(html).toContain(`data-runtime-response-kind="${responseKind}"`);
+      expect(html).toContain(`data-render-state="${renderState}"`);
+      expect(html).toContain('data-client-fallback="false"');
+      expect(html).toContain('data-raw-telemetry="false"');
+      expect(html).toContain('data-aggregate-access="false"');
+      expect(html).toContain('data-adapter-access="false"');
       expect(html).not.toContain("Platform Health");
     }
   });
@@ -145,14 +156,19 @@ describe("18.4-18.6 Executive Dashboard Runtime Consumption Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-render-state=\"ready\"");
-    expect(html).toContain("data-access-allowed=\"true\"");
-    expect(html).toContain("data-controlled-activation-pack=\"executive-dashboard-controlled-activation-pack/v1\"");
+    expect(html).toContain('data-render-state="ready"');
+    expect(html).toContain('data-access-allowed="true"');
+    expect(html).toContain(
+      'data-controlled-activation-pack="executive-dashboard-controlled-activation-pack/v1"',
+    );
     expect(html).toContain("Platform Health");
   });
 
   it("does not reference raw telemetry, adapters, route mutation, login mutation or restricted files", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardRuntimeConsumptionPack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardRuntimeConsumptionPack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

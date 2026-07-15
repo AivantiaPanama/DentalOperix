@@ -65,6 +65,8 @@ export function createExecutiveDashboardApiSnapshot(
   return contracts;
 }
 
-export function serializeExecutiveDashboardApiPayload(payload: ExecutiveDashboardApiPayload): string {
+export function serializeExecutiveDashboardApiPayload(
+  payload: ExecutiveDashboardApiPayload,
+): string {
   return JSON.stringify(payload);
 }

@@ -20,9 +20,12 @@ export type DashboardContractEnvelope<TDashboard> = {
   dashboard: TDashboard;
 };
 
-export type ExecutiveDashboardContractEnvelope = DashboardContractEnvelope<ExecutiveDashboardContract>;
-export type OperationalDashboardContractEnvelope = DashboardContractEnvelope<OperationalDashboardContract>;
-export type GovernanceDashboardContractEnvelope = DashboardContractEnvelope<GovernanceDashboardContract>;
+export type ExecutiveDashboardContractEnvelope =
+  DashboardContractEnvelope<ExecutiveDashboardContract>;
+export type OperationalDashboardContractEnvelope =
+  DashboardContractEnvelope<OperationalDashboardContract>;
+export type GovernanceDashboardContractEnvelope =
+  DashboardContractEnvelope<GovernanceDashboardContract>;
 
 export type ExecutiveDashboardContracts = {
   executive: ExecutiveDashboardContractEnvelope;
@@ -55,7 +58,12 @@ export const EXECUTIVE_DASHBOARD_METRIC_CATALOG: ExecutiveDashboardMetricCatalog
   ],
   domain: ["domain", "readVolume", "fallbackVolume", "errorVolume", "adoptionScore"],
   aggregate: ["aggregate", "requestVolume", "latency", "fallbackRate", "reliability"],
-  governance: ["observabilityCoverage", "fallbackCompliance", "adrCompliance", "registryCompliance"],
+  governance: [
+    "observabilityCoverage",
+    "fallbackCompliance",
+    "adrCompliance",
+    "registryCompliance",
+  ],
 };
 
 export const FORBIDDEN_EXECUTIVE_DASHBOARD_PAYLOAD_KEYS = [
@@ -94,13 +102,19 @@ export function createExecutiveDashboardContracts(
   };
 }
 
-export function serializeExecutiveDashboardContracts(contracts: ExecutiveDashboardContracts): string {
+export function serializeExecutiveDashboardContracts(
+  contracts: ExecutiveDashboardContracts,
+): string {
   return JSON.stringify(contracts);
 }
 
-export function assertExecutiveDashboardContractsAreMetricOnly(contracts: ExecutiveDashboardContracts): void {
+export function assertExecutiveDashboardContractsAreMetricOnly(
+  contracts: ExecutiveDashboardContracts,
+): void {
   const serialized = serializeExecutiveDashboardContracts(contracts);
-  const forbiddenKey = FORBIDDEN_EXECUTIVE_DASHBOARD_PAYLOAD_KEYS.find((key) => serialized.includes(key));
+  const forbiddenKey = FORBIDDEN_EXECUTIVE_DASHBOARD_PAYLOAD_KEYS.find((key) =>
+    serialized.includes(key),
+  );
 
   if (forbiddenKey) {
     throw new Error(`Executive dashboard contract contains forbidden payload key: ${forbiddenKey}`);

@@ -16,7 +16,8 @@ export const EXECUTIVE_DASHBOARD_CONTROLLED_ACTIVATION_PACK_VERSION =
 
 export type ExecutiveDashboardControlledActivationPackPhase = "18.1-18.3";
 
-export type ExecutiveDashboardControlledActivationPackStatus = "approved-controlled-activation-candidate";
+export type ExecutiveDashboardControlledActivationPackStatus =
+  "approved-controlled-activation-candidate";
 
 export type ExecutiveDashboardControlledActivationScope =
   | "18.1-A-runtime-feature-flag-contract"
@@ -138,25 +139,29 @@ export type ExecutiveDashboardControlledActivationPack = {
   nextPhase: "18.4-18.6 Dashboard Runtime Data Binding Review";
 };
 
-export const EXECUTIVE_DASHBOARD_CONTROLLED_ACTIVATION_SCOPES: ExecutiveDashboardControlledActivationScope[] = [
-  "18.1-A-runtime-feature-flag-contract",
-  "18.1-B-runtime-feature-flag-resolution",
-  "18.1-C-disabled-by-default-gate",
-  "18.1-D-no-env-secret-exposure",
-  "18.1-E-feature-flag-governance-tests",
-  "18.2-A-admin-navigation-exposure-contract",
-  "18.2-B-navigation-candidate-filtering",
-  "18.2-C-admin-login-isolation-check",
-  "18.2-D-route-tree-non-mutation-check",
-  "18.2-E-admin-navigation-governance-tests",
-  "18.3-A-permission-gated-access-contract",
-  "18.3-B-forbidden-render-state-binding",
-  "18.3-C-read-only-dashboard-access",
-  "18.3-D-metric-only-dashboard-access",
-  "18.3-E-controlled-activation-regression-tests",
-];
+export const EXECUTIVE_DASHBOARD_CONTROLLED_ACTIVATION_SCOPES: ExecutiveDashboardControlledActivationScope[] =
+  [
+    "18.1-A-runtime-feature-flag-contract",
+    "18.1-B-runtime-feature-flag-resolution",
+    "18.1-C-disabled-by-default-gate",
+    "18.1-D-no-env-secret-exposure",
+    "18.1-E-feature-flag-governance-tests",
+    "18.2-A-admin-navigation-exposure-contract",
+    "18.2-B-navigation-candidate-filtering",
+    "18.2-C-admin-login-isolation-check",
+    "18.2-D-route-tree-non-mutation-check",
+    "18.2-E-admin-navigation-governance-tests",
+    "18.3-A-permission-gated-access-contract",
+    "18.3-B-forbidden-render-state-binding",
+    "18.3-C-read-only-dashboard-access",
+    "18.3-D-metric-only-dashboard-access",
+    "18.3-E-controlled-activation-regression-tests",
+  ];
 
-const SURFACE_LABELS: Record<ExecutiveDashboardSurface, ExecutiveDashboardControlledAdminNavigationEntry["label"]> = {
+const SURFACE_LABELS: Record<
+  ExecutiveDashboardSurface,
+  ExecutiveDashboardControlledAdminNavigationEntry["label"]
+> = {
   executive: "Executive",
   operational: "Operational",
   governance: "Governance",
@@ -236,7 +241,11 @@ function createAccessDecision(
     requiredPermission: "executive-observability:read",
     allowed,
     renderState: allowed ? "ready" : "forbidden",
-    reason: !featureFlagEnabled ? "feature-flag-disabled" : permissionGranted ? "available" : "permission-missing",
+    reason: !featureFlagEnabled
+      ? "feature-flag-disabled"
+      : permissionGranted
+        ? "available"
+        : "permission-missing",
     exposure: "metric-only",
     readOnly: true,
     metricOnly: true,
@@ -281,7 +290,9 @@ export function createExecutiveDashboardControlledActivationPack({
     navigationEntries: productionReadiness.releaseCandidates.map((candidate) => {
       const decision = accessDecisions.find((entry) => entry.surface === candidate.surface);
       if (!decision) {
-        throw new Error(`Missing executive dashboard controlled access decision: ${candidate.surface}`);
+        throw new Error(
+          `Missing executive dashboard controlled access decision: ${candidate.surface}`,
+        );
       }
 
       return {
@@ -314,7 +325,9 @@ export function assertExecutiveDashboardControlledActivationPack(
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_CONTROLLED_ACTIVATION_SCOPES.join("|")) {
-    throw new Error("Executive dashboard controlled activation pack does not cover the full 18.1-18.3 scope.");
+    throw new Error(
+      "Executive dashboard controlled activation pack does not cover the full 18.1-18.3 scope.",
+    );
   }
 
   if (
@@ -327,7 +340,9 @@ export function assertExecutiveDashboardControlledActivationPack(
   }
 
   if (pack.navigationEntries.length !== 3 || pack.accessDecisions.length !== 3) {
-    throw new Error("Executive dashboard controlled activation must cover exactly three dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard controlled activation must cover exactly three dashboard surfaces.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -382,7 +397,9 @@ export function assertExecutiveDashboardControlledActivationPack(
       !entry.readOnly ||
       !entry.href.startsWith("/admin/dashboard/")
     ) {
-      throw new Error(`Executive dashboard controlled navigation violates governance: ${entry.surface}`);
+      throw new Error(
+        `Executive dashboard controlled navigation violates governance: ${entry.surface}`,
+      );
     }
   }
 
@@ -402,7 +419,9 @@ export function assertExecutiveDashboardControlledActivationPack(
       (decision.allowed && decision.renderState !== "ready") ||
       (!decision.allowed && decision.renderState !== "forbidden")
     ) {
-      throw new Error(`Executive dashboard controlled access decision violates governance: ${decision.surface}`);
+      throw new Error(
+        `Executive dashboard controlled access decision violates governance: ${decision.surface}`,
+      );
     }
   }
 }
@@ -441,7 +460,11 @@ export function ExecutiveDashboardControlledActivationBoundary({
   viewModel: ExecutiveDashboardSurfaceViewModel;
   children?: ReactNode;
 }) {
-  const pack = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled, principal, mode });
+  const pack = createExecutiveDashboardControlledActivationPack({
+    featureFlagEnabled,
+    principal,
+    mode,
+  });
   const decision = getExecutiveDashboardControlledAccessDecision(viewModel.surface, pack);
 
   return (
@@ -464,7 +487,11 @@ export function ExecutiveDashboardControlledActivationBoundary({
       data-api-mutation="false"
     >
       {decision.allowed ? (
-        <ExecutiveDashboardProductionReadinessBoundary mode={mode} principal={principal} viewModel={viewModel} />
+        <ExecutiveDashboardProductionReadinessBoundary
+          mode={mode}
+          principal={principal}
+          viewModel={viewModel}
+        />
       ) : (
         <p data-render-state="forbidden">Acceso restringido a observabilidad ejecutiva</p>
       )}

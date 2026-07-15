@@ -18,7 +18,8 @@ export const EXECUTIVE_DASHBOARD_RUNTIME_CONSUMPTION_PACK_VERSION =
 
 export type ExecutiveDashboardRuntimeConsumptionPackPhase = "18.4-18.6";
 
-export type ExecutiveDashboardRuntimeConsumptionPackStatus = "approved-runtime-consumption-candidate";
+export type ExecutiveDashboardRuntimeConsumptionPackStatus =
+  "approved-runtime-consumption-candidate";
 
 export type ExecutiveDashboardRuntimeConsumptionScope =
   | "18.4-A-runtime-data-consumption-boundary"
@@ -142,26 +143,30 @@ export type ExecutiveDashboardRuntimeConsumptionPack = {
   nextPhase: "18.7-18.9 Dashboard Runtime Route Enablement Review";
 };
 
-export const EXECUTIVE_DASHBOARD_RUNTIME_CONSUMPTION_SCOPES: ExecutiveDashboardRuntimeConsumptionScope[] = [
-  "18.4-A-runtime-data-consumption-boundary",
-  "18.4-B-contract-bound-request-descriptor",
-  "18.4-C-metric-only-response-descriptor",
-  "18.4-D-no-client-fallback-consumption",
-  "18.4-E-no-transport-implementation",
-  "18.5-A-api-response-to-render-state-mapping",
-  "18.5-B-loading-state-binding",
-  "18.5-C-ready-state-binding",
-  "18.5-D-empty-state-binding",
-  "18.5-E-error-state-binding",
-  "18.5-F-forbidden-state-binding",
-  "18.6-A-runtime-metric-only-governance-tests",
-  "18.6-B-runtime-read-only-governance-tests",
-  "18.6-C-runtime-permission-gated-governance-tests",
-  "18.6-D-no-raw-telemetry-runtime-tests",
-  "18.6-E-no-aggregate-adapter-runtime-tests",
-];
+export const EXECUTIVE_DASHBOARD_RUNTIME_CONSUMPTION_SCOPES: ExecutiveDashboardRuntimeConsumptionScope[] =
+  [
+    "18.4-A-runtime-data-consumption-boundary",
+    "18.4-B-contract-bound-request-descriptor",
+    "18.4-C-metric-only-response-descriptor",
+    "18.4-D-no-client-fallback-consumption",
+    "18.4-E-no-transport-implementation",
+    "18.5-A-api-response-to-render-state-mapping",
+    "18.5-B-loading-state-binding",
+    "18.5-C-ready-state-binding",
+    "18.5-D-empty-state-binding",
+    "18.5-E-error-state-binding",
+    "18.5-F-forbidden-state-binding",
+    "18.6-A-runtime-metric-only-governance-tests",
+    "18.6-B-runtime-read-only-governance-tests",
+    "18.6-C-runtime-permission-gated-governance-tests",
+    "18.6-D-no-raw-telemetry-runtime-tests",
+    "18.6-E-no-aggregate-adapter-runtime-tests",
+  ];
 
-const RESPONSE_TO_RENDER_STATE: Record<ExecutiveDashboardRuntimeApiResponseKind, ExecutiveDashboardRenderState> = {
+const RESPONSE_TO_RENDER_STATE: Record<
+  ExecutiveDashboardRuntimeApiResponseKind,
+  ExecutiveDashboardRenderState
+> = {
   pending: "loading",
   "metric-response": "ready",
   "empty-response": "empty",
@@ -213,7 +218,9 @@ function createGuardrails(): ExecutiveDashboardRuntimeConsumptionGuardrails {
   };
 }
 
-function createRequestDescriptor(surface: ExecutiveDashboardSurface): ExecutiveDashboardRuntimeConsumptionRequestDescriptor {
+function createRequestDescriptor(
+  surface: ExecutiveDashboardSurface,
+): ExecutiveDashboardRuntimeConsumptionRequestDescriptor {
   return {
     surface,
     method: "GET",
@@ -270,22 +277,25 @@ export function createExecutiveDashboardRuntimeConsumptionPack({
 } = {}): ExecutiveDashboardRuntimeConsumptionPack {
   assertExecutiveDashboardControlledActivationPack(controlledActivation);
 
-  const bindings: ExecutiveDashboardRuntimeConsumptionBinding[] = controlledActivation.accessDecisions.map((accessDecision) => {
-    const effectiveKind: ExecutiveDashboardRuntimeApiResponseKind = accessDecision.allowed ? responseKind : "access-denied";
-    const response = createExecutiveDashboardRuntimeResponseDescriptor({
-      surface: accessDecision.surface,
-      kind: effectiveKind,
-    });
+  const bindings: ExecutiveDashboardRuntimeConsumptionBinding[] =
+    controlledActivation.accessDecisions.map((accessDecision) => {
+      const effectiveKind: ExecutiveDashboardRuntimeApiResponseKind = accessDecision.allowed
+        ? responseKind
+        : "access-denied";
+      const response = createExecutiveDashboardRuntimeResponseDescriptor({
+        surface: accessDecision.surface,
+        kind: effectiveKind,
+      });
 
-    return {
-      surface: accessDecision.surface,
-      accessDecision,
-      request: createRequestDescriptor(accessDecision.surface),
-      response,
-      renderState: response.renderState,
-      allowed: accessDecision.allowed && response.renderState === "ready",
-    };
-  });
+      return {
+        surface: accessDecision.surface,
+        accessDecision,
+        request: createRequestDescriptor(accessDecision.surface),
+        response,
+        renderState: response.renderState,
+        allowed: accessDecision.allowed && response.renderState === "ready",
+      };
+    });
 
   return {
     version: EXECUTIVE_DASHBOARD_RUNTIME_CONSUMPTION_PACK_VERSION,
@@ -310,7 +320,9 @@ export function assertExecutiveDashboardRuntimeConsumptionPack(
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_RUNTIME_CONSUMPTION_SCOPES.join("|")) {
-    throw new Error("Executive dashboard runtime consumption pack does not cover the full 18.4-18.6 scope.");
+    throw new Error(
+      "Executive dashboard runtime consumption pack does not cover the full 18.4-18.6 scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -353,7 +365,9 @@ export function assertExecutiveDashboardRuntimeConsumptionPack(
   }
 
   if (pack.bindings.length !== 3) {
-    throw new Error("Executive dashboard runtime consumption pack must cover exactly three dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard runtime consumption pack must cover exactly three dashboard surfaces.",
+    );
   }
 
   for (const binding of pack.bindings) {
@@ -384,7 +398,9 @@ export function assertExecutiveDashboardRuntimeConsumptionPack(
       binding.renderState !== binding.response.renderState ||
       (!binding.accessDecision.allowed && binding.renderState !== "forbidden")
     ) {
-      throw new Error(`Executive dashboard runtime consumption binding violates governance: ${binding.surface}`);
+      throw new Error(
+        `Executive dashboard runtime consumption binding violates governance: ${binding.surface}`,
+      );
     }
   }
 }
@@ -402,7 +418,10 @@ export function getExecutiveDashboardRuntimeConsumptionBinding(
 
   return {
     ...binding,
-    accessDecision: { ...binding.accessDecision, featureFlag: { ...binding.accessDecision.featureFlag } },
+    accessDecision: {
+      ...binding.accessDecision,
+      featureFlag: { ...binding.accessDecision.featureFlag },
+    },
     request: { ...binding.request },
     response: { ...binding.response },
   };
@@ -435,8 +454,15 @@ export function ExecutiveDashboardRuntimeConsumptionBoundary({
   responseKind: ExecutiveDashboardRuntimeApiResponseKind;
   children?: ReactNode;
 }) {
-  const controlledActivation = createExecutiveDashboardControlledActivationPack({ featureFlagEnabled, mode, principal });
-  const pack = createExecutiveDashboardRuntimeConsumptionPack({ controlledActivation, responseKind });
+  const controlledActivation = createExecutiveDashboardControlledActivationPack({
+    featureFlagEnabled,
+    mode,
+    principal,
+  });
+  const pack = createExecutiveDashboardRuntimeConsumptionPack({
+    controlledActivation,
+    responseKind,
+  });
   const binding = getExecutiveDashboardRuntimeConsumptionBinding(viewModel.surface, pack);
 
   return (

@@ -11,7 +11,8 @@ export const EXECUTIVE_DASHBOARD_INTEGRATION_BOUNDARY_DESIGN_VERSION =
 
 export type ExecutiveDashboardIntegrationBoundaryDesignPhase = "17.3-F";
 
-export type ExecutiveDashboardIntegrationBoundaryDesignStatus = "approved-for-future-view-model-design";
+export type ExecutiveDashboardIntegrationBoundaryDesignStatus =
+  "approved-for-future-view-model-design";
 
 export type ExecutiveDashboardIntegrationBoundaryLayer =
   | "dashboard-shell-boundary"
@@ -110,28 +111,29 @@ const BOUNDARY_LAYERS: ExecutiveDashboardIntegrationBoundaryLayer[] = [
   "api-contract-boundary",
 ];
 
-const FORBIDDEN_INTEGRATION_BOUNDARY_DEPENDENCIES: ExecutiveDashboardIntegrationBoundaryForbiddenDependency[] = [
-  "aggregates",
-  "adapters",
-  "raw-telemetry",
-  "read-sources",
-  "read-model-source-provider",
-  "read-model-direct-access",
-  "lead-write-paths",
-  "persistence",
-  "domain-logic",
-  "fallback-logic",
-  "public-api-expansion",
-  "admin-login-credential-storage",
-  "browser-storage",
-  "credential-forwarding",
-  "client-side-aggregation",
-  "client-side-fallback",
-  "transport-implementation",
-  "fetch-implementation",
-  "route-implementation",
-  "visual-ui-implementation",
-];
+const FORBIDDEN_INTEGRATION_BOUNDARY_DEPENDENCIES: ExecutiveDashboardIntegrationBoundaryForbiddenDependency[] =
+  [
+    "aggregates",
+    "adapters",
+    "raw-telemetry",
+    "read-sources",
+    "read-model-source-provider",
+    "read-model-direct-access",
+    "lead-write-paths",
+    "persistence",
+    "domain-logic",
+    "fallback-logic",
+    "public-api-expansion",
+    "admin-login-credential-storage",
+    "browser-storage",
+    "credential-forwarding",
+    "client-side-aggregation",
+    "client-side-fallback",
+    "transport-implementation",
+    "fetch-implementation",
+    "route-implementation",
+    "visual-ui-implementation",
+  ];
 
 export function createExecutiveDashboardIntegrationBoundaryDesign(
   dataClientDesign: ExecutiveDashboardDataClientDesign = createExecutiveDashboardDataClientDesign(),
@@ -139,19 +141,21 @@ export function createExecutiveDashboardIntegrationBoundaryDesign(
 ): ExecutiveDashboardIntegrationBoundaryDesign {
   assertExecutiveDashboardDataClientDesign(dataClientDesign);
 
-  const boundaries: ExecutiveDashboardIntegrationBoundary[] = dataClientDesign.endpointBindings.map((binding) => ({
-    surface: binding.surface,
-    layers: BOUNDARY_LAYERS,
-    route: binding.route,
-    method: binding.method,
-    requiredPermission: binding.requiredPermission,
-    allowedContract: binding.allowedContract,
-    exposure: binding.responseExposure,
-    dataClientMode: dataClientDesign.mode,
-    runtimeStatus: "design-contract-only",
-    boundaryOwnership: "presentation-integration-only",
-    fallbackOwnership: "server-read-platform-only",
-  }));
+  const boundaries: ExecutiveDashboardIntegrationBoundary[] = dataClientDesign.endpointBindings.map(
+    (binding) => ({
+      surface: binding.surface,
+      layers: BOUNDARY_LAYERS,
+      route: binding.route,
+      method: binding.method,
+      requiredPermission: binding.requiredPermission,
+      allowedContract: binding.allowedContract,
+      exposure: binding.responseExposure,
+      dataClientMode: dataClientDesign.mode,
+      runtimeStatus: "design-contract-only",
+      boundaryOwnership: "presentation-integration-only",
+      fallbackOwnership: "server-read-platform-only",
+    }),
+  );
 
   return {
     version: EXECUTIVE_DASHBOARD_INTEGRATION_BOUNDARY_DESIGN_VERSION,
@@ -198,7 +202,9 @@ export function assertExecutiveDashboardIntegrationBoundaryDesign(
   design: ExecutiveDashboardIntegrationBoundaryDesign,
 ): void {
   if (design.phase !== "17.3-F" || design.status !== "approved-for-future-view-model-design") {
-    throw new Error("Executive dashboard integration boundary design is not approved for future view model design.");
+    throw new Error(
+      "Executive dashboard integration boundary design is not approved for future view model design.",
+    );
   }
 
   if (
@@ -231,11 +237,15 @@ export function assertExecutiveDashboardIntegrationBoundaryDesign(
   }
 
   if (design.mode !== "metric-only-contract-boundary") {
-    throw new Error("Executive dashboard integration boundary must remain metric-only and contract-bound.");
+    throw new Error(
+      "Executive dashboard integration boundary must remain metric-only and contract-bound.",
+    );
   }
 
   if (design.boundaries.length !== 3) {
-    throw new Error("Executive dashboard integration boundary design must define exactly three governed boundaries.");
+    throw new Error(
+      "Executive dashboard integration boundary design must define exactly three governed boundaries.",
+    );
   }
 
   const invalidBoundary = design.boundaries.find(
@@ -251,7 +261,9 @@ export function assertExecutiveDashboardIntegrationBoundaryDesign(
   );
 
   if (invalidBoundary) {
-    throw new Error(`Executive dashboard integration boundary is outside governance: ${invalidBoundary.surface}`);
+    throw new Error(
+      `Executive dashboard integration boundary is outside governance: ${invalidBoundary.surface}`,
+    );
   }
 
   const forbiddenDependency = design.forbiddenDependencies.find(
@@ -259,6 +271,8 @@ export function assertExecutiveDashboardIntegrationBoundaryDesign(
   );
 
   if (forbiddenDependency) {
-    throw new Error(`Executive dashboard integration boundary contains unknown forbidden dependency: ${forbiddenDependency}`);
+    throw new Error(
+      `Executive dashboard integration boundary contains unknown forbidden dependency: ${forbiddenDependency}`,
+    );
   }
 }

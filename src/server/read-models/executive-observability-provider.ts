@@ -121,7 +121,9 @@ function getAggregateEvents(events: ReadObservabilityEvent[]) {
   return events.filter(isAggregateEvent);
 }
 
-function hasAggregate(event: ReadObservabilityEvent): event is ReadTelemetryEvent | FallbackTelemetryEvent | AggregateTelemetryEvent {
+function hasAggregate(
+  event: ReadObservabilityEvent,
+): event is ReadTelemetryEvent | FallbackTelemetryEvent | AggregateTelemetryEvent {
   return "aggregate" in event && typeof event.aggregate === "string" && event.aggregate.length > 0;
 }
 
@@ -136,7 +138,9 @@ function buildPlatformHealth(events: ReadObservabilityEvent[]): PlatformHealthMe
   const totalReads = reads.length;
   const totalFallbacks = fallbacks.length;
   const readErrors = reads.filter((event) => event.source === "Error").length;
-  const unhealthyDomains = domainEvents.filter((event) => !event.healthy || event.source === "Error").length;
+  const unhealthyDomains = domainEvents.filter(
+    (event) => !event.healthy || event.source === "Error",
+  ).length;
   const totalErrors = readErrors + unhealthyDomains;
   const observedDomains = new Set(events.map((event) => event.domain));
 
@@ -176,7 +180,9 @@ function buildDomainHealth(events: ReadObservabilityEvent[]): DomainHealthMetric
 
 function buildAggregateHealth(events: ReadObservabilityEvent[]): AggregateHealthMetric[] {
   const eventsWithAggregate = events.filter(hasAggregate);
-  const aggregateNames = Array.from(new Set(eventsWithAggregate.map((event) => event.aggregate))).sort();
+  const aggregateNames = Array.from(
+    new Set(eventsWithAggregate.map((event) => event.aggregate)),
+  ).sort();
 
   return aggregateNames.map((aggregate) => {
     const aggregateEvents = eventsWithAggregate.filter((event) => event.aggregate === aggregate);
@@ -192,7 +198,10 @@ function buildAggregateHealth(events: ReadObservabilityEvent[]): AggregateHealth
       requestVolume: readEvents.length + aggregateTelemetryEvents.length,
       latency: latencyEvents.length > 0 ? roundMetric(latencyTotal / latencyEvents.length) : 0,
       fallbackRate: percent(fallbackEvents.length, readEvents.length),
-      reliability: aggregateTelemetryEvents.length > 0 ? percent(successCount, aggregateTelemetryEvents.length) : 1,
+      reliability:
+        aggregateTelemetryEvents.length > 0
+          ? percent(successCount, aggregateTelemetryEvents.length)
+          : 1,
     };
   });
 }
@@ -204,7 +213,9 @@ function buildGovernanceHealth(events: ReadObservabilityEvent[]): GovernanceHeal
   return {
     observabilityCoverage: percent(observedDomains.size, EXECUTIVE_OBSERVABILITY_DOMAINS.length),
     fallbackCompliance: percent(
-      EXECUTIVE_OBSERVABILITY_DOMAINS.filter((domain) => observedDomains.has(domain) || domainsWithFallback.has(domain)).length,
+      EXECUTIVE_OBSERVABILITY_DOMAINS.filter(
+        (domain) => observedDomains.has(domain) || domainsWithFallback.has(domain),
+      ).length,
       EXECUTIVE_OBSERVABILITY_DOMAINS.length,
     ),
     adrCompliance: 1,
@@ -212,7 +223,9 @@ function buildGovernanceHealth(events: ReadObservabilityEvent[]): GovernanceHeal
   };
 }
 
-export function createExecutiveObservabilityProvider(eventSource: EventSource = readObservabilityProvider) {
+export function createExecutiveObservabilityProvider(
+  eventSource: EventSource = readObservabilityProvider,
+) {
   function getEvents() {
     return eventSource.getBufferedEvents();
   }

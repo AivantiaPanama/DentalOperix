@@ -15,8 +15,15 @@ const integrationBoundarySource = readFileSync(
 
 describe("17.3-F executive dashboard integration boundary design", () => {
   it("creates an approved metric-only integration boundary design for future view model design", () => {
-    const dataClientDesign = createExecutiveDashboardDataClientDesign(undefined, undefined, "2026-01-01T00:00:00.000Z");
-    const design = createExecutiveDashboardIntegrationBoundaryDesign(dataClientDesign, "2026-01-01T00:00:00.000Z");
+    const dataClientDesign = createExecutiveDashboardDataClientDesign(
+      undefined,
+      undefined,
+      "2026-01-01T00:00:00.000Z",
+    );
+    const design = createExecutiveDashboardIntegrationBoundaryDesign(
+      dataClientDesign,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(design).toMatchObject({
       version: EXECUTIVE_DASHBOARD_INTEGRATION_BOUNDARY_DESIGN_VERSION,
@@ -127,7 +134,11 @@ describe("17.3-F executive dashboard integration boundary design", () => {
   it("keeps fallback ownership in the server read platform and never in the dashboard boundary", () => {
     const design = createExecutiveDashboardIntegrationBoundaryDesign();
 
-    expect(design.boundaries.every((boundary) => boundary.fallbackOwnership === "server-read-platform-only")).toBe(true);
+    expect(
+      design.boundaries.every(
+        (boundary) => boundary.fallbackOwnership === "server-read-platform-only",
+      ),
+    ).toBe(true);
     expect(design.guardrails.clientSideFallbackIncluded).toBe(false);
     expect(design.guardrails.fallbackLogicIncluded).toBe(false);
   });
@@ -170,7 +181,9 @@ describe("17.3-F executive dashboard integration boundary design", () => {
     expect(integrationBoundarySource).not.toMatch(
       /ReadTelemetryEvent|FallbackTelemetryEvent|AggregateTelemetryEvent|DomainTelemetryEvent/,
     );
-    expect(integrationBoundarySource).not.toMatch(/fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/);
+    expect(integrationBoundarySource).not.toMatch(
+      /fetch\(|axios|localStorage|sessionStorage|indexedDB|document\.cookie/,
+    );
     expect(integrationBoundarySource).not.toMatch(/createFileRoute|createServerFileRoute|route\(/);
     expect(integrationBoundarySource).not.toMatch(/admin-auth|login\.tsx|api\/admin\/login/);
     expect(integrationBoundarySource).not.toMatch(

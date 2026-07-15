@@ -115,13 +115,15 @@ describe("18.7-18.9 Executive Dashboard Runtime Wiring Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-runtime-wiring-pack=\"executive-dashboard-runtime-wiring-pack/v1\"");
-    expect(html).toContain("data-runtime-view-bridge=\"runtime-consumption-boundary\"");
-    expect(html).toContain("data-render-state=\"ready\"");
-    expect(html).toContain("data-runtime-consumption-pack=\"executive-dashboard-runtime-consumption-pack/v1\"");
-    expect(html).toContain("data-client-fallback=\"false\"");
-    expect(html).toContain("data-route-mutation=\"false\"");
-    expect(html).toContain("data-login-mutation=\"false\"");
+    expect(html).toContain('data-runtime-wiring-pack="executive-dashboard-runtime-wiring-pack/v1"');
+    expect(html).toContain('data-runtime-view-bridge="runtime-consumption-boundary"');
+    expect(html).toContain('data-render-state="ready"');
+    expect(html).toContain(
+      'data-runtime-consumption-pack="executive-dashboard-runtime-consumption-pack/v1"',
+    );
+    expect(html).toContain('data-client-fallback="false"');
+    expect(html).toContain('data-route-mutation="false"');
+    expect(html).toContain('data-login-mutation="false"');
     expect(html).toContain("Platform Health");
   });
 
@@ -141,14 +143,17 @@ describe("18.7-18.9 Executive Dashboard Runtime Wiring Pack", () => {
         />,
       );
 
-      expect(html).toContain(`data-render-state=\"${renderState}\"`);
-      expect(html).toContain("data-renders-metrics=\"false\"");
+      expect(html).toContain(`data-render-state="${renderState}"`);
+      expect(html).toContain('data-renders-metrics="false"');
       expect(html).not.toContain("Platform Health");
     }
   });
 
   it("does not reference restricted internals, route mutation, login mutation or raw event names", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardRuntimeWiringPack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardRuntimeWiringPack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

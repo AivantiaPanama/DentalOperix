@@ -22,7 +22,8 @@ import {
 } from "./executive-dashboard-render-contract-design";
 import type { ExecutiveDashboardSurface } from "./executive-dashboard-ui-architecture";
 
-export const EXECUTIVE_DASHBOARD_UI_FOUNDATION_PACK_VERSION = "executive-dashboard-ui-foundation-pack/v1";
+export const EXECUTIVE_DASHBOARD_UI_FOUNDATION_PACK_VERSION =
+  "executive-dashboard-ui-foundation-pack/v1";
 
 export type ExecutiveDashboardUiFoundationPackPhase = "17.4";
 
@@ -40,7 +41,11 @@ export type ExecutiveDashboardUiFoundationPackScope =
   | "17.4-I-empty-error-forbidden-ux-contracts"
   | "17.4-J-governance-test-pack";
 
-export type ExecutiveDashboardUiFoundationLayoutRegion = "header" | "navigation" | "content" | "status";
+export type ExecutiveDashboardUiFoundationLayoutRegion =
+  | "header"
+  | "navigation"
+  | "content"
+  | "status";
 
 export type ExecutiveDashboardUiFoundationSurfacePath =
   | "/admin/dashboard/executive"
@@ -207,11 +212,12 @@ export const EXECUTIVE_DASHBOARD_UI_FOUNDATION_SCOPES: ExecutiveDashboardUiFound
   "17.4-J-governance-test-pack",
 ];
 
-const SURFACE_PATHS: Record<ExecutiveDashboardSurface, ExecutiveDashboardUiFoundationSurfacePath> = {
-  executive: "/admin/dashboard/executive",
-  operational: "/admin/dashboard/operational",
-  governance: "/admin/dashboard/governance",
-};
+const SURFACE_PATHS: Record<ExecutiveDashboardSurface, ExecutiveDashboardUiFoundationSurfacePath> =
+  {
+    executive: "/admin/dashboard/executive",
+    operational: "/admin/dashboard/operational",
+    governance: "/admin/dashboard/governance",
+  };
 
 const FORBIDDEN_FOUNDATION_DEPENDENCIES: ExecutiveDashboardUiFoundationForbiddenDependency[] = [
   "aggregates",
@@ -272,8 +278,14 @@ function createGuardrails(): ExecutiveDashboardUiFoundationGuardrails {
 
 export function createExecutiveDashboardUiFoundationPack(
   componentDesign: ExecutiveDashboardComponentDesign = createExecutiveDashboardComponentDesign(),
-  accessModel: ExecutiveDashboardAccessModel = createExecutiveDashboardAccessModel(undefined, componentDesign),
-  dataClientDesign: ExecutiveDashboardDataClientDesign = createExecutiveDashboardDataClientDesign(undefined, accessModel),
+  accessModel: ExecutiveDashboardAccessModel = createExecutiveDashboardAccessModel(
+    undefined,
+    componentDesign,
+  ),
+  dataClientDesign: ExecutiveDashboardDataClientDesign = createExecutiveDashboardDataClientDesign(
+    undefined,
+    accessModel,
+  ),
   renderContractDesign: ExecutiveDashboardRenderContractDesign = createExecutiveDashboardRenderContractDesign(),
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardUiFoundationPack {
@@ -282,62 +294,70 @@ export function createExecutiveDashboardUiFoundationPack(
   assertExecutiveDashboardDataClientDesign(dataClientDesign);
   assertExecutiveDashboardRenderContractDesign(renderContractDesign);
 
-  const layoutShells: ExecutiveDashboardUiFoundationLayoutShell[] = componentDesign.panels.map((panel) => ({
-    surface: panel.surface,
-    path: SURFACE_PATHS[panel.surface],
-    regions: ["header", "navigation", "content", "status"],
-    runtimeStatus: "foundation-contract-only",
-    implementationIncluded: false,
-    allowedContract: "ExecutiveDashboardApiContracts",
-    exposure: "metric-only",
-  }));
+  const layoutShells: ExecutiveDashboardUiFoundationLayoutShell[] = componentDesign.panels.map(
+    (panel) => ({
+      surface: panel.surface,
+      path: SURFACE_PATHS[panel.surface],
+      regions: ["header", "navigation", "content", "status"],
+      runtimeStatus: "foundation-contract-only",
+      implementationIncluded: false,
+      allowedContract: "ExecutiveDashboardApiContracts",
+      exposure: "metric-only",
+    }),
+  );
 
-  const navigation: ExecutiveDashboardUiFoundationNavigationItem[] = componentDesign.panels.map((panel) => ({
-    surface: panel.surface,
-    label: panel.label,
-    path: SURFACE_PATHS[panel.surface],
-    requiredPermission: "executive-observability:read",
-    exposure: "metric-only",
-  }));
+  const navigation: ExecutiveDashboardUiFoundationNavigationItem[] = componentDesign.panels.map(
+    (panel) => ({
+      surface: panel.surface,
+      label: panel.label,
+      path: SURFACE_PATHS[panel.surface],
+      requiredPermission: "executive-observability:read",
+      exposure: "metric-only",
+    }),
+  );
 
-  const widgetRegistry: ExecutiveDashboardUiFoundationWidgetRegistryEntry[] = componentDesign.widgets.map((widgetContract) => ({
-    widgetId: widgetContract.id,
-    surface: widgetContract.surface,
-    allowedContract: widgetContract.requiredContract,
-    requiredPermission: widgetContract.permissionRequired,
-    exposure: widgetContract.exposure,
-    visualImplementationIncluded: false,
-    domainLogicIncluded: false,
-    fallbackLogicIncluded: false,
-  }));
+  const widgetRegistry: ExecutiveDashboardUiFoundationWidgetRegistryEntry[] =
+    componentDesign.widgets.map((widgetContract) => ({
+      widgetId: widgetContract.id,
+      surface: widgetContract.surface,
+      allowedContract: widgetContract.requiredContract,
+      requiredPermission: widgetContract.permissionRequired,
+      exposure: widgetContract.exposure,
+      visualImplementationIncluded: false,
+      domainLogicIncluded: false,
+      fallbackLogicIncluded: false,
+    }));
 
-  const compositionRuntime: ExecutiveDashboardUiFoundationCompositionRuntime[] = componentDesign.panels.map((panel) => ({
-    surface: panel.surface,
-    path: SURFACE_PATHS[panel.surface],
-    widgetIds: panel.widgets,
-    renderStates: ["loading", "ready", "empty", "error", "forbidden"],
-    compositionMode: "declarative-metric-only",
-    runtimeStatus: "foundation-contract-only",
-  }));
+  const compositionRuntime: ExecutiveDashboardUiFoundationCompositionRuntime[] =
+    componentDesign.panels.map((panel) => ({
+      surface: panel.surface,
+      path: SURFACE_PATHS[panel.surface],
+      widgetIds: panel.widgets,
+      renderStates: ["loading", "ready", "empty", "error", "forbidden"],
+      compositionMode: "declarative-metric-only",
+      runtimeStatus: "foundation-contract-only",
+    }));
 
-  const accessGuardBindings: ExecutiveDashboardUiFoundationAccessGuardBinding[] = accessModel.policies.map((policy) => ({
-    surface: policy.surface,
-    requiredPermission: policy.requiredPermission,
-    accessLevel: policy.accessLevel,
-    guardSource: "executive-dashboard-access-model/v1",
-    credentialStorageIncluded: false,
-  }));
+  const accessGuardBindings: ExecutiveDashboardUiFoundationAccessGuardBinding[] =
+    accessModel.policies.map((policy) => ({
+      surface: policy.surface,
+      requiredPermission: policy.requiredPermission,
+      accessLevel: policy.accessLevel,
+      guardSource: "executive-dashboard-access-model/v1",
+      credentialStorageIncluded: false,
+    }));
 
-  const dataClientBindings: ExecutiveDashboardUiFoundationDataClientBinding[] = dataClientDesign.endpointBindings.map((binding) => ({
-    surface: binding.surface,
-    route: binding.route,
-    method: binding.method,
-    bindingSource: "executive-dashboard-data-client-design/v1",
-    transportImplementationIncluded: false,
-    fetchImplementationIncluded: false,
-    clientSideFallbackIncluded: false,
-    responseExposure: binding.responseExposure,
-  }));
+  const dataClientBindings: ExecutiveDashboardUiFoundationDataClientBinding[] =
+    dataClientDesign.endpointBindings.map((binding) => ({
+      surface: binding.surface,
+      route: binding.route,
+      method: binding.method,
+      bindingSource: "executive-dashboard-data-client-design/v1",
+      transportImplementationIncluded: false,
+      fetchImplementationIncluded: false,
+      clientSideFallbackIncluded: false,
+      responseExposure: binding.responseExposure,
+    }));
 
   return {
     version: EXECUTIVE_DASHBOARD_UI_FOUNDATION_PACK_VERSION,
@@ -370,13 +390,19 @@ export function createExecutiveDashboardUiFoundationPack(
   };
 }
 
-export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboardUiFoundationPack): void {
+export function assertExecutiveDashboardUiFoundationPack(
+  pack: ExecutiveDashboardUiFoundationPack,
+): void {
   if (pack.phase !== "17.4" || pack.status !== "approved-foundation-pack-contracts-only") {
-    throw new Error("Executive dashboard UI foundation pack is not approved as a contracts-only foundation.");
+    throw new Error(
+      "Executive dashboard UI foundation pack is not approved as a contracts-only foundation.",
+    );
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_UI_FOUNDATION_SCOPES.join("|")) {
-    throw new Error("Executive dashboard UI foundation pack does not cover the full 17.4 A/J scope.");
+    throw new Error(
+      "Executive dashboard UI foundation pack does not cover the full 17.4 A/J scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -420,7 +446,9 @@ export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboar
     pack.dataClientBindings.length !== 3 ||
     pack.widgetRegistry.length !== 11
   ) {
-    throw new Error("Executive dashboard UI foundation pack has incomplete surface or widget coverage.");
+    throw new Error(
+      "Executive dashboard UI foundation pack has incomplete surface or widget coverage.",
+    );
   }
 
   const unsafeLayout = pack.layoutShells.find(
@@ -431,7 +459,9 @@ export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboar
       layout.exposure !== "metric-only",
   );
   if (unsafeLayout) {
-    throw new Error(`Executive dashboard UI foundation layout is outside governance: ${unsafeLayout.surface}`);
+    throw new Error(
+      `Executive dashboard UI foundation layout is outside governance: ${unsafeLayout.surface}`,
+    );
   }
 
   const unsafeWidget = pack.widgetRegistry.find(
@@ -444,7 +474,9 @@ export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboar
       widget.fallbackLogicIncluded,
   );
   if (unsafeWidget) {
-    throw new Error(`Executive dashboard UI foundation widget is outside governance: ${unsafeWidget.widgetId}`);
+    throw new Error(
+      `Executive dashboard UI foundation widget is outside governance: ${unsafeWidget.widgetId}`,
+    );
   }
 
   const unsafeBinding = pack.dataClientBindings.find(
@@ -457,7 +489,9 @@ export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboar
       binding.responseExposure !== "metric-only",
   );
   if (unsafeBinding) {
-    throw new Error(`Executive dashboard UI foundation data binding is outside governance: ${unsafeBinding.surface}`);
+    throw new Error(
+      `Executive dashboard UI foundation data binding is outside governance: ${unsafeBinding.surface}`,
+    );
   }
 
   const unsafeUxState = pack.uxStateContracts.find(
@@ -470,6 +504,8 @@ export function assertExecutiveDashboardUiFoundationPack(pack: ExecutiveDashboar
       state.exposure !== "metric-only",
   );
   if (unsafeUxState) {
-    throw new Error(`Executive dashboard UI foundation UX state is outside governance: ${unsafeUxState.state}`);
+    throw new Error(
+      `Executive dashboard UI foundation UX state is outside governance: ${unsafeUxState.state}`,
+    );
   }
 }

@@ -5,11 +5,17 @@ import {
   type ExecutiveDashboardApiContracts,
   type ExecutiveDashboardApiRoute,
 } from "./executive-dashboard-api-contracts";
-import { EXECUTIVE_DASHBOARD_CONTRACT_VERSION, EXECUTIVE_DASHBOARD_METRIC_CATALOG } from "./executive-dashboard-contracts";
+import {
+  EXECUTIVE_DASHBOARD_CONTRACT_VERSION,
+  EXECUTIVE_DASHBOARD_METRIC_CATALOG,
+} from "./executive-dashboard-contracts";
 
 export const EXECUTIVE_DASHBOARD_UI_READINESS_VERSION = "executive-dashboard-ui-readiness/v1";
 
-export type ExecutiveDashboardUiCandidate = "Executive Dashboard" | "Operational Dashboard" | "Governance Dashboard";
+export type ExecutiveDashboardUiCandidate =
+  | "Executive Dashboard"
+  | "Operational Dashboard"
+  | "Governance Dashboard";
 
 export type ExecutiveDashboardUiReadinessStatus = "ready-for-ui-design";
 
@@ -146,7 +152,9 @@ export function createExecutiveDashboardUiReadinessAssessment(
   };
 }
 
-export function assertExecutiveDashboardUiReadiness(assessment: ExecutiveDashboardUiReadinessAssessment): void {
+export function assertExecutiveDashboardUiReadiness(
+  assessment: ExecutiveDashboardUiReadinessAssessment,
+): void {
   if (assessment.phase !== "17.3-A" || assessment.status !== "ready-for-ui-design") {
     throw new Error("Executive dashboard UI readiness assessment is not ready for UI design.");
   }
@@ -158,7 +166,9 @@ export function assertExecutiveDashboardUiReadiness(assessment: ExecutiveDashboa
     assessment.designBoundary.persistenceIncluded ||
     assessment.designBoundary.leadWriteIncluded
   ) {
-    throw new Error("17.3-A must not include UI, routes, public APIs, persistence, or lead write behavior.");
+    throw new Error(
+      "17.3-A must not include UI, routes, public APIs, persistence, or lead write behavior.",
+    );
   }
 
   if (
@@ -179,13 +189,22 @@ export function assertExecutiveDashboardUiReadiness(assessment: ExecutiveDashboa
     throw new Error("Executive dashboard UI readiness requires executive-observability:read.");
   }
 
-  const nonCompliantAdr = Object.entries(assessment.adrValidation).find(([, status]) => status !== "compliant");
+  const nonCompliantAdr = Object.entries(assessment.adrValidation).find(
+    ([, status]) => status !== "compliant",
+  );
   if (nonCompliantAdr) {
-    throw new Error(`Executive dashboard UI readiness failed ADR validation: ${nonCompliantAdr[0]}`);
+    throw new Error(
+      `Executive dashboard UI readiness failed ADR validation: ${nonCompliantAdr[0]}`,
+    );
   }
 
-  if (assessment.dashboardCandidates.length !== 3 || assessment.validation.dashboardCandidateCount !== 3) {
-    throw new Error("Executive dashboard UI readiness requires exactly three governed dashboard candidates.");
+  if (
+    assessment.dashboardCandidates.length !== 3 ||
+    assessment.validation.dashboardCandidateCount !== 3
+  ) {
+    throw new Error(
+      "Executive dashboard UI readiness requires exactly three governed dashboard candidates.",
+    );
   }
 
   const invalidCandidate = assessment.dashboardCandidates.find(

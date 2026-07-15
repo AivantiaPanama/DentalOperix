@@ -34,7 +34,10 @@ const viewModel = {
 
 describe("17.8-18.0 Executive Dashboard Production Readiness Pack", () => {
   it("declares the full 30-scope production readiness block", () => {
-    const pack = createExecutiveDashboardProductionReadinessPack(undefined, "2026-06-18T00:00:00.000Z");
+    const pack = createExecutiveDashboardProductionReadinessPack(
+      undefined,
+      "2026-06-18T00:00:00.000Z",
+    );
 
     assertExecutiveDashboardProductionReadinessPack(pack);
 
@@ -51,7 +54,13 @@ describe("17.8-18.0 Executive Dashboard Production Readiness Pack", () => {
     expect(hardening.featureFlagRequired).toBe("EXECUTIVE_DASHBOARD_UI_ENABLED");
     expect(hardening.defaultEnabled).toBe(false);
     expect(hardening.requiredPermission).toBe("executive-observability:read");
-    expect(hardening.allowedRenderStates).toEqual(["loading", "ready", "empty", "error", "forbidden"]);
+    expect(hardening.allowedRenderStates).toEqual([
+      "loading",
+      "ready",
+      "empty",
+      "error",
+      "forbidden",
+    ]);
     expect(hardening.exposure).toBe("metric-only");
     expect(hardening.readOnly).toBe(true);
     expect(hardening.metricOnly).toBe(true);
@@ -113,19 +122,25 @@ describe("17.8-18.0 Executive Dashboard Production Readiness Pack", () => {
 
   it("renders through the admin integration boundary without implementing routes, login or API", () => {
     const html = renderToStaticMarkup(
-      <ExecutiveDashboardProductionReadinessBoundary mode="enabled" principal={principal} viewModel={viewModel} />,
+      <ExecutiveDashboardProductionReadinessBoundary
+        mode="enabled"
+        principal={principal}
+        viewModel={viewModel}
+      />,
     );
 
-    expect(html).toContain("data-production-readiness-pack=\"executive-dashboard-production-readiness-pack/v1\"");
-    expect(html).toContain("data-production-phase=\"17.8-18.0\"");
-    expect(html).toContain("data-production-path=\"/admin/dashboard/executive\"");
-    expect(html).toContain("data-release-state=\"release-candidate\"");
-    expect(html).toContain("data-feature-flag=\"EXECUTIVE_DASHBOARD_UI_ENABLED\"");
-    expect(html).toContain("data-permission=\"executive-observability:read\"");
-    expect(html).toContain("data-exposure=\"metric-only\"");
-    expect(html).toContain("data-route-implementation=\"candidate-only\"");
-    expect(html).toContain("data-login-mutation=\"false\"");
-    expect(html).toContain("data-api-mutation=\"false\"");
+    expect(html).toContain(
+      'data-production-readiness-pack="executive-dashboard-production-readiness-pack/v1"',
+    );
+    expect(html).toContain('data-production-phase="17.8-18.0"');
+    expect(html).toContain('data-production-path="/admin/dashboard/executive"');
+    expect(html).toContain('data-release-state="release-candidate"');
+    expect(html).toContain('data-feature-flag="EXECUTIVE_DASHBOARD_UI_ENABLED"');
+    expect(html).toContain('data-permission="executive-observability:read"');
+    expect(html).toContain('data-exposure="metric-only"');
+    expect(html).toContain('data-route-implementation="candidate-only"');
+    expect(html).toContain('data-login-mutation="false"');
+    expect(html).toContain('data-api-mutation="false"');
     expect(html).toContain("Platform Health");
   });
 
@@ -138,12 +153,15 @@ describe("17.8-18.0 Executive Dashboard Production Readiness Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-render-state=\"forbidden\"");
+    expect(html).toContain('data-render-state="forbidden"');
     expect(html).not.toContain("Platform Health");
   });
 
   it("does not reference raw telemetry, adapters, route tree mutation, login mutation or restricted files", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardProductionReadinessPack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardProductionReadinessPack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

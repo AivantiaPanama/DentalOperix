@@ -54,7 +54,9 @@ describe("19.0-19.2 Executive Dashboard Release Candidate Pack", () => {
     expect(pack.coveredScopes).toHaveLength(15);
     expect(pack.phase).toBe("19.0-19.2");
     expect(pack.status).toBe("approved-release-candidate");
-    expect(pack.releaseCandidateDecision).toBe("approved-for-controlled-production-activation-review");
+    expect(pack.releaseCandidateDecision).toBe(
+      "approved-for-controlled-production-activation-review",
+    );
     expect(pack.nextPhase).toBe("19.3 Dashboard Production Activation Review");
   });
 
@@ -156,14 +158,16 @@ describe("19.0-19.2 Executive Dashboard Release Candidate Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-release-candidate-pack=\"executive-dashboard-release-candidate-pack/v1\"");
-    expect(html).toContain("data-release-candidate-phase=\"19.0-19.2\"");
-    expect(html).toContain("data-render-state=\"ready\"");
-    expect(html).toContain("data-release-candidate=\"true\"");
-    expect(html).toContain("data-runtime-wiring-pack=\"executive-dashboard-runtime-wiring-pack/v1\"");
-    expect(html).toContain("data-client-fallback=\"false\"");
-    expect(html).toContain("data-route-mutation=\"false\"");
-    expect(html).toContain("data-login-mutation=\"false\"");
+    expect(html).toContain(
+      'data-release-candidate-pack="executive-dashboard-release-candidate-pack/v1"',
+    );
+    expect(html).toContain('data-release-candidate-phase="19.0-19.2"');
+    expect(html).toContain('data-render-state="ready"');
+    expect(html).toContain('data-release-candidate="true"');
+    expect(html).toContain('data-runtime-wiring-pack="executive-dashboard-runtime-wiring-pack/v1"');
+    expect(html).toContain('data-client-fallback="false"');
+    expect(html).toContain('data-route-mutation="false"');
+    expect(html).toContain('data-login-mutation="false"');
     expect(html).toContain("Platform Health");
   });
 
@@ -183,14 +187,17 @@ describe("19.0-19.2 Executive Dashboard Release Candidate Pack", () => {
         />,
       );
 
-      expect(html).toContain(`data-render-state=\"${renderState}\"`);
-      expect(html).toContain("data-renders-metrics=\"false\"");
+      expect(html).toContain(`data-render-state="${renderState}"`);
+      expect(html).toContain('data-renders-metrics="false"');
       expect(html).not.toContain("Platform Health");
     }
   });
 
   it("does not reference restricted internals, route mutation, login mutation or raw event names", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardReleaseCandidatePack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardReleaseCandidatePack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

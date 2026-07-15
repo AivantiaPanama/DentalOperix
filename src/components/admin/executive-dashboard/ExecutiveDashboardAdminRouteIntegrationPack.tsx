@@ -72,36 +72,37 @@ export type ExecutiveDashboardAdminRouteMutationGuards = {
   restrictedComponentMutationIncluded: false;
 };
 
-export type ExecutiveDashboardAdminRouteIntegrationGuardrails = ExecutiveDashboardAdminRouteMutationGuards & {
-  adminRouteCandidateContractIncluded: true;
-  adminDashboardMountAdapterIncluded: true;
-  featureFlagGateIncluded: true;
-  permissionGuardBindingIncluded: true;
-  dashboardAdminSurfaceContractIncluded: true;
-  navigationRegistrationCandidateIncluded: true;
-  routeImplementationIncluded: false;
-  fetchImplementationIncluded: false;
-  transportImplementationIncluded: false;
-  persistenceIncluded: false;
-  writePathIncluded: false;
-  domainLogicIncluded: false;
-  fallbackLogicIncluded: false;
-  clientSideFallbackIncluded: false;
-  clientSideAggregationIncluded: false;
-  computedHealthIncluded: false;
-  aggregateAccess: false;
-  adapterAccess: false;
-  readModelDirectAccess: false;
-  readSourceAccess: false;
-  rawTelemetryExposure: false;
-  leadWriteIncluded: false;
-  metricOnly: true;
-  readOnly: true;
-  aggregateIsolationPreserved: true;
-  domainOwnershipPreserved: true;
-  leadsSourceOfTruthPreserved: true;
-  readModelPlatformV2ClosedFrozenPreserved: true;
-};
+export type ExecutiveDashboardAdminRouteIntegrationGuardrails =
+  ExecutiveDashboardAdminRouteMutationGuards & {
+    adminRouteCandidateContractIncluded: true;
+    adminDashboardMountAdapterIncluded: true;
+    featureFlagGateIncluded: true;
+    permissionGuardBindingIncluded: true;
+    dashboardAdminSurfaceContractIncluded: true;
+    navigationRegistrationCandidateIncluded: true;
+    routeImplementationIncluded: false;
+    fetchImplementationIncluded: false;
+    transportImplementationIncluded: false;
+    persistenceIncluded: false;
+    writePathIncluded: false;
+    domainLogicIncluded: false;
+    fallbackLogicIncluded: false;
+    clientSideFallbackIncluded: false;
+    clientSideAggregationIncluded: false;
+    computedHealthIncluded: false;
+    aggregateAccess: false;
+    adapterAccess: false;
+    readModelDirectAccess: false;
+    readSourceAccess: false;
+    rawTelemetryExposure: false;
+    leadWriteIncluded: false;
+    metricOnly: true;
+    readOnly: true;
+    aggregateIsolationPreserved: true;
+    domainOwnershipPreserved: true;
+    leadsSourceOfTruthPreserved: true;
+    readModelPlatformV2ClosedFrozenPreserved: true;
+  };
 
 export type ExecutiveDashboardAdminRouteIntegrationPack = {
   version: typeof EXECUTIVE_DASHBOARD_ADMIN_ROUTE_INTEGRATION_PACK_VERSION;
@@ -118,26 +119,33 @@ export type ExecutiveDashboardAdminRouteIntegrationPack = {
   nextPhase: "17.8 Executive Dashboard Data Fetch Boundary Review";
 };
 
-export const EXECUTIVE_DASHBOARD_ADMIN_ROUTE_INTEGRATION_SCOPES: ExecutiveDashboardAdminRouteIntegrationPackScope[] = [
-  "17.7-A-admin-route-candidate-contract",
-  "17.7-B-admin-dashboard-mount-adapter",
-  "17.7-C-feature-flag-gate",
-  "17.7-D-permission-guard-binding",
-  "17.7-E-dashboard-admin-surface-contract",
-  "17.7-F-navigation-registration-candidate",
-  "17.7-G-no-login-mutation-guard",
-  "17.7-H-no-api-mutation-guard",
-  "17.7-I-route-integration-tests",
-  "17.7-J-formal-governance-document",
-];
+export const EXECUTIVE_DASHBOARD_ADMIN_ROUTE_INTEGRATION_SCOPES: ExecutiveDashboardAdminRouteIntegrationPackScope[] =
+  [
+    "17.7-A-admin-route-candidate-contract",
+    "17.7-B-admin-dashboard-mount-adapter",
+    "17.7-C-feature-flag-gate",
+    "17.7-D-permission-guard-binding",
+    "17.7-E-dashboard-admin-surface-contract",
+    "17.7-F-navigation-registration-candidate",
+    "17.7-G-no-login-mutation-guard",
+    "17.7-H-no-api-mutation-guard",
+    "17.7-I-route-integration-tests",
+    "17.7-J-formal-governance-document",
+  ];
 
-const SURFACE_LABELS: Record<ExecutiveDashboardSurface, ExecutiveDashboardAdminNavigationCandidate["label"]> = {
+const SURFACE_LABELS: Record<
+  ExecutiveDashboardSurface,
+  ExecutiveDashboardAdminNavigationCandidate["label"]
+> = {
   executive: "Executive",
   operational: "Operational",
   governance: "Governance",
 };
 
-const SURFACE_MOUNT_IDS: Record<ExecutiveDashboardSurface, ExecutiveDashboardAdminSurfaceContract["mountId"]> = {
+const SURFACE_MOUNT_IDS: Record<
+  ExecutiveDashboardSurface,
+  ExecutiveDashboardAdminSurfaceContract["mountId"]
+> = {
   executive: "executive-dashboard-root",
   operational: "operational-dashboard-root",
   governance: "governance-dashboard-root",
@@ -245,8 +253,12 @@ export function assertExecutiveDashboardAdminRouteIntegrationPack(
     throw new Error("Executive dashboard admin route integration pack is not approved.");
   }
 
-  if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_ADMIN_ROUTE_INTEGRATION_SCOPES.join("|")) {
-    throw new Error("Executive dashboard admin route integration pack does not cover the full 17.7 A/J scope.");
+  if (
+    pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_ADMIN_ROUTE_INTEGRATION_SCOPES.join("|")
+  ) {
+    throw new Error(
+      "Executive dashboard admin route integration pack does not cover the full 17.7 A/J scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -298,7 +310,9 @@ export function assertExecutiveDashboardAdminRouteIntegrationPack(
     pack.navigationCandidates.length !== 3 ||
     pack.adminSurfaceContracts.length !== 3
   ) {
-    throw new Error("Executive dashboard admin route integration pack must define exactly three admin surfaces.");
+    throw new Error(
+      "Executive dashboard admin route integration pack must define exactly three admin surfaces.",
+    );
   }
 
   for (const route of pack.routeCandidates) {
@@ -310,7 +324,9 @@ export function assertExecutiveDashboardAdminRouteIntegrationPack(
       !route.candidatePath.startsWith("/admin/dashboard/") ||
       !route.apiRoute.startsWith("/api/internal/executive-observability/")
     ) {
-      throw new Error(`Executive dashboard route candidate violates admin integration governance: ${route.surface}`);
+      throw new Error(
+        `Executive dashboard route candidate violates admin integration governance: ${route.surface}`,
+      );
     }
   }
 
@@ -322,7 +338,9 @@ export function assertExecutiveDashboardAdminRouteIntegrationPack(
       navigation.exposure !== "metric-only" ||
       navigation.modifiesExistingNavigation
     ) {
-      throw new Error(`Executive dashboard navigation candidate violates governance: ${navigation.surface}`);
+      throw new Error(
+        `Executive dashboard navigation candidate violates governance: ${navigation.surface}`,
+      );
     }
   }
 
@@ -336,7 +354,9 @@ export function assertExecutiveDashboardAdminRouteIntegrationPack(
       surface.adminLoginMutationAllowed ||
       surface.apiMutationAllowed
     ) {
-      throw new Error(`Executive dashboard admin surface contract violates governance: ${surface.surface}`);
+      throw new Error(
+        `Executive dashboard admin surface contract violates governance: ${surface.surface}`,
+      );
     }
   }
 }

@@ -15,7 +15,8 @@ export const EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_PACK_VERSION =
 
 export type ExecutiveDashboardProductionReadinessPackPhase = "17.8-18.0";
 
-export type ExecutiveDashboardProductionReadinessPackStatus = "approved-production-readiness-candidate";
+export type ExecutiveDashboardProductionReadinessPackStatus =
+  "approved-production-readiness-candidate";
 
 export type ExecutiveDashboardProductionReadinessScope =
   | "17.8-A-feature-flag-hardening"
@@ -76,7 +77,10 @@ export type ExecutiveDashboardProductionReadinessHardening = {
 
 export type ExecutiveDashboardProductionReleaseCandidate = {
   surface: ExecutiveDashboardSurface;
-  candidatePath: "/admin/dashboard/executive" | "/admin/dashboard/operational" | "/admin/dashboard/governance";
+  candidatePath:
+    | "/admin/dashboard/executive"
+    | "/admin/dashboard/operational"
+    | "/admin/dashboard/governance";
   releaseState: ExecutiveDashboardProductionReadinessReleaseState;
   routeImplementationStatus: "candidate-only";
   navigationRegistrationStatus: "candidate-only";
@@ -105,35 +109,36 @@ export type ExecutiveDashboardProductionReadinessBaseline = {
   clientFallbackPrevented: true;
 };
 
-export type ExecutiveDashboardProductionReadinessGuardrails = ExecutiveDashboardProductionReadinessBaseline & {
-  productionHardeningIncluded: true;
-  adminReleaseCandidateIncluded: true;
-  productionReadinessBaselineIncluded: true;
-  visualUiExpansionIncluded: false;
-  loginModificationIncluded: false;
-  authImplementationIncluded: false;
-  credentialStorageIncluded: false;
-  routeTreeMutationIncluded: false;
-  existingRouteMutationIncluded: false;
-  apiImplementationIncluded: false;
-  fetchImplementationIncluded: false;
-  transportImplementationIncluded: false;
-  persistenceIncluded: false;
-  writePathIncluded: false;
-  leadWriteIncluded: false;
-  domainLogicIncluded: false;
-  fallbackLogicIncluded: false;
-  clientSideFallbackIncluded: false;
-  clientSideAggregationIncluded: false;
-  computedHealthIncluded: false;
-  rawTelemetryExposure: false;
-  aggregateAccess: false;
-  adapterAccess: false;
-  readSourceAccess: false;
-  readModelDirectAccess: false;
-  metricOnly: true;
-  readOnly: true;
-};
+export type ExecutiveDashboardProductionReadinessGuardrails =
+  ExecutiveDashboardProductionReadinessBaseline & {
+    productionHardeningIncluded: true;
+    adminReleaseCandidateIncluded: true;
+    productionReadinessBaselineIncluded: true;
+    visualUiExpansionIncluded: false;
+    loginModificationIncluded: false;
+    authImplementationIncluded: false;
+    credentialStorageIncluded: false;
+    routeTreeMutationIncluded: false;
+    existingRouteMutationIncluded: false;
+    apiImplementationIncluded: false;
+    fetchImplementationIncluded: false;
+    transportImplementationIncluded: false;
+    persistenceIncluded: false;
+    writePathIncluded: false;
+    leadWriteIncluded: false;
+    domainLogicIncluded: false;
+    fallbackLogicIncluded: false;
+    clientSideFallbackIncluded: false;
+    clientSideAggregationIncluded: false;
+    computedHealthIncluded: false;
+    rawTelemetryExposure: false;
+    aggregateAccess: false;
+    adapterAccess: false;
+    readSourceAccess: false;
+    readModelDirectAccess: false;
+    metricOnly: true;
+    readOnly: true;
+  };
 
 export type ExecutiveDashboardProductionReadinessPack = {
   version: typeof EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_PACK_VERSION;
@@ -150,40 +155,47 @@ export type ExecutiveDashboardProductionReadinessPack = {
   nextPhase: "18.1 Controlled Dashboard Route Enablement Review";
 };
 
-export const EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_SCOPES: ExecutiveDashboardProductionReadinessScope[] = [
-  "17.8-A-feature-flag-hardening",
-  "17.8-B-permission-guard-hardening",
-  "17.8-C-render-state-hardening",
-  "17.8-D-no-client-fallback-hardening",
-  "17.8-E-no-raw-telemetry-hardening",
-  "17.8-F-no-aggregate-access-hardening",
-  "17.8-G-no-adapter-access-hardening",
-  "17.8-H-read-only-hardening",
-  "17.8-I-metric-only-hardening",
-  "17.8-J-production-hardening-tests",
-  "17.9-A-admin-release-candidate-contract",
-  "17.9-B-admin-route-candidate-freeze",
-  "17.9-C-navigation-candidate-freeze",
-  "17.9-D-admin-login-isolation",
-  "17.9-E-api-surface-isolation",
-  "17.9-F-feature-flag-release-gate",
-  "17.9-G-permission-release-gate",
-  "17.9-H-read-only-release-gate",
-  "17.9-I-release-candidate-tests",
-  "17.9-J-formal-release-candidate-document",
-  "18.0-A-production-readiness-baseline",
-  "18.0-B-governance-regression-baseline",
-  "18.0-C-adr-015-read-model-governance-check",
-  "18.0-D-adr-016-domain-boundaries-check",
-  "18.0-E-adr-017-fallback-policy-check",
-  "18.0-F-adr-018-observability-foundation-check",
-  "18.0-G-adr-024-executive-observability-check",
-  "18.0-H-leads-source-of-truth-check",
-  "18.0-I-read-model-platform-v2-freeze-check",
-  "18.0-J-formal-production-readiness-document",
-];
+export const EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_SCOPES: ExecutiveDashboardProductionReadinessScope[] =
+  [
+    "17.8-A-feature-flag-hardening",
+    "17.8-B-permission-guard-hardening",
+    "17.8-C-render-state-hardening",
+    "17.8-D-no-client-fallback-hardening",
+    "17.8-E-no-raw-telemetry-hardening",
+    "17.8-F-no-aggregate-access-hardening",
+    "17.8-G-no-adapter-access-hardening",
+    "17.8-H-read-only-hardening",
+    "17.8-I-metric-only-hardening",
+    "17.8-J-production-hardening-tests",
+    "17.9-A-admin-release-candidate-contract",
+    "17.9-B-admin-route-candidate-freeze",
+    "17.9-C-navigation-candidate-freeze",
+    "17.9-D-admin-login-isolation",
+    "17.9-E-api-surface-isolation",
+    "17.9-F-feature-flag-release-gate",
+    "17.9-G-permission-release-gate",
+    "17.9-H-read-only-release-gate",
+    "17.9-I-release-candidate-tests",
+    "17.9-J-formal-release-candidate-document",
+    "18.0-A-production-readiness-baseline",
+    "18.0-B-governance-regression-baseline",
+    "18.0-C-adr-015-read-model-governance-check",
+    "18.0-D-adr-016-domain-boundaries-check",
+    "18.0-E-adr-017-fallback-policy-check",
+    "18.0-F-adr-018-observability-foundation-check",
+    "18.0-G-adr-024-executive-observability-check",
+    "18.0-H-leads-source-of-truth-check",
+    "18.0-I-read-model-platform-v2-freeze-check",
+    "18.0-J-formal-production-readiness-document",
+  ];
 
-const ALLOWED_RENDER_STATES: ExecutiveDashboardRenderState[] = ["loading", "ready", "empty", "error", "forbidden"];
+const ALLOWED_RENDER_STATES: ExecutiveDashboardRenderState[] = [
+  "loading",
+  "ready",
+  "empty",
+  "error",
+  "forbidden",
+];
 
 function createBaseline(): ExecutiveDashboardProductionReadinessBaseline {
   return {
@@ -243,8 +255,8 @@ export function createExecutiveDashboardProductionReadinessPack(
 ): ExecutiveDashboardProductionReadinessPack {
   assertExecutiveDashboardAdminRouteIntegrationPack(adminRouteIntegration);
 
-  const releaseCandidates: ExecutiveDashboardProductionReleaseCandidate[] = adminRouteIntegration.adminSurfaceContracts.map(
-    (surface) => ({
+  const releaseCandidates: ExecutiveDashboardProductionReleaseCandidate[] =
+    adminRouteIntegration.adminSurfaceContracts.map((surface) => ({
       surface: surface.surface,
       candidatePath: surface.candidatePath,
       releaseState: "release-candidate",
@@ -256,8 +268,7 @@ export function createExecutiveDashboardProductionReadinessPack(
       featureFlagRequired: "EXECUTIVE_DASHBOARD_UI_ENABLED",
       exposure: "metric-only",
       readOnly: true,
-    }),
-  );
+    }));
 
   return {
     version: EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_PACK_VERSION,
@@ -290,17 +301,23 @@ export function createExecutiveDashboardProductionReadinessPack(
   };
 }
 
-export function assertExecutiveDashboardProductionReadinessPack(pack: ExecutiveDashboardProductionReadinessPack): void {
+export function assertExecutiveDashboardProductionReadinessPack(
+  pack: ExecutiveDashboardProductionReadinessPack,
+): void {
   if (pack.phase !== "17.8-18.0" || pack.status !== "approved-production-readiness-candidate") {
     throw new Error("Executive dashboard production readiness pack is not approved.");
   }
 
   if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_PRODUCTION_READINESS_SCOPES.join("|")) {
-    throw new Error("Executive dashboard production readiness pack does not cover the full 17.8-18.0 scope.");
+    throw new Error(
+      "Executive dashboard production readiness pack does not cover the full 17.8-18.0 scope.",
+    );
   }
 
   if (pack.releaseCandidates.length !== 3) {
-    throw new Error("Executive dashboard production readiness pack must define exactly three release candidates.");
+    throw new Error(
+      "Executive dashboard production readiness pack must define exactly three release candidates.",
+    );
   }
 
   const hardening = pack.hardening;
@@ -323,7 +340,9 @@ export function assertExecutiveDashboardProductionReadinessPack(pack: ExecutiveD
   }
 
   if (hardening.allowedRenderStates.join("|") !== ALLOWED_RENDER_STATES.join("|")) {
-    throw new Error("Executive dashboard production hardening must preserve the render state contract.");
+    throw new Error(
+      "Executive dashboard production hardening must preserve the render state contract.",
+    );
   }
 
   const baseline = pack.baseline;
@@ -386,7 +405,9 @@ export function assertExecutiveDashboardProductionReadinessPack(pack: ExecutiveD
       candidate.exposure !== "metric-only" ||
       !candidate.readOnly
     ) {
-      throw new Error(`Executive dashboard production release candidate violates governance: ${candidate.surface}`);
+      throw new Error(
+        `Executive dashboard production release candidate violates governance: ${candidate.surface}`,
+      );
     }
   }
 }
@@ -408,10 +429,14 @@ export function ExecutiveDashboardProductionReadinessBoundary({
   viewModel: ExecutiveDashboardSurfaceViewModel;
 }) {
   const pack = createExecutiveDashboardProductionReadinessPack();
-  const candidate = pack.releaseCandidates.find((releaseCandidate) => releaseCandidate.surface === viewModel.surface);
+  const candidate = pack.releaseCandidates.find(
+    (releaseCandidate) => releaseCandidate.surface === viewModel.surface,
+  );
 
   if (!candidate) {
-    throw new Error(`Missing executive dashboard production release candidate: ${viewModel.surface}`);
+    throw new Error(
+      `Missing executive dashboard production release candidate: ${viewModel.surface}`,
+    );
   }
 
   return (
@@ -430,7 +455,11 @@ export function ExecutiveDashboardProductionReadinessBoundary({
       data-login-mutation="false"
       data-api-mutation="false"
     >
-      <ExecutiveDashboardAdminMountAdapter mode={mode} principal={principal} viewModel={viewModel} />
+      <ExecutiveDashboardAdminMountAdapter
+        mode={mode}
+        principal={principal}
+        viewModel={viewModel}
+      />
     </section>
   );
 }

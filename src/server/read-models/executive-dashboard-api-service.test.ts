@@ -43,7 +43,10 @@ describe("executive dashboard API service", () => {
     const governance = createExecutiveDashboardApiPayload("governance", generatedAt);
     const snapshot = createExecutiveDashboardApiPayload("snapshot", generatedAt);
 
-    expect(executive).toMatchObject({ version: EXECUTIVE_DASHBOARD_API_CONTRACT_VERSION, generatedAt });
+    expect(executive).toMatchObject({
+      version: EXECUTIVE_DASHBOARD_API_CONTRACT_VERSION,
+      generatedAt,
+    });
     expect(executive.payload.dashboard.platform.totalReads).toBe(1);
     expect(operational.payload.dashboard.aggregates[0]).toMatchObject({
       aggregate: "FinanceAggregateReadService",

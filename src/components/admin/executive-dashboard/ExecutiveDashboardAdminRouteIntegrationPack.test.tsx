@@ -35,7 +35,10 @@ const viewModel = {
 
 describe("17.7 Executive Dashboard Admin Route Integration Pack", () => {
   it("declares the full A/J admin route integration scope without login, route tree, API, fetch or write mutations", () => {
-    const pack = createExecutiveDashboardAdminRouteIntegrationPack(undefined, "2026-06-18T00:00:00.000Z");
+    const pack = createExecutiveDashboardAdminRouteIntegrationPack(
+      undefined,
+      "2026-06-18T00:00:00.000Z",
+    );
 
     assertExecutiveDashboardAdminRouteIntegrationPack(pack);
 
@@ -84,7 +87,11 @@ describe("17.7 Executive Dashboard Admin Route Integration Pack", () => {
   it("creates navigation registration candidates without mutating existing navigation", () => {
     const navigation = getExecutiveDashboardAdminNavigationCandidates();
 
-    expect(navigation.map((item) => item.label)).toEqual(["Executive", "Operational", "Governance"]);
+    expect(navigation.map((item) => item.label)).toEqual([
+      "Executive",
+      "Operational",
+      "Governance",
+    ]);
     for (const item of navigation) {
       expect(item.parentSurface).toBe("admin-dashboard");
       expect(item.registrationStatus).toBe("candidate-only");
@@ -111,15 +118,19 @@ describe("17.7 Executive Dashboard Admin Route Integration Pack", () => {
 
   it("mounts through the activation boundary using feature flag and permission metadata", () => {
     const html = renderToStaticMarkup(
-      <ExecutiveDashboardAdminMountAdapter mode="enabled" principal={principal} viewModel={viewModel} />,
+      <ExecutiveDashboardAdminMountAdapter
+        mode="enabled"
+        principal={principal}
+        viewModel={viewModel}
+      />,
     );
 
-    expect(html).toContain("data-admin-dashboard-surface=\"executive\"");
-    expect(html).toContain("data-admin-dashboard-path=\"/admin/dashboard/executive\"");
-    expect(html).toContain("data-admin-dashboard-registration=\"candidate-only\"");
-    expect(html).toContain("data-feature-flag=\"EXECUTIVE_DASHBOARD_UI_ENABLED\"");
-    expect(html).toContain("data-permission=\"executive-observability:read\"");
-    expect(html).toContain("data-exposure=\"metric-only\"");
+    expect(html).toContain('data-admin-dashboard-surface="executive"');
+    expect(html).toContain('data-admin-dashboard-path="/admin/dashboard/executive"');
+    expect(html).toContain('data-admin-dashboard-registration="candidate-only"');
+    expect(html).toContain('data-feature-flag="EXECUTIVE_DASHBOARD_UI_ENABLED"');
+    expect(html).toContain('data-permission="executive-observability:read"');
+    expect(html).toContain('data-exposure="metric-only"');
     expect(html).toContain("Platform Health");
   });
 
@@ -132,12 +143,15 @@ describe("17.7 Executive Dashboard Admin Route Integration Pack", () => {
       />,
     );
 
-    expect(html).toContain("data-render-state=\"forbidden\"");
+    expect(html).toContain('data-render-state="forbidden"');
     expect(html).not.toContain("Platform Health");
   });
 
   it("does not reference raw telemetry, aggregates, adapters, route implementations, login mutation or restricted files", () => {
-    const source = readFileSync(fileURLToPath(import.meta.resolve("./ExecutiveDashboardAdminRouteIntegrationPack.tsx")), "utf8");
+    const source = readFileSync(
+      fileURLToPath(import.meta.resolve("./ExecutiveDashboardAdminRouteIntegrationPack.tsx")),
+      "utf8",
+    );
 
     expect(source).not.toContain("ReadTelemetryEvent");
     expect(source).not.toContain("FallbackTelemetryEvent");

@@ -22,7 +22,11 @@ describe("17.3-C executive dashboard component design", () => {
       undefined,
       "2026-01-01T00:00:00.000Z",
     );
-    const design = createExecutiveDashboardComponentDesign(contracts, architecture, "2026-01-01T00:00:00.000Z");
+    const design = createExecutiveDashboardComponentDesign(
+      contracts,
+      architecture,
+      "2026-01-01T00:00:00.000Z",
+    );
 
     expect(design).toMatchObject({
       version: EXECUTIVE_DASHBOARD_COMPONENT_DESIGN_VERSION,
@@ -56,7 +60,11 @@ describe("17.3-C executive dashboard component design", () => {
         surface: "operational",
         label: "Operational Dashboard",
         route: "/api/internal/executive-observability/operational",
-        widgets: ["domain-health-matrix-widget", "operational-status-widget", "domain-trend-summary-widget"],
+        widgets: [
+          "domain-health-matrix-widget",
+          "operational-status-widget",
+          "domain-trend-summary-widget",
+        ],
         compositionStatus: "design-only",
         allowedContract: "ExecutiveDashboardApiContracts",
       },
@@ -80,13 +88,25 @@ describe("17.3-C executive dashboard component design", () => {
     const design = createExecutiveDashboardComponentDesign();
 
     expect(design.widgets).toHaveLength(11);
-    expect(design.widgets.every((widget) => widget.requiredContract === "ExecutiveDashboardApiContracts")).toBe(true);
-    expect(design.widgets.every((widget) => widget.permissionRequired === "executive-observability:read")).toBe(true);
+    expect(
+      design.widgets.every(
+        (widget) => widget.requiredContract === "ExecutiveDashboardApiContracts",
+      ),
+    ).toBe(true);
+    expect(
+      design.widgets.every(
+        (widget) => widget.permissionRequired === "executive-observability:read",
+      ),
+    ).toBe(true);
     expect(design.widgets.every((widget) => widget.exposure === "metric-only")).toBe(true);
-    expect(design.widgets.every((widget) => widget.implementationStatus === "component-contract-only")).toBe(true);
-    expect(design.widgets.every((widget) => widget.presentationResponsibility === "render-governed-metrics-only")).toBe(
-      true,
-    );
+    expect(
+      design.widgets.every((widget) => widget.implementationStatus === "component-contract-only"),
+    ).toBe(true);
+    expect(
+      design.widgets.every(
+        (widget) => widget.presentationResponsibility === "render-governed-metrics-only",
+      ),
+    ).toBe(true);
   });
 
   it("maps widgets only to approved metric source types", () => {
@@ -99,14 +119,16 @@ describe("17.3-C executive dashboard component design", () => {
     ]);
 
     expect(
-      design.widgets.every((widget) => widget.metricSources.every((source) => allowedMetricSources.has(source))),
+      design.widgets.every((widget) =>
+        widget.metricSources.every((source) => allowedMetricSources.has(source)),
+      ),
     ).toBe(true);
-    expect(design.widgets.find((widget) => widget.id === "platform-health-widget")?.metricSources).toEqual([
-      "PlatformHealthMetric",
-    ]);
-    expect(design.widgets.find((widget) => widget.id === "adr-compliance-widget")?.metricSources).toEqual([
-      "GovernanceHealthMetric",
-    ]);
+    expect(
+      design.widgets.find((widget) => widget.id === "platform-health-widget")?.metricSources,
+    ).toEqual(["PlatformHealthMetric"]);
+    expect(
+      design.widgets.find((widget) => widget.id === "adr-compliance-widget")?.metricSources,
+    ).toEqual(["GovernanceHealthMetric"]);
   });
 
   it("preserves aggregate isolation, domain ownership, Leads source of truth, and frozen read platform", () => {

@@ -56,7 +56,9 @@ const DEFAULT_INTERNAL_SECURITY_POLICY: ExecutiveDashboardApiSecurityPolicy = {
   exposesFunctionalPayloads: false,
 };
 
-function readinessEndpoint(endpoint: ExecutiveDashboardApiEndpointContract): ExecutiveDashboardApiReadinessEndpoint {
+function readinessEndpoint(
+  endpoint: ExecutiveDashboardApiEndpointContract,
+): ExecutiveDashboardApiReadinessEndpoint {
   return {
     ...endpoint,
     implementationStatus: "planned",
@@ -94,13 +96,17 @@ export function createExecutiveDashboardApiReadinessReport(
   };
 }
 
-export function assertExecutiveDashboardApiReadiness(report: ExecutiveDashboardApiReadinessReport): void {
+export function assertExecutiveDashboardApiReadiness(
+  report: ExecutiveDashboardApiReadinessReport,
+): void {
   if (report.status !== "ready-for-implementation") {
     throw new Error("Executive dashboard API is not ready for implementation.");
   }
 
   if (!report.guarantees.metricOnlyPayloads || report.guarantees.rawTelemetryExposure) {
-    throw new Error("Executive dashboard API readiness requires metric-only payloads and no raw telemetry exposure.");
+    throw new Error(
+      "Executive dashboard API readiness requires metric-only payloads and no raw telemetry exposure.",
+    );
   }
 
   if (report.guarantees.aggregateAccess || report.guarantees.adapterAccess) {
@@ -108,7 +114,9 @@ export function assertExecutiveDashboardApiReadiness(report: ExecutiveDashboardA
   }
 
   if (report.guarantees.routeImplementationIncluded || report.guarantees.uiImplementationIncluded) {
-    throw new Error("Executive dashboard API readiness must not include route or UI implementation.");
+    throw new Error(
+      "Executive dashboard API readiness must not include route or UI implementation.",
+    );
   }
 
   const insecureEndpoint = report.endpoints.find(
@@ -121,6 +129,8 @@ export function assertExecutiveDashboardApiReadiness(report: ExecutiveDashboardA
   );
 
   if (insecureEndpoint) {
-    throw new Error(`Executive dashboard API endpoint is not internally secured: ${insecureEndpoint.route}`);
+    throw new Error(
+      `Executive dashboard API endpoint is not internally secured: ${insecureEndpoint.route}`,
+    );
   }
 }

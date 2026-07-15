@@ -14,7 +14,6 @@ const readinessSource = readFileSync(
   "utf8",
 );
 
-
 describe("executive dashboard API implementation readiness", () => {
   beforeEach(() => {
     readObservabilityProvider.clearBufferedEvents();
@@ -42,7 +41,9 @@ describe("executive dashboard API implementation readiness", () => {
       },
     });
     expect(() => assertExecutiveDashboardApiReadiness(report)).not.toThrow();
-    expect(report.endpoints.every((endpoint) => endpoint.implementationStatus === "planned")).toBe(true);
+    expect(report.endpoints.every((endpoint) => endpoint.implementationStatus === "planned")).toBe(
+      true,
+    );
   });
 
   it("requires internal authentication and authorization for every candidate endpoint", () => {
@@ -114,7 +115,9 @@ describe("executive dashboard API implementation readiness", () => {
     const report = createExecutiveDashboardApiReadinessReport();
 
     expect(report.guarantees.routeImplementationIncluded).toBe(false);
-    expect(report.endpoints.every((endpoint) => endpoint.implementationStatus === "planned")).toBe(true);
+    expect(report.endpoints.every((endpoint) => endpoint.implementationStatus === "planned")).toBe(
+      true,
+    );
     expect(readinessSource).not.toMatch(/from\s+["'].+routes\//);
     expect(readinessSource).not.toMatch(/fileURLToPath\(new URL\("\.\.\/\.\.\/routes/);
   });

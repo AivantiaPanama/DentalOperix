@@ -141,24 +141,25 @@ export type ExecutiveDashboardFinalGovernanceClosurePack = {
   nextPhase: "20.0 Controlled Production Activation Approval";
 };
 
-export const EXECUTIVE_DASHBOARD_FINAL_GOVERNANCE_CLOSURE_SCOPES: ExecutiveDashboardFinalGovernanceClosureScope[] = [
-  "19.3-A-final-governance-closure-contract",
-  "19.3-B-release-candidate-baseline-inclusion",
-  "19.3-C-dashboard-candidate-state-closure",
-  "19.3-D-no-new-capability-closure",
-  "19.4-A-final-compliance-matrix",
-  "19.4-B-metric-only-closure",
-  "19.4-C-read-only-closure",
-  "19.4-D-feature-flag-closure",
-  "19.4-E-permission-gate-closure",
-  "19.4-F-internal-access-closure",
-  "19.4-G-client-fallback-closure",
-  "19.4-H-login-and-api-mutation-closure",
-  "19.4-I-source-of-truth-closure",
-  "19.5-A-closure-test-pack",
-  "19.5-B-final-document-pack",
-  "19.5-C-governance-baseline-handoff",
-];
+export const EXECUTIVE_DASHBOARD_FINAL_GOVERNANCE_CLOSURE_SCOPES: ExecutiveDashboardFinalGovernanceClosureScope[] =
+  [
+    "19.3-A-final-governance-closure-contract",
+    "19.3-B-release-candidate-baseline-inclusion",
+    "19.3-C-dashboard-candidate-state-closure",
+    "19.3-D-no-new-capability-closure",
+    "19.4-A-final-compliance-matrix",
+    "19.4-B-metric-only-closure",
+    "19.4-C-read-only-closure",
+    "19.4-D-feature-flag-closure",
+    "19.4-E-permission-gate-closure",
+    "19.4-F-internal-access-closure",
+    "19.4-G-client-fallback-closure",
+    "19.4-H-login-and-api-mutation-closure",
+    "19.4-I-source-of-truth-closure",
+    "19.5-A-closure-test-pack",
+    "19.5-B-final-document-pack",
+    "19.5-C-governance-baseline-handoff",
+  ];
 
 function createGuardrails(): ExecutiveDashboardFinalGovernanceClosureGuardrails {
   return {
@@ -278,8 +279,12 @@ export function assertExecutiveDashboardFinalGovernanceClosurePack(
     throw new Error("Executive dashboard final governance closure pack is not approved.");
   }
 
-  if (pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_FINAL_GOVERNANCE_CLOSURE_SCOPES.join("|")) {
-    throw new Error("Executive dashboard final governance closure pack does not cover the full 19.3-19.5 scope.");
+  if (
+    pack.coveredScopes.join("|") !== EXECUTIVE_DASHBOARD_FINAL_GOVERNANCE_CLOSURE_SCOPES.join("|")
+  ) {
+    throw new Error(
+      "Executive dashboard final governance closure pack does not cover the full 19.3-19.5 scope.",
+    );
   }
 
   const guardrails = pack.guardrails;
@@ -325,7 +330,9 @@ export function assertExecutiveDashboardFinalGovernanceClosurePack(
   }
 
   if (pack.surfaces.length !== 3) {
-    throw new Error("Executive dashboard final governance closure must cover exactly three dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard final governance closure must cover exactly three dashboard surfaces.",
+    );
   }
 
   if (pack.complianceMatrix.some((entry) => entry.decision !== "pass")) {
@@ -346,7 +353,9 @@ export function assertExecutiveDashboardFinalGovernanceClosurePack(
       (surface.rendersMetrics && surface.renderState !== "ready") ||
       (surface.rendersRestrictedState && surface.renderState !== "forbidden")
     ) {
-      throw new Error(`Executive dashboard final governance closure surface violates governance: ${surface.surface}`);
+      throw new Error(
+        `Executive dashboard final governance closure surface violates governance: ${surface.surface}`,
+      );
     }
   }
 }
@@ -436,7 +445,9 @@ export function ExecutiveDashboardFinalGovernanceClosureBoundary({
   const surface = pack.surfaces.find((candidate) => candidate.surface === viewModel.surface);
 
   if (!surface) {
-    throw new Error(`Missing executive dashboard final governance closure surface: ${viewModel.surface}`);
+    throw new Error(
+      `Missing executive dashboard final governance closure surface: ${viewModel.surface}`,
+    );
   }
 
   return (

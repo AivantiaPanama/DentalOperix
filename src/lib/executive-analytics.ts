@@ -1,13 +1,23 @@
 import type { RevenueForecastRiskSeverity } from "./revenue-forecast";
 import type { RevenueForecastSnapshot } from "./revenue-forecast";
-import type { RevenueServicePerformance, RevenueSnapshotV1, RevenueSourcePerformance } from "./revenue-intelligence";
+import type {
+  RevenueServicePerformance,
+  RevenueSnapshotV1,
+  RevenueSourcePerformance,
+} from "./revenue-intelligence";
 
 export const EXECUTIVE_ANALYTICS_VERSION = "59.3-v1" as const;
 
 export type ExecutiveScoreSignal = "excellent" | "healthy" | "watch" | "critical";
 export type ExecutivePriority = "low" | "medium" | "high";
 export type ExecutiveHealthStatus = "excellent" | "healthy" | "attention-required" | "critical";
-export type ExecutiveActionCategory = "conversion" | "attendance" | "pipeline" | "growth" | "data-quality" | "opportunity";
+export type ExecutiveActionCategory =
+  | "conversion"
+  | "attendance"
+  | "pipeline"
+  | "growth"
+  | "data-quality"
+  | "opportunity";
 
 export type ExecutiveScore = {
   value: number;
@@ -111,7 +121,10 @@ function buildScore(value: number, drivers: string[]): ExecutiveScore {
   };
 }
 
-function calculateRevenueScore(snapshot: RevenueSnapshotV1, forecast: RevenueForecastSnapshot): ExecutiveScore {
+function calculateRevenueScore(
+  snapshot: RevenueSnapshotV1,
+  forecast: RevenueForecastSnapshot,
+): ExecutiveScore {
   const conversionComponent = snapshot.conversion.leadToAppointmentRate * 0.35;
   const attendanceComponent = snapshot.conversion.appointmentToAttendanceRate * 0.25;
   const pipelineComponent = snapshot.pipeline.estimatedPipelineValue > 0 ? 20 : 0;
@@ -141,7 +154,8 @@ function calculateGrowthScore(forecast: RevenueForecastSnapshot): ExecutiveScore
   const values = [conversionTrend, attendanceTrend, leadVolumeTrend]
     .filter(Boolean)
     .map((trend) => trendScore(trend!.direction, trend!.changePercent));
-  const value = values.length === 0 ? 40 : values.reduce((sum, current) => sum + current, 0) / values.length;
+  const value =
+    values.length === 0 ? 40 : values.reduce((sum, current) => sum + current, 0) / values.length;
 
   return buildScore(value, [
     `Tendencia conversión: ${conversionTrend?.direction ?? "insufficient-data"}`,
@@ -150,7 +164,10 @@ function calculateGrowthScore(forecast: RevenueForecastSnapshot): ExecutiveScore
   ]);
 }
 
-function calculateOpportunityIndex(snapshot: RevenueSnapshotV1, forecast: RevenueForecastSnapshot): ExecutiveScore {
+function calculateOpportunityIndex(
+  snapshot: RevenueSnapshotV1,
+  forecast: RevenueForecastSnapshot,
+): ExecutiveScore {
   const sourceDiversity = clamp(snapshot.performance.bySource.length * 12, 0, 30);
   const serviceDiversity = clamp(snapshot.performance.byService.length * 10, 0, 30);
   const forecastUpside = snapshot.pipeline.estimatedPipelineValue > 0 ? 20 : 0;
@@ -175,8 +192,16 @@ function rankSource(source: RevenueSourcePerformance): ExecutiveRankingItem {
 }
 
 function rankService(service: RevenueServicePerformance): ExecutiveRankingItem {
-  const normalizedPipelineScore = service.estimatedPipelineValue > 0 ? Math.min(30, Math.log10(service.estimatedPipelineValue + 1) * 6) : 0;
-  const score = clamp(service.conversionRate * 0.55 + service.completed * 8 + service.leads * 1.5 + normalizedPipelineScore);
+  const normalizedPipelineScore =
+    service.estimatedPipelineValue > 0
+      ? Math.min(30, Math.log10(service.estimatedPipelineValue + 1) * 6)
+      : 0;
+  const score = clamp(
+    service.conversionRate * 0.55 +
+      service.completed * 8 +
+      service.leads * 1.5 +
+      normalizedPipelineScore,
+  );
   return {
     name: service.service,
     leads: service.leads,
@@ -188,10 +213,18 @@ function rankService(service: RevenueServicePerformance): ExecutiveRankingItem {
 }
 
 function sortRanking(a: ExecutiveRankingItem, b: ExecutiveRankingItem) {
-  return b.score - a.score || b.completed - a.completed || b.leads - a.leads || a.name.localeCompare(b.name);
+  return (
+    b.score - a.score ||
+    b.completed - a.completed ||
+    b.leads - a.leads ||
+    a.name.localeCompare(b.name)
+  );
 }
 
-function buildAlerts(snapshot: RevenueSnapshotV1, forecast: RevenueForecastSnapshot): ExecutiveDecisionAlert[] {
+function buildAlerts(
+  snapshot: RevenueSnapshotV1,
+  forecast: RevenueForecastSnapshot,
+): ExecutiveDecisionAlert[] {
   const alerts: ExecutiveDecisionAlert[] = forecast.alerts.map((alert) => ({
     title: alert.title,
     message: alert.message,
@@ -207,16 +240,23 @@ function buildAlerts(snapshot: RevenueSnapshotV1, forecast: RevenueForecastSnaps
       title: "Conversión ejecutiva en observación",
       message: `Lead → Cita se encuentra en ${snapshot.conversion.leadToAppointmentRate}%.`,
       severity: "medium",
-      recommendedAction: "Auditar tiempos de respuesta, calidad de seguimiento y fuentes con baja conversión.",
+      recommendedAction:
+        "Auditar tiempos de respuesta, calidad de seguimiento y fuentes con baja conversión.",
     });
   }
 
-  if (snapshot.quality.missingSource + snapshot.quality.missingService + snapshot.quality.unknownStatus > 0) {
+  if (
+    snapshot.quality.missingSource +
+      snapshot.quality.missingService +
+      snapshot.quality.unknownStatus >
+    0
+  ) {
     alerts.push({
       title: "Calidad de datos ejecutiva",
       message: "Existen registros incompletos que pueden afectar rankings y lectura ejecutiva.",
       severity: "low",
-      recommendedAction: "Completar fuente, servicio y estado en los leads afectados antes del siguiente corte.",
+      recommendedAction:
+        "Completar fuente, servicio y estado en los leads afectados antes del siguiente corte.",
     });
   }
 
@@ -225,10 +265,18 @@ function buildAlerts(snapshot: RevenueSnapshotV1, forecast: RevenueForecastSnaps
 
 function buildOpportunities(snapshot: RevenueSnapshotV1): ExecutiveOpportunity[] {
   const opportunities: ExecutiveOpportunity[] = [];
-  const topSource = [...snapshot.performance.bySource].sort((a, b) => b.conversionRate - a.conversionRate || b.leads - a.leads)[0];
-  const topService = [...snapshot.performance.byService].sort((a, b) => b.estimatedPipelineValue - a.estimatedPipelineValue || b.conversionRate - a.conversionRate)[0];
+  const topSource = [...snapshot.performance.bySource].sort(
+    (a, b) => b.conversionRate - a.conversionRate || b.leads - a.leads,
+  )[0];
+  const topService = [...snapshot.performance.byService].sort(
+    (a, b) =>
+      b.estimatedPipelineValue - a.estimatedPipelineValue || b.conversionRate - a.conversionRate,
+  )[0];
   const underusedSource = [...snapshot.performance.bySource]
-    .filter((source) => source.leads > 0 && source.conversionRate >= snapshot.conversion.leadToAppointmentRate)
+    .filter(
+      (source) =>
+        source.leads > 0 && source.conversionRate >= snapshot.conversion.leadToAppointmentRate,
+    )
     .sort((a, b) => a.leads - b.leads)[0];
 
   if (topSource) {
@@ -254,7 +302,9 @@ function buildOpportunities(snapshot: RevenueSnapshotV1): ExecutiveOpportunity[]
       title: `Fuente subutilizada: ${underusedSource.source}`,
       description: `${underusedSource.source} supera o iguala la conversión promedio, pero tiene bajo volumen relativo.`,
       priority: "medium",
-      scoreImpact: roundOne(underusedSource.conversionRate - snapshot.conversion.leadToAppointmentRate),
+      scoreImpact: roundOne(
+        underusedSource.conversionRate - snapshot.conversion.leadToAppointmentRate,
+      ),
     });
   }
 
@@ -270,16 +320,28 @@ function buildOpportunities(snapshot: RevenueSnapshotV1): ExecutiveOpportunity[]
   return opportunities.slice(0, 6);
 }
 
-function highestPriority(priorities: ExecutivePriority[], fallback: ExecutivePriority): ExecutivePriority {
+function highestPriority(
+  priorities: ExecutivePriority[],
+  fallback: ExecutivePriority,
+): ExecutivePriority {
   if (priorities.includes("high")) return "high";
   if (priorities.includes("medium")) return "medium";
   if (priorities.includes("low")) return "low";
   return fallback;
 }
 
-function healthFromScores(revenueScore: ExecutiveScore, growthScore: ExecutiveScore, alerts: ExecutiveDecisionAlert[]): ExecutiveHealthStatus {
-  if (alerts.some((alert) => alert.severity === "high") || revenueScore.value < 35) return "critical";
-  if (revenueScore.value < 55 || growthScore.value < 45 || alerts.some((alert) => alert.severity === "medium")) {
+function healthFromScores(
+  revenueScore: ExecutiveScore,
+  growthScore: ExecutiveScore,
+  alerts: ExecutiveDecisionAlert[],
+): ExecutiveHealthStatus {
+  if (alerts.some((alert) => alert.severity === "high") || revenueScore.value < 35)
+    return "critical";
+  if (
+    revenueScore.value < 55 ||
+    growthScore.value < 45 ||
+    alerts.some((alert) => alert.severity === "medium")
+  ) {
     return "attention-required";
   }
   if (revenueScore.value >= 80 && growthScore.value >= 60) return "excellent";
@@ -297,10 +359,15 @@ function buildInterpretation(
 ): ExecutiveInterpretation {
   const healthStatus = healthFromScores(revenueScore, growthScore, alerts);
   const riskLevel = highestPriority(
-    alerts.map((alert) => (alert.severity === "high" ? "high" : alert.severity === "medium" ? "medium" : "low")),
+    alerts.map((alert) =>
+      alert.severity === "high" ? "high" : alert.severity === "medium" ? "medium" : "low",
+    ),
     "low",
   );
-  const opportunityLevel = highestPriority(opportunities.map((opportunity) => opportunity.priority), "low");
+  const opportunityLevel = highestPriority(
+    opportunities.map((opportunity) => opportunity.priority),
+    "low",
+  );
   const topOpportunity = opportunities[0]?.title ?? "mantener monitoreo de Revenue Intelligence";
   const topRisk = alerts[0]?.title ?? "sin riesgos ejecutivos críticos";
   const primaryFocus = riskLevel === "high" || riskLevel === "medium" ? topRisk : topOpportunity;
@@ -313,7 +380,12 @@ function buildInterpretation(
   return {
     healthStatus,
     riskLevel,
-    opportunityLevel: opportunityIndex.value >= 65 ? opportunityLevel : opportunityLevel === "high" ? "medium" : opportunityLevel,
+    opportunityLevel:
+      opportunityIndex.value >= 65
+        ? opportunityLevel
+        : opportunityLevel === "high"
+          ? "medium"
+          : opportunityLevel,
     narrative,
     primaryFocus,
   };
@@ -383,8 +455,10 @@ function buildPriorityActions(
       title: "Validar disponibilidad de datos operativos",
       category: "data-quality",
       priority: "low",
-      rationale: "El snapshot no contiene leads; Executive Analytics conserva modo read-only y no asume persistencia adicional.",
-      expectedOutcome: "Confirmar que la captura operativa esté disponible antes de tomar decisiones ejecutivas.",
+      rationale:
+        "El snapshot no contiene leads; Executive Analytics conserva modo read-only y no asume persistencia adicional.",
+      expectedOutcome:
+        "Confirmar que la captura operativa esté disponible antes de tomar decisiones ejecutivas.",
     });
   }
 
@@ -394,7 +468,8 @@ function buildPriorityActions(
       category: "pipeline",
       priority: "low",
       rationale: "No se detectan riesgos ejecutivos relevantes en el snapshot actual.",
-      expectedOutcome: "Conservar visibilidad ejecutiva sin introducir cambios operativos innecesarios.",
+      expectedOutcome:
+        "Conservar visibilidad ejecutiva sin introducir cambios operativos innecesarios.",
     });
   }
 
@@ -429,7 +504,12 @@ export function createExecutiveAnalyticsSnapshot(
     alerts,
     opportunities,
   );
-  const priorityActions = buildPriorityActions(revenueSnapshot, forecastSnapshot, alerts, opportunities);
+  const priorityActions = buildPriorityActions(
+    revenueSnapshot,
+    forecastSnapshot,
+    alerts,
+    opportunities,
+  );
 
   return {
     version: EXECUTIVE_ANALYTICS_VERSION,

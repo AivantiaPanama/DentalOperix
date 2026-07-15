@@ -101,7 +101,9 @@ const FORBIDDEN_DEPENDENCIES: ExecutiveDashboardUiForbiddenDependency[] = [
 
 export function createExecutiveDashboardUiArchitectureDesign(
   contracts: ExecutiveDashboardApiContracts = createExecutiveDashboardApiContracts(),
-  readiness: ExecutiveDashboardUiReadinessAssessment = createExecutiveDashboardUiReadinessAssessment(contracts),
+  readiness: ExecutiveDashboardUiReadinessAssessment = createExecutiveDashboardUiReadinessAssessment(
+    contracts,
+  ),
   generatedAt = new Date().toISOString(),
 ): ExecutiveDashboardUiArchitectureDesign {
   assertExecutiveDashboardUiReadiness(readiness);
@@ -167,9 +169,13 @@ export function createExecutiveDashboardUiArchitectureDesign(
   };
 }
 
-export function assertExecutiveDashboardUiArchitectureDesign(design: ExecutiveDashboardUiArchitectureDesign): void {
+export function assertExecutiveDashboardUiArchitectureDesign(
+  design: ExecutiveDashboardUiArchitectureDesign,
+): void {
   if (design.phase !== "17.3-B" || design.status !== "approved-for-component-design") {
-    throw new Error("Executive dashboard UI architecture design is not approved for component design.");
+    throw new Error(
+      "Executive dashboard UI architecture design is not approved for component design.",
+    );
   }
 
   if (
@@ -190,19 +196,30 @@ export function assertExecutiveDashboardUiArchitectureDesign(design: ExecutiveDa
   }
 
   if (design.consumptionRule.allowedContract !== "ExecutiveDashboardApiContracts") {
-    throw new Error("Executive dashboard UI architecture must consume ExecutiveDashboardApiContracts only.");
+    throw new Error(
+      "Executive dashboard UI architecture must consume ExecutiveDashboardApiContracts only.",
+    );
   }
 
-  if (design.consumptionRule.permissionRequired !== "executive-observability:read" || !design.consumptionRule.metricOnly) {
-    throw new Error("Executive dashboard UI architecture must remain permissioned and metric-only.");
+  if (
+    design.consumptionRule.permissionRequired !== "executive-observability:read" ||
+    !design.consumptionRule.metricOnly
+  ) {
+    throw new Error(
+      "Executive dashboard UI architecture must remain permissioned and metric-only.",
+    );
   }
 
   if (design.surfaces.length !== 3) {
-    throw new Error("Executive dashboard UI architecture must define exactly three governed dashboard surfaces.");
+    throw new Error(
+      "Executive dashboard UI architecture must define exactly three governed dashboard surfaces.",
+    );
   }
 
   const invalidSurface = design.surfaces.find(
-    (surface) => surface.ownership !== "presentation-only" || surface.implementationStatus !== "architecture-only",
+    (surface) =>
+      surface.ownership !== "presentation-only" ||
+      surface.implementationStatus !== "architecture-only",
   );
 
   if (invalidSurface) {
