@@ -6,7 +6,11 @@ import type {
   ValidationResult,
 } from "../sdk";
 
-export type ValidationExecutionCategory = "architecture" | "governance" | "documentation" | "compliance";
+export type ValidationExecutionCategory =
+  | "architecture"
+  | "governance"
+  | "documentation"
+  | "compliance";
 
 export interface ValidationExecutionContext extends ValidationContext {
   readonly sessionId: string;

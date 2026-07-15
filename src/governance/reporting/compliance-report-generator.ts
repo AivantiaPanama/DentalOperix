@@ -1,4 +1,9 @@
-import type { IReportGenerator, ValidationContext, ValidationReport, ValidationResult } from "../sdk";
+import type {
+  IReportGenerator,
+  ValidationContext,
+  ValidationReport,
+  ValidationResult,
+} from "../sdk";
 import { ReportBuilder } from "../sdk";
 
 export class ComplianceReportGenerator implements IReportGenerator {

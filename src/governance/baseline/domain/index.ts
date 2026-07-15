@@ -5,7 +5,10 @@ export type {
   GovernanceDecision,
   RuleSeverity,
 } from "./enums";
-export type { BaselineDescriptor, BaselineDescriptorMetadata } from "./entities/baseline-descriptor";
+export type {
+  BaselineDescriptor,
+  BaselineDescriptorMetadata,
+} from "./entities/baseline-descriptor";
 export type { ComplianceReport, ComplianceReportSummary } from "./entities/compliance-report";
 export type { ComplianceRule, ComplianceRuleContext } from "./rules/compliance-rule";
 export type { BaselineVersion } from "./value-objects/baseline-version";

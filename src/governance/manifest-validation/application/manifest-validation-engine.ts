@@ -18,7 +18,9 @@ export interface ManifestValidationEngineOptions {
 }
 
 const DEFAULT_SUPPORTED_SCHEMA_VERSIONS = ["1.0.0"] as const;
-const DEFAULT_SUPPORTED_BASELINE_VERSIONS = ["DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE"] as const;
+const DEFAULT_SUPPORTED_BASELINE_VERSIONS = [
+  "DENTALOPERIX_BASELINE_71_5_RELEASE_CANDIDATE",
+] as const;
 const DEFAULT_REQUIRED_GOVERNANCE_CAPABILITIES = [
   "72.1.1",
   "72.1.2",
@@ -39,7 +41,9 @@ const summarizeIssues = (issues: readonly ManifestValidationIssue[]): ManifestVa
   };
 };
 
-const resolveCompatibilityStatus = (summary: ManifestValidationSummary): ManifestCompatibilityStatus => {
+const resolveCompatibilityStatus = (
+  summary: ManifestValidationSummary,
+): ManifestCompatibilityStatus => {
   if (summary.errorCount > 0) return "incompatible";
   if (summary.warningCount > 0) return "compatible-with-warnings";
   return "compatible";
@@ -54,8 +58,10 @@ export class ManifestValidationEngine {
 
   constructor(options: ManifestValidationEngineOptions = {}) {
     this.compatibilityRules = options.compatibilityRules ?? DEFAULT_MANIFEST_COMPATIBILITY_RULES;
-    this.supportedSchemaVersions = options.supportedSchemaVersions ?? DEFAULT_SUPPORTED_SCHEMA_VERSIONS;
-    this.supportedBaselineVersions = options.supportedBaselineVersions ?? DEFAULT_SUPPORTED_BASELINE_VERSIONS;
+    this.supportedSchemaVersions =
+      options.supportedSchemaVersions ?? DEFAULT_SUPPORTED_SCHEMA_VERSIONS;
+    this.supportedBaselineVersions =
+      options.supportedBaselineVersions ?? DEFAULT_SUPPORTED_BASELINE_VERSIONS;
     this.requiredGovernanceCapabilities =
       options.requiredGovernanceCapabilities ?? DEFAULT_REQUIRED_GOVERNANCE_CAPABILITIES;
     this.clock = options.clock ?? (() => new Date().toISOString());

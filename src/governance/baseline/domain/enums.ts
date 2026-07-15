@@ -6,4 +6,7 @@ export type RuleSeverity = "info" | "low" | "medium" | "high" | "critical";
 
 export type BaselineCertificationStatus = "RELEASE_CANDIDATE" | "CERTIFIED" | "DEPRECATED";
 
-export type BaselineReleaseType = "release-candidate" | "certified-baseline" | "governance-baseline";
+export type BaselineReleaseType =
+  | "release-candidate"
+  | "certified-baseline"
+  | "governance-baseline";

@@ -13,9 +13,5 @@ export {
   CreateRuleRegistryFromManifestUseCase,
   LoadGovernanceManifestUseCase,
 } from "./application";
-export {
-  JsonManifestParser,
-  ManifestRuleRegistry,
-  StaticManifestLoader,
-} from "./infrastructure";
+export { JsonManifestParser, ManifestRuleRegistry, StaticManifestLoader } from "./infrastructure";
 export { BASELINE_71_5_GOVERNANCE_MANIFEST } from "./catalog";

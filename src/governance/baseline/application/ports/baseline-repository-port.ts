@@ -2,6 +2,8 @@ import type { BaselineDescriptor } from "../../domain/entities/baseline-descript
 import type { BaselineVersion } from "../../domain/value-objects/baseline-version";
 
 export interface BaselineRepositoryPort {
-  getByVersion(version: BaselineVersion): Promise<BaselineDescriptor | null> | BaselineDescriptor | null;
+  getByVersion(
+    version: BaselineVersion,
+  ): Promise<BaselineDescriptor | null> | BaselineDescriptor | null;
   getActive(): Promise<BaselineDescriptor | null> | BaselineDescriptor | null;
 }

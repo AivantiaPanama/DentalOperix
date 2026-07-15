@@ -10,5 +10,8 @@ export interface ComplianceReportExportResult {
 }
 
 export interface ComplianceReportExporterPort {
-  export(report: ComplianceReport, format: ComplianceReportExportFormat): Promise<ComplianceReportExportResult> | ComplianceReportExportResult;
+  export(
+    report: ComplianceReport,
+    format: ComplianceReportExportFormat,
+  ): Promise<ComplianceReportExportResult> | ComplianceReportExportResult;
 }

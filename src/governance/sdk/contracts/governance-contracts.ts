@@ -20,7 +20,9 @@ export interface IReportGenerator {
 }
 
 export interface IEvidenceProvider {
-  collect(context: ValidationContext): Promise<readonly GovernanceEvidence[]> | readonly GovernanceEvidence[];
+  collect(
+    context: ValidationContext,
+  ): Promise<readonly GovernanceEvidence[]> | readonly GovernanceEvidence[];
 }
 
 export interface IRegistryProvider {

@@ -4,7 +4,10 @@ import { ValidatorRunner } from "./validator-runner";
 export class PipelineRunner {
   constructor(private readonly validatorRunner = new ValidatorRunner()) {}
 
-  async run(validators: readonly IValidator[], context: ValidationContext): Promise<readonly ValidationResult[]> {
+  async run(
+    validators: readonly IValidator[],
+    context: ValidationContext,
+  ): Promise<readonly ValidationResult[]> {
     const results: ValidationResult[] = [];
 
     for (const validator of validators) {

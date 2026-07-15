@@ -15,7 +15,8 @@ export const determineVersionPolicy = (changeKind: VersionChangeKind): VersionPo
       changeKind,
       requiresADR: true,
       requiresGARBReview: true,
-      rationale: "Incompatible public contract changes require ADR, GARB review, and MAJOR version increment.",
+      rationale:
+        "Incompatible public contract changes require ADR, GARB review, and MAJOR version increment.",
     };
   }
 

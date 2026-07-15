@@ -1,5 +1,8 @@
 import type { ValidationContext } from "../sdk";
-import type { ValidationExecutionCategory, ValidationExecutionContext } from "../execution/validation-execution-types";
+import type {
+  ValidationExecutionCategory,
+  ValidationExecutionContext,
+} from "../execution/validation-execution-types";
 
 const DEFAULT_CATEGORIES: readonly ValidationExecutionCategory[] = [
   "architecture",

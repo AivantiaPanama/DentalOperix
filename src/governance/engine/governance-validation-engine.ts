@@ -1,4 +1,10 @@
-import type { IEvidenceProvider, IRegistryProvider, IValidationEngine, ValidationContext, ValidationReport } from "../sdk";
+import type {
+  IEvidenceProvider,
+  IRegistryProvider,
+  IValidationEngine,
+  ValidationContext,
+  ValidationReport,
+} from "../sdk";
 import { aggregateComplianceStatus } from "../sdk";
 import type { ValidationExecutionResult } from "../execution/validation-execution-types";
 import { ValidationPipeline } from "./validation-pipeline";
@@ -26,7 +32,9 @@ export class GovernanceValidationEngine implements IValidationEngine {
     const session = ValidationSession.create(context);
     const validators = this.pipeline.listValidators();
     const results = await this.pipelineRunner.run(validators, session);
-    const collectedEvidence = this.evidenceProvider ? await this.evidenceProvider.collect(session) : [];
+    const collectedEvidence = this.evidenceProvider
+      ? await this.evidenceProvider.collect(session)
+      : [];
     const resultEvidence = results.flatMap((result) => [...result.evidence]);
     const evidence = [...collectedEvidence, ...resultEvidence];
     const report = this.reportGenerator.generate(session, results);

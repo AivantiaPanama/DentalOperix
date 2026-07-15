@@ -26,24 +26,48 @@ const requiredCapabilityMatrixKeys = [
 
 export const manifestStructureRule: ManifestCompatibilityRule = {
   ruleId: "manifest.structure.required-fields",
-  description: "Validates required GovernanceManifest structural fields without mutating the manifest.",
+  description:
+    "Validates required GovernanceManifest structural fields without mutating the manifest.",
   evaluate(manifest: GovernanceManifest): readonly ManifestValidationIssue[] {
     const issues: ManifestValidationIssue[] = [];
 
     if (isBlank(manifest.schemaVersion)) {
-      issues.push(issue("MANIFEST_SCHEMA_VERSION_REQUIRED", "Manifest schemaVersion is required.", "error", "schemaVersion"));
+      issues.push(
+        issue(
+          "MANIFEST_SCHEMA_VERSION_REQUIRED",
+          "Manifest schemaVersion is required.",
+          "error",
+          "schemaVersion",
+        ),
+      );
     }
 
     if (isBlank(manifest.manifestId)) {
-      issues.push(issue("MANIFEST_ID_REQUIRED", "Manifest manifestId is required.", "error", "manifestId"));
+      issues.push(
+        issue("MANIFEST_ID_REQUIRED", "Manifest manifestId is required.", "error", "manifestId"),
+      );
     }
 
     if (isBlank(manifest.metadata.generatedAt)) {
-      issues.push(issue("MANIFEST_GENERATED_AT_REQUIRED", "Manifest metadata.generatedAt is required.", "error", "metadata.generatedAt"));
+      issues.push(
+        issue(
+          "MANIFEST_GENERATED_AT_REQUIRED",
+          "Manifest metadata.generatedAt is required.",
+          "error",
+          "metadata.generatedAt",
+        ),
+      );
     }
 
     if (isBlank(manifest.metadata.generatedBy)) {
-      issues.push(issue("MANIFEST_GENERATED_BY_REQUIRED", "Manifest metadata.generatedBy is required.", "error", "metadata.generatedBy"));
+      issues.push(
+        issue(
+          "MANIFEST_GENERATED_BY_REQUIRED",
+          "Manifest metadata.generatedBy is required.",
+          "error",
+          "metadata.generatedBy",
+        ),
+      );
     }
 
     if (isBlank(manifest.metadata.documentationPackage)) {
@@ -58,15 +82,36 @@ export const manifestStructureRule: ManifestCompatibilityRule = {
     }
 
     if (isBlank(manifest.baseline.identifier)) {
-      issues.push(issue("MANIFEST_BASELINE_IDENTIFIER_REQUIRED", "Manifest baseline.identifier is required.", "error", "baseline.identifier"));
+      issues.push(
+        issue(
+          "MANIFEST_BASELINE_IDENTIFIER_REQUIRED",
+          "Manifest baseline.identifier is required.",
+          "error",
+          "baseline.identifier",
+        ),
+      );
     }
 
     if (isBlank(manifest.baseline.version)) {
-      issues.push(issue("MANIFEST_BASELINE_VERSION_REQUIRED", "Manifest baseline.version is required.", "error", "baseline.version"));
+      issues.push(
+        issue(
+          "MANIFEST_BASELINE_VERSION_REQUIRED",
+          "Manifest baseline.version is required.",
+          "error",
+          "baseline.version",
+        ),
+      );
     }
 
     if (manifest.rules.length === 0) {
-      issues.push(issue("MANIFEST_RULES_REQUIRED", "Manifest must contain at least one governance rule.", "error", "rules"));
+      issues.push(
+        issue(
+          "MANIFEST_RULES_REQUIRED",
+          "Manifest must contain at least one governance rule.",
+          "error",
+          "rules",
+        ),
+      );
     }
 
     return issues;
@@ -75,8 +120,12 @@ export const manifestStructureRule: ManifestCompatibilityRule = {
 
 export const manifestVersionCompatibilityRule: ManifestCompatibilityRule = {
   ruleId: "manifest.version.compatibility",
-  description: "Validates declared manifest schema and baseline versions against the approved compatibility context.",
-  evaluate(manifest: GovernanceManifest, context: ManifestValidationContext): readonly ManifestValidationIssue[] {
+  description:
+    "Validates declared manifest schema and baseline versions against the approved compatibility context.",
+  evaluate(
+    manifest: GovernanceManifest,
+    context: ManifestValidationContext,
+  ): readonly ManifestValidationIssue[] {
     const issues: ManifestValidationIssue[] = [];
 
     if (!context.supportedSchemaVersions.includes(manifest.schemaVersion)) {
@@ -101,7 +150,9 @@ export const manifestVersionCompatibilityRule: ManifestCompatibilityRule = {
       );
     }
 
-    if (!manifest.compatibilityMatrix.compatibleBaselineVersions.includes(manifest.baseline.version)) {
+    if (
+      !manifest.compatibilityMatrix.compatibleBaselineVersions.includes(manifest.baseline.version)
+    ) {
       issues.push(
         issue(
           "MANIFEST_BASELINE_NOT_DECLARED_COMPATIBLE",
@@ -118,7 +169,8 @@ export const manifestVersionCompatibilityRule: ManifestCompatibilityRule = {
 
 export const manifestReadOnlyRule: ManifestCompatibilityRule = {
   ruleId: "manifest.readonly.enforcement",
-  description: "Ensures the manifest validation profile remains read-only for certified governance boundaries.",
+  description:
+    "Ensures the manifest validation profile remains read-only for certified governance boundaries.",
   evaluate(manifest: GovernanceManifest): readonly ManifestValidationIssue[] {
     if (manifest.validationProfile.readOnly) return [];
 
@@ -135,8 +187,12 @@ export const manifestReadOnlyRule: ManifestCompatibilityRule = {
 
 export const manifestCompatibilityMatrixRule: ManifestCompatibilityRule = {
   ruleId: "manifest.compatibility-matrix.required-capabilities",
-  description: "Validates compatibility matrix declarations for SDK, validation engine, rule registry, and baseline versions.",
-  evaluate(manifest: GovernanceManifest, context: ManifestValidationContext): readonly ManifestValidationIssue[] {
+  description:
+    "Validates compatibility matrix declarations for SDK, validation engine, rule registry, and baseline versions.",
+  evaluate(
+    manifest: GovernanceManifest,
+    context: ManifestValidationContext,
+  ): readonly ManifestValidationIssue[] {
     const issues: ManifestValidationIssue[] = [];
 
     for (const key of requiredCapabilityMatrixKeys) {
@@ -177,7 +233,8 @@ export const manifestCompatibilityMatrixRule: ManifestCompatibilityRule = {
 
 export const manifestRuleDefinitionRule: ManifestCompatibilityRule = {
   ruleId: "manifest.rules.required-fields",
-  description: "Validates rule definitions embedded in the manifest without executing governance rules.",
+  description:
+    "Validates rule definitions embedded in the manifest without executing governance rules.",
   evaluate(manifest: GovernanceManifest): readonly ManifestValidationIssue[] {
     const issues: ManifestValidationIssue[] = [];
 
@@ -186,27 +243,75 @@ export const manifestRuleDefinitionRule: ManifestCompatibilityRule = {
       const ruleKey = createRuleKey(rule.identifier);
 
       if (isBlank(rule.identifier.value)) {
-        issues.push(issue("MANIFEST_RULE_IDENTIFIER_REQUIRED", "Rule identifier.value is required.", "error", `${path}.identifier.value`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_IDENTIFIER_REQUIRED",
+            "Rule identifier.value is required.",
+            "error",
+            `${path}.identifier.value`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.identifier.version)) {
-        issues.push(issue("MANIFEST_RULE_IDENTIFIER_VERSION_REQUIRED", "Rule identifier.version is required.", "error", `${path}.identifier.version`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_IDENTIFIER_VERSION_REQUIRED",
+            "Rule identifier.version is required.",
+            "error",
+            `${path}.identifier.version`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.name)) {
-        issues.push(issue("MANIFEST_RULE_NAME_REQUIRED", "Rule name is required.", "error", `${path}.name`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_NAME_REQUIRED",
+            "Rule name is required.",
+            "error",
+            `${path}.name`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.description)) {
-        issues.push(issue("MANIFEST_RULE_DESCRIPTION_REQUIRED", "Rule description is required.", "error", `${path}.description`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_DESCRIPTION_REQUIRED",
+            "Rule description is required.",
+            "error",
+            `${path}.description`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.objective)) {
-        issues.push(issue("MANIFEST_RULE_OBJECTIVE_REQUIRED", "Rule objective is required.", "error", `${path}.objective`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_OBJECTIVE_REQUIRED",
+            "Rule objective is required.",
+            "error",
+            `${path}.objective`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.evaluationCriteria.summary)) {
-        issues.push(issue("MANIFEST_RULE_EVALUATION_SUMMARY_REQUIRED", "Rule evaluationCriteria.summary is required.", "error", `${path}.evaluationCriteria.summary`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_EVALUATION_SUMMARY_REQUIRED",
+            "Rule evaluationCriteria.summary is required.",
+            "error",
+            `${path}.evaluationCriteria.summary`,
+            ruleKey,
+          ),
+        );
       }
 
       if (isBlank(rule.evaluationCriteria.expectedResult)) {
@@ -222,11 +327,27 @@ export const manifestRuleDefinitionRule: ManifestCompatibilityRule = {
       }
 
       if (isBlank(rule.version.value)) {
-        issues.push(issue("MANIFEST_RULE_VERSION_REQUIRED", "Rule version.value is required.", "error", `${path}.version.value`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_VERSION_REQUIRED",
+            "Rule version.value is required.",
+            "error",
+            `${path}.version.value`,
+            ruleKey,
+          ),
+        );
       }
 
       if (rule.requiredEvidence.length === 0) {
-        issues.push(issue("MANIFEST_RULE_EVIDENCE_REQUIRED", "Rule requiredEvidence must declare at least one evidence artifact.", "error", `${path}.requiredEvidence`, ruleKey));
+        issues.push(
+          issue(
+            "MANIFEST_RULE_EVIDENCE_REQUIRED",
+            "Rule requiredEvidence must declare at least one evidence artifact.",
+            "error",
+            `${path}.requiredEvidence`,
+            ruleKey,
+          ),
+        );
       }
     });
 
@@ -295,7 +416,8 @@ export const manifestAllowedRuleStatusRule: ManifestCompatibilityRule = {
 
 export const manifestRuleDependencyRule: ManifestCompatibilityRule = {
   ruleId: "manifest.rules.dependency-references",
-  description: "Validates that rule dependency references resolve to rules declared in the same manifest.",
+  description:
+    "Validates that rule dependency references resolve to rules declared in the same manifest.",
   evaluate(manifest: GovernanceManifest): readonly ManifestValidationIssue[] {
     const declaredRuleKeys = new Set(manifest.rules.map((rule) => createRuleKey(rule.identifier)));
 

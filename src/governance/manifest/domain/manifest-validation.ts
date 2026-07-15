@@ -10,10 +10,13 @@ export function validateGovernanceManifest(manifest: GovernanceManifest): Manife
 
   if (!manifest.schemaVersion.trim()) errors.push("Manifest schemaVersion is required.");
   if (!manifest.manifestId.trim()) errors.push("Manifest manifestId is required.");
-  if (!manifest.baseline.identifier.trim()) errors.push("Manifest baseline identifier is required.");
+  if (!manifest.baseline.identifier.trim())
+    errors.push("Manifest baseline identifier is required.");
   if (!manifest.baseline.version.trim()) errors.push("Manifest baseline version is required.");
-  if (manifest.rules.length === 0) errors.push("Manifest must contain at least one governance rule.");
-  if (!manifest.validationProfile.readOnly) errors.push("Governance manifests must be read-only for 72.1.3-I3.");
+  if (manifest.rules.length === 0)
+    errors.push("Manifest must contain at least one governance rule.");
+  if (!manifest.validationProfile.readOnly)
+    errors.push("Governance manifests must be read-only for 72.1.3-I3.");
 
   const ruleKeys = new Set<string>();
   for (const rule of manifest.rules) {

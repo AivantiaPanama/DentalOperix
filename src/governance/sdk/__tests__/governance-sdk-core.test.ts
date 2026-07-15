@@ -96,7 +96,10 @@ describe("Governance SDK Core 72.1.1", () => {
       evidenceId: "72.1.1-sdk-core-evidence",
       source: "Governance SDK Core tests",
       summary: "SDK contracts, registry, reporting, versioning, and evidence primitives validated.",
-      artifacts: ["src/governance/sdk/index.ts", "src/governance/sdk/__tests__/governance-sdk-core.test.ts"],
+      artifacts: [
+        "src/governance/sdk/index.ts",
+        "src/governance/sdk/__tests__/governance-sdk-core.test.ts",
+      ],
     });
 
     const provider = new StaticEvidenceProvider([evidence]);

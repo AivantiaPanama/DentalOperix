@@ -15,7 +15,9 @@ const rank: Record<ComplianceStatus, number> = {
   NOT_APPLICABLE: 1,
 };
 
-export const aggregateComplianceStatus = (results: readonly ValidationResult[]): ComplianceStatus => {
+export const aggregateComplianceStatus = (
+  results: readonly ValidationResult[],
+): ComplianceStatus => {
   if (results.length === 0) {
     return "NOT_APPLICABLE";
   }
@@ -38,7 +40,9 @@ export class ReportBuilder implements IReportGenerator {
   }
 }
 
-export const createEvidence = (params: Omit<GovernanceEvidence, "generatedAt">): GovernanceEvidence => ({
+export const createEvidence = (
+  params: Omit<GovernanceEvidence, "generatedAt">,
+): GovernanceEvidence => ({
   ...params,
   generatedAt: new Date().toISOString(),
 });

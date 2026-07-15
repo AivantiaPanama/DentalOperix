@@ -48,7 +48,10 @@ describe("Governance Validation Engine", () => {
     const engine = new GovernanceValidationEngine(registry);
     const result = await engine.execute(context);
 
-    expect(result.executedValidators).toEqual(["architecture-validator-a", "governance-validator-b"]);
+    expect(result.executedValidators).toEqual([
+      "architecture-validator-a",
+      "governance-validator-b",
+    ]);
     expect(result.status).toBe("PASS");
     expect(result.report.status).toBe("PASS");
     expect(result.report.results).toHaveLength(2);
@@ -72,7 +75,9 @@ describe("Governance Validation Engine", () => {
     const result = await engine.execute(context);
 
     expect(result.evidence.map((item) => item.evidenceId)).toContain("session-evidence");
-    expect(result.evidence.map((item) => item.evidenceId)).toContain("compliance-validator-evidence");
+    expect(result.evidence.map((item) => item.evidenceId)).toContain(
+      "compliance-validator-evidence",
+    );
   });
 
   it("returns NOT_APPLICABLE when no validators are registered", async () => {
