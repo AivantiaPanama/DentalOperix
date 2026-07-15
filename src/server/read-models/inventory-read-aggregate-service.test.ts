@@ -95,18 +95,32 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("inventory read aggregate service", () => {
   it("builds an isolated inventory aggregate for products, consumables, stock levels, and warehouses", () => {
-    const result = buildInventoryReadAggregateFromReadModels(models({
-      products: [product({ productId: "PROD-001" })],
-      consumables: [consumable({ consumableId: "CONS-001" })],
-      stockLevels: [stockLevel({ stockLevelId: "STK-001" })],
-      warehouses: [warehouse({ warehouseId: "WH-001" })],
-    }));
+    const result = buildInventoryReadAggregateFromReadModels(
+      models({
+        products: [product({ productId: "PROD-001" })],
+        consumables: [consumable({ consumableId: "CONS-001" })],
+        stockLevels: [stockLevel({ stockLevelId: "STK-001" })],
+        warehouses: [warehouse({ warehouseId: "WH-001" })],
+      }),
+    );
 
     expect(result.inventoryAggregate).toEqual({
-      products: [expect.objectContaining({ productId: "PROD-001", productName: "Resina compuesta" })],
-      consumables: [expect.objectContaining({ consumableId: "CONS-001", consumableName: "Guantes nitrilo" })],
-      stockLevels: [expect.objectContaining({ stockLevelId: "STK-001", productId: "PROD-001", warehouseId: "WH-001" })],
-      warehouses: [expect.objectContaining({ warehouseId: "WH-001", warehouseName: "Bodega Clínica" })],
+      products: [
+        expect.objectContaining({ productId: "PROD-001", productName: "Resina compuesta" }),
+      ],
+      consumables: [
+        expect.objectContaining({ consumableId: "CONS-001", consumableName: "Guantes nitrilo" }),
+      ],
+      stockLevels: [
+        expect.objectContaining({
+          stockLevelId: "STK-001",
+          productId: "PROD-001",
+          warehouseId: "WH-001",
+        }),
+      ],
+      warehouses: [
+        expect.objectContaining({ warehouseId: "WH-001", warehouseName: "Bodega Clínica" }),
+      ],
     });
     expect(result.diagnostics).toMatchObject({
       totalProducts: 1,
@@ -121,12 +135,14 @@ describe("inventory read aggregate service", () => {
   });
 
   it("filters incomplete inventory rows while preserving diagnostics", () => {
-    const result = buildInventoryReadAggregateFromReadModels(models({
-      products: [product({ productId: "", productName: "" })],
-      consumables: [consumable({ consumableId: "", consumableName: "" })],
-      stockLevels: [stockLevel({ stockLevelId: "", productId: "", warehouseId: "" })],
-      warehouses: [warehouse({ warehouseId: "", warehouseName: "" })],
-    }));
+    const result = buildInventoryReadAggregateFromReadModels(
+      models({
+        products: [product({ productId: "", productName: "" })],
+        consumables: [consumable({ consumableId: "", consumableName: "" })],
+        stockLevels: [stockLevel({ stockLevelId: "", productId: "", warehouseId: "" })],
+        warehouses: [warehouse({ warehouseId: "", warehouseName: "" })],
+      }),
+    );
 
     expect(result.inventoryAggregate).toEqual({
       products: [],
@@ -144,9 +160,17 @@ describe("inventory read aggregate service", () => {
 
   it("keeps stock movements and purchasing entities out of inventory v1", () => {
     const result = buildInventoryReadAggregateFromReadModels(models({}));
-    const source = readFileSync(join(process.cwd(), "src/server/read-models/inventory-read-aggregate-service.ts"), "utf8");
+    const source = readFileSync(
+      join(process.cwd(), "src/server/read-models/inventory-read-aggregate-service.ts"),
+      "utf8",
+    );
 
-    expect(Object.keys(result.inventoryAggregate).sort()).toEqual(["consumables", "products", "stockLevels", "warehouses"]);
+    expect(Object.keys(result.inventoryAggregate).sort()).toEqual([
+      "consumables",
+      "products",
+      "stockLevels",
+      "warehouses",
+    ]);
     expect(source.toLowerCase()).not.toContain("stockmovement");
     expect(source.toLowerCase()).not.toContain("purchaseorder");
     expect(source.toLowerCase()).not.toContain("reconciliation");

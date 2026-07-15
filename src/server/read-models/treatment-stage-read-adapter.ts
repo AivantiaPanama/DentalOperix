@@ -24,7 +24,9 @@ function sequenceValue(stage: TreatmentStageReadModel) {
 }
 
 function isUsableStage(stage: TreatmentStageReadModel) {
-  return Boolean(normalize(stage.treatmentStageId) && normalize(stage.patientId) && normalize(stage.stageName));
+  return Boolean(
+    normalize(stage.treatmentStageId) && normalize(stage.patientId) && normalize(stage.stageName),
+  );
 }
 
 function toTreatmentStageDto(stage: TreatmentStageReadModel): TreatmentStageReadDto {

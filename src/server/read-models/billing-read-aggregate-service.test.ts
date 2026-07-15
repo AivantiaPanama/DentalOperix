@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { buildBillingReadAggregatesFromReadModels } from "./billing-read-aggregate-service";
-import type { PatientBillingProfileReadModel, PatientReadModel, WorksheetReadModels } from "./worksheet-read-models";
+import type {
+  PatientBillingProfileReadModel,
+  PatientReadModel,
+  WorksheetReadModels,
+} from "./worksheet-read-models";
 
 const patient = (patientId: string): PatientReadModel => ({
   patientId,
@@ -17,7 +21,9 @@ const patient = (patientId: string): PatientReadModel => ({
   notes: "",
 });
 
-const billingProfile = (overrides: Partial<PatientBillingProfileReadModel>): PatientBillingProfileReadModel => ({
+const billingProfile = (
+  overrides: Partial<PatientBillingProfileReadModel>,
+): PatientBillingProfileReadModel => ({
   billingProfileId: "BIL-001",
   patientId: "PAT-001",
   billingType: "company",
@@ -55,14 +61,18 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("billing read aggregate service", () => {
   it("builds isolated billing aggregates without extending Patient or CRM aggregates", () => {
-    const result = buildBillingReadAggregatesFromReadModels(models({
-      billingProfiles: [billingProfile({ billingProfileId: "BIL-001" })],
-    }));
+    const result = buildBillingReadAggregatesFromReadModels(
+      models({
+        billingProfiles: [billingProfile({ billingProfileId: "BIL-001" })],
+      }),
+    );
 
     expect(result.billingAggregates).toEqual([
       {
         patientId: "PAT-001",
-        billingProfiles: [expect.objectContaining({ billingProfileId: "BIL-001", ruc: "155-123-456", dv: "42" })],
+        billingProfiles: [
+          expect.objectContaining({ billingProfileId: "BIL-001", ruc: "155-123-456", dv: "42" }),
+        ],
       },
     ]);
     expect(result.diagnostics).toMatchObject({
@@ -74,36 +84,50 @@ describe("billing read aggregate service", () => {
   });
 
   it("keeps orphan billing profiles diagnostic instead of failing the read model", () => {
-    const result = buildBillingReadAggregatesFromReadModels(models({
-      billingProfiles: [billingProfile({ patientId: "PAT-MISSING" })],
-    }));
+    const result = buildBillingReadAggregatesFromReadModels(
+      models({
+        billingProfiles: [billingProfile({ patientId: "PAT-MISSING" })],
+      }),
+    );
 
     expect(result.billingAggregates).toEqual([{ patientId: "PAT-001", billingProfiles: [] }]);
     expect(result.diagnostics).toMatchObject({ orphanBillingProfiles: 1 });
   });
 
   it("filters incomplete fiscal rows from the consumer payload but keeps diagnostics", () => {
-    const result = buildBillingReadAggregatesFromReadModels(models({
-      billingProfiles: [
-        billingProfile({ billingProfileId: "BIL-INCOMPLETE", taxIdValue: "", ruc: "", legalName: "", fiscalAddress: "" }),
-      ],
-    }));
+    const result = buildBillingReadAggregatesFromReadModels(
+      models({
+        billingProfiles: [
+          billingProfile({
+            billingProfileId: "BIL-INCOMPLETE",
+            taxIdValue: "",
+            ruc: "",
+            legalName: "",
+            fiscalAddress: "",
+          }),
+        ],
+      }),
+    );
 
     expect(result.billingAggregates).toEqual([{ patientId: "PAT-001", billingProfiles: [] }]);
-    expect(result.diagnostics).toMatchObject({ totalBillingProfiles: 1, incompleteBillingProfiles: 1 });
+    expect(result.diagnostics).toMatchObject({
+      totalBillingProfiles: 1,
+      incompleteBillingProfiles: 1,
+    });
   });
 
   it("sorts billing profiles by newest operational timestamp", () => {
-    const result = buildBillingReadAggregatesFromReadModels(models({
-      billingProfiles: [
-        billingProfile({ billingProfileId: "BIL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        billingProfile({ billingProfileId: "BIL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-    }));
+    const result = buildBillingReadAggregatesFromReadModels(
+      models({
+        billingProfiles: [
+          billingProfile({ billingProfileId: "BIL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          billingProfile({ billingProfileId: "BIL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+      }),
+    );
 
-    expect(result.billingAggregates[0]?.billingProfiles.map((profile) => profile.billingProfileId)).toEqual([
-      "BIL-NEW",
-      "BIL-OLD",
-    ]);
+    expect(
+      result.billingAggregates[0]?.billingProfiles.map((profile) => profile.billingProfileId),
+    ).toEqual(["BIL-NEW", "BIL-OLD"]);
   });
 });

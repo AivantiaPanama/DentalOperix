@@ -40,7 +40,9 @@ const supportTicket = (overrides: Partial<SupportTicketReadModel>): SupportTicke
   ...overrides,
 });
 
-const resolutionMetric = (overrides: Partial<ResolutionMetricReadModel>): ResolutionMetricReadModel => ({
+const resolutionMetric = (
+  overrides: Partial<ResolutionMetricReadModel>,
+): ResolutionMetricReadModel => ({
   resolutionMetricId: "RES-001",
   supportTicketId: "TICKET-001",
   firstResponseTimeMinutes: "15",
@@ -56,7 +58,9 @@ const resolutionMetric = (overrides: Partial<ResolutionMetricReadModel>): Resolu
   ...overrides,
 });
 
-const satisfactionMetric = (overrides: Partial<SatisfactionMetricReadModel>): SatisfactionMetricReadModel => ({
+const satisfactionMetric = (
+  overrides: Partial<SatisfactionMetricReadModel>,
+): SatisfactionMetricReadModel => ({
   satisfactionMetricId: "SAT-001",
   supportTicketId: "TICKET-001",
   csat: "4.8",
@@ -102,18 +106,26 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("support read aggregate service", () => {
   it("builds an isolated support aggregate for cases, tickets, resolution metrics, and satisfaction metrics", () => {
-    const result = buildSupportReadAggregateFromReadModels(models({
-      supportCases: [supportCase({ supportCaseId: "CASE-001" })],
-      supportTickets: [supportTicket({ supportTicketId: "TICKET-001" })],
-      resolutionMetrics: [resolutionMetric({ resolutionMetricId: "RES-001" })],
-      satisfactionMetrics: [satisfactionMetric({ satisfactionMetricId: "SAT-001" })],
-    }));
+    const result = buildSupportReadAggregateFromReadModels(
+      models({
+        supportCases: [supportCase({ supportCaseId: "CASE-001" })],
+        supportTickets: [supportTicket({ supportTicketId: "TICKET-001" })],
+        resolutionMetrics: [resolutionMetric({ resolutionMetricId: "RES-001" })],
+        satisfactionMetrics: [satisfactionMetric({ satisfactionMetricId: "SAT-001" })],
+      }),
+    );
 
     expect(result.supportAggregate).toEqual({
       supportCases: [expect.objectContaining({ supportCaseId: "CASE-001", caseStatus: "open" })],
-      supportTickets: [expect.objectContaining({ supportTicketId: "TICKET-001", ticketStatus: "in_progress" })],
-      resolutionMetrics: [expect.objectContaining({ resolutionMetricId: "RES-001", firstResponseTimeMinutes: "15" })],
-      satisfactionMetrics: [expect.objectContaining({ satisfactionMetricId: "SAT-001", csat: "4.8" })],
+      supportTickets: [
+        expect.objectContaining({ supportTicketId: "TICKET-001", ticketStatus: "in_progress" }),
+      ],
+      resolutionMetrics: [
+        expect.objectContaining({ resolutionMetricId: "RES-001", firstResponseTimeMinutes: "15" }),
+      ],
+      satisfactionMetrics: [
+        expect.objectContaining({ satisfactionMetricId: "SAT-001", csat: "4.8" }),
+      ],
     });
     expect(result.diagnostics).toMatchObject({
       totalSupportCases: 1,
@@ -128,12 +140,14 @@ describe("support read aggregate service", () => {
   });
 
   it("filters incomplete support rows while preserving diagnostics", () => {
-    const result = buildSupportReadAggregateFromReadModels(models({
-      supportCases: [supportCase({ supportCaseId: "" })],
-      supportTickets: [supportTicket({ supportTicketId: "" })],
-      resolutionMetrics: [resolutionMetric({ resolutionMetricId: "" })],
-      satisfactionMetrics: [satisfactionMetric({ satisfactionMetricId: "" })],
-    }));
+    const result = buildSupportReadAggregateFromReadModels(
+      models({
+        supportCases: [supportCase({ supportCaseId: "" })],
+        supportTickets: [supportTicket({ supportTicketId: "" })],
+        resolutionMetrics: [resolutionMetric({ resolutionMetricId: "" })],
+        satisfactionMetrics: [satisfactionMetric({ satisfactionMetricId: "" })],
+      }),
+    );
 
     expect(result.supportAggregate).toEqual({
       supportCases: [],
@@ -151,7 +165,10 @@ describe("support read aggregate service", () => {
 
   it("keeps support workflow execution and automation out of support v1", () => {
     const result = buildSupportReadAggregateFromReadModels(models({}));
-    const source = readFileSync(join(process.cwd(), "src/server/read-models/support-read-aggregate-service.ts"), "utf8");
+    const source = readFileSync(
+      join(process.cwd(), "src/server/read-models/support-read-aggregate-service.ts"),
+      "utf8",
+    );
 
     expect(Object.keys(result.supportAggregate).sort()).toEqual([
       "resolutionMetrics",

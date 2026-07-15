@@ -188,8 +188,6 @@ describe("patient aggregate read service", () => {
     expect(patient.resolvedIdentity.documentValue).toBe("8-888-888");
   });
 
-
-
   it("ignores incomplete identifiers and keeps TMP-PAT fallback deterministic", () => {
     const identity = resolvePatientIdentity("PAT-002", [
       {
@@ -263,7 +261,9 @@ describe("patient aggregate read service", () => {
     expect(result.administrativeProfiles).toHaveLength(result.patients.length);
     expect(JSON.stringify(result.administrativeProfiles)).not.toContain("resolvedIdentity");
     expect(JSON.stringify(result.administrativeProfiles)).not.toContain("resolvedContact");
-    expect(JSON.stringify(result.administrativeProfiles)).not.toContain("resolvedAdministrativeProfile");
+    expect(JSON.stringify(result.administrativeProfiles)).not.toContain(
+      "resolvedAdministrativeProfile",
+    );
   });
 
   it("keeps public administrative profiles contact-compatible while contacts remain internal diagnostics", () => {
@@ -272,7 +272,9 @@ describe("patient aggregate read service", () => {
     expect(result.administrativeProfiles[1].email).toBe("carlos@example.com");
     expect(result.administrativeProfiles[1].phone).toBe("+507 6000 0000");
     expect(JSON.stringify(result.administrativeProfiles)).not.toContain("resolvedContact");
-    expect(JSON.stringify(result.administrativeProfiles)).not.toContain("resolvedAdministrativeProfile");
+    expect(JSON.stringify(result.administrativeProfiles)).not.toContain(
+      "resolvedAdministrativeProfile",
+    );
   });
 
   it("throws a domain error when the requested aggregate does not exist", () => {
@@ -285,7 +287,9 @@ describe("patient aggregate read service", () => {
     const result = buildPatientAggregatesFromReadModels(baseModels);
 
     const patient = result.patients.find((candidate) => candidate.id === "PAT-001");
-    const publicProfile = result.administrativeProfiles.find((candidate) => candidate.id === "PAT-001");
+    const publicProfile = result.administrativeProfiles.find(
+      (candidate) => candidate.id === "PAT-001",
+    );
 
     expect(patient?.resolvedAdministrativeProfile.hasExplicitAdministrativeProfile).toBe(true);
     expect(patient?.resolvedAdministrativeProfile.isVerified).toBe(true);
@@ -293,5 +297,4 @@ describe("patient aggregate read service", () => {
     expect(publicProfile?.emergencyContact).toBe("Ana Demo · +507 6111 1111");
     expect(JSON.stringify(publicProfile)).not.toContain("resolvedAdministrativeProfile");
   });
-
 });

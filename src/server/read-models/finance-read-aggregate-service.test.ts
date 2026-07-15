@@ -97,18 +97,22 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("finance read aggregate service", () => {
   it("builds an isolated finance aggregate without extending Patient, CRM, Billing, Clinical, or Operations", () => {
-    const result = buildFinanceReadAggregateFromReadModels(models({
-      invoices: [invoice({ invoiceId: "INV-001" })],
-      payments: [payment({ paymentId: "PAY-001" })],
-      collections: [collection({ collectionId: "COL-001" })],
-      financialKpis: [financialKpi({ financialKpiId: "FKPI-001" })],
-    }));
+    const result = buildFinanceReadAggregateFromReadModels(
+      models({
+        invoices: [invoice({ invoiceId: "INV-001" })],
+        payments: [payment({ paymentId: "PAY-001" })],
+        collections: [collection({ collectionId: "COL-001" })],
+        financialKpis: [financialKpi({ financialKpiId: "FKPI-001" })],
+      }),
+    );
 
     expect(result.financeAggregate).toEqual({
       invoices: [expect.objectContaining({ invoiceId: "INV-001", invoiceNumber: "F-001" })],
       payments: [expect.objectContaining({ paymentId: "PAY-001", amount: "500.00" })],
       collections: [expect.objectContaining({ collectionId: "COL-001", status: "open" })],
-      financialKpis: [expect.objectContaining({ financialKpiId: "FKPI-001", metricName: "monthly_revenue" })],
+      financialKpis: [
+        expect.objectContaining({ financialKpiId: "FKPI-001", metricName: "monthly_revenue" }),
+      ],
     });
     expect(result.diagnostics).toMatchObject({
       totalInvoices: 1,
@@ -123,12 +127,14 @@ describe("finance read aggregate service", () => {
   });
 
   it("filters incomplete finance rows from payloads while keeping diagnostics", () => {
-    const result = buildFinanceReadAggregateFromReadModels(models({
-      invoices: [invoice({ invoiceId: "", invoiceNumber: "" })],
-      payments: [payment({ paymentId: "", amount: "" })],
-      collections: [collection({ collectionId: "", status: "" })],
-      financialKpis: [financialKpi({ financialKpiId: "", metricName: "" })],
-    }));
+    const result = buildFinanceReadAggregateFromReadModels(
+      models({
+        invoices: [invoice({ invoiceId: "", invoiceNumber: "" })],
+        payments: [payment({ paymentId: "", amount: "" })],
+        collections: [collection({ collectionId: "", status: "" })],
+        financialKpis: [financialKpi({ financialKpiId: "", metricName: "" })],
+      }),
+    );
 
     expect(result.financeAggregate).toEqual({
       invoices: [],
@@ -145,28 +151,42 @@ describe("finance read aggregate service", () => {
   });
 
   it("sorts finance records by newest timestamp", () => {
-    const result = buildFinanceReadAggregateFromReadModels(models({
-      invoices: [
-        invoice({ invoiceId: "INV-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        invoice({ invoiceId: "INV-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      payments: [
-        payment({ paymentId: "PAY-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        payment({ paymentId: "PAY-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      collections: [
-        collection({ collectionId: "COL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        collection({ collectionId: "COL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      financialKpis: [
-        financialKpi({ financialKpiId: "FKPI-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        financialKpi({ financialKpiId: "FKPI-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-    }));
+    const result = buildFinanceReadAggregateFromReadModels(
+      models({
+        invoices: [
+          invoice({ invoiceId: "INV-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          invoice({ invoiceId: "INV-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        payments: [
+          payment({ paymentId: "PAY-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          payment({ paymentId: "PAY-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        collections: [
+          collection({ collectionId: "COL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          collection({ collectionId: "COL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        financialKpis: [
+          financialKpi({ financialKpiId: "FKPI-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          financialKpi({ financialKpiId: "FKPI-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+      }),
+    );
 
-    expect(result.financeAggregate.invoices.map((item) => item.invoiceId)).toEqual(["INV-NEW", "INV-OLD"]);
-    expect(result.financeAggregate.payments.map((item) => item.paymentId)).toEqual(["PAY-NEW", "PAY-OLD"]);
-    expect(result.financeAggregate.collections.map((item) => item.collectionId)).toEqual(["COL-NEW", "COL-OLD"]);
-    expect(result.financeAggregate.financialKpis.map((item) => item.financialKpiId)).toEqual(["FKPI-NEW", "FKPI-OLD"]);
+    expect(result.financeAggregate.invoices.map((item) => item.invoiceId)).toEqual([
+      "INV-NEW",
+      "INV-OLD",
+    ]);
+    expect(result.financeAggregate.payments.map((item) => item.paymentId)).toEqual([
+      "PAY-NEW",
+      "PAY-OLD",
+    ]);
+    expect(result.financeAggregate.collections.map((item) => item.collectionId)).toEqual([
+      "COL-NEW",
+      "COL-OLD",
+    ]);
+    expect(result.financeAggregate.financialKpis.map((item) => item.financialKpiId)).toEqual([
+      "FKPI-NEW",
+      "FKPI-OLD",
+    ]);
   });
 });

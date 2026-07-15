@@ -84,7 +84,10 @@ export function buildPatientAggregatesFromReadModels(
   return {
     patients,
     administrativeProfiles: models.contacts.length
-      ? patients.map(({ resolvedIdentity, resolvedContact, resolvedAdministrativeProfile, ...profile }) => profile)
+      ? patients.map(
+          ({ resolvedIdentity, resolvedContact, resolvedAdministrativeProfile, ...profile }) =>
+            profile,
+        )
       : profiles,
     diagnostics: {
       totalPatients: patients.length,
@@ -92,8 +95,12 @@ export function buildPatientAggregatesFromReadModels(
       totalContacts: models.contacts.length,
       patientsWithExplicitIdentity: identities.filter((identity) => !identity.isTemporary).length,
       patientsWithTemporaryIdentity: identities.filter((identity) => identity.isTemporary).length,
-      patientsWithExplicitEmail: patients.filter((patient) => patient.resolvedContact.hasExplicitEmail).length,
-      patientsWithExplicitPhone: patients.filter((patient) => patient.resolvedContact.hasExplicitPhone).length,
+      patientsWithExplicitEmail: patients.filter(
+        (patient) => patient.resolvedContact.hasExplicitEmail,
+      ).length,
+      patientsWithExplicitPhone: patients.filter(
+        (patient) => patient.resolvedContact.hasExplicitPhone,
+      ).length,
       patientsWithExplicitAdministrativeProfile: patients.filter(
         (patient) => patient.resolvedAdministrativeProfile.hasExplicitAdministrativeProfile,
       ).length,

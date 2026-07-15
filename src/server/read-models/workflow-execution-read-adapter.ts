@@ -17,7 +17,9 @@ function normalize(value: string | undefined | null) {
 }
 
 function readTimestamp(status: WorkflowExecutionStatusReadModel) {
-  const timestamp = Date.parse(status.updatedAt || status.lastTransitionAt || status.createdAt || "");
+  const timestamp = Date.parse(
+    status.updatedAt || status.lastTransitionAt || status.createdAt || "",
+  );
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
@@ -25,14 +27,20 @@ function isUsableStatus(status: WorkflowExecutionStatusReadModel) {
   return Boolean(normalize(status.workflowExecutionStatusId) && normalize(status.workflowName));
 }
 
-function toWorkflowExecutionDto(status: WorkflowExecutionStatusReadModel): WorkflowExecutionReadDto {
+function toWorkflowExecutionDto(
+  status: WorkflowExecutionStatusReadModel,
+): WorkflowExecutionReadDto {
   return {
     workflowExecutionStatusId: normalize(status.workflowExecutionStatusId),
-    ...(normalize(status.automationRunId) ? { automationRunId: normalize(status.automationRunId) } : {}),
+    ...(normalize(status.automationRunId)
+      ? { automationRunId: normalize(status.automationRunId) }
+      : {}),
     workflowName: normalize(status.workflowName),
     status: normalize(status.status),
     ...(normalize(status.currentStep) ? { currentStep: normalize(status.currentStep) } : {}),
-    ...(normalize(status.lastTransitionAt) ? { lastTransitionAt: normalize(status.lastTransitionAt) } : {}),
+    ...(normalize(status.lastTransitionAt)
+      ? { lastTransitionAt: normalize(status.lastTransitionAt) }
+      : {}),
     source: normalize(status.source) || "read-model",
     isMock: status.isMock,
     ...(normalize(status.notes) ? { notes: normalize(status.notes) } : {}),

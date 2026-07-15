@@ -25,7 +25,9 @@ export function normalizeIdentifierValue(value: string | undefined | null) {
 export function normalizeIdentityType(
   value: string | undefined | null,
 ): PatientIdentityDocumentType | null {
-  const normalized = normalizeIdentifierValue(value).toUpperCase().replace(/[\s_-]+/g, "_");
+  const normalized = normalizeIdentifierValue(value)
+    .toUpperCase()
+    .replace(/[\s_-]+/g, "_");
 
   if (["CID", "CEDULA", "CÉDULA", "CEDULA_PANAMA", "PANAMA_CID"].includes(normalized)) {
     return "CID";

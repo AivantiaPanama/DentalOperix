@@ -22,7 +22,12 @@ describe("patient contact read adapter", () => {
     const resolved = resolvePatientContacts("PAT-001", [
       contact({ contactId: "CON-EMAIL-OLD", contactValue: "old@example.com" }),
       contact({ contactId: "CON-EMAIL", contactValue: "new@example.com", isPrimary: true }),
-      contact({ contactId: "CON-PHONE", contactType: "phone", contactValue: "+507 6000 0000", isPrimary: true }),
+      contact({
+        contactId: "CON-PHONE",
+        contactType: "phone",
+        contactValue: "+507 6000 0000",
+        isPrimary: true,
+      }),
     ]);
 
     expect(resolved).toMatchObject({

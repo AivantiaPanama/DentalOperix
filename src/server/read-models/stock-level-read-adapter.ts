@@ -23,7 +23,11 @@ function readTimestamp(stockLevel: StockLevelReadModel) {
 }
 
 function isUsableStockLevel(stockLevel: StockLevelReadModel) {
-  return Boolean(normalize(stockLevel.stockLevelId) && normalize(stockLevel.productId) && normalize(stockLevel.warehouseId));
+  return Boolean(
+    normalize(stockLevel.stockLevelId) &&
+    normalize(stockLevel.productId) &&
+    normalize(stockLevel.warehouseId),
+  );
 }
 
 function toStockLevelDto(stockLevel: StockLevelReadModel): StockLevelReadDto {
@@ -32,8 +36,12 @@ function toStockLevelDto(stockLevel: StockLevelReadModel): StockLevelReadDto {
     productId: normalize(stockLevel.productId),
     warehouseId: normalize(stockLevel.warehouseId),
     availableQuantity: normalize(stockLevel.availableQuantity),
-    ...(normalize(stockLevel.reservedQuantity) ? { reservedQuantity: normalize(stockLevel.reservedQuantity) } : {}),
-    ...(normalize(stockLevel.reorderThreshold) ? { reorderThreshold: normalize(stockLevel.reorderThreshold) } : {}),
+    ...(normalize(stockLevel.reservedQuantity)
+      ? { reservedQuantity: normalize(stockLevel.reservedQuantity) }
+      : {}),
+    ...(normalize(stockLevel.reorderThreshold)
+      ? { reorderThreshold: normalize(stockLevel.reorderThreshold) }
+      : {}),
     status: normalize(stockLevel.status),
     source: normalize(stockLevel.source) || "read-model",
     isMock: stockLevel.isMock,

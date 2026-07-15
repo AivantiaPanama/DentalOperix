@@ -40,7 +40,9 @@ const operationalKpi = (overrides: Partial<OperationalKpiReadModel>): Operationa
   ...overrides,
 });
 
-const workflowStatus = (overrides: Partial<WorkflowExecutionStatusReadModel>): WorkflowExecutionStatusReadModel => ({
+const workflowStatus = (
+  overrides: Partial<WorkflowExecutionStatusReadModel>,
+): WorkflowExecutionStatusReadModel => ({
   workflowExecutionStatusId: "WF-001",
   automationRunId: "RUN-001",
   workflowName: "lead-follow-up",
@@ -74,16 +76,27 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("operations read aggregate service", () => {
   it("builds an isolated operations aggregate without extending Patient, CRM, Billing, or Clinical", () => {
-    const result = buildOperationsReadAggregateFromReadModels(models({
-      automationRuns: [automationRun({ automationRunId: "RUN-001" })],
-      operationalKpis: [operationalKpi({ operationalKpiId: "KPI-001" })],
-      workflowExecutionStatus: [workflowStatus({ workflowExecutionStatusId: "WF-001" })],
-    }));
+    const result = buildOperationsReadAggregateFromReadModels(
+      models({
+        automationRuns: [automationRun({ automationRunId: "RUN-001" })],
+        operationalKpis: [operationalKpi({ operationalKpiId: "KPI-001" })],
+        workflowExecutionStatus: [workflowStatus({ workflowExecutionStatusId: "WF-001" })],
+      }),
+    );
 
     expect(result.operationsAggregate).toEqual({
-      automationRuns: [expect.objectContaining({ automationRunId: "RUN-001", workflowName: "lead-follow-up" })],
-      operationalKpis: [expect.objectContaining({ operationalKpiId: "KPI-001", metricName: "automation_success_rate" })],
-      workflowExecutionStatus: [expect.objectContaining({ workflowExecutionStatusId: "WF-001", status: "completed" })],
+      automationRuns: [
+        expect.objectContaining({ automationRunId: "RUN-001", workflowName: "lead-follow-up" }),
+      ],
+      operationalKpis: [
+        expect.objectContaining({
+          operationalKpiId: "KPI-001",
+          metricName: "automation_success_rate",
+        }),
+      ],
+      workflowExecutionStatus: [
+        expect.objectContaining({ workflowExecutionStatusId: "WF-001", status: "completed" }),
+      ],
     });
     expect(result.diagnostics).toMatchObject({
       totalAutomationRuns: 1,
@@ -96,11 +109,15 @@ describe("operations read aggregate service", () => {
   });
 
   it("filters incomplete operational rows from payloads while keeping diagnostics", () => {
-    const result = buildOperationsReadAggregateFromReadModels(models({
-      automationRuns: [automationRun({ automationRunId: "", workflowName: "" })],
-      operationalKpis: [operationalKpi({ operationalKpiId: "", metricName: "" })],
-      workflowExecutionStatus: [workflowStatus({ workflowExecutionStatusId: "", workflowName: "" })],
-    }));
+    const result = buildOperationsReadAggregateFromReadModels(
+      models({
+        automationRuns: [automationRun({ automationRunId: "", workflowName: "" })],
+        operationalKpis: [operationalKpi({ operationalKpiId: "", metricName: "" })],
+        workflowExecutionStatus: [
+          workflowStatus({ workflowExecutionStatusId: "", workflowName: "" }),
+        ],
+      }),
+    );
 
     expect(result.operationsAggregate).toEqual({
       automationRuns: [],
@@ -115,23 +132,41 @@ describe("operations read aggregate service", () => {
   });
 
   it("sorts operational records by newest timestamp", () => {
-    const result = buildOperationsReadAggregateFromReadModels(models({
-      automationRuns: [
-        automationRun({ automationRunId: "RUN-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        automationRun({ automationRunId: "RUN-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      operationalKpis: [
-        operationalKpi({ operationalKpiId: "KPI-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        operationalKpi({ operationalKpiId: "KPI-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      workflowExecutionStatus: [
-        workflowStatus({ workflowExecutionStatusId: "WF-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        workflowStatus({ workflowExecutionStatusId: "WF-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-    }));
+    const result = buildOperationsReadAggregateFromReadModels(
+      models({
+        automationRuns: [
+          automationRun({ automationRunId: "RUN-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          automationRun({ automationRunId: "RUN-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        operationalKpis: [
+          operationalKpi({ operationalKpiId: "KPI-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          operationalKpi({ operationalKpiId: "KPI-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        workflowExecutionStatus: [
+          workflowStatus({
+            workflowExecutionStatusId: "WF-OLD",
+            updatedAt: "2026-01-01T00:00:00.000Z",
+          }),
+          workflowStatus({
+            workflowExecutionStatusId: "WF-NEW",
+            updatedAt: "2026-01-03T00:00:00.000Z",
+          }),
+        ],
+      }),
+    );
 
-    expect(result.operationsAggregate.automationRuns.map((run) => run.automationRunId)).toEqual(["RUN-NEW", "RUN-OLD"]);
-    expect(result.operationsAggregate.operationalKpis.map((kpi) => kpi.operationalKpiId)).toEqual(["KPI-NEW", "KPI-OLD"]);
-    expect(result.operationsAggregate.workflowExecutionStatus.map((status) => status.workflowExecutionStatusId)).toEqual(["WF-NEW", "WF-OLD"]);
+    expect(result.operationsAggregate.automationRuns.map((run) => run.automationRunId)).toEqual([
+      "RUN-NEW",
+      "RUN-OLD",
+    ]);
+    expect(result.operationsAggregate.operationalKpis.map((kpi) => kpi.operationalKpiId)).toEqual([
+      "KPI-NEW",
+      "KPI-OLD",
+    ]);
+    expect(
+      result.operationsAggregate.workflowExecutionStatus.map(
+        (status) => status.workflowExecutionStatusId,
+      ),
+    ).toEqual(["WF-NEW", "WF-OLD"]);
   });
 });

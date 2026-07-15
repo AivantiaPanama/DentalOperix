@@ -74,13 +74,12 @@ function findPrimaryContact(
     (contact) =>
       contact.patientId === patientId && contact.contactType.trim().toLowerCase() === type,
   );
-  return matching.find((contact) => contact.isPrimary)?.contactValue ?? matching[0]?.contactValue ?? "";
+  return (
+    matching.find((contact) => contact.isPrimary)?.contactValue ?? matching[0]?.contactValue ?? ""
+  );
 }
 
-function findProfile(
-  profiles: PatientAdministrativeProfileReadModel[],
-  patientId: string,
-) {
+function findProfile(profiles: PatientAdministrativeProfileReadModel[], patientId: string) {
   return profiles.find((profile) => profile.patientId === patientId);
 }
 
@@ -158,8 +157,10 @@ function mapReadModelPatient(
     missingFields,
     completionPercentage: getCompletionPercentage(missingFields),
     administrativeStatus,
-    verifiedAt: administrativeStatus === "verified" ? normalizeValue(profile?.verifiedAt) : undefined,
-    verifiedBy: administrativeStatus === "verified" ? normalizeValue(profile?.verifiedBy) : undefined,
+    verifiedAt:
+      administrativeStatus === "verified" ? normalizeValue(profile?.verifiedAt) : undefined,
+    verifiedBy:
+      administrativeStatus === "verified" ? normalizeValue(profile?.verifiedBy) : undefined,
     updatedAt: normalizeValue(profile?.updatedAt) || normalizeValue(patient.updatedAt) || undefined,
   };
 }

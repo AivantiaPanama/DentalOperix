@@ -41,7 +41,9 @@ function toOperationalKpiDto(kpi: OperationalKpiReadModel): OperationalKpiReadDt
   };
 }
 
-export function readOperationalKpis(operationalKpis: OperationalKpiReadModel[]): OperationalKpiReadDto[] {
+export function readOperationalKpis(
+  operationalKpis: OperationalKpiReadModel[],
+): OperationalKpiReadDto[] {
   return operationalKpis
     .filter(isUsableKpi)
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))

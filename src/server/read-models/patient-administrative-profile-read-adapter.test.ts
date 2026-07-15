@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import { resolvePatientAdministrativeProfile } from "./patient-administrative-profile-read-adapter";
 import type { PatientAdministrativeProfileReadModel } from "./worksheet-read-models";
 
-function profile(overrides: Partial<PatientAdministrativeProfileReadModel>): PatientAdministrativeProfileReadModel {
+function profile(
+  overrides: Partial<PatientAdministrativeProfileReadModel>,
+): PatientAdministrativeProfileReadModel {
   return {
     profileId: "PRO-BASE",
     patientId: "PAT-001",

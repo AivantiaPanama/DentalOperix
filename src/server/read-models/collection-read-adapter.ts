@@ -18,7 +18,9 @@ function normalize(value: string | undefined | null) {
 }
 
 function readTimestamp(collection: CollectionReadModel) {
-  const timestamp = Date.parse(collection.updatedAt || collection.lastAttemptAt || collection.createdAt || "");
+  const timestamp = Date.parse(
+    collection.updatedAt || collection.lastAttemptAt || collection.createdAt || "",
+  );
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
@@ -34,7 +36,9 @@ function toCollectionDto(collection: CollectionReadModel): CollectionReadDto {
     status: normalize(collection.status),
     outstandingAmount: normalize(collection.outstandingAmount),
     ...(normalize(collection.attempts) ? { attempts: normalize(collection.attempts) } : {}),
-    ...(normalize(collection.lastAttemptAt) ? { lastAttemptAt: normalize(collection.lastAttemptAt) } : {}),
+    ...(normalize(collection.lastAttemptAt)
+      ? { lastAttemptAt: normalize(collection.lastAttemptAt) }
+      : {}),
     source: normalize(collection.source) || "read-model",
     isMock: collection.isMock,
     ...(normalize(collection.notes) ? { notes: normalize(collection.notes) } : {}),

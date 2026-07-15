@@ -23,7 +23,10 @@ function compareByUpdatedAtDesc(a: TreatmentInterestReadDto, b: TreatmentInteres
   return normalize(b.updatedAt || b.createdAt).localeCompare(normalize(a.updatedAt || a.createdAt));
 }
 
-export function readTreatmentInterestsForPatient(patientId: string, interests: TreatmentInterestReadModel[]): TreatmentInterestReadDto[] {
+export function readTreatmentInterestsForPatient(
+  patientId: string,
+  interests: TreatmentInterestReadModel[],
+): TreatmentInterestReadDto[] {
   return interests
     .filter((interest) => normalize(interest.patientId) === patientId)
     .map((interest) => ({

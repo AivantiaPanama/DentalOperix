@@ -39,14 +39,19 @@ describe("inventory read domain closure", () => {
       "warehouses",
     ]);
     expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain("stockmovement");
-    expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain("inventoryadjustment");
+    expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain(
+      "inventoryadjustment",
+    );
     expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain("purchaseorder");
     expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain("supplierorder");
     expect(JSON.stringify(result.inventoryAggregate).toLowerCase()).not.toContain("reconciliation");
   });
 
   it("does not import other domain aggregate services into the inventory aggregate", () => {
-    const source = readFileSync(join(process.cwd(), "src/server/read-models/inventory-read-aggregate-service.ts"), "utf8");
+    const source = readFileSync(
+      join(process.cwd(), "src/server/read-models/inventory-read-aggregate-service.ts"),
+      "utf8",
+    );
 
     expect(source).not.toContain("patient-aggregate-read-service");
     expect(source).not.toContain("crm-read-aggregate-service");

@@ -450,7 +450,9 @@ function normalizeHeader(value: string) {
 }
 
 function toCamelCase(value: string) {
-  return normalizeHeader(value).replace(/_([a-z0-9])/g, (_, letter: string) => letter.toUpperCase());
+  return normalizeHeader(value).replace(/_([a-z0-9])/g, (_, letter: string) =>
+    letter.toUpperCase(),
+  );
 }
 
 function toBoolean(value: string | undefined) {
@@ -495,7 +497,10 @@ async function readSheetRecords(sheetName: string): Promise<SheetReadResult> {
 
     return { records, available: records.length > 0 };
   } catch (error) {
-    console.warn(`Read model sheet ${sheetName} is unavailable; falling back when possible.`, error);
+    console.warn(
+      `Read model sheet ${sheetName} is unavailable; falling back when possible.`,
+      error,
+    );
     return { records: [], available: false };
   }
 }
@@ -552,7 +557,9 @@ function mapContact(record: RawWorksheetRecord): PatientContactReadModel {
   };
 }
 
-function mapAdministrativeProfile(record: RawWorksheetRecord): PatientAdministrativeProfileReadModel {
+function mapAdministrativeProfile(
+  record: RawWorksheetRecord,
+): PatientAdministrativeProfileReadModel {
   return {
     profileId: record.profileId ?? "",
     patientId: record.patientId ?? "",
@@ -880,7 +887,8 @@ function mapResolutionMetric(record: RawWorksheetRecord): ResolutionMetricReadMo
   return {
     resolutionMetricId: record.resolutionMetricId ?? record.metricId ?? record.id ?? "",
     supportTicketId: record.supportTicketId ?? record.ticketId ?? "",
-    firstResponseTimeMinutes: record.firstResponseTimeMinutes ?? record.firstResponseTime ?? record.firstResponse ?? "",
+    firstResponseTimeMinutes:
+      record.firstResponseTimeMinutes ?? record.firstResponseTime ?? record.firstResponse ?? "",
     resolutionTimeMinutes: record.resolutionTimeMinutes ?? record.resolutionTime ?? "",
     escalationRate: record.escalationRate ?? record.escalations ?? "",
     periodStart: record.periodStart ?? record.startDate ?? "",
@@ -954,38 +962,40 @@ export async function readWorksheetReadModels(): Promise<WorksheetReadModels | n
     resolutionMetrics,
     satisfactionMetrics,
   ] = await Promise.all([
-      readSheetRecords(READ_MODEL_SHEETS.patients),
-      readSheetRecords(READ_MODEL_SHEETS.identifiers),
-      readSheetRecords(READ_MODEL_SHEETS.contacts),
-      readSheetRecords(READ_MODEL_SHEETS.administrativeProfiles),
-      readSheetRecords(READ_MODEL_SHEETS.treatmentInterests),
-      readSheetRecords(READ_MODEL_SHEETS.crmFolios),
-      readSheetRecords(READ_MODEL_SHEETS.billingProfiles),
-      readSheetRecords(READ_MODEL_SHEETS.treatmentPlans),
-      readSheetRecords(READ_MODEL_SHEETS.treatmentStages),
-      readSheetRecords(READ_MODEL_SHEETS.clinicalOutcomes),
-      readSheetRecords(READ_MODEL_SHEETS.automationRuns),
-      readSheetRecords(READ_MODEL_SHEETS.operationalKpis),
-      readSheetRecords(READ_MODEL_SHEETS.workflowExecutionStatus),
-      readSheetRecords(READ_MODEL_SHEETS.invoices),
-      readSheetRecords(READ_MODEL_SHEETS.payments),
-      readSheetRecords(READ_MODEL_SHEETS.collections),
-      readSheetRecords(READ_MODEL_SHEETS.financialKpis),
-      readSheetRecords(READ_MODEL_SHEETS.products),
-      readSheetRecords(READ_MODEL_SHEETS.consumables),
-      readSheetRecords(READ_MODEL_SHEETS.stockLevels),
-      readSheetRecords(READ_MODEL_SHEETS.warehouses),
-      readSheetRecords(READ_MODEL_SHEETS.supportCases),
-      readSheetRecords(READ_MODEL_SHEETS.supportTickets),
-      readSheetRecords(READ_MODEL_SHEETS.resolutionMetrics),
-      readSheetRecords(READ_MODEL_SHEETS.satisfactionMetrics),
-    ]);
+    readSheetRecords(READ_MODEL_SHEETS.patients),
+    readSheetRecords(READ_MODEL_SHEETS.identifiers),
+    readSheetRecords(READ_MODEL_SHEETS.contacts),
+    readSheetRecords(READ_MODEL_SHEETS.administrativeProfiles),
+    readSheetRecords(READ_MODEL_SHEETS.treatmentInterests),
+    readSheetRecords(READ_MODEL_SHEETS.crmFolios),
+    readSheetRecords(READ_MODEL_SHEETS.billingProfiles),
+    readSheetRecords(READ_MODEL_SHEETS.treatmentPlans),
+    readSheetRecords(READ_MODEL_SHEETS.treatmentStages),
+    readSheetRecords(READ_MODEL_SHEETS.clinicalOutcomes),
+    readSheetRecords(READ_MODEL_SHEETS.automationRuns),
+    readSheetRecords(READ_MODEL_SHEETS.operationalKpis),
+    readSheetRecords(READ_MODEL_SHEETS.workflowExecutionStatus),
+    readSheetRecords(READ_MODEL_SHEETS.invoices),
+    readSheetRecords(READ_MODEL_SHEETS.payments),
+    readSheetRecords(READ_MODEL_SHEETS.collections),
+    readSheetRecords(READ_MODEL_SHEETS.financialKpis),
+    readSheetRecords(READ_MODEL_SHEETS.products),
+    readSheetRecords(READ_MODEL_SHEETS.consumables),
+    readSheetRecords(READ_MODEL_SHEETS.stockLevels),
+    readSheetRecords(READ_MODEL_SHEETS.warehouses),
+    readSheetRecords(READ_MODEL_SHEETS.supportCases),
+    readSheetRecords(READ_MODEL_SHEETS.supportTickets),
+    readSheetRecords(READ_MODEL_SHEETS.resolutionMetrics),
+    readSheetRecords(READ_MODEL_SHEETS.satisfactionMetrics),
+  ]);
 
   if (!patients.available) return null;
 
   return {
     patients: patients.records.map(mapPatient).filter((patient) => patient.patientId),
-    identifiers: identifiers.records.map(mapIdentifier).filter((identifier) => identifier.patientId),
+    identifiers: identifiers.records
+      .map(mapIdentifier)
+      .filter((identifier) => identifier.patientId),
     contacts: contacts.records.map(mapContact).filter((contact) => contact.patientId),
     administrativeProfiles: administrativeProfiles.records
       .map(mapAdministrativeProfile)
@@ -997,9 +1007,7 @@ export async function readWorksheetReadModels(): Promise<WorksheetReadModels | n
     billingProfiles: billingProfiles.records
       .map(mapBillingProfile)
       .filter((profile) => profile.patientId),
-    treatmentPlans: treatmentPlans.records
-      .map(mapTreatmentPlan)
-      .filter((plan) => plan.patientId),
+    treatmentPlans: treatmentPlans.records.map(mapTreatmentPlan).filter((plan) => plan.patientId),
     treatmentStages: treatmentStages.records
       .map(mapTreatmentStage)
       .filter((stage) => stage.patientId),
@@ -1015,30 +1023,20 @@ export async function readWorksheetReadModels(): Promise<WorksheetReadModels | n
     workflowExecutionStatus: workflowExecutionStatus.records
       .map(mapWorkflowExecutionStatus)
       .filter((status) => status.workflowExecutionStatusId || status.automationRunId),
-    invoices: invoices.records
-      .map(mapInvoice)
-      .filter((invoice) => invoice.invoiceId),
-    payments: payments.records
-      .map(mapPayment)
-      .filter((payment) => payment.paymentId),
+    invoices: invoices.records.map(mapInvoice).filter((invoice) => invoice.invoiceId),
+    payments: payments.records.map(mapPayment).filter((payment) => payment.paymentId),
     collections: collections.records
       .map(mapCollection)
       .filter((collection) => collection.collectionId),
-    financialKpis: financialKpis.records
-      .map(mapFinancialKpi)
-      .filter((kpi) => kpi.financialKpiId),
-    products: products.records
-      .map(mapProduct)
-      .filter((product) => product.productId),
+    financialKpis: financialKpis.records.map(mapFinancialKpi).filter((kpi) => kpi.financialKpiId),
+    products: products.records.map(mapProduct).filter((product) => product.productId),
     consumables: consumables.records
       .map(mapConsumable)
       .filter((consumable) => consumable.consumableId),
     stockLevels: stockLevels.records
       .map(mapStockLevel)
       .filter((stockLevel) => stockLevel.stockLevelId),
-    warehouses: warehouses.records
-      .map(mapWarehouse)
-      .filter((warehouse) => warehouse.warehouseId),
+    warehouses: warehouses.records.map(mapWarehouse).filter((warehouse) => warehouse.warehouseId),
     supportCases: supportCases.records
       .map(mapSupportCase)
       .filter((supportCase) => supportCase.supportCaseId),

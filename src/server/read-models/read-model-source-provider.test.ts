@@ -80,14 +80,35 @@ beforeEach(() => {
   vi.mocked(listPatientAdministrativeProfiles).mockResolvedValue(legacyPatients as never);
   vi.mocked(buildCrmReadAggregatesFromReadModels).mockReturnValue({
     crmAggregates: [{ patientId: "read-model-patient", treatmentInterests: [], crmFolios: [] }],
-    diagnostics: { totalPatients: 1, totalTreatmentInterests: 0, totalCrmFolios: 0, patientsWithTreatmentInterests: 0, patientsWithCrmFolios: 0, orphanTreatmentInterests: 0, orphanCrmFolios: 0 },
+    diagnostics: {
+      totalPatients: 1,
+      totalTreatmentInterests: 0,
+      totalCrmFolios: 0,
+      patientsWithTreatmentInterests: 0,
+      patientsWithCrmFolios: 0,
+      orphanTreatmentInterests: 0,
+      orphanCrmFolios: 0,
+    },
   } as never);
   vi.mocked(buildBillingReadAggregatesFromReadModels).mockReturnValue({
     billingAggregates: [{ patientId: "read-model-patient", billingProfiles: [] }],
-    diagnostics: { totalPatients: 1, totalBillingProfiles: 0, patientsWithBillingProfiles: 0, orphanBillingProfiles: 0, incompleteBillingProfiles: 0 },
+    diagnostics: {
+      totalPatients: 1,
+      totalBillingProfiles: 0,
+      patientsWithBillingProfiles: 0,
+      orphanBillingProfiles: 0,
+      incompleteBillingProfiles: 0,
+    },
   } as never);
   vi.mocked(buildClinicalReadAggregatesFromReadModels).mockReturnValue({
-    clinicalAggregates: [{ patientId: "read-model-patient", treatmentPlans: [], treatmentStages: [], clinicalOutcomes: [] }],
+    clinicalAggregates: [
+      {
+        patientId: "read-model-patient",
+        treatmentPlans: [],
+        treatmentStages: [],
+        clinicalOutcomes: [],
+      },
+    ],
     diagnostics: {
       totalPatients: 1,
       totalTreatmentPlans: 0,
@@ -181,13 +202,15 @@ describe("read model source provider", () => {
     expect(source.diagnostics.patientAggregateDiagnostics?.patientsWithTemporaryIdentity).toBe(1);
     expect(source.crmAggregates).toHaveLength(1);
     expect(source.billingAggregates).toHaveLength(1);
-    expect(source.operationsAggregate).toEqual({ automationRuns: [], operationalKpis: [], workflowExecutionStatus: [] });
+    expect(source.operationsAggregate).toEqual({
+      automationRuns: [],
+      operationalKpis: [],
+      workflowExecutionStatus: [],
+    });
     expect(source.diagnostics.crmAggregateDiagnostics).toMatchObject({ totalPatients: 1 });
     expect(source.diagnostics.billingAggregateDiagnostics).toMatchObject({ totalPatients: 1 });
     expect(listPatientAdministrativeProfiles).not.toHaveBeenCalled();
   });
-
-
 
   it("emits read, aggregate, and domain telemetry when read models are used", async () => {
     vi.mocked(readWorksheetReadModels).mockResolvedValue(readModels as never);
@@ -198,7 +221,9 @@ describe("read model source provider", () => {
     expect(events.filter((event) => event.type === "aggregate")).toHaveLength(8);
     expect(events.filter((event) => event.type === "read")).toHaveLength(8);
     expect(events.filter((event) => event.type === "domain")).toHaveLength(8);
-    expect(events.find((event) => event.type === "aggregate" && event.domain === "Patient")).toMatchObject({
+    expect(
+      events.find((event) => event.type === "aggregate" && event.domain === "Patient"),
+    ).toMatchObject({
       aggregate: "PatientAggregateReadService",
       recordCount: 1,
     });
@@ -214,8 +239,21 @@ describe("read model source provider", () => {
       .filter((event) => event.type === "fallback");
 
     expect(fallbackEvents).toHaveLength(8);
-    expect(fallbackEvents.map((event) => event.domain).sort()).toEqual(["Billing", "CRM", "Clinical", "Finance", "Inventory", "Operations", "Patient", "Support"]);
-    expect(fallbackEvents.every((event) => event.type === "fallback" && event.reason === "read-model-unavailable")).toBe(true);
+    expect(fallbackEvents.map((event) => event.domain).sort()).toEqual([
+      "Billing",
+      "CRM",
+      "Clinical",
+      "Finance",
+      "Inventory",
+      "Operations",
+      "Patient",
+      "Support",
+    ]);
+    expect(
+      fallbackEvents.every(
+        (event) => event.type === "fallback" && event.reason === "read-model-unavailable",
+      ),
+    ).toBe(true);
   });
 
   it("keeps aggregate diagnostics internal while exposing only administrative profile patients", async () => {

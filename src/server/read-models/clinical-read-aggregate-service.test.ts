@@ -56,7 +56,9 @@ const treatmentStage = (overrides: Partial<TreatmentStageReadModel>): TreatmentS
   ...overrides,
 });
 
-const clinicalOutcome = (overrides: Partial<ClinicalOutcomeReadModel>): ClinicalOutcomeReadModel => ({
+const clinicalOutcome = (
+  overrides: Partial<ClinicalOutcomeReadModel>,
+): ClinicalOutcomeReadModel => ({
   clinicalOutcomeId: "COUT-001",
   treatmentPlanId: "TPL-001",
   patientId: "PAT-001",
@@ -88,18 +90,26 @@ const models = (overrides: Partial<WorksheetReadModels>): WorksheetReadModels =>
 
 describe("clinical read aggregate service", () => {
   it("builds isolated clinical aggregates without extending Patient, CRM, or Billing", () => {
-    const result = buildClinicalReadAggregatesFromReadModels(models({
-      treatmentPlans: [treatmentPlan({})],
-      treatmentStages: [treatmentStage({})],
-      clinicalOutcomes: [clinicalOutcome({})],
-    }));
+    const result = buildClinicalReadAggregatesFromReadModels(
+      models({
+        treatmentPlans: [treatmentPlan({})],
+        treatmentStages: [treatmentStage({})],
+        clinicalOutcomes: [clinicalOutcome({})],
+      }),
+    );
 
     expect(result.clinicalAggregates).toEqual([
       {
         patientId: "PAT-001",
-        treatmentPlans: [expect.objectContaining({ treatmentPlanId: "TPL-001", planName: "Ortodoncia" })],
-        treatmentStages: [expect.objectContaining({ treatmentStageId: "TST-001", stageName: "Diagnostico" })],
-        clinicalOutcomes: [expect.objectContaining({ clinicalOutcomeId: "COUT-001", outcomeType: "progress" })],
+        treatmentPlans: [
+          expect.objectContaining({ treatmentPlanId: "TPL-001", planName: "Ortodoncia" }),
+        ],
+        treatmentStages: [
+          expect.objectContaining({ treatmentStageId: "TST-001", stageName: "Diagnostico" }),
+        ],
+        clinicalOutcomes: [
+          expect.objectContaining({ clinicalOutcomeId: "COUT-001", outcomeType: "progress" }),
+        ],
       },
     ]);
     expect(result.diagnostics).toMatchObject({
@@ -111,11 +121,13 @@ describe("clinical read aggregate service", () => {
   });
 
   it("keeps orphan clinical rows diagnostic instead of failing the read model", () => {
-    const result = buildClinicalReadAggregatesFromReadModels(models({
-      treatmentPlans: [treatmentPlan({ patientId: "PAT-MISSING" })],
-      treatmentStages: [treatmentStage({ patientId: "PAT-MISSING" })],
-      clinicalOutcomes: [clinicalOutcome({ patientId: "PAT-MISSING" })],
-    }));
+    const result = buildClinicalReadAggregatesFromReadModels(
+      models({
+        treatmentPlans: [treatmentPlan({ patientId: "PAT-MISSING" })],
+        treatmentStages: [treatmentStage({ patientId: "PAT-MISSING" })],
+        clinicalOutcomes: [clinicalOutcome({ patientId: "PAT-MISSING" })],
+      }),
+    );
 
     expect(result.clinicalAggregates).toEqual([
       { patientId: "PAT-001", treatmentPlans: [], treatmentStages: [], clinicalOutcomes: [] },
@@ -128,11 +140,13 @@ describe("clinical read aggregate service", () => {
   });
 
   it("filters incomplete clinical rows from consumer payload but keeps diagnostics", () => {
-    const result = buildClinicalReadAggregatesFromReadModels(models({
-      treatmentPlans: [treatmentPlan({ planName: "" })],
-      treatmentStages: [treatmentStage({ stageName: "" })],
-      clinicalOutcomes: [clinicalOutcome({ outcomeType: "" })],
-    }));
+    const result = buildClinicalReadAggregatesFromReadModels(
+      models({
+        treatmentPlans: [treatmentPlan({ planName: "" })],
+        treatmentStages: [treatmentStage({ stageName: "" })],
+        clinicalOutcomes: [clinicalOutcome({ outcomeType: "" })],
+      }),
+    );
 
     expect(result.clinicalAggregates).toEqual([
       { patientId: "PAT-001", treatmentPlans: [], treatmentStages: [], clinicalOutcomes: [] },
@@ -145,24 +159,24 @@ describe("clinical read aggregate service", () => {
   });
 
   it("sorts treatment plans by newest timestamp and stages by sequence", () => {
-    const result = buildClinicalReadAggregatesFromReadModels(models({
-      treatmentPlans: [
-        treatmentPlan({ treatmentPlanId: "TPL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
-        treatmentPlan({ treatmentPlanId: "TPL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
-      ],
-      treatmentStages: [
-        treatmentStage({ treatmentStageId: "TST-2", sequence: "2" }),
-        treatmentStage({ treatmentStageId: "TST-1", sequence: "1" }),
-      ],
-    }));
+    const result = buildClinicalReadAggregatesFromReadModels(
+      models({
+        treatmentPlans: [
+          treatmentPlan({ treatmentPlanId: "TPL-OLD", updatedAt: "2026-01-01T00:00:00.000Z" }),
+          treatmentPlan({ treatmentPlanId: "TPL-NEW", updatedAt: "2026-01-03T00:00:00.000Z" }),
+        ],
+        treatmentStages: [
+          treatmentStage({ treatmentStageId: "TST-2", sequence: "2" }),
+          treatmentStage({ treatmentStageId: "TST-1", sequence: "1" }),
+        ],
+      }),
+    );
 
-    expect(result.clinicalAggregates[0]?.treatmentPlans.map((plan) => plan.treatmentPlanId)).toEqual([
-      "TPL-NEW",
-      "TPL-OLD",
-    ]);
-    expect(result.clinicalAggregates[0]?.treatmentStages.map((stage) => stage.treatmentStageId)).toEqual([
-      "TST-1",
-      "TST-2",
-    ]);
+    expect(
+      result.clinicalAggregates[0]?.treatmentPlans.map((plan) => plan.treatmentPlanId),
+    ).toEqual(["TPL-NEW", "TPL-OLD"]);
+    expect(
+      result.clinicalAggregates[0]?.treatmentStages.map((stage) => stage.treatmentStageId),
+    ).toEqual(["TST-1", "TST-2"]);
   });
 });

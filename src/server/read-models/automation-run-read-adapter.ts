@@ -19,7 +19,9 @@ function normalize(value: string | undefined | null) {
 }
 
 function readTimestamp(run: AutomationRunReadModel) {
-  const timestamp = Date.parse(run.updatedAt || run.completedAt || run.startedAt || run.createdAt || "");
+  const timestamp = Date.parse(
+    run.updatedAt || run.completedAt || run.startedAt || run.createdAt || "",
+  );
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 
@@ -43,7 +45,9 @@ function toAutomationRunDto(run: AutomationRunReadModel): AutomationRunReadDto {
   };
 }
 
-export function readAutomationRuns(automationRuns: AutomationRunReadModel[]): AutomationRunReadDto[] {
+export function readAutomationRuns(
+  automationRuns: AutomationRunReadModel[],
+): AutomationRunReadDto[] {
   return automationRuns
     .filter(isUsableRun)
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))

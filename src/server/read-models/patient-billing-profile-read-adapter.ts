@@ -31,13 +31,15 @@ function readTimestamp(profile: PatientBillingProfileReadModel) {
 function isProfileUsable(profile: PatientBillingProfileReadModel) {
   return Boolean(
     normalizeValue(profile.taxIdValue) ||
-      normalizeValue(profile.ruc) ||
-      normalizeValue(profile.legalName) ||
-      normalizeValue(profile.fiscalAddress),
+    normalizeValue(profile.ruc) ||
+    normalizeValue(profile.legalName) ||
+    normalizeValue(profile.fiscalAddress),
   );
 }
 
-function toBillingProfileDto(profile: PatientBillingProfileReadModel): PatientBillingProfileReadDto {
+function toBillingProfileDto(
+  profile: PatientBillingProfileReadModel,
+): PatientBillingProfileReadDto {
   return {
     billingProfileId: normalizeValue(profile.billingProfileId),
     patientId: normalizeValue(profile.patientId),
@@ -63,7 +65,9 @@ export function readBillingProfilesForPatient(
   billingProfiles: PatientBillingProfileReadModel[],
 ): PatientBillingProfileReadDto[] {
   return billingProfiles
-    .filter((profile) => normalizeValue(profile.patientId) === patientId && isProfileUsable(profile))
+    .filter(
+      (profile) => normalizeValue(profile.patientId) === patientId && isProfileUsable(profile),
+    )
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))
     .map(toBillingProfileDto);
 }

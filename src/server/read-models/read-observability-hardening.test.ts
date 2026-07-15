@@ -10,7 +10,10 @@ import { buildClinicalReadAggregatesFromReadModels } from "@/server/read-models/
 import { buildOperationsReadAggregateFromReadModels } from "@/server/read-models/operations-read-aggregate-service";
 import { buildFinanceReadAggregateFromReadModels } from "@/server/read-models/finance-read-aggregate-service";
 import { buildInventoryReadAggregateFromReadModels } from "@/server/read-models/inventory-read-aggregate-service";
-import { readObservabilityProvider, type ReadObservabilityEvent } from "./read-observability-provider";
+import {
+  readObservabilityProvider,
+  type ReadObservabilityEvent,
+} from "./read-observability-provider";
 
 vi.mock("@/server/leads/operations-repository", () => ({
   listLeadOperationsProfiles: vi.fn(),
@@ -75,10 +78,19 @@ beforeEach(() => {
   readObservabilityProvider.setSink(undefined);
 
   vi.mocked(listLeadOperationsProfiles).mockResolvedValue([{ leadId: "lead-1" }] as never);
-  vi.mocked(listPatientAdministrativeProfiles).mockResolvedValue([{ id: "legacy-patient" }] as never);
+  vi.mocked(listPatientAdministrativeProfiles).mockResolvedValue([
+    { id: "legacy-patient" },
+  ] as never);
   vi.mocked(readWorksheetReadModels).mockResolvedValue(readModels as never);
   vi.mocked(buildClinicalReadAggregatesFromReadModels).mockReturnValue({
-    clinicalAggregates: [{ patientId: "read-model-patient", treatmentPlans: [], treatmentStages: [], clinicalOutcomes: [] }],
+    clinicalAggregates: [
+      {
+        patientId: "read-model-patient",
+        treatmentPlans: [],
+        treatmentStages: [],
+        clinicalOutcomes: [],
+      },
+    ],
     diagnostics: {
       totalPatients: 1,
       totalTreatmentPlans: 0,
@@ -177,7 +189,6 @@ beforeEach(() => {
       incompleteWarehouses: 0,
     },
   } as never);
-
 });
 
 describe("read observability hardening", () => {
@@ -190,9 +201,29 @@ describe("read observability hardening", () => {
 
     expect(readEvents).toHaveLength(8);
     expect(domainEvents).toHaveLength(8);
-    expect(readEvents.map((event) => event.domain).sort()).toEqual(["Billing", "CRM", "Clinical", "Finance", "Inventory", "Operations", "Patient", "Support"]);
-    expect(domainEvents.map((event) => event.domain).sort()).toEqual(["Billing", "CRM", "Clinical", "Finance", "Inventory", "Operations", "Patient", "Support"]);
-    expect(readEvents.every((event) => event.source === "ReadModel" && event.recordCount >= 0)).toBe(true);
+    expect(readEvents.map((event) => event.domain).sort()).toEqual([
+      "Billing",
+      "CRM",
+      "Clinical",
+      "Finance",
+      "Inventory",
+      "Operations",
+      "Patient",
+      "Support",
+    ]);
+    expect(domainEvents.map((event) => event.domain).sort()).toEqual([
+      "Billing",
+      "CRM",
+      "Clinical",
+      "Finance",
+      "Inventory",
+      "Operations",
+      "Patient",
+      "Support",
+    ]);
+    expect(
+      readEvents.every((event) => event.source === "ReadModel" && event.recordCount >= 0),
+    ).toBe(true);
     expect(domainEvents.every((event) => event.source === "ReadModel" && event.healthy)).toBe(true);
   });
 
@@ -204,10 +235,12 @@ describe("read observability hardening", () => {
     });
     readObservabilityProvider.setSink(sink);
 
-    await expect(getReadModelSource({ consumerName: "Patient Management" })).resolves.toMatchObject({
-      mode: "read-model",
-      patients: [{ id: "patient-1", fullName: "Paciente Uno" }],
-    });
+    await expect(getReadModelSource({ consumerName: "Patient Management" })).resolves.toMatchObject(
+      {
+        mode: "read-model",
+        patients: [{ id: "patient-1", fullName: "Paciente Uno" }],
+      },
+    );
 
     expect(sink).toHaveBeenCalled();
     expect(readObservabilityProvider.getBufferedEvents().length).toBeGreaterThanOrEqual(9);

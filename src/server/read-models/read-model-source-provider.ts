@@ -83,7 +83,16 @@ type GetReadModelSourceOptions = {
 function trackDomainTelemetry(
   consumerName: string,
   mode: ReadModelSourceMode,
-  counts: { patients: number; crm: number; billing: number; clinical: number; operations: number; finance: number; inventory: number; support: number },
+  counts: {
+    patients: number;
+    crm: number;
+    billing: number;
+    clinical: number;
+    operations: number;
+    finance: number;
+    inventory: number;
+    support: number;
+  },
 ) {
   const source = mode === "read-model" ? "ReadModel" : "LeadProjection";
 
@@ -281,7 +290,12 @@ async function getLegacyLeadsSource(
     operationsAggregate: { automationRuns: [], operationalKpis: [], workflowExecutionStatus: [] },
     financeAggregate: { invoices: [], payments: [], collections: [], financialKpis: [] },
     inventoryAggregate: { products: [], consumables: [], stockLevels: [], warehouses: [] },
-    supportAggregate: { supportCases: [], supportTickets: [], resolutionMetrics: [], satisfactionMetrics: [] },
+    supportAggregate: {
+      supportCases: [],
+      supportTickets: [],
+      resolutionMetrics: [],
+      satisfactionMetrics: [],
+    },
     diagnostics: {
       usedReadModel: false,
       fallbackReason,
@@ -298,7 +312,11 @@ export async function getReadModelSource({
   try {
     const models = await readWorksheetReadModels();
     if (!models || models.patients.length === 0) {
-      return await getLegacyLeadsSource(leadOperationsPromise, "read-model-unavailable", consumerName);
+      return await getLegacyLeadsSource(
+        leadOperationsPromise,
+        "read-model-unavailable",
+        consumerName,
+      );
     }
 
     const [leadOperations] = await Promise.all([leadOperationsPromise]);

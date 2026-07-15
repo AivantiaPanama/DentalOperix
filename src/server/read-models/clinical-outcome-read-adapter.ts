@@ -23,7 +23,11 @@ function readTimestamp(outcome: ClinicalOutcomeReadModel) {
 }
 
 function isUsableOutcome(outcome: ClinicalOutcomeReadModel) {
-  return Boolean(normalize(outcome.clinicalOutcomeId) && normalize(outcome.patientId) && normalize(outcome.outcomeType));
+  return Boolean(
+    normalize(outcome.clinicalOutcomeId) &&
+    normalize(outcome.patientId) &&
+    normalize(outcome.outcomeType),
+  );
 }
 
 function toClinicalOutcomeDto(outcome: ClinicalOutcomeReadModel): ClinicalOutcomeReadDto {

@@ -1,4 +1,12 @@
-export type ReadDomainName = "Patient" | "CRM" | "Billing" | "Clinical" | "Operations" | "Finance" | "Inventory" | "Support";
+export type ReadDomainName =
+  | "Patient"
+  | "CRM"
+  | "Billing"
+  | "Clinical"
+  | "Operations"
+  | "Finance"
+  | "Inventory"
+  | "Support";
 
 export type ReadSourceName = "ReadModel" | "LeadProjection" | "Error";
 

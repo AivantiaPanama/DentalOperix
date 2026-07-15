@@ -29,10 +29,18 @@ function isUsableResolutionMetric(metric: ResolutionMetricReadModel) {
 function toResolutionMetricDto(metric: ResolutionMetricReadModel): ResolutionMetricReadDto {
   return {
     resolutionMetricId: normalize(metric.resolutionMetricId),
-    ...(normalize(metric.supportTicketId) ? { supportTicketId: normalize(metric.supportTicketId) } : {}),
-    ...(normalize(metric.firstResponseTimeMinutes) ? { firstResponseTimeMinutes: normalize(metric.firstResponseTimeMinutes) } : {}),
-    ...(normalize(metric.resolutionTimeMinutes) ? { resolutionTimeMinutes: normalize(metric.resolutionTimeMinutes) } : {}),
-    ...(normalize(metric.escalationRate) ? { escalationRate: normalize(metric.escalationRate) } : {}),
+    ...(normalize(metric.supportTicketId)
+      ? { supportTicketId: normalize(metric.supportTicketId) }
+      : {}),
+    ...(normalize(metric.firstResponseTimeMinutes)
+      ? { firstResponseTimeMinutes: normalize(metric.firstResponseTimeMinutes) }
+      : {}),
+    ...(normalize(metric.resolutionTimeMinutes)
+      ? { resolutionTimeMinutes: normalize(metric.resolutionTimeMinutes) }
+      : {}),
+    ...(normalize(metric.escalationRate)
+      ? { escalationRate: normalize(metric.escalationRate) }
+      : {}),
     ...(normalize(metric.periodStart) ? { periodStart: normalize(metric.periodStart) } : {}),
     ...(normalize(metric.periodEnd) ? { periodEnd: normalize(metric.periodEnd) } : {}),
     source: normalize(metric.source) || "read-model",
@@ -41,7 +49,9 @@ function toResolutionMetricDto(metric: ResolutionMetricReadModel): ResolutionMet
   };
 }
 
-export function readResolutionMetrics(metrics: ResolutionMetricReadModel[]): ResolutionMetricReadDto[] {
+export function readResolutionMetrics(
+  metrics: ResolutionMetricReadModel[],
+): ResolutionMetricReadDto[] {
   return metrics
     .filter(isUsableResolutionMetric)
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))

@@ -28,7 +28,9 @@ function isUsableSatisfactionMetric(metric: SatisfactionMetricReadModel) {
 function toSatisfactionMetricDto(metric: SatisfactionMetricReadModel): SatisfactionMetricReadDto {
   return {
     satisfactionMetricId: normalize(metric.satisfactionMetricId),
-    ...(normalize(metric.supportTicketId) ? { supportTicketId: normalize(metric.supportTicketId) } : {}),
+    ...(normalize(metric.supportTicketId)
+      ? { supportTicketId: normalize(metric.supportTicketId) }
+      : {}),
     ...(normalize(metric.csat) ? { csat: normalize(metric.csat) } : {}),
     ...(normalize(metric.nps) ? { nps: normalize(metric.nps) } : {}),
     ...(normalize(metric.surveyResult) ? { surveyResult: normalize(metric.surveyResult) } : {}),
@@ -39,7 +41,9 @@ function toSatisfactionMetricDto(metric: SatisfactionMetricReadModel): Satisfact
   };
 }
 
-export function readSatisfactionMetrics(metrics: SatisfactionMetricReadModel[]): SatisfactionMetricReadDto[] {
+export function readSatisfactionMetrics(
+  metrics: SatisfactionMetricReadModel[],
+): SatisfactionMetricReadDto[] {
   return metrics
     .filter(isUsableSatisfactionMetric)
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))

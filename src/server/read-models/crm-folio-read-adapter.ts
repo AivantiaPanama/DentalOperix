@@ -21,7 +21,10 @@ function compareByCreatedAtDesc(a: CrmFolioReadDto, b: CrmFolioReadDto) {
   return normalize(b.createdAt).localeCompare(normalize(a.createdAt));
 }
 
-export function readCrmFoliosForPatient(patientId: string, folios: CrmFolioReadModel[]): CrmFolioReadDto[] {
+export function readCrmFoliosForPatient(
+  patientId: string,
+  folios: CrmFolioReadModel[],
+): CrmFolioReadDto[] {
   return folios
     .filter((folio) => normalize(folio.patientId) === patientId)
     .map((folio) => ({

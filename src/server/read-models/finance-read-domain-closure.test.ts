@@ -36,11 +36,16 @@ describe("finance read domain closure", () => {
     ]);
     expect(JSON.stringify(result.financeAggregate).toLowerCase()).not.toContain("ledger");
     expect(JSON.stringify(result.financeAggregate).toLowerCase()).not.toContain("reconciliation");
-    expect(JSON.stringify(result.financeAggregate).toLowerCase()).not.toContain("accountingentries");
+    expect(JSON.stringify(result.financeAggregate).toLowerCase()).not.toContain(
+      "accountingentries",
+    );
   });
 
   it("does not import other domain aggregate services into the finance aggregate", () => {
-    const source = readFileSync(join(process.cwd(), "src/server/read-models/finance-read-aggregate-service.ts"), "utf8");
+    const source = readFileSync(
+      join(process.cwd(), "src/server/read-models/finance-read-aggregate-service.ts"),
+      "utf8",
+    );
 
     expect(source).not.toContain("patient-aggregate-read-service");
     expect(source).not.toContain("crm-read-aggregate-service");

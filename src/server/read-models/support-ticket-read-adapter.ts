@@ -28,10 +28,16 @@ function isUsableSupportTicket(supportTicket: SupportTicketReadModel) {
 function toSupportTicketDto(supportTicket: SupportTicketReadModel): SupportTicketReadDto {
   return {
     supportTicketId: normalize(supportTicket.supportTicketId),
-    ...(normalize(supportTicket.supportCaseId) ? { supportCaseId: normalize(supportTicket.supportCaseId) } : {}),
-    ...(normalize(supportTicket.patientId) ? { patientId: normalize(supportTicket.patientId) } : {}),
+    ...(normalize(supportTicket.supportCaseId)
+      ? { supportCaseId: normalize(supportTicket.supportCaseId) }
+      : {}),
+    ...(normalize(supportTicket.patientId)
+      ? { patientId: normalize(supportTicket.patientId) }
+      : {}),
     ticketStatus: normalize(supportTicket.ticketStatus),
-    ...(normalize(supportTicket.ticketHistory) ? { ticketHistory: normalize(supportTicket.ticketHistory) } : {}),
+    ...(normalize(supportTicket.ticketHistory)
+      ? { ticketHistory: normalize(supportTicket.ticketHistory) }
+      : {}),
     ...(normalize(supportTicket.openedAt) ? { openedAt: normalize(supportTicket.openedAt) } : {}),
     source: normalize(supportTicket.source) || "read-model",
     isMock: supportTicket.isMock,
@@ -39,7 +45,9 @@ function toSupportTicketDto(supportTicket: SupportTicketReadModel): SupportTicke
   };
 }
 
-export function readSupportTickets(supportTickets: SupportTicketReadModel[]): SupportTicketReadDto[] {
+export function readSupportTickets(
+  supportTickets: SupportTicketReadModel[],
+): SupportTicketReadDto[] {
   return supportTickets
     .filter(isUsableSupportTicket)
     .sort((left, right) => readTimestamp(right) - readTimestamp(left))

@@ -1,5 +1,11 @@
-import { readCollections, type CollectionReadDto } from "@/server/read-models/collection-read-adapter";
-import { readFinancialKpis, type FinancialKpiReadDto } from "@/server/read-models/financial-kpi-read-adapter";
+import {
+  readCollections,
+  type CollectionReadDto,
+} from "@/server/read-models/collection-read-adapter";
+import {
+  readFinancialKpis,
+  type FinancialKpiReadDto,
+} from "@/server/read-models/financial-kpi-read-adapter";
 import { readInvoices, type InvoiceReadDto } from "@/server/read-models/invoice-read-adapter";
 import { readPayments, type PaymentReadDto } from "@/server/read-models/payment-read-adapter";
 import type { WorksheetReadModels } from "@/server/read-models/worksheet-read-models";
@@ -35,7 +41,9 @@ function normalize(value: string | undefined | null) {
   return (value ?? "").trim();
 }
 
-export function buildFinanceReadAggregateFromReadModels(models: WorksheetReadModels): FinanceReadAggregateResult {
+export function buildFinanceReadAggregateFromReadModels(
+  models: WorksheetReadModels,
+): FinanceReadAggregateResult {
   const invoices = models.invoices ?? [];
   const payments = models.payments ?? [];
   const collections = models.collections ?? [];
@@ -62,10 +70,18 @@ export function buildFinanceReadAggregateFromReadModels(models: WorksheetReadMod
       usablePayments: usablePayments.length,
       usableCollections: usableCollections.length,
       usableFinancialKpis: usableFinancialKpis.length,
-      incompleteInvoices: invoices.filter((invoice) => !normalize(invoice.invoiceId) || !normalize(invoice.invoiceNumber)).length,
-      incompletePayments: payments.filter((payment) => !normalize(payment.paymentId) || !normalize(payment.amount)).length,
-      incompleteCollections: collections.filter((collection) => !normalize(collection.collectionId) || !normalize(collection.status)).length,
-      incompleteFinancialKpis: financialKpis.filter((kpi) => !normalize(kpi.financialKpiId) || !normalize(kpi.metricName)).length,
+      incompleteInvoices: invoices.filter(
+        (invoice) => !normalize(invoice.invoiceId) || !normalize(invoice.invoiceNumber),
+      ).length,
+      incompletePayments: payments.filter(
+        (payment) => !normalize(payment.paymentId) || !normalize(payment.amount),
+      ).length,
+      incompleteCollections: collections.filter(
+        (collection) => !normalize(collection.collectionId) || !normalize(collection.status),
+      ).length,
+      incompleteFinancialKpis: financialKpis.filter(
+        (kpi) => !normalize(kpi.financialKpiId) || !normalize(kpi.metricName),
+      ).length,
     },
   };
 }

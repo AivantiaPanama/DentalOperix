@@ -43,12 +43,19 @@ describe("support read domain closure", () => {
       "supportTickets",
     ]);
     expect(JSON.stringify(result.supportAggregate).toLowerCase()).not.toContain("surveyprocessing");
-    expect(JSON.stringify(result.supportAggregate).toLowerCase()).not.toContain("escalationautomation");
-    expect(JSON.stringify(result.supportAggregate).toLowerCase()).not.toContain("ticketworkflowexecution");
+    expect(JSON.stringify(result.supportAggregate).toLowerCase()).not.toContain(
+      "escalationautomation",
+    );
+    expect(JSON.stringify(result.supportAggregate).toLowerCase()).not.toContain(
+      "ticketworkflowexecution",
+    );
   });
 
   it("does not import other domain aggregate services into the support aggregate", () => {
-    const source = readFileSync(join(process.cwd(), "src/server/read-models/support-read-aggregate-service.ts"), "utf8");
+    const source = readFileSync(
+      join(process.cwd(), "src/server/read-models/support-read-aggregate-service.ts"),
+      "utf8",
+    );
 
     expect(source).not.toContain("patient-aggregate-read-service");
     expect(source).not.toContain("crm-read-aggregate-service");

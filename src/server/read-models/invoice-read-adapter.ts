@@ -19,7 +19,9 @@ function normalize(value: string | undefined | null) {
 }
 
 function readTimestamp(invoice: InvoiceReadModel) {
-  const timestamp = Date.parse(invoice.updatedAt || invoice.dueAt || invoice.issuedAt || invoice.createdAt || "");
+  const timestamp = Date.parse(
+    invoice.updatedAt || invoice.dueAt || invoice.issuedAt || invoice.createdAt || "",
+  );
   return Number.isNaN(timestamp) ? 0 : timestamp;
 }
 

@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { readObservabilityProvider, type ReadObservabilityEvent } from "./read-observability-provider";
+import {
+  readObservabilityProvider,
+  type ReadObservabilityEvent,
+} from "./read-observability-provider";
 
 describe("read observability provider", () => {
   beforeEach(() => {

@@ -1,6 +1,15 @@
-import { readAutomationRuns, type AutomationRunReadDto } from "@/server/read-models/automation-run-read-adapter";
-import { readOperationalKpis, type OperationalKpiReadDto } from "@/server/read-models/operational-kpi-read-adapter";
-import { readWorkflowExecutionStatuses, type WorkflowExecutionReadDto } from "@/server/read-models/workflow-execution-read-adapter";
+import {
+  readAutomationRuns,
+  type AutomationRunReadDto,
+} from "@/server/read-models/automation-run-read-adapter";
+import {
+  readOperationalKpis,
+  type OperationalKpiReadDto,
+} from "@/server/read-models/operational-kpi-read-adapter";
+import {
+  readWorkflowExecutionStatuses,
+  type WorkflowExecutionReadDto,
+} from "@/server/read-models/workflow-execution-read-adapter";
 import type { WorksheetReadModels } from "@/server/read-models/worksheet-read-models";
 
 export type OperationsReadAggregate = {
@@ -30,7 +39,9 @@ function normalize(value: string | undefined | null) {
   return (value ?? "").trim();
 }
 
-export function buildOperationsReadAggregateFromReadModels(models: WorksheetReadModels): OperationsReadAggregateResult {
+export function buildOperationsReadAggregateFromReadModels(
+  models: WorksheetReadModels,
+): OperationsReadAggregateResult {
   const automationRuns = models.automationRuns ?? [];
   const operationalKpis = models.operationalKpis ?? [];
   const workflowExecutionStatus = models.workflowExecutionStatus ?? [];
@@ -52,8 +63,12 @@ export function buildOperationsReadAggregateFromReadModels(models: WorksheetRead
       usableAutomationRuns: usableAutomationRuns.length,
       usableOperationalKpis: usableOperationalKpis.length,
       usableWorkflowExecutionStatus: usableWorkflowExecutionStatus.length,
-      incompleteAutomationRuns: automationRuns.filter((run) => !normalize(run.automationRunId) || !normalize(run.workflowName)).length,
-      incompleteOperationalKpis: operationalKpis.filter((kpi) => !normalize(kpi.operationalKpiId) || !normalize(kpi.metricName)).length,
+      incompleteAutomationRuns: automationRuns.filter(
+        (run) => !normalize(run.automationRunId) || !normalize(run.workflowName),
+      ).length,
+      incompleteOperationalKpis: operationalKpis.filter(
+        (kpi) => !normalize(kpi.operationalKpiId) || !normalize(kpi.metricName),
+      ).length,
       incompleteWorkflowExecutionStatus: workflowExecutionStatus.filter(
         (status) => !normalize(status.workflowExecutionStatusId) || !normalize(status.workflowName),
       ).length,

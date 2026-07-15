@@ -25,7 +25,12 @@ const identifier = (
 describe("patient identifier read adapter", () => {
   it("uses CID ahead of primary passport because domain priority wins", () => {
     const identity = resolvePatientIdentity("PAT-001", [
-      identifier({ identifierId: "ID-PASS", identifierType: "PASSPORT", identifierValue: "PA-123", isPrimary: true }),
+      identifier({
+        identifierId: "ID-PASS",
+        identifierType: "PASSPORT",
+        identifierValue: "PA-123",
+        isPrimary: true,
+      }),
       identifier({ identifierId: "ID-CID", identifierType: "CID", identifierValue: "8-888-888" }),
     ]);
 

@@ -23,7 +23,9 @@ function readTimestamp(plan: TreatmentPlanReadModel) {
 }
 
 function isUsablePlan(plan: TreatmentPlanReadModel) {
-  return Boolean(normalize(plan.treatmentPlanId) && normalize(plan.patientId) && normalize(plan.planName));
+  return Boolean(
+    normalize(plan.treatmentPlanId) && normalize(plan.patientId) && normalize(plan.planName),
+  );
 }
 
 function toTreatmentPlanDto(plan: TreatmentPlanReadModel): TreatmentPlanReadDto {
