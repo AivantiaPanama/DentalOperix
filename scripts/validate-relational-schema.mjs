@@ -1,13 +1,13 @@
-import fs from 'node:fs';
-import process from 'node:process';
-import { Client } from 'pg';
-import dotenv from 'dotenv';
+import fs from "node:fs";
+import process from "node:process";
+import { Client } from "pg";
+import dotenv from "dotenv";
 
-const envPath = process.argv[2] ?? '.env.relational.local';
+const envPath = process.argv[2] ?? ".env.relational.local";
 
 function maskConnectionString(value) {
-  if (!value) return '';
-  return value.replace(/:([^:@/]+)@/, ':***@');
+  if (!value) return "";
+  return value.replace(/:([^:@/]+)@/, ":***@");
 }
 
 function fail(message) {
@@ -22,48 +22,52 @@ if (!fs.existsSync(envPath)) {
 dotenv.config({ path: envPath, override: true });
 
 const databaseUrl = process.env.DATABASE_URL || process.env.POSTGRES_URL;
-const persistenceMode = process.env.LEADS_PERSISTENCE_MODE ?? 'google-sheet';
-const cutoverApproved = process.env.RELATIONAL_CUTOVER_APPROVED === 'true';
+const persistenceMode = process.env.LEADS_PERSISTENCE_MODE ?? "google-sheet";
+const cutoverApproved = process.env.RELATIONAL_CUTOVER_APPROVED === "true";
 
-const requiredTables = ['leads', 'lead_persistence_migration_audit'];
+const requiredTables = ["leads", "lead_persistence_migration_audit"];
 const requiredLeadColumns = [
-  'id',
-  'created_at',
-  'name',
-  'phone',
-  'email',
-  'treatment',
-  'message',
-  'urgency',
-  'preferred_date',
-  'status',
-  'source',
-  'ai_summary',
-  'calendar_event_id',
-  'email_sent',
-  'physical_source',
-  'source_record_hash',
-  'schema_version',
-  'inserted_at',
-  'updated_at',
+  "id",
+  "created_at",
+  "name",
+  "phone",
+  "email",
+  "treatment",
+  "message",
+  "urgency",
+  "preferred_date",
+  "status",
+  "source",
+  "ai_summary",
+  "calendar_event_id",
+  "email_sent",
+  "physical_source",
+  "source_record_hash",
+  "schema_version",
+  "inserted_at",
+  "updated_at",
 ];
 
-console.log('DentalOperix 57.7-C relational schema validation');
+console.log("DentalOperix 57.7-C relational schema validation");
 console.log(`Env file: ${envPath}`);
 console.log(`Persistence mode: ${persistenceMode}`);
 console.log(`Cutover approved flag: ${cutoverApproved}`);
-console.log(`Database URL configured: ${databaseUrl ? 'yes' : 'no'}`);
+console.log(`Database URL configured: ${databaseUrl ? "yes" : "no"}`);
 
 if (!databaseUrl) {
-  fail('DATABASE_URL or POSTGRES_URL is required.');
+  fail("DATABASE_URL or POSTGRES_URL is required.");
 }
 
-if (persistenceMode !== 'google-sheet') {
-  fail('Refusing validation unless LEADS_PERSISTENCE_MODE=google-sheet. Validation must not activate cutover.');
+if (persistenceMode !== "google-sheet") {
+  fail(
+    "Refusing validation unless LEADS_PERSISTENCE_MODE=google-sheet. Validation must not activate cutover.",
+  );
 }
 
 if (cutoverApproved) {
-  fail('Refusing validation when RELATIONAL_CUTOVER_APPROVED=true. This validation is pre-cutover only.');
+  fail(
+    "Refusing validation when RELATIONAL_CUTOVER_APPROVED=true. This validation is pre-cutover only.",
+  );
 }
 
 const client = new Client({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false } });
@@ -85,7 +89,7 @@ try {
   const missingTables = requiredTables.filter((table) => !foundTables.includes(table));
 
   if (missingTables.length > 0) {
-    fail(`Missing required tables: ${missingTables.join(', ')}`);
+    fail(`Missing required tables: ${missingTables.join(", ")}`);
   }
 
   const columnResult = await client.query(
@@ -97,17 +101,19 @@ try {
   );
 
   const foundLeadColumns = columnResult.rows.map((row) => row.column_name);
-  const missingLeadColumns = requiredLeadColumns.filter((column) => !foundLeadColumns.includes(column));
+  const missingLeadColumns = requiredLeadColumns.filter(
+    (column) => !foundLeadColumns.includes(column),
+  );
 
   if (missingLeadColumns.length > 0) {
-    fail(`Missing required leads columns: ${missingLeadColumns.join(', ')}`);
+    fail(`Missing required leads columns: ${missingLeadColumns.join(", ")}`);
   }
 
-  console.log(`Tables found: ${foundTables.join(', ')}`);
+  console.log(`Tables found: ${foundTables.join(", ")}`);
   console.log(`Leads columns validated: ${requiredLeadColumns.length}`);
-  console.log('Result: PASS');
+  console.log("Result: PASS");
 } catch (error) {
-  console.error('Result: FAIL');
+  console.error("Result: FAIL");
   console.error(error instanceof Error ? error.message : String(error));
   process.exitCode = 1;
 } finally {
