@@ -1,14 +1,8 @@
 \# DentalOperix Governance Rules
 
-
-
 \## Certified Architecture
 
-
-
 Official architecture:
-
-
 
 Leads
 
@@ -20,23 +14,13 @@ Leads
 
 → Supabase PostgreSQL
 
-
-
 Permanent rule:
-
-
 
 Leads = Source of Truth
 
-
-
 \## Protected Components
 
-
-
 Do not modify without explicit approval:
-
-
 
 \- BookingDialog
 
@@ -54,15 +38,9 @@ Do not modify without explicit approval:
 
 \- siteServices.ts
 
-
-
 \## Forbidden Patterns
 
-
-
 Never introduce:
-
-
 
 \- Dual Write
 
@@ -74,19 +52,11 @@ Never introduce:
 
 \- Direct writes bypassing LeadPersistencePort
 
-
-
 \## RBAC Constraints
-
-
 
 RBAC is an authorization layer only.
 
-
-
 RBAC must not modify:
-
-
 
 \- LeadPersistencePort
 
@@ -96,15 +66,9 @@ RBAC must not modify:
 
 \- Supabase persistence architecture
 
-
-
 \## Implementation Policy
 
-
-
 Before proposing changes:
-
-
 
 1\. Analyze architecture impact
 
@@ -116,11 +80,7 @@ Before proposing changes:
 
 5\. Generate implementation plan
 
-
-
 Never assume architecture changes without documentary evidence.
-
-
 
 ## Baseline 68.1 Update
 

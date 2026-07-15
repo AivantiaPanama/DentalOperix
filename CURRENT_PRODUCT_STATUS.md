@@ -9,16 +9,16 @@
 
 ## Certified state
 
-| Area | Status |
-|---|---|
-| Editorial Infrastructure | CERTIFIED |
-| Baseline Foundation | CERTIFIED |
-| Editorial Integration Review | PASS |
-| Institutional Certification | COMPLETED |
-| PR-01 Commercial Demo Foundation | IMPLEMENTED / EVIDENCED |
-| PR-02 Demo Journey Integration | IMPLEMENTED / EVIDENCED |
+| Area                                | Status                  |
+| ----------------------------------- | ----------------------- |
+| Editorial Infrastructure            | CERTIFIED               |
+| Baseline Foundation                 | CERTIFIED               |
+| Editorial Integration Review        | PASS                    |
+| Institutional Certification         | COMPLETED               |
+| PR-01 Commercial Demo Foundation    | IMPLEMENTED / EVIDENCED |
+| PR-02 Demo Journey Integration      | IMPLEMENTED / EVIDENCED |
 | PR-03 Commercial Presentation Layer | IMPLEMENTED / EVIDENCED |
-| RB-01 Publication Finalization | COMPLETED |
+| RB-01 Publication Finalization      | COMPLETED               |
 
 ## Product capability published in this edition
 

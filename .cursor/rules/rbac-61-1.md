@@ -1,10 +1,6 @@
 \# RBAC 61.1 Foundation
 
-
-
 Official Roles:
-
-
 
 \- Patient
 
@@ -14,11 +10,7 @@ Official Roles:
 
 \- Administrator
 
-
-
 Key Rules:
-
-
 
 \- lead.create = prohibited
 
@@ -26,11 +18,7 @@ Key Rules:
 
 \- user.delete = prohibited
 
-
-
 Only Administrator may:
-
-
 
 \- assign roles
 
@@ -40,11 +28,7 @@ Only Administrator may:
 
 \- reassign lead ownership
 
-
-
 Open Architecture Questions:
-
-
 
 \- Doctor ↔ Patient Assignment
 
@@ -54,7 +38,4 @@ Open Architecture Questions:
 
 \- Role Assignment Workflow
 
-
-
 Do not invent solutions for open architecture questions.
-
