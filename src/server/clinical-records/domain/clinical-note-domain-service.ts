@@ -1,5 +1,9 @@
 import { ClinicalRecordValidationError } from "./clinical-record.errors";
-import { archiveClinicalNoteEntity, createClinicalNoteEntity, updateClinicalNoteEntity } from "./clinical-note.entity";
+import {
+  archiveClinicalNoteEntity,
+  createClinicalNoteEntity,
+  updateClinicalNoteEntity,
+} from "./clinical-note.entity";
 import type {
   ClinicalNote,
   ClinicalNoteTransitionInput,
@@ -59,11 +63,18 @@ export type AmendClinicalNoteOptions = {
   now?: string;
 };
 
-export function registerClinicalNote(input: RegisterClinicalNoteInput, options: RegisterClinicalNoteOptions = {}): ClinicalNote {
+export function registerClinicalNote(
+  input: RegisterClinicalNoteInput,
+  options: RegisterClinicalNoteOptions = {},
+): ClinicalNote {
   return createClinicalNoteEntity({ ...input, status: "draft" }, options);
 }
 
-export function completeClinicalNote(note: ClinicalNote, input: ClinicalNoteTransitionInput, options: CompleteClinicalNoteOptions = {}): ClinicalNote {
+export function completeClinicalNote(
+  note: ClinicalNote,
+  input: ClinicalNoteTransitionInput,
+  options: CompleteClinicalNoteOptions = {},
+): ClinicalNote {
   assertClinicalNoteCanBeCompleted(note);
   const now = resolveOperationTimestamp(options.now);
   const healthcareProfessionalId = requireNoteTransitionActor(input);
@@ -81,7 +92,11 @@ export function completeClinicalNote(note: ClinicalNote, input: ClinicalNoteTran
   };
 }
 
-export function reopenClinicalNote(note: ClinicalNote, input: ClinicalNoteTransitionInput, options: ReopenClinicalNoteOptions = {}): ClinicalNote {
+export function reopenClinicalNote(
+  note: ClinicalNote,
+  input: ClinicalNoteTransitionInput,
+  options: ReopenClinicalNoteOptions = {},
+): ClinicalNote {
   assertClinicalNoteCanBeReopened(note);
   const now = resolveOperationTimestamp(options.now);
   const healthcareProfessionalId = requireNoteTransitionActor(input);
@@ -99,17 +114,29 @@ export function reopenClinicalNote(note: ClinicalNote, input: ClinicalNoteTransi
   };
 }
 
-export function amendClinicalNote(note: ClinicalNote, input: UpdateClinicalNoteInput, options: AmendClinicalNoteOptions = {}): ClinicalNote {
+export function amendClinicalNote(
+  note: ClinicalNote,
+  input: UpdateClinicalNoteInput,
+  options: AmendClinicalNoteOptions = {},
+): ClinicalNote {
   assertClinicalNoteCanBeAmended(note);
   return updateClinicalNoteEntity(note, input, resolveOperationTimestamp(options.now));
 }
 
-export function archiveClinicalNote(note: ClinicalNote, input: ClinicalNoteTransitionInput, options: AmendClinicalNoteOptions = {}): ClinicalNote {
+export function archiveClinicalNote(
+  note: ClinicalNote,
+  input: ClinicalNoteTransitionInput,
+  options: AmendClinicalNoteOptions = {},
+): ClinicalNote {
   if (note.status === "archived") {
     throw new ClinicalRecordValidationError("Clinical note is already archived.");
   }
 
-  return archiveClinicalNoteEntity(note, input.healthcareProfessionalId, resolveOperationTimestamp(options.now));
+  return archiveClinicalNoteEntity(
+    note,
+    input.healthcareProfessionalId,
+    resolveOperationTimestamp(options.now),
+  );
 }
 
 export const ClinicalNoteDomainService = {

@@ -13,7 +13,9 @@ export class ArchiveClinicalNoteUseCase {
   constructor(private readonly dependencies: ArchiveClinicalNoteUseCaseDependencies) {}
 
   async execute(command: ArchiveClinicalNoteCommand): Promise<ArchiveClinicalNoteResult> {
-    const clinicalNote = await this.dependencies.clinicalNoteRepositoryPort.findClinicalNoteById(command.clinicalNoteId);
+    const clinicalNote = await this.dependencies.clinicalNoteRepositoryPort.findClinicalNoteById(
+      command.clinicalNoteId,
+    );
     if (!clinicalNote || (command.patientId && clinicalNote.patientId !== command.patientId)) {
       throw new ClinicalNoteNotFoundError(command.clinicalNoteId);
     }
@@ -23,7 +25,8 @@ export class ArchiveClinicalNoteUseCase {
       { healthcareProfessionalId: command.healthcareProfessionalId, reason: command.reason },
       { now: command.now },
     );
-    const savedClinicalNote = await this.dependencies.clinicalNoteRepositoryPort.updateClinicalNote(archivedClinicalNote);
+    const savedClinicalNote =
+      await this.dependencies.clinicalNoteRepositoryPort.updateClinicalNote(archivedClinicalNote);
 
     return { clinicalNote: toClinicalNoteApplicationDto(savedClinicalNote) };
   }

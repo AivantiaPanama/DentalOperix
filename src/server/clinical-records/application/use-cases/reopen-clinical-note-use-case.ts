@@ -13,7 +13,9 @@ export class ReopenClinicalNoteUseCase {
   constructor(private readonly dependencies: ReopenClinicalNoteUseCaseDependencies) {}
 
   async execute(command: ReopenClinicalNoteCommand): Promise<ReopenClinicalNoteResult> {
-    const clinicalNote = await this.dependencies.clinicalNoteRepositoryPort.findClinicalNoteById(command.clinicalNoteId);
+    const clinicalNote = await this.dependencies.clinicalNoteRepositoryPort.findClinicalNoteById(
+      command.clinicalNoteId,
+    );
     if (!clinicalNote || (command.patientId && clinicalNote.patientId !== command.patientId)) {
       throw new ClinicalNoteNotFoundError(command.clinicalNoteId);
     }
@@ -23,7 +25,8 @@ export class ReopenClinicalNoteUseCase {
       { healthcareProfessionalId: command.healthcareProfessionalId, reason: command.reason },
       { now: command.now },
     );
-    const savedClinicalNote = await this.dependencies.clinicalNoteRepositoryPort.updateClinicalNote(reopenedClinicalNote);
+    const savedClinicalNote =
+      await this.dependencies.clinicalNoteRepositoryPort.updateClinicalNote(reopenedClinicalNote);
 
     return { clinicalNote: toClinicalNoteApplicationDto(savedClinicalNote) };
   }

@@ -7,10 +7,15 @@ function requireNonBlank(value: string | undefined, field: string): string {
   return normalized;
 }
 
-export function createClinicalRecordIdValue(value: string | undefined, fallback: string): ClinicalRecordId {
+export function createClinicalRecordIdValue(
+  value: string | undefined,
+  fallback: string,
+): ClinicalRecordId {
   return requireNonBlank(value ?? fallback, "clinicalRecordId");
 }
 
-export function createClinicalRecordPatientIdValue(value: string | undefined): ClinicalRecordPatientId {
+export function createClinicalRecordPatientIdValue(
+  value: string | undefined,
+): ClinicalRecordPatientId {
   return requireNonBlank(value, "patientId");
 }

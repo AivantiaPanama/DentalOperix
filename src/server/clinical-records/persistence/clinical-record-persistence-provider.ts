@@ -6,7 +6,8 @@ import {
 } from "./relational-clinical-record-persistence-adapter";
 import { RelationalClinicalNoteRepositoryAdapter } from "./relational-clinical-note-repository-adapter";
 
-export const CLINICAL_RECORD_PERSISTENCE_PROVIDER_VERSION = "75.0-WP-02-I1-M4-CLINICAL-RECORD-PERSISTENCE-PROVIDER" as const;
+export const CLINICAL_RECORD_PERSISTENCE_PROVIDER_VERSION =
+  "75.0-WP-02-I1-M4-CLINICAL-RECORD-PERSISTENCE-PROVIDER" as const;
 
 export type ClinicalRecordPersistenceProviderOptions = {
   clientFactory?: ClinicalRecordPersistenceClientFactory;

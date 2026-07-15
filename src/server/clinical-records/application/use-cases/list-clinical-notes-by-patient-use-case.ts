@@ -10,8 +10,13 @@ export type ListClinicalNotesByPatientUseCaseDependencies = {
 export class ListClinicalNotesByPatientUseCase {
   constructor(private readonly dependencies: ListClinicalNotesByPatientUseCaseDependencies) {}
 
-  async execute(command: ListClinicalNotesByPatientCommand): Promise<ListClinicalNotesByPatientResult> {
-    const clinicalNotes = await this.dependencies.clinicalNoteRepositoryPort.findClinicalNotesByPatientId(command.patientId);
+  async execute(
+    command: ListClinicalNotesByPatientCommand,
+  ): Promise<ListClinicalNotesByPatientResult> {
+    const clinicalNotes =
+      await this.dependencies.clinicalNoteRepositoryPort.findClinicalNotesByPatientId(
+        command.patientId,
+      );
 
     return { clinicalNotes: clinicalNotes.map(toClinicalNoteApplicationDto) };
   }

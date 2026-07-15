@@ -1,6 +1,11 @@
 import { createClinicalRecordAggregate } from "../domain/clinical-record.entity";
 import type { ClinicalRecordPersistencePort } from "../domain/clinical-record-persistence-port";
-import type { ClinicalRecord, ClinicalRecordId, ClinicalRecordPatientId, CreateClinicalRecordInput } from "../domain/clinical-record.types";
+import type {
+  ClinicalRecord,
+  ClinicalRecordId,
+  ClinicalRecordPatientId,
+  CreateClinicalRecordInput,
+} from "../domain/clinical-record.types";
 import {
   RELATIONAL_CLINICAL_RECORD_EVENTS_TABLE_NAME,
   RELATIONAL_CLINICAL_RECORDS_TABLE_NAME,
@@ -13,15 +18,26 @@ import {
   type RelationalClinicalRecordRow,
 } from "./clinical-record-persistence-mappers";
 
-export const RELATIONAL_CLINICAL_RECORD_PERSISTENCE_ADAPTER_VERSION = "75.0-WP-01-RELATIONAL-CLINICAL-RECORD-PERSISTENCE-ADAPTER" as const;
+export const RELATIONAL_CLINICAL_RECORD_PERSISTENCE_ADAPTER_VERSION =
+  "75.0-WP-01-RELATIONAL-CLINICAL-RECORD-PERSISTENCE-ADAPTER" as const;
 
 export type ClinicalRecordPersistenceQueryClient = {
-  query<T = Record<string, unknown>>(text: string, values?: unknown[]): Promise<{ rows: T[]; rowCount: number | null }>;
+  query<T = Record<string, unknown>>(
+    text: string,
+    values?: unknown[],
+  ): Promise<{ rows: T[]; rowCount: number | null }>;
 };
 
-type PgClient = ClinicalRecordPersistenceQueryClient & { connect(): Promise<void>; end(): Promise<void> };
-type PgClientConstructor = new (config: { connectionString: string; ssl?: { rejectUnauthorized: boolean } }) => PgClient;
-export type ClinicalRecordPersistenceClientFactory = () => Promise<ClinicalRecordPersistenceQueryClient>;
+type PgClient = ClinicalRecordPersistenceQueryClient & {
+  connect(): Promise<void>;
+  end(): Promise<void>;
+};
+type PgClientConstructor = new (config: {
+  connectionString: string;
+  ssl?: { rejectUnauthorized: boolean };
+}) => PgClient;
+export type ClinicalRecordPersistenceClientFactory =
+  () => Promise<ClinicalRecordPersistenceQueryClient>;
 
 export class ClinicalRecordPersistenceNotFoundError extends Error {
   constructor(clinicalRecordId: ClinicalRecordId) {
@@ -36,17 +52,24 @@ function getDatabaseUrl(): string | undefined {
 
 export async function createDefaultClinicalRecordPersistenceClient(): Promise<PgClient> {
   const databaseUrl = getDatabaseUrl();
-  if (!databaseUrl) throw new Error("Clinical record persistence requires DATABASE_URL or POSTGRES_URL.");
+  if (!databaseUrl)
+    throw new Error("Clinical record persistence requires DATABASE_URL or POSTGRES_URL.");
   const pgModule = (await import("pg")) as unknown as { Client: PgClientConstructor };
-  const client = new pgModule.Client({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false } });
+  const client = new pgModule.Client({
+    connectionString: databaseUrl,
+    ssl: { rejectUnauthorized: false },
+  });
   await client.connect();
   return client;
 }
 
-const CLINICAL_RECORD_COLUMNS = "id, patient_id, status, created_by_user_id, created_by_role, created_via, created_at, updated_at";
+const CLINICAL_RECORD_COLUMNS =
+  "id, patient_id, status, created_by_user_id, created_by_role, created_via, created_at, updated_at";
 
 export class RelationalClinicalRecordPersistenceAdapter implements ClinicalRecordPersistencePort {
-  constructor(private readonly clientFactory: ClinicalRecordPersistenceClientFactory = createDefaultClinicalRecordPersistenceClient) {}
+  constructor(
+    private readonly clientFactory: ClinicalRecordPersistenceClientFactory = createDefaultClinicalRecordPersistenceClient,
+  ) {}
 
   async createClinicalRecord(input: CreateClinicalRecordInput): Promise<ClinicalRecord> {
     const record = createClinicalRecordAggregate(input);
@@ -80,7 +103,9 @@ export class RelationalClinicalRecordPersistenceAdapter implements ClinicalRecor
     return this.loadClinicalRecordGraph(client, "id", id);
   }
 
-  async findClinicalRecordByPatientId(patientId: ClinicalRecordPatientId): Promise<ClinicalRecord | null> {
+  async findClinicalRecordByPatientId(
+    patientId: ClinicalRecordPatientId,
+  ): Promise<ClinicalRecord | null> {
     const client = await this.clientFactory();
     return this.loadClinicalRecordGraph(client, "patient_id", patientId);
   }

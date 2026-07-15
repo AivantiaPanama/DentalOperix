@@ -1,5 +1,14 @@
 import { useMemo, useState } from "react";
-import { Archive, CheckCircle2, FileText, Loader2, RefreshCcw, Save, Search, ShieldCheck } from "lucide-react";
+import {
+  Archive,
+  CheckCircle2,
+  FileText,
+  Loader2,
+  RefreshCcw,
+  Save,
+  Search,
+  ShieldCheck,
+} from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -113,7 +122,8 @@ export function ClinicalNotesWorkspace() {
         const nextPatientId = value.trim();
         const currentClinicalRecordId = current.clinicalRecordId.trim();
         const shouldAutoSyncClinicalRecord =
-          !currentClinicalRecordId || currentClinicalRecordId === getClinicalRecordIdForPatient(current.patientId);
+          !currentClinicalRecordId ||
+          currentClinicalRecordId === getClinicalRecordIdForPatient(current.patientId);
 
         return {
           ...current,
@@ -151,11 +161,19 @@ export function ClinicalNotesWorkspace() {
       const nextNotes = payload.clinicalNotes ?? [];
       setNotes(nextNotes);
       setSelectedNoteId(nextNotes[0]?.id ?? null);
-      setNotice(nextNotes.length ? "Notas clínicas cargadas." : "No hay notas clínicas registradas para este paciente.");
+      setNotice(
+        nextNotes.length
+          ? "Notas clínicas cargadas."
+          : "No hay notas clínicas registradas para este paciente.",
+      );
     } catch (loadError) {
       setNotes([]);
       setSelectedNoteId(null);
-      setError(loadError instanceof Error ? loadError.message : "No se pudieron cargar las notas clínicas.");
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "No se pudieron cargar las notas clínicas.",
+      );
     } finally {
       setLoading(false);
     }
@@ -198,7 +216,11 @@ export function ClinicalNotesWorkspace() {
       setForm((current) => ({ ...current, title: "", narrative: "", appointmentId: "" }));
       setNotice("Nota clínica registrada correctamente.");
     } catch (registerError) {
-      setError(registerError instanceof Error ? registerError.message : "No se pudo registrar la nota clínica.");
+      setError(
+        registerError instanceof Error
+          ? registerError.message
+          : "No se pudo registrar la nota clínica.",
+      );
     } finally {
       setSaving(false);
     }
@@ -234,17 +256,27 @@ export function ClinicalNotesWorkspace() {
         throw new Error(payload.error ?? "No se pudo actualizar la nota clínica.");
       }
 
-      setNotes((current) => current.map((currentNote) => (currentNote.id === payload.clinicalNote?.id ? payload.clinicalNote : currentNote)));
+      setNotes((current) =>
+        current.map((currentNote) =>
+          currentNote.id === payload.clinicalNote?.id ? payload.clinicalNote : currentNote,
+        ),
+      );
       setSelectedNoteId(payload.clinicalNote.id);
       setNotice(successMessage);
     } catch (transitionError) {
-      setError(transitionError instanceof Error ? transitionError.message : "No se pudo actualizar la nota clínica.");
+      setError(
+        transitionError instanceof Error
+          ? transitionError.message
+          : "No se pudo actualizar la nota clínica.",
+      );
     } finally {
       setTransitioningId(null);
     }
   };
 
-  const canSubmit = Boolean(patientId && form.clinicalRecordId.trim() && healthcareProfessionalId && form.narrative.trim());
+  const canSubmit = Boolean(
+    patientId && form.clinicalRecordId.trim() && healthcareProfessionalId && form.narrative.trim(),
+  );
 
   return (
     <div className="space-y-6">
@@ -255,7 +287,8 @@ export function ClinicalNotesWorkspace() {
             Clinical Notes
           </CardTitle>
           <CardDescription>
-            Registro clínico gobernado por Clinical Records. La interfaz consume contratos API y no contiene reglas de negocio clínicas.
+            Registro clínico gobernado por Clinical Records. La interfaz consume contratos API y no
+            contiene reglas de negocio clínicas.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -279,7 +312,9 @@ export function ClinicalNotesWorkspace() {
         <Card>
           <CardHeader>
             <CardTitle>Registrar nota clínica</CardTitle>
-            <CardDescription>Capture la narrativa clínica usando los identificadores certificados del dominio.</CardDescription>
+            <CardDescription>
+              Capture la narrativa clínica usando los identificadores certificados del dominio.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2">
@@ -345,11 +380,24 @@ export function ClinicalNotesWorkspace() {
 
             <div className="flex flex-wrap gap-3">
               <Button type="button" onClick={registerClinicalNote} disabled={!canSubmit || saving}>
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                {saving ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4" />
+                )}
                 Registrar nota
               </Button>
-              <Button type="button" variant="outline" onClick={loadClinicalNotes} disabled={!patientId || loading}>
-                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={loadClinicalNotes}
+                disabled={!patientId || loading}
+              >
+                {loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Search className="h-4 w-4" />
+                )}
                 Consultar historial
               </Button>
             </div>
@@ -359,7 +407,9 @@ export function ClinicalNotesWorkspace() {
         <Card>
           <CardHeader>
             <CardTitle>Historial clínico</CardTitle>
-            <CardDescription>Notas clínicas del paciente seleccionado, ordenadas por carga de la API.</CardDescription>
+            <CardDescription>
+              Notas clínicas del paciente seleccionado, ordenadas por carga de la API.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {notes.length === 0 ? (
@@ -375,19 +425,25 @@ export function ClinicalNotesWorkspace() {
                       type="button"
                       onClick={() => setSelectedNoteId(note.id)}
                       className={`w-full rounded-2xl border p-4 text-left transition hover:border-primary ${
-                        selectedNote?.id === note.id ? "border-primary bg-primary/5" : "border-border bg-white"
+                        selectedNote?.id === note.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border bg-white"
                       }`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <p className="font-semibold text-deep">{note.title || "Nota clínica"}</p>
-                          <p className="mt-1 text-xs text-muted-foreground">{formatDate(note.updatedAt)}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            {formatDate(note.updatedAt)}
+                          </p>
                         </div>
                         <Badge variant="outline" className={statusClass(note.status)}>
                           {statusLabel(note.status)}
                         </Badge>
                       </div>
-                      <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{note.narrative}</p>
+                      <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">
+                        {note.narrative}
+                      </p>
                     </button>
                   ))}
                 </div>
@@ -397,9 +453,15 @@ export function ClinicalNotesWorkspace() {
                     <div className="space-y-5">
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
-                          <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">Clinical Note</p>
-                          <h3 className="mt-2 text-2xl font-bold text-deep">{selectedNote.title || "Nota clínica"}</h3>
-                          <p className="mt-1 text-sm text-muted-foreground">ID: {selectedNote.id}</p>
+                          <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+                            Clinical Note
+                          </p>
+                          <h3 className="mt-2 text-2xl font-bold text-deep">
+                            {selectedNote.title || "Nota clínica"}
+                          </h3>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            ID: {selectedNote.id}
+                          </p>
                         </div>
                         <Badge variant="outline" className={statusClass(selectedNote.status)}>
                           {statusLabel(selectedNote.status)}
@@ -408,22 +470,28 @@ export function ClinicalNotesWorkspace() {
 
                       <div className="grid gap-3 text-sm text-muted-foreground md:grid-cols-2">
                         <div>
-                          <span className="font-semibold text-deep">Paciente:</span> {selectedNote.patientId}
+                          <span className="font-semibold text-deep">Paciente:</span>{" "}
+                          {selectedNote.patientId}
                         </div>
                         <div>
-                          <span className="font-semibold text-deep">Expediente:</span> {selectedNote.clinicalRecordId}
+                          <span className="font-semibold text-deep">Expediente:</span>{" "}
+                          {selectedNote.clinicalRecordId}
                         </div>
                         <div>
-                          <span className="font-semibold text-deep">Creada:</span> {formatDate(selectedNote.createdAt)}
+                          <span className="font-semibold text-deep">Creada:</span>{" "}
+                          {formatDate(selectedNote.createdAt)}
                         </div>
                         <div>
-                          <span className="font-semibold text-deep">Actualizada:</span> {formatDate(selectedNote.updatedAt)}
+                          <span className="font-semibold text-deep">Actualizada:</span>{" "}
+                          {formatDate(selectedNote.updatedAt)}
                         </div>
                         <div>
-                          <span className="font-semibold text-deep">Autor:</span> {selectedNote.createdByHealthcareProfessionalId}
+                          <span className="font-semibold text-deep">Autor:</span>{" "}
+                          {selectedNote.createdByHealthcareProfessionalId}
                         </div>
                         <div>
-                          <span className="font-semibold text-deep">Cita:</span> {selectedNote.appointmentId ?? "No asociada"}
+                          <span className="font-semibold text-deep">Cita:</span>{" "}
+                          {selectedNote.appointmentId ?? "No asociada"}
                         </div>
                       </div>
 
@@ -439,8 +507,18 @@ export function ClinicalNotesWorkspace() {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => runClinicalNoteTransition(selectedNote, "complete", "Nota clínica completada.")}
-                          disabled={selectedNote.status === "completed" || selectedNote.status === "archived" || Boolean(transitioningId)}
+                          onClick={() =>
+                            runClinicalNoteTransition(
+                              selectedNote,
+                              "complete",
+                              "Nota clínica completada.",
+                            )
+                          }
+                          disabled={
+                            selectedNote.status === "completed" ||
+                            selectedNote.status === "archived" ||
+                            Boolean(transitioningId)
+                          }
                         >
                           {transitioningId === `${selectedNote.id}:complete` ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -452,8 +530,18 @@ export function ClinicalNotesWorkspace() {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => runClinicalNoteTransition(selectedNote, "reopen", "Nota clínica reabierta.")}
-                          disabled={selectedNote.status === "draft" || selectedNote.status === "archived" || Boolean(transitioningId)}
+                          onClick={() =>
+                            runClinicalNoteTransition(
+                              selectedNote,
+                              "reopen",
+                              "Nota clínica reabierta.",
+                            )
+                          }
+                          disabled={
+                            selectedNote.status === "draft" ||
+                            selectedNote.status === "archived" ||
+                            Boolean(transitioningId)
+                          }
                         >
                           {transitioningId === `${selectedNote.id}:reopen` ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -465,7 +553,13 @@ export function ClinicalNotesWorkspace() {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => runClinicalNoteTransition(selectedNote, "archive", "Nota clínica archivada.")}
+                          onClick={() =>
+                            runClinicalNoteTransition(
+                              selectedNote,
+                              "archive",
+                              "Nota clínica archivada.",
+                            )
+                          }
                           disabled={selectedNote.status === "archived" || Boolean(transitioningId)}
                         >
                           {transitioningId === `${selectedNote.id}:archive` ? (

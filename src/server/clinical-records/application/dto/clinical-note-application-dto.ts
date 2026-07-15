@@ -1,5 +1,10 @@
 import type { ClinicalRecordId, ClinicalRecordPatientId } from "../../domain/clinical-record.types";
-import type { ClinicalNote, ClinicalNoteId, ClinicalNoteStatus, HealthcareProfessionalId } from "../../domain/clinical-note.types";
+import type {
+  ClinicalNote,
+  ClinicalNoteId,
+  ClinicalNoteStatus,
+  HealthcareProfessionalId,
+} from "../../domain/clinical-note.types";
 
 export type ClinicalNoteApplicationDto = {
   id: ClinicalNoteId;

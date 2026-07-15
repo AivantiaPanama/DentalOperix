@@ -14,7 +14,8 @@ export class RegisterClinicalNoteUseCase {
   async execute(command: RegisterClinicalNoteCommand): Promise<RegisterClinicalNoteResult> {
     const { now, ...input } = command;
     const clinicalNote = ClinicalNoteDomainService.registerClinicalNote(input, { now });
-    const savedClinicalNote = await this.dependencies.clinicalNoteRepositoryPort.saveClinicalNote(clinicalNote);
+    const savedClinicalNote =
+      await this.dependencies.clinicalNoteRepositoryPort.saveClinicalNote(clinicalNote);
 
     return { clinicalNote: toClinicalNoteApplicationDto(savedClinicalNote) };
   }

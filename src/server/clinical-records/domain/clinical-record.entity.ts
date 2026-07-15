@@ -1,5 +1,12 @@
-import type { ClinicalRecordAggregateRoot, CreateClinicalRecordInput, CreateClinicalRecordOptions } from "./clinical-record.types";
-import { createClinicalRecordIdValue, createClinicalRecordPatientIdValue } from "./clinical-record.value-objects";
+import type {
+  ClinicalRecordAggregateRoot,
+  CreateClinicalRecordInput,
+  CreateClinicalRecordOptions,
+} from "./clinical-record.types";
+import {
+  createClinicalRecordIdValue,
+  createClinicalRecordPatientIdValue,
+} from "./clinical-record.value-objects";
 import { validateCreateClinicalRecordInput } from "./clinical-record.validation";
 
 function resolveOperationTimestamp(now?: string): string {
@@ -10,10 +17,16 @@ function createEventId(recordId: string, eventName: string): string {
   return `${recordId}_${eventName}`;
 }
 
-export function createClinicalRecordAggregate(input: CreateClinicalRecordInput, options: CreateClinicalRecordOptions = {}): ClinicalRecordAggregateRoot {
+export function createClinicalRecordAggregate(
+  input: CreateClinicalRecordInput,
+  options: CreateClinicalRecordOptions = {},
+): ClinicalRecordAggregateRoot {
   const validated = validateCreateClinicalRecordInput(input);
   const now = resolveOperationTimestamp(options.now);
-  const id = createClinicalRecordIdValue(validated.id ?? options.id, `clinical_record_${Date.now()}`);
+  const id = createClinicalRecordIdValue(
+    validated.id ?? options.id,
+    `clinical_record_${Date.now()}`,
+  );
   const patientId = createClinicalRecordPatientIdValue(validated.patientId);
   const status = validated.status ?? "draft";
   const actor = validated.actor;

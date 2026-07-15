@@ -72,7 +72,9 @@ export class ClinicalNoteApplicationService {
     return this.getUseCase.execute(command);
   }
 
-  listClinicalNotesByPatient(command: ListClinicalNotesByPatientCommand): Promise<ListClinicalNotesByPatientResult> {
+  listClinicalNotesByPatient(
+    command: ListClinicalNotesByPatientCommand,
+  ): Promise<ListClinicalNotesByPatientResult> {
     return this.listByPatientUseCase.execute(command);
   }
 }

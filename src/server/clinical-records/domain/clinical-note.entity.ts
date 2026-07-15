@@ -1,5 +1,13 @@
-import type { ClinicalNote, CreateClinicalNoteInput, CreateClinicalNoteOptions, UpdateClinicalNoteInput } from "./clinical-note.types";
-import { createClinicalRecordIdValue, createClinicalRecordPatientIdValue } from "./clinical-record.value-objects";
+import type {
+  ClinicalNote,
+  CreateClinicalNoteInput,
+  CreateClinicalNoteOptions,
+  UpdateClinicalNoteInput,
+} from "./clinical-note.types";
+import {
+  createClinicalRecordIdValue,
+  createClinicalRecordPatientIdValue,
+} from "./clinical-record.value-objects";
 import {
   createClinicalNarrativeValue,
   createClinicalNoteIdValue,
@@ -12,12 +20,17 @@ function resolveOperationTimestamp(now?: string): string {
   return now ?? new Date().toISOString();
 }
 
-export function createClinicalNoteEntity(input: CreateClinicalNoteInput, options: CreateClinicalNoteOptions = {}): ClinicalNote {
+export function createClinicalNoteEntity(
+  input: CreateClinicalNoteInput,
+  options: CreateClinicalNoteOptions = {},
+): ClinicalNote {
   const now = resolveOperationTimestamp(options.now);
   const id = createClinicalNoteIdValue(input.id ?? options.id, `clinical_note_${Date.now()}`);
   const clinicalRecordId = createClinicalRecordIdValue(input.clinicalRecordId, "");
   const patientId = createClinicalRecordPatientIdValue(input.patientId);
-  const healthcareProfessionalId = createHealthcareProfessionalIdValue(input.healthcareProfessionalId);
+  const healthcareProfessionalId = createHealthcareProfessionalIdValue(
+    input.healthcareProfessionalId,
+  );
 
   return {
     id,
@@ -36,10 +49,18 @@ export function createClinicalNoteEntity(input: CreateClinicalNoteInput, options
   };
 }
 
-export function updateClinicalNoteEntity(note: ClinicalNote, input: UpdateClinicalNoteInput, now = new Date().toISOString()): ClinicalNote {
-  const healthcareProfessionalId = createHealthcareProfessionalIdValue(input.healthcareProfessionalId);
-  const nextNarrative = input.narrative === undefined ? note.narrative : createClinicalNarrativeValue(input.narrative);
-  const nextTitle = input.title === undefined ? note.title : createClinicalNoteTitleValue(input.title);
+export function updateClinicalNoteEntity(
+  note: ClinicalNote,
+  input: UpdateClinicalNoteInput,
+  now = new Date().toISOString(),
+): ClinicalNote {
+  const healthcareProfessionalId = createHealthcareProfessionalIdValue(
+    input.healthcareProfessionalId,
+  );
+  const nextNarrative =
+    input.narrative === undefined ? note.narrative : createClinicalNarrativeValue(input.narrative);
+  const nextTitle =
+    input.title === undefined ? note.title : createClinicalNoteTitleValue(input.title);
 
   return {
     ...note,
@@ -54,16 +75,22 @@ export function updateClinicalNoteEntity(note: ClinicalNote, input: UpdateClinic
   };
 }
 
-export function archiveClinicalNoteEntity(note: ClinicalNote, healthcareProfessionalId: string, now = new Date().toISOString()): ClinicalNote {
+export function archiveClinicalNoteEntity(
+  note: ClinicalNote,
+  healthcareProfessionalId: string,
+  now = new Date().toISOString(),
+): ClinicalNote {
   return {
     ...note,
     status: "archived",
     audit: {
       ...note.audit,
       updatedAt: now,
-      updatedByHealthcareProfessionalId: createHealthcareProfessionalIdValue(healthcareProfessionalId),
+      updatedByHealthcareProfessionalId:
+        createHealthcareProfessionalIdValue(healthcareProfessionalId),
       archivedAt: now,
-      archivedByHealthcareProfessionalId: createHealthcareProfessionalIdValue(healthcareProfessionalId),
+      archivedByHealthcareProfessionalId:
+        createHealthcareProfessionalIdValue(healthcareProfessionalId),
     },
   };
 }

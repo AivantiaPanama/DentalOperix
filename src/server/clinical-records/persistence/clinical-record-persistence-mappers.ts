@@ -36,7 +36,9 @@ export function mapClinicalRecordToRelationalValues(record: ClinicalRecord): unk
   ];
 }
 
-export function mapClinicalRecordEventToRelationalValues(event: ClinicalRecordDomainEvent): unknown[] {
+export function mapClinicalRecordEventToRelationalValues(
+  event: ClinicalRecordDomainEvent,
+): unknown[] {
   return [event.id, event.clinicalRecordId, event.patientId, event.type, event.occurredAt];
 }
 

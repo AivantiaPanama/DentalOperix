@@ -1,4 +1,7 @@
-import { createClinicalNoteApplicationService, type ClinicalNoteApplicationService } from "../application";
+import {
+  createClinicalNoteApplicationService,
+  type ClinicalNoteApplicationService,
+} from "../application";
 import { ClinicalNoteNotFoundError } from "../domain/clinical-record.errors";
 import { createClinicalNoteRepositoryPort } from "../persistence";
 import {
@@ -9,7 +12,8 @@ import {
   updateClinicalNoteApiSchema,
 } from "./clinical-note-api-contracts";
 
-export const CLINICAL_NOTE_API_CONTROLLER_VERSION = "75.0-WP-02-I1-M5-CLINICAL-NOTE-API-CONTROLLER" as const;
+export const CLINICAL_NOTE_API_CONTROLLER_VERSION =
+  "75.0-WP-02-I1-M5-CLINICAL-NOTE-API-CONTROLLER" as const;
 
 export type ClinicalNoteApiControllerDependencies = {
   clinicalNoteApplicationService: ClinicalNoteApplicationService;
@@ -20,7 +24,9 @@ export class ClinicalNoteApiController {
 
   async registerClinicalNote(request: Request, patientId: string): Promise<Response> {
     try {
-      const payload = registerClinicalNoteApiSchema.parse(await readClinicalNoteJsonPayload(request));
+      const payload = registerClinicalNoteApiSchema.parse(
+        await readClinicalNoteJsonPayload(request),
+      );
       const result = await this.dependencies.clinicalNoteApplicationService.registerClinicalNote({
         ...payload,
         patientId,
@@ -29,29 +35,52 @@ export class ClinicalNoteApiController {
 
       return clinicalNoteJsonResponse({ success: true, clinicalNote: result.clinicalNote }, 201);
     } catch (error) {
-      return this.toErrorResponse("Failed to register clinical note through Clinical Records Application Layer.", error);
+      return this.toErrorResponse(
+        "Failed to register clinical note through Clinical Records Application Layer.",
+        error,
+      );
     }
   }
 
   async listClinicalNotesByPatient(_request: Request, patientId: string): Promise<Response> {
     try {
-      const result = await this.dependencies.clinicalNoteApplicationService.listClinicalNotesByPatient({ patientId });
+      const result =
+        await this.dependencies.clinicalNoteApplicationService.listClinicalNotesByPatient({
+          patientId,
+        });
       return clinicalNoteJsonResponse({ success: true, clinicalNotes: result.clinicalNotes });
     } catch (error) {
-      return this.toErrorResponse("Failed to list clinical notes through Clinical Records Application Layer.", error);
+      return this.toErrorResponse(
+        "Failed to list clinical notes through Clinical Records Application Layer.",
+        error,
+      );
     }
   }
 
-  async getClinicalNote(_request: Request, patientId: string, clinicalNoteId: string): Promise<Response> {
+  async getClinicalNote(
+    _request: Request,
+    patientId: string,
+    clinicalNoteId: string,
+  ): Promise<Response> {
     try {
-      const result = await this.dependencies.clinicalNoteApplicationService.getClinicalNote({ clinicalNoteId, patientId });
+      const result = await this.dependencies.clinicalNoteApplicationService.getClinicalNote({
+        clinicalNoteId,
+        patientId,
+      });
       return clinicalNoteJsonResponse({ success: true, clinicalNote: result.clinicalNote });
     } catch (error) {
-      return this.toErrorResponse("Failed to get clinical note through Clinical Records Application Layer.", error);
+      return this.toErrorResponse(
+        "Failed to get clinical note through Clinical Records Application Layer.",
+        error,
+      );
     }
   }
 
-  async updateClinicalNote(request: Request, patientId: string, clinicalNoteId: string): Promise<Response> {
+  async updateClinicalNote(
+    request: Request,
+    patientId: string,
+    clinicalNoteId: string,
+  ): Promise<Response> {
     try {
       const payload = updateClinicalNoteApiSchema.parse(await readClinicalNoteJsonPayload(request));
 
@@ -98,7 +127,10 @@ export class ClinicalNoteApiController {
       });
       return clinicalNoteJsonResponse({ success: true, clinicalNote: result.clinicalNote });
     } catch (error) {
-      return this.toErrorResponse("Failed to update clinical note through Clinical Records Application Layer.", error);
+      return this.toErrorResponse(
+        "Failed to update clinical note through Clinical Records Application Layer.",
+        error,
+      );
     }
   }
 

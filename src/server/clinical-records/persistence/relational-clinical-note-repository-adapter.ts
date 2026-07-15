@@ -38,7 +38,9 @@ const CLINICAL_NOTE_COLUMNS = [
 ].join(", ");
 
 export class RelationalClinicalNoteRepositoryAdapter implements ClinicalNoteRepositoryPort {
-  constructor(private readonly clientFactory: ClinicalRecordPersistenceClientFactory = createDefaultClinicalRecordPersistenceClient) {}
+  constructor(
+    private readonly clientFactory: ClinicalRecordPersistenceClientFactory = createDefaultClinicalRecordPersistenceClient,
+  ) {}
 
   async saveClinicalNote(note: ClinicalNote): Promise<ClinicalNote> {
     const client = await this.clientFactory();
@@ -59,7 +61,9 @@ export class RelationalClinicalNoteRepositoryAdapter implements ClinicalNoteRepo
     return this.loadClinicalNote(client, id);
   }
 
-  async findClinicalNotesByClinicalRecordId(clinicalRecordId: ClinicalRecordId): Promise<ClinicalNote[]> {
+  async findClinicalNotesByClinicalRecordId(
+    clinicalRecordId: ClinicalRecordId,
+  ): Promise<ClinicalNote[]> {
     const client = await this.clientFactory();
     return this.loadClinicalNotesByColumn(client, "clinical_record_id", clinicalRecordId);
   }
@@ -109,7 +113,10 @@ export class RelationalClinicalNoteRepositoryAdapter implements ClinicalNoteRepo
     return result.rows.map(mapRelationalClinicalNoteToDomain);
   }
 
-  private async loadClinicalNote(client: ClinicalRecordPersistenceQueryClient, id: ClinicalNoteId): Promise<ClinicalNote | null> {
+  private async loadClinicalNote(
+    client: ClinicalRecordPersistenceQueryClient,
+    id: ClinicalNoteId,
+  ): Promise<ClinicalNote | null> {
     const result = await client.query<RelationalClinicalNoteRow>(
       `SELECT ${CLINICAL_NOTE_COLUMNS}
          FROM ${RELATIONAL_CLINICAL_NOTES_TABLE_NAME}

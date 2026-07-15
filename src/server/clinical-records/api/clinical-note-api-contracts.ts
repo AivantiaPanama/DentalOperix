@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { ClinicalRecordValidationError } from "../domain/clinical-record.errors";
 
-export const CLINICAL_NOTE_API_CONTRACT_VERSION = "75.0-WP-02-I1-M5-CLINICAL-NOTE-API-CONTRACTS" as const;
+export const CLINICAL_NOTE_API_CONTRACT_VERSION =
+  "75.0-WP-02-I1-M5-CLINICAL-NOTE-API-CONTRACTS" as const;
 
 const optionalTrimmedString = z.string().trim().min(1).optional();
 
@@ -17,34 +18,33 @@ export const registerClinicalNoteApiSchema = z
   })
   .strict();
 
-export const updateClinicalNoteApiSchema = z
-  .discriminatedUnion("operation", [
-    z.object({
-      operation: z.literal("complete"),
-      healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
-      reason: optionalTrimmedString,
-      now: optionalTrimmedString,
-    }),
-    z.object({
-      operation: z.literal("reopen"),
-      healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
-      reason: optionalTrimmedString,
-      now: optionalTrimmedString,
-    }),
-    z.object({
-      operation: z.literal("amend"),
-      healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
-      title: optionalTrimmedString,
-      narrative: z.string().trim().min(1, "Clinical note narrative cannot be empty.").optional(),
-      now: optionalTrimmedString,
-    }),
-    z.object({
-      operation: z.literal("archive"),
-      healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
-      reason: optionalTrimmedString,
-      now: optionalTrimmedString,
-    }),
-  ]);
+export const updateClinicalNoteApiSchema = z.discriminatedUnion("operation", [
+  z.object({
+    operation: z.literal("complete"),
+    healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
+    reason: optionalTrimmedString,
+    now: optionalTrimmedString,
+  }),
+  z.object({
+    operation: z.literal("reopen"),
+    healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
+    reason: optionalTrimmedString,
+    now: optionalTrimmedString,
+  }),
+  z.object({
+    operation: z.literal("amend"),
+    healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
+    title: optionalTrimmedString,
+    narrative: z.string().trim().min(1, "Clinical note narrative cannot be empty.").optional(),
+    now: optionalTrimmedString,
+  }),
+  z.object({
+    operation: z.literal("archive"),
+    healthcareProfessionalId: z.string().trim().min(1, "healthcareProfessionalId is required."),
+    reason: optionalTrimmedString,
+    now: optionalTrimmedString,
+  }),
+]);
 
 export type RegisterClinicalNoteApiPayload = z.infer<typeof registerClinicalNoteApiSchema>;
 export type UpdateClinicalNoteApiPayload = z.infer<typeof updateClinicalNoteApiSchema>;
@@ -69,7 +69,10 @@ export function parseClinicalNoteApiError(error: unknown): { status: number; mes
     return { status: 400, message: error.issues.join(" ") };
   }
 
-  return { status: 500, message: error instanceof Error ? error.message : "Unknown clinical note API error." };
+  return {
+    status: 500,
+    message: error instanceof Error ? error.message : "Unknown clinical note API error.",
+  };
 }
 
 export function getClinicalNotePatientIdFromPath(request: Request): string {
