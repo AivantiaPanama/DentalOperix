@@ -99,7 +99,9 @@ export const Route = createFileRoute("/admin/dashboard")({
 
 export function DashboardPage() {
   const [metrics, setMetrics] = useState<CrmDashboardMetrics | null>(null);
-  const [executiveAnalytics, setExecutiveAnalytics] = useState<ExecutiveAnalyticsSnapshot | null>(null);
+  const [executiveAnalytics, setExecutiveAnalytics] = useState<ExecutiveAnalyticsSnapshot | null>(
+    null,
+  );
   const [period, setPeriod] = useState<DashboardPeriod>("all");
   const [loading, setLoading] = useState(true);
   const [reconcilingMetrics, setReconcilingMetrics] = useState(false);
@@ -124,11 +126,17 @@ export function DashboardPage() {
         setReconcilingMetrics(true);
         try {
           const reconciledMetrics = await fetchRevenueDashboardMetrics(selectedPeriod);
-          if (hasDashboardLeads(reconciledMetrics) || !shouldReconcileDashboardMetrics(reconciledMetrics)) {
+          if (
+            hasDashboardLeads(reconciledMetrics) ||
+            !shouldReconcileDashboardMetrics(reconciledMetrics)
+          ) {
             nextMetrics = reconciledMetrics;
           }
         } catch (reconciliationError) {
-          console.warn("Dashboard metrics reconciliation failed; keeping initial snapshot.", reconciliationError);
+          console.warn(
+            "Dashboard metrics reconciliation failed; keeping initial snapshot.",
+            reconciliationError,
+          );
         }
       }
 
@@ -146,7 +154,6 @@ export function DashboardPage() {
       }
     }
   };
-
 
   const loadExecutiveAnalytics = (selectedPeriod: string) => {
     setExecutiveLoading(true);
@@ -311,7 +318,9 @@ export function DashboardPage() {
 
           {loading ? (
             <div className="rounded-3xl border border-border bg-white p-10 text-center text-lg font-medium text-muted-foreground shadow-soft">
-              {reconcilingMetrics ? "Validando métricas reales del CRM..." : "Cargando métricas de Revenue Intelligence..."}
+              {reconcilingMetrics
+                ? "Validando métricas reales del CRM..."
+                : "Cargando métricas de Revenue Intelligence..."}
             </div>
           ) : error ? (
             <div className="rounded-3xl border border-destructive bg-destructive/10 p-10 text-center text-lg font-medium text-destructive shadow-soft">

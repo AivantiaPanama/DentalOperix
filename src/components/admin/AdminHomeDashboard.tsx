@@ -196,7 +196,9 @@ export function AdminHomeDashboard() {
       const failures = [metricsResult, leadsResult, goalsResult, automationResult].filter(
         (result) => result.status === "rejected",
       );
-      setError(failures.length ? "Algunos módulos no pudieron cargar datos en este momento." : null);
+      setError(
+        failures.length ? "Algunos módulos no pudieron cargar datos en este momento." : null,
+      );
     } finally {
       setLoading(false);
     }
@@ -231,7 +233,12 @@ export function AdminHomeDashboard() {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" onClick={() => void loadDashboard()} disabled={loading}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void loadDashboard()}
+            disabled={loading}
+          >
             <RefreshCcw className="mr-2 h-4 w-4" />
             Actualizar
           </Button>
@@ -262,11 +269,15 @@ export function AdminHomeDashboard() {
           <section className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Card className="shadow-soft">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Leads del mes</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Leads del mes
+                </CardTitle>
                 <Users className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-deep">{metrics?.totals.leads ?? state.leads.length}</div>
+                <div className="text-3xl font-bold text-deep">
+                  {metrics?.totals.leads ?? state.leads.length}
+                </div>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Meta mensual: {state.goals.monthlyLeadsGoal} leads
                 </p>
@@ -275,11 +286,15 @@ export function AdminHomeDashboard() {
 
             <Card className="shadow-soft">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Conversión</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Conversión
+                </CardTitle>
                 <Activity className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-deep">{percent(metrics?.conversionRate)}</div>
+                <div className="text-3xl font-bold text-deep">
+                  {percent(metrics?.conversionRate)}
+                </div>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {conversionGoalProgress}% de la meta configurada
                 </p>
@@ -288,7 +303,9 @@ export function AdminHomeDashboard() {
 
             <Card className="shadow-soft">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Pipeline</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Pipeline
+                </CardTitle>
                 <Target className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -303,7 +320,9 @@ export function AdminHomeDashboard() {
 
             <Card className="shadow-soft">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Agenda hoy</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">
+                  Agenda hoy
+                </CardTitle>
                 <CalendarDays className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
@@ -330,16 +349,25 @@ export function AdminHomeDashboard() {
                 {recentLeads.length ? (
                   <div className="divide-y divide-border rounded-2xl border border-border">
                     {recentLeads.map((lead) => (
-                      <div key={lead.id} className="grid gap-3 p-4 md:grid-cols-[1.2fr_1fr_auto] md:items-center">
+                      <div
+                        key={lead.id}
+                        className="grid gap-3 p-4 md:grid-cols-[1.2fr_1fr_auto] md:items-center"
+                      >
                         <div>
                           <p className="font-semibold text-deep">{lead.name}</p>
-                          <p className="text-sm text-muted-foreground">{lead.email} · {lead.phone}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {lead.email} · {lead.phone}
+                          </p>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-deep">{lead.treatment}</p>
-                          <p className="text-xs text-muted-foreground">Preferencia: {formatDate(lead.preferredDate)}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Preferencia: {formatDate(lead.preferredDate)}
+                          </p>
                         </div>
-                        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${statusTone(lead.status)}`}>
+                        <span
+                          className={`rounded-full px-3 py-1 text-xs font-semibold ${statusTone(lead.status)}`}
+                        >
                           {lead.status}
                         </span>
                       </div>
@@ -383,7 +411,9 @@ export function AdminHomeDashboard() {
               <Card className="shadow-soft">
                 <CardHeader>
                   <CardTitle>Módulos administrativos</CardTitle>
-                  <CardDescription>Accesos preparados para operación administrativa.</CardDescription>
+                  <CardDescription>
+                    Accesos preparados para operación administrativa.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {moduleCards.map((item) => {
@@ -415,7 +445,9 @@ export function AdminHomeDashboard() {
             <Card className="shadow-soft lg:col-span-2">
               <CardHeader>
                 <CardTitle>Estado de objetivos</CardTitle>
-                <CardDescription>Lectura rápida de metas configuradas para administración.</CardDescription>
+                <CardDescription>
+                  Lectura rápida de metas configuradas para administración.
+                </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-border p-4">
@@ -424,11 +456,15 @@ export function AdminHomeDashboard() {
                 </div>
                 <div className="rounded-2xl border border-border p-4">
                   <p className="text-sm text-muted-foreground">Conversión objetivo</p>
-                  <p className="mt-1 text-xl font-bold text-deep">{percent(state.goals.conversionGoal)}</p>
+                  <p className="mt-1 text-xl font-bold text-deep">
+                    {percent(state.goals.conversionGoal)}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-border p-4">
                   <p className="text-sm text-muted-foreground">Asistencia objetivo</p>
-                  <p className="mt-1 text-xl font-bold text-deep">{percent(state.goals.attendanceGoal)}</p>
+                  <p className="mt-1 text-xl font-bold text-deep">
+                    {percent(state.goals.attendanceGoal)}
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-border p-4">
                   <p className="text-sm text-muted-foreground">Pipeline objetivo</p>

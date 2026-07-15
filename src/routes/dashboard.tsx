@@ -6,7 +6,10 @@ export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard Resolver — DentalOperix" },
-      { name: "description", content: "Resolver de dashboard protegido por rol para DentalOperix." },
+      {
+        name: "description",
+        content: "Resolver de dashboard protegido por rol para DentalOperix.",
+      },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
@@ -22,7 +25,9 @@ function AccessBlocked() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <section className="max-w-lg rounded-3xl border border-border bg-white p-8 text-center shadow-soft">
-        <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Acceso restringido</p>
+        <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+          Acceso restringido
+        </p>
         <h1 className="mt-3 text-3xl font-bold tracking-tight text-deep">ACCESS BLOCKED</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">
           No fue posible resolver un dashboard autorizado para el rol de la sesión actual.

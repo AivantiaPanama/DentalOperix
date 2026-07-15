@@ -1,6 +1,14 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { CalendarDays, FileText, HeartHandshake, Home, LogIn, ShieldCheck, UserRound } from "lucide-react";
+import {
+  CalendarDays,
+  FileText,
+  HeartHandshake,
+  Home,
+  LogIn,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
 import type { Role } from "@/lib/rbac/roles";
 
 const roleLabels: Record<Role, string> = {
@@ -82,7 +90,9 @@ export function RoleWorkspaceLayout({
         </aside>
 
         <section className="rounded-3xl border border-border bg-white p-8 shadow-soft">
-          <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Dashboard protegido</p>
+          <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+            Dashboard protegido
+          </p>
           <h1 className="mt-3 text-4xl font-bold tracking-tight text-deep">{label}</h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">{roleDescriptions[role]}</p>
           <div className="mt-8">{children}</div>

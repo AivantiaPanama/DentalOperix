@@ -18,7 +18,8 @@ export function RoleDashboardShell({
           <div>
             <h2 className="text-xl font-semibold text-deep">Dashboard en construcción</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              La ruta ya está protegida por rol. Las funciones especializadas se integrarán en la siguiente fase.
+              La ruta ya está protegida por rol. Las funciones especializadas se integrarán en la
+              siguiente fase.
             </p>
           </div>
         )}

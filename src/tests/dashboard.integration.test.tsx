@@ -18,7 +18,6 @@ vi.mock("@/lib/api/revenue-dashboard-metrics", async () => {
   };
 });
 
-
 vi.mock("@/lib/api/executive-analytics", async () => {
   const actual = await vi.importActual<typeof import("@/lib/api/executive-analytics")>(
     "@/lib/api/executive-analytics",
@@ -53,9 +52,8 @@ class ResizeObserverMock {
 
 globalThis.ResizeObserver = ResizeObserverMock as any;
 
-const mockedFetchRevenueDashboardMetrics = fetchRevenueDashboardMetrics as unknown as MockedFunction<
-  typeof fetchRevenueDashboardMetrics
->;
+const mockedFetchRevenueDashboardMetrics =
+  fetchRevenueDashboardMetrics as unknown as MockedFunction<typeof fetchRevenueDashboardMetrics>;
 
 const mockedFetchExecutiveAnalytics = fetchExecutiveAnalytics as unknown as MockedFunction<
   typeof fetchExecutiveAnalytics
@@ -142,9 +140,7 @@ describe("DashboardPage integration", () => {
         },
       ],
       rankings: {
-        sources: [
-          { name: "hero-button", leads: 6, completed: 4, conversionRate: 80, score: 91 },
-        ],
+        sources: [{ name: "hero-button", leads: 6, completed: 4, conversionRate: 80, score: 91 }],
         services: [
           {
             name: "Implantes Dentales",

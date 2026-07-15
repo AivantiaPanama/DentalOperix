@@ -1,7 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { BarChart3, Bot, ClipboardList, Flag, Home, Settings, ShieldCheck, Target } from "lucide-react";
+import {
+  BarChart3,
+  Bot,
+  ClipboardList,
+  Flag,
+  Home,
+  Settings,
+  ShieldCheck,
+  Target,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const adminLinks = [

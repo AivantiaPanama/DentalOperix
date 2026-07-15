@@ -68,13 +68,17 @@ function RankingList({ title, items }: { title: string; items: ExecutiveRankingI
       <div className="mt-4 space-y-3">
         {items.length > 0 ? (
           items.slice(0, 5).map((item, index) => (
-            <div key={`${title}-${item.name}`} className="flex items-center justify-between gap-4 text-sm">
+            <div
+              key={`${title}-${item.name}`}
+              className="flex items-center justify-between gap-4 text-sm"
+            >
               <div>
                 <p className="font-semibold text-deep">
                   {index + 1}. {item.name}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {item.leads} leads · {item.completed} completados · {item.conversionRate}% conversión
+                  {item.leads} leads · {item.completed} completados · {item.conversionRate}%
+                  conversión
                 </p>
               </div>
               <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
@@ -83,7 +87,9 @@ function RankingList({ title, items }: { title: string; items: ExecutiveRankingI
             </div>
           ))
         ) : (
-          <p className="text-sm text-muted-foreground">Sin datos suficientes para ranking ejecutivo.</p>
+          <p className="text-sm text-muted-foreground">
+            Sin datos suficientes para ranking ejecutivo.
+          </p>
         )}
       </div>
     </div>
@@ -131,7 +137,9 @@ export function ExecutiveAnalyticsPanel({
           <div className="rounded-2xl border border-border bg-slate-50 p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Interpretación ejecutiva</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Interpretación ejecutiva
+                </p>
                 <h3 className="mt-2 text-xl font-semibold text-deep">
                   {healthLabels[executive.interpretation.healthStatus]}
                 </h3>
@@ -161,7 +169,10 @@ export function ExecutiveAnalyticsPanel({
 
           <div className="grid gap-4 lg:grid-cols-2">
             <RankingList title="Ranking ejecutivo de fuentes" items={executive.rankings.sources} />
-            <RankingList title="Ranking ejecutivo de servicios" items={executive.rankings.services} />
+            <RankingList
+              title="Ranking ejecutivo de servicios"
+              items={executive.rankings.services}
+            />
           </div>
 
           <div className="rounded-2xl border border-border bg-slate-50 p-5">
@@ -169,7 +180,10 @@ export function ExecutiveAnalyticsPanel({
             <div className="mt-4 grid gap-3 md:grid-cols-2">
               {executive.priorityActions.length > 0 ? (
                 executive.priorityActions.slice(0, 4).map((action) => (
-                  <div key={`${action.title}-${action.category}`} className="rounded-xl bg-white p-4 text-sm">
+                  <div
+                    key={`${action.title}-${action.category}`}
+                    className="rounded-xl bg-white p-4 text-sm"
+                  >
                     <div className="flex items-start justify-between gap-3">
                       <p className="font-semibold text-deep">{action.title}</p>
                       <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
@@ -184,7 +198,9 @@ export function ExecutiveAnalyticsPanel({
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">No hay acciones prioritarias activas.</p>
+                <p className="text-sm text-muted-foreground">
+                  No hay acciones prioritarias activas.
+                </p>
               )}
             </div>
           </div>
@@ -195,7 +211,10 @@ export function ExecutiveAnalyticsPanel({
               <div className="mt-4 space-y-3">
                 {executive.alerts.length > 0 ? (
                   executive.alerts.slice(0, 4).map((alert) => (
-                    <div key={`${alert.title}-${alert.message}`} className="rounded-xl bg-white p-4 text-sm">
+                    <div
+                      key={`${alert.title}-${alert.message}`}
+                      className="rounded-xl bg-white p-4 text-sm"
+                    >
                       <div className="flex items-start justify-between gap-3">
                         <p className="font-semibold text-deep">{alert.title}</p>
                         <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
@@ -203,11 +222,15 @@ export function ExecutiveAnalyticsPanel({
                         </span>
                       </div>
                       <p className="mt-2 text-muted-foreground">{alert.message}</p>
-                      <p className="mt-2 text-xs font-medium text-deep">{alert.recommendedAction}</p>
+                      <p className="mt-2 text-xs font-medium text-deep">
+                        {alert.recommendedAction}
+                      </p>
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-muted-foreground">No hay alertas ejecutivas activas.</p>
+                  <p className="text-sm text-muted-foreground">
+                    No hay alertas ejecutivas activas.
+                  </p>
                 )}
               </div>
             </div>
@@ -217,7 +240,10 @@ export function ExecutiveAnalyticsPanel({
               <div className="mt-4 space-y-3">
                 {executive.opportunities.length > 0 ? (
                   executive.opportunities.slice(0, 4).map((opportunity) => (
-                    <div key={`${opportunity.title}-${opportunity.description}`} className="rounded-xl bg-white p-4 text-sm">
+                    <div
+                      key={`${opportunity.title}-${opportunity.description}`}
+                      className="rounded-xl bg-white p-4 text-sm"
+                    >
                       <div className="flex items-start justify-between gap-3">
                         <p className="font-semibold text-deep">{opportunity.title}</p>
                         <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
@@ -231,7 +257,9 @@ export function ExecutiveAnalyticsPanel({
                     </div>
                   ))
                 ) : (
-                  <p className="text-sm text-muted-foreground">No hay oportunidades ejecutivas detectadas.</p>
+                  <p className="text-sm text-muted-foreground">
+                    No hay oportunidades ejecutivas detectadas.
+                  </p>
                 )}
               </div>
             </div>

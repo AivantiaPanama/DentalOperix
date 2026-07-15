@@ -12,10 +12,15 @@ function AccessDenied({ allowedRoles }: { allowedRoles: readonly Role[] }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4">
       <section className="max-w-lg rounded-3xl border border-border bg-white p-8 text-center shadow-soft">
-        <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Acceso restringido</p>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-deep">No tienes permiso para ver esta área</h1>
+        <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+          Acceso restringido
+        </p>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-deep">
+          No tienes permiso para ver esta área
+        </h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">
-          Esta sección está disponible únicamente para los roles autorizados: {allowedRoles.join(", ")}.
+          Esta sección está disponible únicamente para los roles autorizados:{" "}
+          {allowedRoles.join(", ")}.
         </p>
         <a
           href="/"
