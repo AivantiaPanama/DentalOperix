@@ -3,6 +3,7 @@ import { CalendarClock, ClipboardList, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TodayScheduleWidget } from "@/components/assistant/TodayScheduleWidget";
 import { LeadQueueWidget, type LeadQueueItem } from "@/components/assistant/LeadQueueWidget";
+import { OperationalDailyView } from "@/components/assistant/OperationalDailyView";
 import { CommercialDemoJourneyCard } from "@/components/assistant/CommercialDemoJourneyCard";
 import { OperationalIntelligenceSection } from "@/components/intelligence/OperationalIntelligenceSection";
 import { buildOperationalIntelligenceSignals } from "@/lib/intelligence/presentation/buildOperationalIntelligenceSignals";
@@ -75,6 +76,8 @@ export function AssistantDashboard() {
       </section>
 
       <TodayScheduleWidget />
+
+      <OperationalDailyView />
 
       <OperationalIntelligenceSection signals={signals} />
 
