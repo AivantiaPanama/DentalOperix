@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { LockKeyhole, ShieldCheck } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
-import { getUserPortalByPublicSlug } from "@/data/userPortals";
+import { getUserPortalByPublicSlug, type UserPortal } from "@/data/userPortals";
 
 export const Route = createFileRoute("/portal/$profile")({
   head: ({ params }) => {
@@ -24,9 +24,29 @@ export const Route = createFileRoute("/portal/$profile")({
   component: PortalProfilePage,
 });
 
+export function getPortalAccessAction(portal: UserPortal | undefined) {
+  if (portal?.id === "assistant") {
+    return {
+      badge: "Workspace operativo",
+      description:
+        "El workspace operativo ya está disponible para asistentes autenticados. El ingreso valida el flujo existente de login y permisos.",
+      actionLabel: "Ingresar al Workspace",
+      actionHref: "/assistant",
+    };
+  }
+
+  return {
+    badge: "En preparación",
+    description: "Este perfil aún conserva una experiencia de referencia pública sin acceso operativo habilitado.",
+    actionLabel: null,
+    actionHref: null,
+  };
+}
+
 function PortalProfilePage() {
   const { profile } = Route.useParams();
   const portal = getUserPortalByPublicSlug(profile);
+  const accessAction = getPortalAccessAction(portal);
 
   if (!portal) {
     return (
@@ -63,10 +83,13 @@ function PortalProfilePage() {
               <p className="mt-5 text-base leading-7 text-muted-foreground md:text-lg">
                 {portal.description}
               </p>
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                {accessAction.description}
+              </p>
             </div>
 
-            <div className="rounded-2xl border border-border bg-secondary/60 px-4 py-3 text-sm font-medium text-deep">
-              En preparación
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+              {accessAction.badge}
             </div>
           </div>
 
@@ -80,6 +103,11 @@ function PortalProfilePage() {
           </div>
 
           <div className="mt-10 flex flex-wrap gap-3">
+            {accessAction.actionHref && accessAction.actionLabel ? (
+              <Button asChild className="rounded-full bg-primary text-primary-foreground">
+                <Link to={accessAction.actionHref}>{accessAction.actionLabel}</Link>
+              </Button>
+            ) : null}
             <Button asChild className="rounded-full bg-primary text-primary-foreground">
               <Link to="/">Volver al inicio</Link>
             </Button>
