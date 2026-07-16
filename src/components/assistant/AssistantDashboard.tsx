@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import { CalendarClock, ClipboardList, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TodayScheduleWidget } from "@/components/assistant/TodayScheduleWidget";
-import { LeadQueueWidget } from "@/components/assistant/LeadQueueWidget";
+import { LeadQueueWidget, type LeadQueueItem } from "@/components/assistant/LeadQueueWidget";
 import { CommercialDemoJourneyCard } from "@/components/assistant/CommercialDemoJourneyCard";
+import { OperationalIntelligenceSection } from "@/components/intelligence/OperationalIntelligenceSection";
+import { buildOperationalIntelligenceSignals } from "@/lib/intelligence/presentation/buildOperationalIntelligenceSignals";
+import type { DecisionSignal } from "@/lib/intelligence/types";
 
 const shellCards = [
   {
@@ -25,6 +29,37 @@ const shellCards = [
 ] as const;
 
 export function AssistantDashboard() {
+  const [signals, setSignals] = useState<DecisionSignal[]>([]);
+  const [leads, setLeads] = useState<LeadQueueItem[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadSignals() {
+      try {
+        const response = await fetch("/api/leads/list", { credentials: "same-origin" });
+        const payload = await response.json().catch(() => ({}));
+        const nextLeads = Array.isArray(payload?.leads) ? payload.leads : [];
+
+        if (!cancelled) {
+          setLeads(nextLeads);
+          setSignals(buildOperationalIntelligenceSignals({ leads: nextLeads, now: new Date() }));
+        }
+      } catch {
+        if (!cancelled) {
+          setLeads([]);
+          setSignals([]);
+        }
+      }
+    }
+
+    void loadSignals();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <div className="space-y-6">
       <section className="rounded-3xl border border-primary/20 bg-primary/5 p-6">
@@ -41,9 +76,11 @@ export function AssistantDashboard() {
 
       <TodayScheduleWidget />
 
+      <OperationalIntelligenceSection signals={signals} />
+
       <CommercialDemoJourneyCard />
 
-      <LeadQueueWidget />
+      <LeadQueueWidget initialLeads={leads} />
 
       <section className="grid gap-4 md:grid-cols-3" aria-label="Módulos del workspace asistente">
         {shellCards.map((item) => {

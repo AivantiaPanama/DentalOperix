@@ -88,7 +88,11 @@ export function LeadQueueWidget({ initialLeads }: { initialLeads?: LeadQueueItem
   const [selectedLead, setSelectedLead] = useState<LeadQueueItem | null>(null);
 
   useEffect(() => {
-    if (initialLeads) {
+    if (initialLeads !== undefined) {
+      setLeads(initialLeads);
+      setFallbackMessage(null);
+      setErrorMessage(null);
+      setState("ready");
       return;
     }
 
