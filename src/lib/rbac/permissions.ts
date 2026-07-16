@@ -30,6 +30,7 @@ export const PERMISSIONS = [
   "audit:read",
   "notifications:read",
   "kpis:read",
+  "operations:read",
   "executive-observability:read",
   "dataQuality:read",
   "users:read",
@@ -76,6 +77,7 @@ export const ROLE_PERMISSIONS: Record<Role, readonly Permission[]> = {
     "patients:verifyProfile",
     "notifications:read",
     "kpis:read",
+    "operations:read",
     "dataQuality:read",
   ],
   patient: [
