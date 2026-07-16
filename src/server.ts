@@ -31,9 +31,12 @@ import * as leadOperationsListHandler from "./routes/api/leads/operations";
 import * as leadOperationsDetailHandler from "./routes/api/leads/$id/operations";
 import * as operationalReportHandler from "./routes/api/reports/operational";
 import * as operationalAuditHandler from "./routes/api/audit/operational";
+
 import * as operationalNotificationsHandler from "./routes/api/notifications/operational";
 import * as operationalKpisHandler from "./routes/api/kpis/operational";
+import * as operationalDailyViewHandler from "./routes/api/operations/daily";
 import * as operationalDataQualityHandler from "./routes/api/data-quality/operational";
+
 import * as leadsUpdateStatusHandler from "./routes/api/leads/update-status";
 import * as leadsUpdateNotesHandler from "./routes/api/leads/update-notes";
 import * as appointmentsRequestHandler from "./routes/api/appointments/request";
@@ -324,6 +327,10 @@ export default {
 
       if (url.pathname === "/api/kpis/operational" && request.method === "GET") {
         return await operationalKpisHandler.GET(request);
+      }
+
+      if (url.pathname === "/api/operations/daily" && request.method === "GET") {
+        return await operationalDailyViewHandler.GET(request);
       }
 
       if (url.pathname === "/api/data-quality/operational" && request.method === "GET") {

@@ -60,7 +60,7 @@ export function RoleRouteGuard({
       .then(async (response) => {
         if (!mounted) return;
         if (response.status === 401) {
-          navigate({ to: "/admin/login", replace: true });
+          navigate({ to: "/admin/login", search: { role: undefined }, replace: true });
           return;
         }
 
@@ -78,7 +78,7 @@ export function RoleRouteGuard({
         setForbidden(true);
       })
       .catch(() => {
-        if (mounted) navigate({ to: "/admin/login", replace: true });
+        if (mounted) navigate({ to: "/admin/login", search: { role: undefined }, replace: true });
       })
       .finally(() => {
         if (mounted) setChecking(false);

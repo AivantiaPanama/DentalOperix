@@ -55,7 +55,7 @@ function DashboardResolverPage() {
         if (!mounted) return;
 
         if (response.status === 401) {
-          navigate({ to: "/admin/login", replace: true });
+          navigate({ to: "/admin/login", search: { role: undefined }, replace: true });
           return;
         }
 
@@ -70,7 +70,7 @@ function DashboardResolverPage() {
         setBlocked(true);
       })
       .catch(() => {
-        if (mounted) navigate({ to: "/admin/login", replace: true });
+        if (mounted) navigate({ to: "/admin/login", search: { role: undefined }, replace: true });
       });
 
     return () => {

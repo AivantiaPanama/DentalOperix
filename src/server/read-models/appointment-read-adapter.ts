@@ -10,11 +10,15 @@ type AppointmentReadRow = {
 };
 
 type AppointmentReadClient = {
+  connect(): Promise<void>;
   query<T = Record<string, unknown>>(
     text: string,
     values?: unknown[],
   ): Promise<{ rows: T[] }>;
+  end(): Promise<void>;
 };
+
+const APPOINTMENT_READ_TIMEOUT_MS = 10000;
 
 function getDatabaseUrl() {
   return process.env.DATABASE_URL || process.env.POSTGRES_URL;
@@ -40,6 +44,21 @@ async function createReadClient(): Promise<AppointmentReadClient> {
       rejectUnauthorized: false,
     },
   });
+}
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string) {
+  let timer: ReturnType<typeof setTimeout>;
+
+  const timeoutPromise = new Promise<T>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new Error(message));
+    }, timeoutMs);
+  });
+
+  promise.finally(() => clearTimeout(timer));
+  promise.catch(() => undefined);
+
+  return Promise.race<T>([promise, timeoutPromise]);
 }
 
 function normalize(value: string | null | undefined): string {
@@ -97,22 +116,36 @@ export async function listAppointmentsForOperationalDay(
 
   const client = await createReadClient();
 
-  const result = await client.query<AppointmentReadRow>(
-    `
-      SELECT
-        id,
-        patient_name,
-        scheduled_start_at,
-        scheduled_end_at,
-        service,
-        status
-      FROM appointments
-      WHERE scheduled_start_at >= $1
-        AND scheduled_start_at < $2
-      ORDER BY scheduled_start_at ASC
-    `,
-    [start, end],
-  );
+  try {
+    await withTimeout(
+      client.connect(),
+      APPOINTMENT_READ_TIMEOUT_MS,
+      "Appointment read connect timed out",
+    );
 
-  return result.rows.map(mapAppointmentRow);
+    const result = await withTimeout(
+      client.query<AppointmentReadRow>(
+        `
+          SELECT
+            id,
+            patient_name,
+            scheduled_start_at,
+            scheduled_end_at,
+            service,
+            status
+          FROM appointments
+          WHERE scheduled_start_at >= $1
+            AND scheduled_start_at < $2
+          ORDER BY scheduled_start_at ASC
+        `,
+        [start, end],
+      ),
+      APPOINTMENT_READ_TIMEOUT_MS,
+      "Appointment read query timed out",
+    );
+
+    return result.rows.map(mapAppointmentRow);
+  } finally {
+    await client.end().catch(() => undefined);
+  }
 }

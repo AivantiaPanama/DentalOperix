@@ -9,6 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/admin/login")({
+  validateSearch: (search: Record<string, unknown>) => {
+    const role = typeof search.role === "string" && isRole(search.role) ? search.role : undefined;
+    return { role };
+  },
   head: () => ({
     meta: [
       { title: "Login Admin — DentalOperix" },
@@ -21,8 +25,10 @@ export const Route = createFileRoute("/admin/login")({
 
 function AdminLoginPage() {
   const navigate = useNavigate();
+  const search = Route.useSearch();
+  const initialRole = search.role ?? "administrator";
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<Role>("administrator");
+  const [role, setRole] = useState<Role>(initialRole);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

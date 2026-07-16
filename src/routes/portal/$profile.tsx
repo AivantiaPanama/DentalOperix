@@ -31,7 +31,7 @@ export function getPortalAccessAction(portal: UserPortal | undefined) {
       description:
         "El workspace operativo ya está disponible para asistentes autenticados. El ingreso valida el flujo existente de login y permisos.",
       actionLabel: "Ingresar al Workspace",
-      actionHref: "/assistant",
+      actionHref: "/admin/login?role=assistant",
     };
   }
 
