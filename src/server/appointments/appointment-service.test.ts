@@ -42,6 +42,10 @@ class MemoryAppointmentRepository implements AppointmentRepository {
       }),
     );
   }
+
+  async listAppointmentsByDateRange(): Promise<Appointment[]> {
+    return [...this.appointments.values()];
+  }
 }
 
 describe("61.2-06B appointment service foundation", () => {

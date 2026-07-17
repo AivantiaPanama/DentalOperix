@@ -1,4 +1,5 @@
 import {
+  AppointmentValidationError,
   createAppointmentEntity,
   validateUpdateAppointmentInput,
   type Appointment,
@@ -10,9 +11,12 @@ import {
 } from "./appointment-domain";
 import {
   AppointmentNotFoundError,
-  type AppointmentConflictSearch,
   type AppointmentRepository,
 } from "./appointment-repository";
+import type {
+  AppointmentDateRangeSearch,
+  AppointmentConflictSearch,
+} from "./appointment-read-repository";
 
 export const RELATIONAL_APPOINTMENTS_TABLE_NAME = "appointments" as const;
 
@@ -208,6 +212,57 @@ export class RelationalAppointmentRepository implements AppointmentRepository {
     );
 
     return result.rows[0] ? rowToAppointment(result.rows[0]) : null;
+  }
+
+  async listAppointmentsByDateRange(
+    search: AppointmentDateRangeSearch,
+  ): Promise<Appointment[]> {
+    const start = Date.parse(search.startAt);
+    const end = Date.parse(search.endAt);
+
+    if (!Number.isFinite(start) || !Number.isFinite(end)) {
+      throw new AppointmentValidationError(
+        "Invalid date range: startAt and endAt must be valid ISO datetimes.",
+      );
+    }
+
+    if (end <= start) {
+      throw new AppointmentValidationError("Invalid date range: endAt must be later than startAt.");
+    }
+
+    const filters: string[] = [
+      "scheduled_start_at < $1",
+      "scheduled_end_at > $2",
+    ];
+    const values: unknown[] = [search.endAt, search.startAt];
+
+    if (search.providerId) {
+      values.push(search.providerId);
+      filters.push(`provider_id = $${values.length}`);
+    }
+
+    if (search.statuses) {
+      if (search.statuses.length === 0) {
+        return [];
+      }
+
+      const placeholders = search.statuses.map((_, index) => `$${values.length + index + 1}`);
+      values.push(...search.statuses);
+      filters.push(`status IN (${placeholders.join(", ")})`);
+    }
+
+    const client = await this.clientFactory();
+    const result = await client.query<RelationalAppointmentRow>(
+      `
+        SELECT ${RETURNING_APPOINTMENT_COLUMNS}
+        FROM ${RELATIONAL_APPOINTMENTS_TABLE_NAME}
+        WHERE ${filters.join("\n          AND ")}
+        ORDER BY scheduled_start_at ASC
+      `,
+      values,
+    );
+
+    return result.rows.map(rowToAppointment);
   }
 
   async updateAppointment(id: string, input: UpdateAppointmentInput): Promise<Appointment> {

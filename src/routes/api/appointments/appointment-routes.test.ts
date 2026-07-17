@@ -39,6 +39,10 @@ class MemoryAppointmentRepository implements AppointmentRepository {
       }),
     );
   }
+
+  async listAppointmentsByDateRange(): Promise<Appointment[]> {
+    return [...this.appointments.values()];
+  }
 }
 
 const repository = new MemoryAppointmentRepository();

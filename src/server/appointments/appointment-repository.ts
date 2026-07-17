@@ -3,19 +3,13 @@ import type {
   CreateAppointmentInput,
   UpdateAppointmentInput,
 } from "./appointment-domain";
+import type { AppointmentReadRepository } from "./appointment-read-repository";
 
-export type AppointmentConflictSearch = {
-  providerId: string;
-  startAt: string;
-  endAt: string;
-  excludeAppointmentId?: string;
-};
+export type { AppointmentConflictSearch, AppointmentDateRangeSearch } from "./appointment-read-repository";
 
-export interface AppointmentRepository {
+export interface AppointmentRepository extends AppointmentReadRepository {
   createAppointment(input: CreateAppointmentInput): Promise<Appointment>;
-  findAppointmentById(id: string): Promise<Appointment | null>;
   updateAppointment(id: string, input: UpdateAppointmentInput): Promise<Appointment>;
-  listProviderCapacityConflicts(search: AppointmentConflictSearch): Promise<Appointment[]>;
 }
 
 export class AppointmentNotFoundError extends Error {
