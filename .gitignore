@@ -54,3 +54,7 @@ dist-ssr
 .env.cutover.prod
 .env.relational.prod
 .env.production.local
+
+
+# Supabase CLI local metadata
+supabase/.temp/
