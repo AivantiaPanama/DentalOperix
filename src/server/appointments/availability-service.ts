@@ -3,7 +3,7 @@ import {
   statusConsumesProviderCapacity,
   type Appointment,
 } from "./appointment-domain";
-import type { AppointmentRepository } from "./appointment-repository";
+import type { AppointmentReadRepository } from "./appointment-read-repository";
 
 export type AvailabilityCheckInput = {
   providerId: string;
@@ -22,7 +22,10 @@ export type AvailabilityCheckResult = {
 
 export class AppointmentAvailabilityService {
   constructor(
-    private readonly repository: Pick<AppointmentRepository, "listProviderCapacityConflicts">,
+  private readonly repository: Pick<
+    AppointmentReadRepository,
+    "listProviderCapacityConflicts"
+  >,
   ) {}
 
   async checkProviderAvailability(input: AvailabilityCheckInput): Promise<AvailabilityCheckResult> {

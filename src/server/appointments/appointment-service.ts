@@ -7,6 +7,7 @@ import {
 } from "./appointment-domain";
 import { AppointmentAvailabilityService } from "./availability-service";
 import type { AppointmentRepository } from "./appointment-repository";
+import type { AppointmentWriteRepository } from "./appointment-write-repository";
 
 export class AppointmentProviderConflictError extends Error {
   constructor(providerId: string) {
@@ -18,12 +19,18 @@ export class AppointmentProviderConflictError extends Error {
 export class AppointmentService {
   private readonly availabilityService: AppointmentAvailabilityService;
 
-  constructor(private readonly repository: AppointmentRepository) {
+  constructor(
+    repository: AppointmentRepository,
+    private readonly writeRepository: AppointmentWriteRepository = repository,
+  ) {
     this.availabilityService = new AppointmentAvailabilityService(repository);
   }
 
   async createRequest(input: CreateAppointmentInput): Promise<Appointment> {
-    return this.repository.createAppointment({ ...input, status: input.status ?? "requested" });
+    return this.writeRepository.createAppointment({
+      ...input,
+      status: input.status ?? "requested",
+    });
   }
 
   async confirmAppointment(
@@ -35,18 +42,19 @@ export class AppointmentService {
       actor: AppointmentAuditActor;
     },
   ): Promise<Appointment> {
-    const availability = await this.availabilityService.checkProviderAvailability({
-      providerId: input.providerId,
-      startAt: input.scheduledStartAt,
-      endAt: input.scheduledEndAt,
-      excludeAppointmentId: id,
-    });
+    const availability =
+      await this.availabilityService.checkProviderAvailability({
+        providerId: input.providerId,
+        startAt: input.scheduledStartAt,
+        endAt: input.scheduledEndAt,
+        excludeAppointmentId: id,
+      });
 
     if (!availability.available) {
       throw new AppointmentProviderConflictError(input.providerId);
     }
 
-    return this.repository.updateAppointment(id, {
+    return this.writeRepository.updateAppointment(id, {
       providerId: input.providerId,
       scheduledStartAt: input.scheduledStartAt,
       scheduledEndAt: input.scheduledEndAt,
@@ -59,7 +67,7 @@ export class AppointmentService {
     id: string,
     input: { actor: AppointmentAuditActor; reason?: string },
   ): Promise<Appointment> {
-    return this.repository.updateAppointment(id, {
+    return this.writeRepository.updateAppointment(id, {
       status: "cancelled",
       cancellationReason: input.reason,
       actor: input.actor,
@@ -70,14 +78,17 @@ export class AppointmentService {
     id: string,
     input: { actor: AppointmentAuditActor; notes?: string },
   ): Promise<Appointment> {
-    return this.repository.updateAppointment(id, {
+    return this.writeRepository.updateAppointment(id, {
       status: "needs_assistant_review",
       notes: input.notes,
       actor: input.actor,
     });
   }
 
-  applyUpdateForTesting(appointment: Appointment, actor: AppointmentAuditActor): Appointment {
+  applyUpdateForTesting(
+    appointment: Appointment,
+    actor: AppointmentAuditActor,
+  ): Appointment {
     return applyAppointmentUpdate(
       appointment,
       {

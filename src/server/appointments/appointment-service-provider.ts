@@ -1,7 +1,9 @@
 import { AppointmentService } from "./appointment-service";
 import { AppointmentAvailabilityService } from "./availability-service";
 import { RelationalAppointmentRepository } from "./relational-appointment-repository";
+import { RelationalAppointmentWriteRepository } from "./relational-appointment-write-repository";
 import type { AppointmentRepository } from "./appointment-repository";
+import type { AppointmentWriteRepository } from "./appointment-write-repository";
 
 /**
  * 61.2-06C Appointment Service Provider.
@@ -15,8 +17,14 @@ class AppointmentServiceProvider {
   private repositoryFactory: () => AppointmentRepository = () =>
     new RelationalAppointmentRepository();
 
+  private writeRepositoryFactory: () => AppointmentWriteRepository = () =>
+    new RelationalAppointmentWriteRepository();
+
   getAppointmentService(): AppointmentService {
-    return new AppointmentService(this.repositoryFactory());
+    return new AppointmentService(
+      this.repositoryFactory(),
+      this.writeRepositoryFactory(),
+    );
   }
 
   getAvailabilityService(): AppointmentAvailabilityService {
@@ -25,10 +33,13 @@ class AppointmentServiceProvider {
 
   setRepositoryFactoryForTesting(factory: () => AppointmentRepository) {
     this.repositoryFactory = factory;
+    this.writeRepositoryFactory = factory;
   }
 
   resetForTesting() {
     this.repositoryFactory = () => new RelationalAppointmentRepository();
+    this.writeRepositoryFactory = () =>
+      new RelationalAppointmentWriteRepository();
   }
 }
 
